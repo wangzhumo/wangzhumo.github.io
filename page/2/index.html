@@ -302,6 +302,629 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/Android/Activity与Fragment的生命周期/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wangzhumo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headimage.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王诛魔">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Android/Activity与Fragment的生命周期/" itemprop="url">
+                  Activity与Fragment的生命周期
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-03-05 14:02:42" itemprop="dateCreated datePublished" datetime="2018-03-05T14:02:42+08:00">2018-03-05</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-05-09 18:08:36" itemprop="dateModified" datetime="2018-05-09T18:08:36+08:00">2018-05-09</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>做Android开发好些年了,这些基础的知识,完完整整的在博客上写一次.</p>
+<h4 id="Activity生命周期"><a href="#Activity生命周期" class="headerlink" title="Activity生命周期"></a>Activity生命周期</h4><p>必不可少的一张图,来自Google Android developer 的文档上</p>
+<p><img src="/images/activity_lifecycle.png" alt="activity_liferycle"></p>
+<h5 id="回调方法简述"><a href="#回调方法简述" class="headerlink" title="回调方法简述"></a>回调方法简述</h5><ul>
+<li><p>onCreate()  </p>
+<p>当Activity创建时,会回调该方法,常用于初始化View 或其他的一些功能的初始化</p>
+</li>
+<li><p>onStart()</p>
+<p>Activity已经初始化完毕,此时的页面是可见状态,则回调onStart();方法</p>
+<p>Activity启动：onCreate() -&gt; onStart() -&gt; onResume()</p>
+</li>
+<li><p>onResume()</p>
+<p>当Activity可见,并且获得焦点,可以与用户交互时回调</p>
+<p>在我们处理一些视屏操作,或者是Fragment懒加载等都可以用到</p>
+</li>
+<li><p>onPause()</p>
+<p>当调用onPause()时,说明Activity被阻挡,部分UI已经不可见了,但是Activity的UI并没有完全消失.</p>
+</li>
+<li><p>onStop()</p>
+<p>当Activity完全不可见,且到了后台之后,如果系统内存不足,系统可能会杀死当前Activity</p>
+<p>在这个方法中可以取消一些动画效果等</p>
+</li>
+<li><p>onDestory()</p>
+<p>Activity退出,销毁</p>
+<p>常用于销毁,回收资源</p>
+</li>
+</ul>
+<h5 id="经典场景"><a href="#经典场景" class="headerlink" title="经典场景"></a>经典场景</h5><p>1.正常启动</p>
+<p>系统调用onCreate方法 , 然后调用onStart() , 最后调用 onResume() ,用户可操作.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">E/MainActivity: ---- onCreate ----</span><br><span class="line">E/MainActivity: ---- onStart ----</span><br><span class="line">E/MainActivity: ---- onResume ----</span><br></pre></td></tr></table></figure>
+<p>2.正常退出</p>
+<p>Activity先失去焦点不可交互</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">E/MainActivity: ---- onPause ----</span><br><span class="line">E/MainActivity: ---- onStop ----</span><br><span class="line">E/MainActivity: ---- onDestroy ----</span><br></pre></td></tr></table></figure>
+<p>2.弹出Dialog</p>
+<p>MainActivity什么log也没有打印,说明不对Activity造成影响</p>
+<p>3.跳转一个透明的Activity页面(1像素的同理)</p>
+<p>MainActivity只调用了onPause()  因为MainActivity的UI被遮挡了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">E/MainActivity: ---- onPause ----</span><br></pre></td></tr></table></figure>
+<p>4.从被遮挡状态恢复</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">E/MainActivity: ---- onResume ----</span><br></pre></td></tr></table></figure>
+<p>6.锁屏</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">E/MainActivity: ---- onPause ----</span><br><span class="line">E/MainActivity: ---- onStop ----</span><br></pre></td></tr></table></figure>
+<p>此时,MainActivity已经在后台了.</p>
+<p>7.从锁屏恢复</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">E/MainActivity: ---- onStart ----</span><br><span class="line">E/MainActivity: ---- onResume ----</span><br></pre></td></tr></table></figure>
+<p>可以发现,不仅仅走了onResume() ,还走了一次onStart()</p>
+<p>8.横竖屏切换</p>
+<ul>
+<li><p>正常切换</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">E/MainActivity: ---- onPause ----</span><br><span class="line">E/MainActivity: ---- onStop ----</span><br><span class="line">E/MainActivity: ---- onDestroy ----</span><br><span class="line"></span><br><span class="line">E/MainActivity: ---- onCreate ----</span><br><span class="line">E/MainActivity: ---- onStart ----</span><br><span class="line">E/MainActivity: ---- onResume ----</span><br><span class="line"></span><br><span class="line">如果你什么都不设置,直接切换是这样的.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>保留Activity的切换</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">我在manifest.xml文件中,添加了</span><br><span class="line"></span><br><span class="line">&lt;activity</span><br><span class="line">	android:name=&quot;.MainActivity&quot;</span><br><span class="line">	android:configChanges=&quot;orientation|screenSize&quot;&gt;</span><br><span class="line">	&lt;intent-filter&gt;</span><br><span class="line">		&lt;action android:name=&quot;android.intent.action.MAIN&quot; /&gt;</span><br><span class="line">	&lt;category android:name=&quot;android.intent.category.LAUNCHER&quot; /&gt;</span><br><span class="line">&lt;/intent-filter&gt;</span><br><span class="line">&lt;/activity&gt;</span><br></pre></td></tr></table></figure>
+<p>此时:</p>
+<p>Activity不会被销毁,从而重新创建,而是调用onConfigurationChanged</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">  public void onConfigurationChanged(Configuration newConfig) &#123;</span><br><span class="line">     super.onConfigurationChanged(newConfig);</span><br><span class="line">     //do somethings</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ul>
+<h4 id="Fragment生命周期"><a href="#Fragment生命周期" class="headerlink" title="Fragment生命周期"></a>Fragment生命周期</h4><p>惯例,如图:</p>
+<p><img src="/images/fragment_lifercycle.png" alt="fragment_lifecycle"></p>
+<h5 id="回调方法简述-1"><a href="#回调方法简述-1" class="headerlink" title="回调方法简述"></a>回调方法简述</h5><p>其中onAttach()  onCreateView() onActivityCreated()  onDestroy() onDetach() 和Activity的不一致</p>
+<ul>
+<li><p>onAttach()</p>
+<p>Fragment与它所依赖的Activity建立关联</p>
+</li>
+<li><p>onCreateView()</p>
+<p>这里是给Fragment创建视图用的,在onCreate()中初始化Fragment,但是视图等还是没有加载上去的</p>
+</li>
+<li><p>onActivityCreated()</p>
+<p>如果调用该方法,说明Fragment依赖的Activity中onCreate()已经执行完毕</p>
+</li>
+<li><p>onDestroyView()</p>
+<p>Fragment中的布局销毁,移除</p>
+<p>要注意的是,此时Fragment与它所依赖的Activity还是关联的</p>
+</li>
+<li><p>onDestroy()</p>
+<p>此时,Fragment被销毁</p>
+</li>
+<li><p>onDetach()</p>
+<p>解除与Activity的关联</p>
+</li>
+</ul>
+<p>PS: Fragment中的onResume()并不十分准确,所以如果要做懒加载,要判断fragment不能使用onResume判断</p>
+<h5 id="经典场景-1"><a href="#经典场景-1" class="headerlink" title="经典场景"></a>经典场景</h5><p>1.正常启动</p>
+<p>真的是超级多啊</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">E/BlankFragment: ---- onAttach ----   			关联Activity</span><br><span class="line">E/BlankFragment: ---- onCreate ----    			Fragment初始化</span><br><span class="line">E/BlankFragment: ---- onCreateView ----			创建Fragment的布局</span><br><span class="line">E/BlankFragment: ---- onViewCreated ----		onCreateView执行完后被触发</span><br><span class="line">E/BlankFragment: ---- onActivityCreated ----	关联的Activity OnCreate()执行完毕后触发</span><br><span class="line">E/BlankFragment: ---- onStart ----				Fragment可见</span><br><span class="line">E/BlankFragment: ---- onResume ----				Fragment可交互,一般不使用它来判断</span><br></pre></td></tr></table></figure>
+<p>2.正常退出(或者是它关联的Activity被销毁了)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">E/BlankFragment: ---- onPause ----</span><br><span class="line">E/BlankFragment: ---- onStop ----</span><br><span class="line">E/BlankFragment: ---- onDestroyView ----</span><br><span class="line">E/BlankFragment: ---- onDestroy ----</span><br><span class="line">E/BlankFragment: ---- onDetach ----</span><br></pre></td></tr></table></figure>
+<p>3.进入后台</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">E/BlankFragment: ---- onPause ----</span><br><span class="line">E/BlankFragment: ---- onStop ----</span><br></pre></td></tr></table></figure>
+<p>4.从锁屏到解锁</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">E/BlankFragment: ---- onPause ----</span><br><span class="line">E/BlankFragment: ---- onSaveInstanceState ----</span><br><span class="line">E/BlankFragment: ---- onStop ----</span><br><span class="line"></span><br><span class="line">E/BlankFragment: ---- onStart ----</span><br><span class="line">E/BlankFragment: ---- onResume ----</span><br></pre></td></tr></table></figure>
+<p>5.切换到OtherFragment</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">E/BlankFragment: ---- onPause ----</span><br><span class="line">E/BlankFragment: ---- onStop ----</span><br><span class="line">E/BlankFragment: ---- onDestroyView ----</span><br></pre></td></tr></table></figure>
+<p>6.从OtherFragment切换回本Fragment</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">E/BlankFragment: ---- onCreateView ----</span><br><span class="line">E/BlankFragment: ---- onActivityCreated ----</span><br><span class="line">E/BlankFragment: ---- onStart ----   </span><br><span class="line">E/BlankFragment: ---- onResume ----</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/Android-Test/Android-单元测试-二/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wangzhumo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headimage.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王诛魔">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Android-Test/Android-单元测试-二/" itemprop="url">
+                  Android 单元测试(二)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-03-01 15:27:56" itemprop="dateCreated datePublished" datetime="2018-03-01T15:27:56+08:00">2018-03-01</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-03-05 14:02:12" itemprop="dateModified" datetime="2018-03-05T14:02:12+08:00">2018-03-05</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android-Test/" itemprop="url" rel="index"><span itemprop="name">Android Test</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>后补.</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/Flutter/Flutter安装指南MAC版/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wangzhumo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headimage.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王诛魔">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Flutter/Flutter安装指南MAC版/" itemprop="url">
+                  Flutter安装指南MAC版
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-02-28 23:56:58" itemprop="dateCreated datePublished" datetime="2018-02-28T23:56:58+08:00">2018-02-28</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-03-01 00:44:14" itemprop="dateModified" datetime="2018-03-01T00:44:14+08:00">2018-03-01</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Flutter/" itemprop="url" rel="index"><span itemprop="name">Flutter</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="下载Flutter-SDK"><a href="#下载Flutter-SDK" class="headerlink" title="下载Flutter SDK"></a>下载Flutter SDK</h4><h5 id="使用Git安装"><a href="#使用Git安装" class="headerlink" title="使用Git安装"></a>使用Git安装</h5><p>如果已经下载过flutter的,切换到flutter目录去直接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">git checkout beta</span><br><span class="line">git pull</span><br><span class="line">//可能会失败,因为这个目录中可能有修改过,要目放弃修改,要么暂存均可</span><br><span class="line"></span><br><span class="line">(如果失败,这里选择了暂存) -- Start</span><br><span class="line">git checkout beta</span><br><span class="line">git stash</span><br><span class="line">git pull</span><br><span class="line">(如果失败,这里选择了暂存)  -- End</span><br></pre></td></tr></table></figure>
+<p>未下载过,第一次安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//克隆flutter的beta分支</span><br><span class="line">git clone -b beta https://github.com/flutter/flutter.git</span><br></pre></td></tr></table></figure>
+<h5 id="配置”环境变量”"><a href="#配置”环境变量”" class="headerlink" title="配置”环境变量”"></a>配置”环境变量”</h5><p>熟悉命令的自己搞一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//把         安装目录/flutter/bin</span><br><span class="line">export PATH=`pwd`/flutter/bin:$PATH</span><br></pre></td></tr></table></figure>
+<p>不熟悉的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">~ ⌚ 0:01:37</span><br><span class="line">$ vim ~/.bash_profile</span><br><span class="line"></span><br><span class="line">//会进入vim编辑,如下配置即可</span><br><span class="line">export FLUTTER_HOME=/Users/phyooos/develop/flutter</span><br><span class="line"></span><br><span class="line">export PATH=$PATH:$FLUTTER_HOME/bin:</span><br></pre></td></tr></table></figure>
+<p>不会的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">open ~/.bash_profile</span><br><span class="line"></span><br><span class="line">//编辑器,总可以了吧,如下配置即可</span><br><span class="line">export FLUTTER_HOME=/Users/phyooos/develop/flutter</span><br><span class="line"></span><br><span class="line">export PATH=$PATH:$FLUTTER_HOME/bin:</span><br></pre></td></tr></table></figure>
+<p>放一下我自己的配置:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0/Contents/Home</span><br><span class="line">export ANDROID_HOME=/Users/phyooos/Library/Android/sdk</span><br><span class="line">export TOMCAT_HOME=/Users/phyooos/develop/apache-tomcat-7.0.77</span><br><span class="line">export GRADLE_USER_HOME=/Users/phyooos/develop/gradle</span><br><span class="line">export MYSQL_HOME=/usr/local/mysql-5.7.18-macos10.12-x86_64</span><br><span class="line">export GOROOT=/usr/local/go</span><br><span class="line">export GOPATH=/Users/phyooos/develop/workspace</span><br><span class="line">export GOBIN=$GOPATH/bin</span><br><span class="line">export SCALA_HOME=/Users/phyooos/develop/scala-2.11.8</span><br><span class="line">export MAVEN_HOME=/Users/phyooos/develop/apache-maven-3.5.0</span><br><span class="line">export FLUTTER_HOME=/Users/phyooos/develop/flutter</span><br><span class="line">export PATH=/usr/local/Cellar/git/2.15.0/bin:$PATH:$JAVA_HOME/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$TOMCAT_HOME/bin:$GRADLE_HOME/bin:$MYSQL_HOME/bin:$GOROOT/bin:$GOPATH:$GOBIN:$GOPATH/bin:$FLUTTER_HOME/bin:$MAVEN_HOME/bin:$SCALA_HOME/bin</span><br></pre></td></tr></table></figure>
+<h4 id="安装Flutter"><a href="#安装Flutter" class="headerlink" title="安装Flutter"></a>安装Flutter</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flutter doctor</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这里要注意的是,这个配置需要”良好的网络环境”,最好翻墙下载为妙,但是<strong>终端不走代理</strong></p>
+<p>所以,需要手动给终端配置一下,请看我另一篇文章</p>
+<p><a href="http://www.wangzhumo.com/Flutter/Flutter-%E5%AE%89%E8%A3%85/">Flutter 安装</a></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/Android-Test/Android-单元测试-一/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1950,714 +2573,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/Android/Android开发中常用的Adb命令/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wangzhumo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/headimage.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="王诛魔">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Android/Android开发中常用的Adb命令/" itemprop="url">
-                  Android开发中常用的Adb命令
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-01-11 12:07:40 / 修改时间：13:17:15" itemprop="dateCreated datePublished" datetime="2018-01-11T12:07:40+08:00">2018-01-11</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在做这些之前,先配置好adb环境变量,以我的配置为例</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> vim ~/.bash_profile</span><br><span class="line"></span><br><span class="line">export ANDROID_HOME=/Users/phyooos/Library/Android/sdk</span><br><span class="line">...</span><br><span class="line">export PATH=&#123;省略&#125;:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> source ~/.bas</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> adb</span><br><span class="line">Android Debug Bridge version 1.0.39</span><br><span class="line">Version 0.0.1-4500957</span><br><span class="line">Installed as /Users/phyooos/Library/Android/sdk/platform-tools/adb</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<p>补充</p>
-<blockquote>
-<p>adb shell pm list packages   当前手机安装的所有app包名<br>adb shell pm list packages | grep ‘google’  在所有包名中查找带’google’的</p>
-</blockquote>
-<h4 id="连接设备"><a href="#连接设备" class="headerlink" title="连接设备"></a>连接设备</h4><p>打开开发者 -&gt; 打开调试 -&gt; 允许调试</p>
-<ul>
-<li><p>通过usb连接</p>
-</li>
-<li><p>通过wifi连接</p>
-<p>保证Android设备与电脑在局域网中,网段好像也要一致 eg:  <code>192.168.2.98 , 192.168.2.111</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">~ ⌚ 9:44:55</span><br><span class="line"><span class="meta">$</span> adb connect 192.168.6.51</span><br><span class="line">unable to connect to 192.168.6.51:5555: Connection refused</span><br></pre></td></tr></table></figure>
-<p>此时是连接不上的,要先tcpip 5555,如下:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>使用Tcp并监听端口5555</span><br><span class="line">adb tcpip 5555</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>连接设备</span><br><span class="line">adb connect 192.168.6.51</span><br></pre></td></tr></table></figure>
-<p>如果你想用usb调试</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>使用usb调试  </span><br><span class="line">adb usb</span><br></pre></td></tr></table></figure>
-<p>PS:有的设备直接adb connect  即可,所以不妨先试试</p>
-<p>​</p>
-</li>
-</ul>
-<h4 id="查看设备"><a href="#查看设备" class="headerlink" title="查看设备"></a>查看设备</h4><ul>
-<li><p>查看所有连接的设备</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb devices</span><br><span class="line">List of devices attached</span><br><span class="line">3080b82d	device</span><br><span class="line">860BCML228J8	device</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>指定设备(adb 命令必须指定一个设备使用)</p>
-</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">abd -s 编号 命令</span><br><span class="line">比如我要连接3080b82d	device 这个设备,安装一个apk</span><br><span class="line"></span><br><span class="line">eg:</span><br><span class="line"><span class="meta">$</span> adb -s 3080b82d install Test.apk</span><br><span class="line">Success</span><br></pre></td></tr></table></figure>
-<h4 id="安装-卸载apk"><a href="#安装-卸载apk" class="headerlink" title="安装,卸载apk"></a>安装,卸载apk</h4><ul>
-<li>安装<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb -s 3080b82d install Users/phyooos/develop/Test.apk</span><br><span class="line">Success</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>install 跟上apk的path即可</p>
-<p>install 可以搭配几个参数使用,比较常用的是</p>
-<p><code>install -r</code>   替换掉原来的apk.(被称为强制安装)    至于其他的参数去google官网看吧</p>
-<p><code>install -t</code>  可以安装测试包</p>
-<ul>
-<li>卸载</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">adb uninstall [软件包名]</span><br><span class="line"></span><br><span class="line">adb uninstall -k [软件包名]</span><br></pre></td></tr></table></figure>
-<p>-k 参数,卸载软件但是保留配置和缓存文件.</p>
-<p>包名使用文章开始的命令查找即可(当前有两个手机,还要指定设备)<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb -s 3080b82d shell pm list packages | grep 'miui'</span><br><span class="line">package:com.miui.screenrecorder</span><br><span class="line">package:com.miui.contentextension</span><br><span class="line">package:com.miui.powerkeeper</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
-<h4 id="拉取-推送文件"><a href="#拉取-推送文件" class="headerlink" title="拉取,推送文件"></a>拉取,推送文件</h4><ul>
-<li>发送文件到Android设备</li>
-</ul>
-<p>　　<code>adb push [本地路径] [远程路径]</code></p>
-<ul>
-<li>从Android设备中下载文件</li>
-</ul>
-<p>　　<code>adb pull [远程路径] [本地路径]</code></p>
-<h4 id="截图录屏"><a href="#截图录屏" class="headerlink" title="截图录屏"></a>截图录屏</h4><ul>
-<li><p>截图<code>adb shell screencap [path]</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adb shell screencap /sdcard/screen.png</span><br><span class="line">#截图并保存到/sdcard/screen.png</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>录屏<code>adb shell screenrecord [path]</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adb shell screenrecord /sdcard/demo.mp4</span><br><span class="line">#录屏</span><br></pre></td></tr></table></figure>
-<p>注意:   按Ctrl-C 结束录制</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">adb shell screenrecord --size &lt;WIDTHxHEIGHT&gt;</span><br><span class="line"></span><br><span class="line">adb shell screenrecord --bit-rate &lt;RATE&gt;</span><br><span class="line">adb shell screenrecord --bit-rate 5000000 /sdcard/demo.mp4</span><br><span class="line"></span><br><span class="line">adb shell screenrecord --time-limit &lt;TIME&gt;</span><br><span class="line"></span><br><span class="line">adb shell screenrecord --rotate</span><br><span class="line"></span><br><span class="line">adb shell screenrecord --verbose</span><br></pre></td></tr></table></figure>
-<p>​</p>
-</li>
-</ul>
-<h4 id="Package"><a href="#Package" class="headerlink" title="Package"></a>Package</h4><ul>
-<li><p>查看系统内app信息  <code>adb shell pm list packages</code></p>
-<ul>
-<li><p>查看当前所有包</p>
-<p><code>adb shell pm list packages</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb shell pm list packages</span><br><span class="line">package:com.flyme.roamingpay</span><br><span class="line">package:com.android.cts.priv.ctsshim</span><br><span class="line">package:com.meizu.pps</span><br><span class="line">package:com.meizu.net.pedometer</span><br><span class="line">package:com.android.providers.telephony</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>系统应用</p>
-<p><code>adb shell pm list packages -s</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb shell pm list packages -s</span><br><span class="line">package:com.miui.screenrecorder</span><br><span class="line">package:com.android.cts.priv.ctsshim</span><br><span class="line">package:com.qualcomm.qti.auth.sampleextauthservice</span><br><span class="line">package:com.qualcomm.qti.perfdump</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>普通外来应用</p>
-<p><code>adb shell pm list packages -3</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb shell pm list packages -3</span><br><span class="line">package:com.google.android.youtube</span><br><span class="line">package:com.hpbr.bosszhipin</span><br><span class="line">package:de.blinkt.openvpn</span><br><span class="line">package:org.iggymedia.periodtracker</span><br><span class="line">package:com.daimajia.gold</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>其他参数</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>See their associated file.</span><br><span class="line">adb shell pm list packages -f </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>Filter to only show disabled packages.</span><br><span class="line">adb shell pm list packages -d </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>Filter to only show enabled packages.</span><br><span class="line">adb shell pm list packages -e </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>See the installer for the packages.</span><br><span class="line">adb shell pm list packages -i </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>Also include uninstalled packages.</span><br><span class="line">adb shell pm list packages -u</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>通过包名查找app位置 <code>adb shell pm path [packagename]</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ adb shell pm path com.miui.screenrecorder</span><br><span class="line">package:/system/app/MiuiScreenRecorder/MiuiScreenRecorder.apk</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>清除缓存<code>adb shell pm clear  [packageName]</code></p>
-<p>清除了该app的  data  cache</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ adb shell pm clear com.yhcs.carmart</span><br><span class="line">Success</span><br></pre></td></tr></table></figure>
-<p>​</p>
-</li>
-</ul>
-<h4 id="shell"><a href="#shell" class="headerlink" title="shell"></a>shell</h4><p>我们知道android其实精简了linux的命令,有一大部分linux命令没法用的</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb shell</span><br><span class="line"><span class="meta">#</span>即可进入</span><br><span class="line"></span><br><span class="line">如果要root权限,国内手机好像不一致,我是用过的为</span><br><span class="line"><span class="meta">$</span> adb root</span><br><span class="line"><span class="meta">$</span> adb shell</span><br><span class="line"></span><br><span class="line">此时权限就是root</span><br><span class="line"></span><br><span class="line">进入shell后,就可以为所欲为,一般和linux一致</span><br></pre></td></tr></table></figure>
-<p>不过这些,还是管用的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls , cd , rm , mkdir , touch , pwd ,cp , mv ,netstat , ping, ip</span><br></pre></td></tr></table></figure>
-<p>举一个例子,我想查看当前wifi的ip是多少.</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb shell</span><br><span class="line">sagit:/ $ ip -f inet addr show wlan0</span><br><span class="line">23: wlan0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP group default qlen 3000</span><br><span class="line">    inet 192.168.6.51/23 brd 192.168.7.255 scope global wlan0</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">sagit:/ $</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>ip  inet 192.168.6.51  这个就是</span><br></pre></td></tr></table></figure>
-<h4 id="Logcat"><a href="#Logcat" class="headerlink" title="Logcat"></a>Logcat</h4><p><code>adb logcat [option] [filter]</code></p>
-<ul>
-<li><p>查看log <code>adb logcat</code></p>
-<p>通过  control + c  退出</p>
-<p>​</p>
-</li>
-<li><p>查看Debug的log <code>adb logcat *:D</code></p>
-</li>
-</ul>
-<p>Logcat,还是Android studio 看起来方便,所以没有继续去看,也就不说了</p>
-<h4 id="dumpsys"><a href="#dumpsys" class="headerlink" title="dumpsys"></a>dumpsys</h4><p>这是一个很强大的命令</p>
-<ul>
-<li><p>电量 <code>adb shell dumpsys battery</code></p>
-<p>​</p>
-</li>
-<li><p>服务列表 <code>adb shell dumpsys</code></p>
-<p>下面的命令  <code>| more</code> 是为了显示所有的数据 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ adb shell dumpsys | more</span><br><span class="line">Currently running services:</span><br><span class="line">  DockObserver</span><br><span class="line">  MiuiBackup</span><br><span class="line">  MiuiInit</span><br><span class="line">  SurfaceFlinger</span><br><span class="line">  accessibility</span><br><span class="line">  account</span><br><span class="line">  activity</span><br><span class="line">  alarm</span><br><span class="line">  ...</span><br></pre></td></tr></table></figure>
-<p>这个Currently running services   所有的项目,都可以详细查询</p>
-</li>
-<li><p>查询单个service  <code>adb shell dumpsys [service name]</code></p>
-<p>搞几个例子看看:</p>
-<ul>
-<li>屏幕分辨率<code>adb shell dumpsys window displays</code></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ adb shell dumpsys window displays</span><br><span class="line"></span><br><span class="line">WINDOW MANAGER DISPLAY CONTENTS (dumpsys window displays)</span><br><span class="line">  Display: mDisplayId=0</span><br><span class="line">    init=1080x1920 480dpi cur=1080x1920 app=1080x1920 rng=1080x1020-1920x1860</span><br><span class="line">    deferred=false mLayoutNeeded=false</span><br></pre></td></tr></table></figure>
-<p>其中:</p>
-<p>init=1080x1920  分辨率</p>
-<p>480dpi   dpi值</p>
-<p>​</p>
-<ul>
-<li><p>activity信息<code>adb shell dumpsys activity</code></p>
-<p>比如我想看看我activity的信息<code>adb shell dumpsys activity | grep &#39;com.yhcs.carmart&#39;</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ adb shell dumpsys activity | grep &quot;com.yhcs.carmart&quot;</span><br><span class="line">  * com.yhcs.carmart: 2 items</span><br><span class="line">    #0: PendingIntentRecord&#123;c526be3 com.yhcs.carmart startService&#125;</span><br><span class="line">    #1: PendingIntentRecord&#123;8949e0 com.yhcs.carmart broadcastIntent&#125;</span><br><span class="line">      -&gt; 8161:com.yhcs.carmart/u0a460 s1/1 u0/0 +44s372ms</span><br><span class="line">      -&gt; 8556:com.yhcs.carmart:channel/u0a460 s1/1 u0/0 +33s684ms</span><br><span class="line">      </span><br><span class="line">      ...</span><br><span class="line">      </span><br><span class="line">  * Recent #0: TaskRecord&#123;6019b81 #14799 A=com.yhcs.carmart U=0 StackId=1 sz=1&#125;</span><br><span class="line">   packageName=com.yhcs.carmart processName=com.yhcs.carmart</span><br><span class="line">   launchedFromUid=10460 launchedFromPackage=com.yhcs.carmart userId=0</span><br><span class="line">   app=ProcessRecord&#123;3c52934 8161:com.yhcs.carmart/u0a460&#125;</span><br><span class="line">   Intent &#123; cmp=com.yhcs.carmart/.ui.main.MainActivity &#125;</span><br><span class="line">   frontOfTask=true task=TaskRecord&#123;6019b81 #14799 A=com.yhcs.carmart U=0 StackId=1 sz=1&#125;</span><br><span class="line">   taskAffinity=com.yhcs.carmart</span><br><span class="line">   realActivity=com.yhcs.carmart/.ui.main.MainActivity</span><br></pre></td></tr></table></figure>
-<p>现在指定查看这个activity</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ adb shell dumpsys activity com.yhcs.carmart/.ui.main.MainActivity</span><br><span class="line">TASK com.yhcs.carmart id=14799 userId=0</span><br><span class="line">  ACTIVITY com.yhcs.carmart/.ui.main.MainActivity a99200b pid=8161</span><br><span class="line">    Local Activity 90efa41 State:</span><br><span class="line">      mResumed=false mStopped=true mFinished=false</span><br><span class="line">      mChangingConfigurations=false</span><br><span class="line">      mCurrentConfig=&#123;1.0 460mcc11mnc [zh_CN] ldltr sw360dp w360dp h620dp 480dpi nrml long port finger -keyb/v/h -nav/h appBounds=Rect(0, 0 - 1080, 1920) s.12 themeChanged=0 themeChangedFlags=0&#125;</span><br><span class="line">      ...</span><br><span class="line">View Hierarchy:</span><br><span class="line">      DecorView@ce71c9e[MainActivity]</span><br><span class="line">        android.widget.LinearLayout&#123;6106377 V.E...... ......ID 0,0-1080,1920&#125;</span><br><span class="line">      ...</span><br><span class="line">Active Fragments </span><br><span class="line">	  ...</span><br></pre></td></tr></table></figure>
-<p>里面有很多信息</p>
-<p>​</p>
-</li>
-</ul>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/uncategorized/OkHttp中添加https支持/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wangzhumo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/headimage.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="王诛魔">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/uncategorized/OkHttp中添加https支持/" itemprop="url">
-                  OkHttp中添加https支持
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-01-10 16:43:57 / 修改时间：23:29:54" itemprop="dateCreated datePublished" datetime="2018-01-10T16:43:57+08:00">2018-01-10</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>基础知识</strong></p>
-<p>感觉就是一堆有信誉的机构,说: 我们这些机构的公钥是可信的,我们下面的小弟当然也是可以信任的啦</p>
-<p>然后大家就去当人家小弟,就是可信的了….</p>
-<p>当然这里面有的大佬不高兴,就自己搞一套证书,比如12306</p>
-<p>Https中,值得注意的密钥有:</p>
-<ul>
-<li>服务器端的<code>公钥</code>和<code>私钥</code></li>
-</ul>
-<ul>
-<li>客户端的<code>随机密钥</code></li>
-</ul>
-<p>值得注意的是一个HTTPS请求实际上就是两次HTTP传输.</p>
-<p>1.客户端向服务器发起HTTPS请求，连接到服务器的443端口。</p>
-<p>2.服务端收到请求,向客户端发送自己的<code>公钥</code></p>
-<p>3.客户端收到服务器公钥,开始验证证书的合法性,我们知道系统内置了一些证书,应该是叫顶级证书吧</p>
-<p>我们的证书并不是啥大机构发的,肯定不在里面,那么就没法验证合法.</p>
-<p>​     合法 &gt; 继续</p>
-<p>​     不合法 &gt; 此次Https请求终止</p>
-<p>4.客户端验证公钥合格后(也就是给你发消息的服务器是正经服务器)，那么客户端会生成一个 随机密码,客户端会拿着这个随机密码和刚才收到的服务器密钥做非对称加密 &gt;&gt; 得到密文的密码</p>
-<p>——–以上第一次http请求结束了——–</p>
-<p>5.客户端会发起HTTPS中的第二个HTTP请求,发送客户端密钥(密文)给服务器。</p>
-<p>6.服务器收到密文，会用自己的私钥对其进行非对称解密,得到客户端刚才生成的客户端随机密码.</p>
-<p>此时服务器使用客户端随机密码,对数据进行对称加密</p>
-<p>7.把对称加密后的数据返回给客户端,客户端对称解密,OK    此次Https完美结束</p>
-<p>——–整个https请求结束了——–</p>
-<p>其中 , <code>对称加密</code>和<code>非对称加密</code>,  各司其职,共同完成整个请求.</p>
-<p>  对称加密: 最快速,最简单</p>
-<p>  非对称加密:速度慢,很安全,不需要把秘钥分发,客户端利用公钥加密的数据,只能是拥有秘钥的服务器解密</p>
-<p>利用非对称加密的特性传递  客户端生成的随机密钥 ,达到只有服务器和客户端互相知道的密钥,从而使用密钥进行(高速简单的)对称加密数据.</p>
-<p><strong>第一部分:信任所有</strong></p>
-<p>这就是,我不管是谁传递的消息,不是你家服务器传递的消息,你也会信</p>
-<p><strong>Api.java</strong> (提供okhttp实例,并创建Retroit服务)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">OkHttpClient okHttpClient = new OkHttpClient.Builder()</span><br><span class="line">               .hostnameVerifier(new HostnameVerifier() &#123;</span><br><span class="line">                   @Override</span><br><span class="line">                   public boolean verify(String hostname, SSLSession session) &#123;</span><br><span class="line">                       return true;</span><br><span class="line">                   &#125;</span><br><span class="line">               &#125;)</span><br><span class="line">               .sslSocketFactory(createSSLSocketFactory())</span><br><span class="line">               .build();</span><br><span class="line">               </span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">//这里是创建一个SSLSocketFactory,提供给上面的 .sslSocketFactory()</span><br><span class="line">private  SSLSocketFactory createSSLSocketFactory() &#123;</span><br><span class="line">       SSLSocketFactory ssfFactory = null;</span><br><span class="line">       try &#123;</span><br><span class="line">           SSLContext sc = SSLContext.getInstance(&quot;TLS&quot;);</span><br><span class="line">           sc.init(null, new TrustManager[]&#123;new TrustAllCerts()&#125;, new SecureRandom());</span><br><span class="line">           ssfFactory = sc.getSocketFactory();</span><br><span class="line">       &#125; catch (Exception e) &#123;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       return ssfFactory;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-<p>其中涉及到<strong>TrustAllCerts.java</strong>,可以看到只是实现X509TrustManager,所有方法都是默认实现</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * If you have any questions, you can contact by email &#123; wangzhumoo@gmail.com&#125;</span><br><span class="line"> * @author 王诛魔 2018/1/8 下午2:25</span><br><span class="line"> */</span><br><span class="line">public class TrustAllCerts implements X509TrustManager &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException &#123;&#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException &#123;&#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public X509Certificate[] getAcceptedIssuers() &#123;</span><br><span class="line">        return new X509Certificate[0];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里就以及可以了,信任所有的连接</p>
-<hr>
-<p><strong>第二部分:(强验证)</strong></p>
-<p>我只信任证书合法的服务器传递的数据.</p>
-<ul>
-<li>查看Https的证书</li>
-</ul>
-<p><img src="images/https_zhengshu.png" alt="https证书"></p>
-<p>在浏览器上看到这个,这个已经是我把证书添加为信任了,所以他是一个 <code>安全</code> 的标志</p>
-<ul>
-<li>分析</li>
-</ul>
-<p><img src="images/https_root.png" alt="https证书"></p>
-<p>这里是我查看当前网站证书的结构</p>
-<p>最顶—是根证书,到期时间是2028年</p>
-<p>最底—是我司证书,到期时间是2018.12.9日</p>
-<p>这里我们可以发现,我们网站的证书是有时间限制的,那么就会有一个问题,到了2018.12.9这一天怎么办.</p>
-<blockquote>
-<p>我也不知道会怎么样,应该是续签吧!那么万一这个证书变化了怎么办?</p>
-</blockquote>
-<p>所以,我们应该把根证书置为信任.</p>
-<ul>
-<li>下载保存</li>
-</ul>
-<p><img src="images/https_save.png" alt="https证书"></p>
-<p>Mac的在  钥匙串访问  中</p>
-<p>Windows 没法放图,在chrome上查看证书的时候应该就能保存.</p>
-<p><strong>HttpsUtils.java </strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * If you have any questions, you can contact by email &#123; wangzhumoo@gmail.com&#125;</span><br><span class="line"> * @author 王诛魔 2018/1/10 下午5:07</span><br><span class="line"> * 支持https的工具类</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">public class HttpsUtils &#123;</span><br><span class="line">    private static final String TAG = &quot;OkHttp&quot;;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 创建一个空白的KeyStore</span><br><span class="line">     * @return KeyStore</span><br><span class="line">     * @throws GeneralSecurityException</span><br><span class="line">     */</span><br><span class="line">    private static KeyStore createEmptyKeyStore() throws GeneralSecurityException &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());</span><br><span class="line">            //此处密码随意,不会产生问题</span><br><span class="line">            keystore.load(null, &quot;password&quot;.toCharArray());</span><br><span class="line">            return keystore;</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * TrustManager  生成</span><br><span class="line">     * @return</span><br><span class="line">     * @throws GeneralSecurityException</span><br><span class="line">     */</span><br><span class="line">    private static TrustManager[] generateTrustManager() throws GeneralSecurityException &#123;</span><br><span class="line"></span><br><span class="line">        //创建一个X.509格式的CertificateFactory</span><br><span class="line">        CertificateFactory certificateFactory = CertificateFactory.getInstance(&quot;X.509&quot;);</span><br><span class="line"></span><br><span class="line">        Certificate ca;</span><br><span class="line">        //证书工厂根据证书文件的流生成证书Certificate</span><br><span class="line">        InputStream assets = App.getContext().getResources().openRawResource(R.raw.rootca);</span><br><span class="line">        ca = certificateFactory.generateCertificate(assets);</span><br><span class="line">        Log.e(TAG, &quot;trustManager: ca = &quot; + ((X509Certificate) ca).getSubjectDN() );</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        //创建KeyStore，用来存储信任证书</span><br><span class="line">        KeyStore keyStor = createEmptyKeyStore();</span><br><span class="line">        keyStor.setCertificateEntry(&quot;ca&quot;,ca);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        //创建一个默认类型的TrustManagerFactory</span><br><span class="line">        String defaultAlgorithm = TrustManagerFactory.getDefaultAlgorithm();</span><br><span class="line">        TrustManagerFactory tmf = TrustManagerFactory.getInstance(defaultAlgorithm);</span><br><span class="line"></span><br><span class="line">        //用keyStore实例初始化TrustManagerFactory,此时TrustManagerFactory会信任我们保存的证书</span><br><span class="line">        tmf.init(keyStor);</span><br><span class="line"></span><br><span class="line">        //通过tmf获取TrustManager数组，TrustManager也会信任keyStor中的证书</span><br><span class="line"></span><br><span class="line">        return tmf.getTrustManagers();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 提供一个一个SSLSocketFactory</span><br><span class="line">     * @return SSLSocketFactory实例</span><br><span class="line">     */</span><br><span class="line">    public static SSLSocketFactory generateSSLSocketFactory()  &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            SSLContext sc = SSLContext.getInstance(&quot;TLS&quot;);</span><br><span class="line">            sc.init(null, generateTrustManager(), new SecureRandom());</span><br><span class="line">            Log.e(TAG, &quot;generateSSLSocketFactory &quot;);</span><br><span class="line">            return sc.getSocketFactory();</span><br><span class="line">        &#125; catch (GeneralSecurityException e) &#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注释很清楚了.</p>
-<p><strong>关键:</strong></p>
-<p>1.拿到帧数的流</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">InputStream assets = App.getContext().getResources().openRawResource(R.raw.rootca);</span><br></pre></td></tr></table></figure>
-<p>2.保存到keystore</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">KeyStore keyStor = createEmptyKeyStore();</span><br><span class="line">keyStor.setCertificateEntry(&quot;ca&quot;,ca);</span><br></pre></td></tr></table></figure>
-<p>3.初始化并拿到TrustManager[]</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tmf.init(keyStor);</span><br><span class="line">tmf.getTrustManagers()</span><br></pre></td></tr></table></figure>
-<p><strong>使用即可:</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//这样就Ok</span><br><span class="line">OkHttpClient okHttpClient = new OkHttpClient.Builder()</span><br><span class="line">                .hostnameVerifier((hostname, session) -&gt; true)</span><br><span class="line">                .sslSocketFactory(HttpsUtils.generateSSLSocketFactory())</span><br><span class="line">                .build();</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>超好的两篇</p>
-<p><a href="http://blog.csdn.net/lmj623565791/article/details/48129405" target="_blank" rel="noopener">http://blog.csdn.net/lmj623565791/article/details/48129405</a></p>
-<p><a href="http://blog.csdn.net/iispring/article/details/51615631" target="_blank" rel="noopener">http://blog.csdn.net/iispring/article/details/51615631</a></p>
-</blockquote>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/Bug/WebView播放H5视屏没有画面-只有声音/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wangzhumo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/headimage.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="王诛魔">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Bug/WebView播放H5视屏没有画面-只有声音/" itemprop="url">
-                  WebView播放H5视屏没有画面,只有声音
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-01-04 11:03:45" itemprop="dateCreated datePublished" datetime="2018-01-04T11:03:45+08:00">2018-01-04</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-03-01 00:28:33" itemprop="dateModified" datetime="2018-03-01T00:28:33+08:00">2018-03-01</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Bug/" itemprop="url" rel="index"><span itemprop="name">Bug</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>描述:点击播放按钮后,只能听到声音,而画面是白的….一直白…想到应该是硬件加速的问题</strong></p>
-<p><strong>1.确认硬件加速(非此因素)</strong></p>
-<p>在WebViewActivity.java中发现</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);</span><br></pre></td></tr></table></figure>
-<p><strong>2.确认AndroidManifest.xml(非此因素)</strong></p>
-<p>application节点下并没有发现</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:hardwareAccelerated=&quot;true&quot;</span><br></pre></td></tr></table></figure>
-<p>在WebViewActivity中,也无该配置</p>
-<ul>
-<li>尝试: WebViewActivity.java中,注释</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);</span><br></pre></td></tr></table></figure>
-<p>在AndroidManifest.xml节点下加入<code>android:hardwareAccelerated=&quot;true&quot;</code></p>
-<ul>
-<li>结果……没用</li>
-</ul>
-<p><strong>3.检查activity_web_view.xml</strong></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">WebView</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/webView"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:scrollbars</span>=<span class="string">"none"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:visibility</span>=<span class="string">"@&#123;showError?View.GONE:View.VISIBLE&#125;"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-<p>没问题.</p>
-<p>BUT….</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">LinearLayout</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layerType</span>=<span class="string">"software"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">include</span> <span class="attr">layout</span>=<span class="string">"@layout/layout_toolbar"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">ProgressBar</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/web_load_progress"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">style</span>=<span class="string">"?android:attr/progressBarStyleHorizontal"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"2dp"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:indeterminateOnly</span>=<span class="string">"false"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:max</span>=<span class="string">"100"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:progress</span>=<span class="string">"@&#123;progress&#125;"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:progressDrawable</span>=<span class="string">"@drawable/progress_bar_states"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:visibility</span>=<span class="string">"gone"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">WebView</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/webView"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:scrollbars</span>=<span class="string">"none"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:visibility</span>=<span class="string">"@&#123;showError?View.GONE:View.VISIBLE&#125;"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>####父布局竟然<code>android:layerType=&quot;software&quot;</code></p>
-<ul>
-<li>解决,删掉该属性即可</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2709,7 +2624,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">46</span>
+                    <span class="site-state-item-count">49</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2740,7 +2655,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">9</span>
+                      
+                    
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -2799,7 +2716,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">23</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">26</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

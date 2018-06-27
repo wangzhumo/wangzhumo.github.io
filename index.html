@@ -302,6 +302,627 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/Java/ServiceLoader-与-责任链设计模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wangzhumo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headimage.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王诛魔">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Java/ServiceLoader-与-责任链设计模式/" itemprop="url">
+                  ServiceLoader 与 责任链设计模式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-06-26 18:22:46" itemprop="dateCreated datePublished" datetime="2018-06-26T18:22:46+08:00">2018-06-26</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-06-27 16:36:54" itemprop="dateModified" datetime="2018-06-27T16:36:54+08:00">2018-06-27</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前因"><a href="#前因" class="headerlink" title="前因"></a>前因</h3><p>最近在做人脸识别的一些东西</p>
+<p>主要是使用百度的SDK来完成采集, 识别.</p>
+<p>这个功能是使用百度云的Api来对人脸进行分析,拿到年龄 颜值 等等信息</p>
+<p><strong>第一版设计稿:</strong></p>
+<p><img src="../images/face_value.png" alt="之前的效果"></p>
+<p>那我就直接把请求到的数据展示了一下,然而</p>
+<p><strong>第二版设计稿:</strong></p>
+<p><img src="../images/face_text.png" alt="第二版"></p>
+<p>这一版就是需要把拿到的数值按照区间来展示成文字描述</p>
+<p>那么,应该就是各种switch    if else </p>
+<p>….</p>
+<p>本来也是做Demo,所以我们可以高点其他的东西,于是我就想起了责任链模式,勉强可以做做么</p>
+<h3 id="实现责任链"><a href="#实现责任链" class="headerlink" title="实现责任链"></a>实现责任链</h3><h4 id="定义抽象类"><a href="#定义抽象类" class="headerlink" title="定义抽象类"></a>定义抽象类</h4><p>com.baidu.aip.fl.func.service.HandlerFace.java  接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">HandlerFace</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> HandlerFace nextHandler;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//接收一个实体类</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> ResultBean <span class="title">process</span><span class="params">(ResultBean bean)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回下一个处理类</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> HandlerFace <span class="title">nextHandler</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> nextHandler;</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">//设置下一个处理类</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setHandler</span><span class="params">(HandlerFace handler)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.nextHandler = handler;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h4><p><code>com.baidu.aip.fl.func.service.AgeHandlerFace.java</code>  实现类,处理年龄信息</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AgeHandlerFace</span> <span class="keyword">extends</span> <span class="title">HandlerFace</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ResultBean <span class="title">process</span><span class="params">(ResultBean bean)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//1.处理自己的事情</span></span><br><span class="line">        <span class="keyword">if</span> (bean != <span class="keyword">null</span> &amp;&amp; bean.getIntAge() == <span class="number">0</span> )&#123;</span><br><span class="line">            bean.setResultAge(<span class="string">"-"</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (bean != <span class="keyword">null</span> &amp;&amp; bean.getIntAge() &lt;= <span class="number">5</span>)&#123;</span><br><span class="line">            bean.setResultAge(<span class="string">"小朋友"</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (bean != <span class="keyword">null</span> &amp;&amp; bean.getIntAge() &lt;= <span class="number">10</span>)&#123;</span><br><span class="line">            bean.setResultAge(<span class="string">"中等朋友"</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (bean != <span class="keyword">null</span> &amp;&amp; bean.getIntAge() &lt;= <span class="number">15</span>)&#123;</span><br><span class="line">            bean.setResultAge(<span class="string">"大朋友"</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (bean != <span class="keyword">null</span> &amp;&amp; bean.getIntAge() &lt;= <span class="number">20</span>)&#123;</span><br><span class="line">            bean.setResultAge(<span class="string">"成年人"</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (bean != <span class="keyword">null</span> &amp;&amp; bean.getIntAge() &lt;= <span class="number">40</span>)&#123;</span><br><span class="line">            bean.setResultAge(<span class="string">"中年人"</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (bean != <span class="keyword">null</span> &amp;&amp; bean.getIntAge() &lt;= <span class="number">60</span>)&#123;</span><br><span class="line">            bean.setResultAge(<span class="string">"老年人"</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (bean != <span class="keyword">null</span> &amp;&amp; bean.getIntAge() &lt;= <span class="number">100</span>)&#123;</span><br><span class="line">            bean.setResultAge(<span class="string">"年纪好大"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//2.是否有下一个人来处理</span></span><br><span class="line">        <span class="keyword">if</span> (nextHandler() != <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="comment">//2.1.如果有下一个处理类,则把信息交给他继续处理</span></span><br><span class="line">            <span class="keyword">return</span> nextHandler().process(bean);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//3.没有下一个处理直接返回</span></span><br><span class="line">        <span class="keyword">return</span> bean;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>AgeHandlerFace类只处理年纪相关的东西</p>
+<p><code>com.baidu.aip.fl.func.service.BeautyHandlerFace.java</code></p>
+<p><code>com.baidu.aip.fl.func.service.GenderHandlerFace.java</code></p>
+<p>同样实现HandlerFace,分别处理颜值和性别</p>
+<h3 id="ServiceLoader"><a href="#ServiceLoader" class="headerlink" title="ServiceLoader"></a>ServiceLoader</h3><p>上面的责任链其实已经可以使用,但是需要手动来初始化每个具体实现类,</p>
+<p>并且一个一个设置 nextHandler ,最后调用处理</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RealProcessFace</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//保存HandlerFace的每一个实现类</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ArrayList&lt;HandlerFace&gt; arraylist;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        arraylist = <span class="keyword">new</span> ArrayList();</span><br><span class="line">        <span class="comment">//通过ServiceLoader来加载所有HandlerFace的实现类</span></span><br><span class="line">        ServiceLoader&lt;HandlerFace&gt; processors = ServiceLoader.load(HandlerFace.class);</span><br><span class="line">        Iterator iterator = processors.iterator();</span><br><span class="line">        <span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">        	<span class="comment">//iterator.next() 这里具体实现类才真正的初始化了</span></span><br><span class="line">            arraylist.add((HandlerFace) iterator.next());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取组合短语</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> task 人脸信息</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 组合短语</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">process</span><span class="params">(ResultBean task)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arraylist.size() - <span class="number">1</span> ; i++) &#123;</span><br><span class="line">            <span class="comment">//依次设置setHandler </span></span><br><span class="line">            <span class="comment">//因为我并不需要他们依次处理,所以我并不关系他们处理的顺序</span></span><br><span class="line">            <span class="comment">//如果是需要顺序执行的话,建议还是手动处理</span></span><br><span class="line">            arraylist.get(i).setHandler(arraylist.get(i+<span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//调用第一个处理类,就会依次调用后面的处理类</span></span><br><span class="line">        ResultBean resultBean = arraylist.get(<span class="number">0</span>).process(task);</span><br><span class="line">        <span class="comment">//返回处理结果</span></span><br><span class="line">        <span class="keyword">return</span> resultBean.format();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h4><p><img src="../images/service_info.png" alt="info"></p>
+<p>1.创建一个base类,就是我上面写过的,可以是接口和抽象类</p>
+<p><code>com.baidu.aip.fl.func.service.HandlerFace</code></p>
+<p>2.一个或多个实现类</p>
+<p><code>com.baidu.aip.fl.func.service.AgeHandlerFace.java</code></p>
+<p><code>com.baidu.aip.fl.func.service.BeautyHandlerFace.java</code></p>
+<p><code>com.baidu.aip.fl.func.service.GenderHandlerFace.java</code></p>
+<p>这里一共是3个</p>
+<p>3.定义resources/META-INF/ …. 文件</p>
+<ul>
+<li><p>该文件无拓展名</p>
+</li>
+<li><p>文件名就是 base类 或者接口 的全路径( 包名 + Filename )</p>
+</li>
+<li><p>文件中每一行写一个实现类的全路径名( 包名 + Filename )</p>
+<p>src/main/resources/META-INF/services/com.baidu.aip.fl.func.service.HandlerFace</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">com.baidu.aip.fl.func.service.GenderHandlerFace</span><br><span class="line">com.baidu.aip.fl.func.service.AgeHandlerFace</span><br><span class="line">com.baidu.aip.fl.func.service.BeautyHandlerFace</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>4.获取所有实现类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ServiceLoader&lt;HandlerFace&gt; processors = ServiceLoader.load(HandlerFace.class);</span><br><span class="line"><span class="comment">//注意此时实现类都没有实例化</span></span><br><span class="line">Iterator iterator = processors.iterator();</span><br><span class="line"><span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">    <span class="comment">//iterator.next() 这里具体实现类才真正的初始化了</span></span><br><span class="line">    arraylist.add((HandlerFace) iterator.next());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样的懒加载过程是由ServiceLoader实现的</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><h4 id="责任链"><a href="#责任链" class="headerlink" title="责任链"></a>责任链</h4><p>这样的形式,为后期的扩展提供了很大的便利</p>
+<p>AgeHandlerFace 中,我可以分更细的粒度,也可以合并.</p>
+<p>eg:  50 以下都是年轻人</p>
+<p>​       100 - 50 是老年人</p>
+<p>责任链虽然Android端最显著的算是 <strong>事件分发机制</strong>  ,很多框架中也都有使用,filter这样的东西</p>
+<h4 id="ServiceLoader-1"><a href="#ServiceLoader-1" class="headerlink" title="ServiceLoader"></a>ServiceLoader</h4><p>这个东西,很强大</p>
+<p>在插件化,以及 服务提供等方面都有应用</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/Video/Android自己封装一个VideoPlayer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wangzhumo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headimage.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王诛魔">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Video/Android自己封装一个VideoPlayer/" itemprop="url">
+                  Android自己封装一个VideoPlayer
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-05-23 16:00:32 / 修改时间：23:34:52" itemprop="dateCreated datePublished" datetime="2018-05-23T16:00:32+08:00">2018-05-23</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Video/" itemprop="url" rel="index"><span itemprop="name">Video</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h4><p>定义:</p>
+<ol>
+<li>播放器 - TextureView .. </li>
+<li>播放控制器 - MeadiaPlayer   Ijk</li>
+<li>控制器 - 即控制播放的UI部分,快进等等</li>
+</ol>
+<p>需求:</p>
+<ul>
+<li>播放器 , 播放控制器  , 控制器UI 分离,方便随时替换</li>
+<li>对MeadiaPlayer 管理,达到无缝切换播放器</li>
+</ul>
+<p>参考:</p>
+<p>JiaoZiVideoPlayer</p>
+<p>GSYVideoPlayer</p>
+<p>进一步分析:</p>
+<p>现在需要实现:</p>
+<ul>
+<li>无任何控制器的播放,但是保证其在RecyclerView中的播放<ul>
+<li>只可以点击播放</li>
+<li>滑动到第一个自动播放视频</li>
+</ul>
+</li>
+<li>详情页播放器<ul>
+<li>时长</li>
+<li>播放进度</li>
+<li>全屏播放</li>
+</ul>
+</li>
+</ul>
+<h4 id="结构分析"><a href="#结构分析" class="headerlink" title="结构分析"></a>结构分析</h4><ul>
+<li>由于一般通过播放器来控制整个播放过程,所以都应该集中到播放器中去</li>
+</ul>
+<h5 id="播放控制器"><a href="#播放控制器" class="headerlink" title="播放控制器"></a>播放控制器</h5><ol>
+<li>定义一个播放控制器的抽象类,该类应该包含一个播放控制器应该有的功能</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/uncategorized/Android自定义一个遮罩引导层/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wangzhumo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headimage.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王诛魔">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/uncategorized/Android自定义一个遮罩引导层/" itemprop="url">
+                  Android自定义一个遮罩引导层
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-05-21 16:53:08" itemprop="dateCreated datePublished" datetime="2018-05-21T16:53:08+08:00">2018-05-21</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-05-23 15:59:43" itemprop="dateModified" datetime="2018-05-23T15:59:43+08:00">2018-05-23</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="分析需求"><a href="#分析需求" class="headerlink" title="分析需求"></a>分析需求</h4><p>高亮显示指定的控件(1个或者多个)</p>
+<ul>
+<li>只有一个高亮控件,则直接绘制即可</li>
+<li>多个高亮控件,则分两种效果展示<ul>
+<li>顺序展示每一个控件</li>
+<li>展示所有控件</li>
+</ul>
+</li>
+<li>高亮部分的形状<ul>
+<li>方形</li>
+<li>圆形</li>
+</ul>
+</li>
+</ul>
+<p>展示与消失</p>
+<ul>
+<li>自动展示,自动消失</li>
+<li>点击消失</li>
+<li>点击指定部分消失</li>
+</ul>
+<h4 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h4><h5 id="遮罩层"><a href="#遮罩层" class="headerlink" title="遮罩层"></a>遮罩层</h5><ol>
+<li>直接在本来的页面是添加,不用时消失</li>
+<li>使用DecorView的方式,添加view即可</li>
+<li>使用透明Activity覆盖</li>
+</ol>
+<p>选择第二种方式来实现</p>
+<p>第一种方便但是耗时耗力,并且不能通用</p>
+<p>第二种是大家都认可的一种方式,而且支持配置</p>
+<p>第三种,对原界面生命周期造成影响,不太好</p>
+<h5 id="高亮的实现"><a href="#高亮的实现" class="headerlink" title="高亮的实现"></a>高亮的实现</h5><p><strong>PorterDuffXfermode</strong>      :: PorterDuff.Mode.XOR)</p>
+<h4 id="代码设计"><a href="#代码设计" class="headerlink" title="代码设计"></a>代码设计</h4><ul>
+<li>mask layer View   用来实现遮罩层<ul>
+<li>高亮显示绘制</li>
+<li>指示语位置</li>
+</ul>
+</li>
+<li>mask layer Manager  用来管理  遮罩层 <ul>
+<li>addView</li>
+<li>Show / hide </li>
+<li>DecorView 操作</li>
+<li>其他配置信息</li>
+</ul>
+</li>
+<li>mask bean  用来存放需要高亮的View信息(高度,宽度..)</li>
+</ul>
+<h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><p>mask:</p>
+<p>MaskGuideView   遮罩层容器</p>
+<p>MaskLayout   高亮控件与指示语的位置,以及排列展示</p>
+<p>MaskManager      加载管理整个遮罩层</p>
+<p>MaskType      高亮控件的形状, 圆 方</p>
+<p>TargetInfo      高亮控件的位置信息</p>
+<p>TargetInfo.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * If you have any questions, you can contact by email &#123; wangzhumoo@gmail.com&#125;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> 王诛魔 2018/5/21 下午7:20</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 高亮区域信息</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TargetInfo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * 高亮区域起始X坐标</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> startX;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * 高亮区域起始Y坐标</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> startY;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * 高亮区域宽度</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> width;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * 高亮区域高度</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> height;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * 偏移量</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> offset = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取半径</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getRadius</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Math.max(width, height) / <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>MaskType.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * If you have any questions, you can contact by email &#123; wangzhumoo@gmail.com&#125;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> 王诛魔 2018/5/21 下午7:18</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> MaskType &#123;</span><br><span class="line">    Rect,Circle</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * If you have any questions, you can contact by email &#123; wangzhumoo@gmail.com&#125;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> 王诛魔 2018/5/21 下午11:35</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 负责管理,准备,操作MaskGuideView</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MaskManager</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//属性</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"MaskManager"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ViewGroup mRootView;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> MaskGuideView mMaskGuideView;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Context mContext;</span><br><span class="line">    <span class="keyword">private</span> List&lt;TargetInfo&gt; mTargetInfoList;</span><br><span class="line">    <span class="keyword">private</span> List&lt;View&gt; mTargetViewList;</span><br><span class="line">    <span class="keyword">private</span> List&lt;MaskLayout&gt; mMaskLayoutList;</span><br><span class="line">    <span class="keyword">private</span> MaskType mMaskType;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> isShowAll;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> mPadding;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 计算targetInfo</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> targetView view</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> TargetInfo</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> TargetInfo <span class="title">generateTargetInfo</span><span class="params">(View targetView)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] location = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>];</span><br><span class="line">        <span class="comment">//我们需要的是,这个targetView在整个屏幕上的位置</span></span><br><span class="line">        targetView.getLocationOnScreen(location);</span><br><span class="line">        TargetInfo targetInfo = <span class="keyword">new</span> TargetInfo();</span><br><span class="line">        <span class="comment">//计算startX width ...</span></span><br><span class="line">        <span class="keyword">switch</span> (mMaskType) &#123;</span><br><span class="line">            <span class="keyword">case</span> Rect:</span><br><span class="line">                targetInfo.startX = location[<span class="number">0</span>] - mPadding;</span><br><span class="line">                targetInfo.startY = location[<span class="number">1</span>] - mPadding;</span><br><span class="line">                targetInfo.width = targetView.getWidth() + <span class="number">2</span> * mPadding;</span><br><span class="line">                targetInfo.height = targetView.getHeight() + <span class="number">2</span> * mPadding;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> Circle:</span><br><span class="line">                <span class="keyword">int</span> diameter = Math.max(targetView.getWidth() + <span class="number">2</span> * mPadding, targetView.getHeight() + <span class="number">2</span> * mPadding);</span><br><span class="line">                targetInfo.startX = location[<span class="number">0</span>] - mPadding;</span><br><span class="line">                targetInfo.startY = location[<span class="number">1</span>] - mPadding - (diameter / <span class="number">2</span> - targetView.getHeight() / <span class="number">2</span> - mPadding);</span><br><span class="line">                targetInfo.width = diameter;</span><br><span class="line">                targetInfo.height = diameter;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        Log.e(TAG, <span class="string">"generateTargetInfo: "</span> + targetInfo.toString() );</span><br><span class="line">        <span class="keyword">return</span> targetInfo;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * builder模式</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Builder</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> ViewGroup mRootView;</span><br><span class="line">        <span class="keyword">private</span> MaskGuideView mMaskGuideView;</span><br><span class="line">        <span class="keyword">private</span> Context mContext;</span><br><span class="line">        <span class="keyword">private</span> List&lt;TargetInfo&gt; mTargetInfoList;</span><br><span class="line">        <span class="keyword">private</span> List&lt;MaskLayout&gt; mMaskLayoutList;</span><br><span class="line">        <span class="keyword">private</span> List&lt;View&gt; mTargetViewList;</span><br><span class="line">        <span class="keyword">private</span> MaskType mMaskType = MaskType.Circle;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> mPadding = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> mGravity = Gravity.TOP;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">boolean</span> isShowAll;</span><br><span class="line">        </span><br><span class="line">        ...省略</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">public</span> MaskManager <span class="title">build</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.mMaskGuideView.setOnClickListener(<span class="keyword">this</span>.mMaskGuideView);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> MaskManager(<span class="keyword">this</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>额,代码传git好了</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/Source-Code/Android-Binder机制-一/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -348,12 +969,24 @@
                 
               
 
-              <time title="创建时间：2018-05-11 13:56:25 / 修改时间：17:35:31" itemprop="dateCreated datePublished" datetime="2018-05-11T13:56:25+08:00">2018-05-11</time>
+              <time title="创建时间：2018-05-11 13:56:25" itemprop="dateCreated datePublished" datetime="2018-05-11T13:56:25+08:00">2018-05-11</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-05-14 19:08:24" itemprop="dateModified" datetime="2018-05-14T19:08:24+08:00">2018-05-14</time>
               
             
           </span>
@@ -413,6 +1046,7 @@
 <li>查询服务：根据服务名查询相应的的信息</li>
 </ul>
 <p>ServiceManager是有权限控制的，只有具有相应权限的进程才能注册,查询服务</p>
+<p><a href="http://gityuan.com/2015/11/08/binder-get-sm/" target="_blank" rel="noopener">http://gityuan.com/2015/11/08/binder-get-sm/</a></p>
 <h3 id="Linux内存"><a href="#Linux内存" class="headerlink" title="Linux内存"></a>Linux内存</h3><h4 id="内核空间"><a href="#内核空间" class="headerlink" title="内核空间"></a>内核空间</h4><p>为什么进程间不可以直接通讯那?</p>
 <p>因为每个进程的内存空间都是隔离起来的,不可能随意去访问其他进程的内存.</p>
 <p>在32位系统中,寻址空间最大为4G,那么这4G内存,一般将1G分配给内核空间,3G用户空间,Linux内核由系统内的所有进程共享.</p>
@@ -424,7 +1058,20 @@
 <h4 id="BINDER-MMAP"><a href="#BINDER-MMAP" class="headerlink" title="BINDER_MMAP"></a>BINDER_MMAP</h4><p>mmap可以将一个文件或者其它对象映射进内存</p>
 <p>在Binder中,通过在用户空间(当前进程的用户空间)创建一个虚拟地址空间,并在内核空间创建相同大小的虚拟地址空间.</p>
 <p>接着申请一块物理内存,将物理内存映射到内核虚拟地址空间和用户虚拟内存空间,这样就实现了用户控件和内核空间的同步.</p>
+<p><img src="/images/binder_physical_memory.jpg" alt="来自Gityuan大佬"></p>
+<h4 id="大概流程"><a href="#大概流程" class="headerlink" title="大概流程"></a>大概流程</h4><ol>
+<li>copy_from_user 首先是要发出消息的,那么先从用户控件from 拷贝数据</li>
+<li>binder_thread_write 第二步就是把刚才拷贝的数据写入到内核空间</li>
+<li>binder_thread_read 第三步再次读取刚才从用户控件from读取并写入内核空间的数据</li>
+<li>copy_to_user 最后当然是从内核空间拷贝数据到用户空间to(即目标)</li>
+</ol>
+<p>PS:以上均建立在每一次操作都成功的基础上</p>
 <p>来自Gityuan大神的分享<a href="http://gityuan.com/2015/11/01/binder-driver/" target="_blank" rel="noopener">http://gityuan.com/2015/11/01/binder-driver/</a></p>
+<p><img src="/images/binder_memory_map.jpg" alt="binder_memory"></p>
+<p>解释说明:</p>
+<p>首先Client端发送消息,通过copy_from_user从Client端<strong>拷贝数据</strong>到内核空间去</p>
+<p>而后还记得<strong>BINDER_MMAP</strong>中的操作么,内核空间的地址与Server是同一块物理内存,</p>
+<p>Server就可以通过这个方式,直接同步到Client发送的数据.</p>
 <blockquote>
 <ul>
 <li>binder_init：初始化字符设备；</li>
@@ -436,7 +1083,6 @@
 </li>
 </ul>
 </blockquote>
-<p><img src="/images/binder_physical_memory.jpg" alt="来自Gityuan大佬"></p>
 
           
         
@@ -553,7 +1199,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-05-11 13:57:49" itemprop="dateModified" datetime="2018-05-11T13:57:49+08:00">2018-05-11</time>
+                <time title="修改时间：2018-05-14 18:26:32" itemprop="dateModified" datetime="2018-05-14T18:26:32+08:00">2018-05-14</time>
               
             
           </span>
@@ -653,7 +1299,8 @@
 </ol>
 <p>并且要根据需要添加 in out 的关键词</p>
 <h4 id="ContentProvider"><a href="#ContentProvider" class="headerlink" title="ContentProvider"></a>ContentProvider</h4><p>主要是针对数据库使用的,最常见的例子就是Android中有很多已经定义好的ContentProvider</p>
-<h4 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h4><p>说道这里,就不得不提一下<strong>Binder</strong>了</p>
+<h4 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h4><p>说到这里,就不得不提一下<strong>Binder</strong>了</p>
+<p><a href="http://www.wangzhumo.com/Source-Code/Android-Binder%E6%9C%BA%E5%88%B6-%E4%B8%80/">http://www.wangzhumo.com/Source-Code/Android-Binder%E6%9C%BA%E5%88%B6-%E4%B8%80/</a></p>
 
           
         
@@ -1677,629 +2324,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/Android/Activity与Fragment的生命周期/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wangzhumo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/headimage.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="王诛魔">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Android/Activity与Fragment的生命周期/" itemprop="url">
-                  Activity与Fragment的生命周期
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-03-05 14:02:42" itemprop="dateCreated datePublished" datetime="2018-03-05T14:02:42+08:00">2018-03-05</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-05-09 18:08:36" itemprop="dateModified" datetime="2018-05-09T18:08:36+08:00">2018-05-09</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>做Android开发好些年了,这些基础的知识,完完整整的在博客上写一次.</p>
-<h4 id="Activity生命周期"><a href="#Activity生命周期" class="headerlink" title="Activity生命周期"></a>Activity生命周期</h4><p>必不可少的一张图,来自Google Android developer 的文档上</p>
-<p><img src="/images/activity_lifecycle.png" alt="activity_liferycle"></p>
-<h5 id="回调方法简述"><a href="#回调方法简述" class="headerlink" title="回调方法简述"></a>回调方法简述</h5><ul>
-<li><p>onCreate()  </p>
-<p>当Activity创建时,会回调该方法,常用于初始化View 或其他的一些功能的初始化</p>
-</li>
-<li><p>onStart()</p>
-<p>Activity已经初始化完毕,此时的页面是可见状态,则回调onStart();方法</p>
-<p>Activity启动：onCreate() -&gt; onStart() -&gt; onResume()</p>
-</li>
-<li><p>onResume()</p>
-<p>当Activity可见,并且获得焦点,可以与用户交互时回调</p>
-<p>在我们处理一些视屏操作,或者是Fragment懒加载等都可以用到</p>
-</li>
-<li><p>onPause()</p>
-<p>当调用onPause()时,说明Activity被阻挡,部分UI已经不可见了,但是Activity的UI并没有完全消失.</p>
-</li>
-<li><p>onStop()</p>
-<p>当Activity完全不可见,且到了后台之后,如果系统内存不足,系统可能会杀死当前Activity</p>
-<p>在这个方法中可以取消一些动画效果等</p>
-</li>
-<li><p>onDestory()</p>
-<p>Activity退出,销毁</p>
-<p>常用于销毁,回收资源</p>
-</li>
-</ul>
-<h5 id="经典场景"><a href="#经典场景" class="headerlink" title="经典场景"></a>经典场景</h5><p>1.正常启动</p>
-<p>系统调用onCreate方法 , 然后调用onStart() , 最后调用 onResume() ,用户可操作.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">E/MainActivity: ---- onCreate ----</span><br><span class="line">E/MainActivity: ---- onStart ----</span><br><span class="line">E/MainActivity: ---- onResume ----</span><br></pre></td></tr></table></figure>
-<p>2.正常退出</p>
-<p>Activity先失去焦点不可交互</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">E/MainActivity: ---- onPause ----</span><br><span class="line">E/MainActivity: ---- onStop ----</span><br><span class="line">E/MainActivity: ---- onDestroy ----</span><br></pre></td></tr></table></figure>
-<p>2.弹出Dialog</p>
-<p>MainActivity什么log也没有打印,说明不对Activity造成影响</p>
-<p>3.跳转一个透明的Activity页面(1像素的同理)</p>
-<p>MainActivity只调用了onPause()  因为MainActivity的UI被遮挡了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">E/MainActivity: ---- onPause ----</span><br></pre></td></tr></table></figure>
-<p>4.从被遮挡状态恢复</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">E/MainActivity: ---- onResume ----</span><br></pre></td></tr></table></figure>
-<p>6.锁屏</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">E/MainActivity: ---- onPause ----</span><br><span class="line">E/MainActivity: ---- onStop ----</span><br></pre></td></tr></table></figure>
-<p>此时,MainActivity已经在后台了.</p>
-<p>7.从锁屏恢复</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">E/MainActivity: ---- onStart ----</span><br><span class="line">E/MainActivity: ---- onResume ----</span><br></pre></td></tr></table></figure>
-<p>可以发现,不仅仅走了onResume() ,还走了一次onStart()</p>
-<p>8.横竖屏切换</p>
-<ul>
-<li><p>正常切换</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">E/MainActivity: ---- onPause ----</span><br><span class="line">E/MainActivity: ---- onStop ----</span><br><span class="line">E/MainActivity: ---- onDestroy ----</span><br><span class="line"></span><br><span class="line">E/MainActivity: ---- onCreate ----</span><br><span class="line">E/MainActivity: ---- onStart ----</span><br><span class="line">E/MainActivity: ---- onResume ----</span><br><span class="line"></span><br><span class="line">如果你什么都不设置,直接切换是这样的.</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>保留Activity的切换</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">我在manifest.xml文件中,添加了</span><br><span class="line"></span><br><span class="line">&lt;activity</span><br><span class="line">	android:name=&quot;.MainActivity&quot;</span><br><span class="line">	android:configChanges=&quot;orientation|screenSize&quot;&gt;</span><br><span class="line">	&lt;intent-filter&gt;</span><br><span class="line">		&lt;action android:name=&quot;android.intent.action.MAIN&quot; /&gt;</span><br><span class="line">	&lt;category android:name=&quot;android.intent.category.LAUNCHER&quot; /&gt;</span><br><span class="line">&lt;/intent-filter&gt;</span><br><span class="line">&lt;/activity&gt;</span><br></pre></td></tr></table></figure>
-<p>此时:</p>
-<p>Activity不会被销毁,从而重新创建,而是调用onConfigurationChanged</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">  public void onConfigurationChanged(Configuration newConfig) &#123;</span><br><span class="line">     super.onConfigurationChanged(newConfig);</span><br><span class="line">     //do somethings</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>​</p>
-</li>
-</ul>
-<h4 id="Fragment生命周期"><a href="#Fragment生命周期" class="headerlink" title="Fragment生命周期"></a>Fragment生命周期</h4><p>惯例,如图:</p>
-<p><img src="/images/fragment_lifercycle.png" alt="fragment_lifecycle"></p>
-<h5 id="回调方法简述-1"><a href="#回调方法简述-1" class="headerlink" title="回调方法简述"></a>回调方法简述</h5><p>其中onAttach()  onCreateView() onActivityCreated()  onDestroy() onDetach() 和Activity的不一致</p>
-<ul>
-<li><p>onAttach()</p>
-<p>Fragment与它所依赖的Activity建立关联</p>
-</li>
-<li><p>onCreateView()</p>
-<p>这里是给Fragment创建视图用的,在onCreate()中初始化Fragment,但是视图等还是没有加载上去的</p>
-</li>
-<li><p>onActivityCreated()</p>
-<p>如果调用该方法,说明Fragment依赖的Activity中onCreate()已经执行完毕</p>
-</li>
-<li><p>onDestroyView()</p>
-<p>Fragment中的布局销毁,移除</p>
-<p>要注意的是,此时Fragment与它所依赖的Activity还是关联的</p>
-</li>
-<li><p>onDestroy()</p>
-<p>此时,Fragment被销毁</p>
-</li>
-<li><p>onDetach()</p>
-<p>解除与Activity的关联</p>
-</li>
-</ul>
-<p>PS: Fragment中的onResume()并不十分准确,所以如果要做懒加载,要判断fragment不能使用onResume判断</p>
-<h5 id="经典场景-1"><a href="#经典场景-1" class="headerlink" title="经典场景"></a>经典场景</h5><p>1.正常启动</p>
-<p>真的是超级多啊</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">E/BlankFragment: ---- onAttach ----   			关联Activity</span><br><span class="line">E/BlankFragment: ---- onCreate ----    			Fragment初始化</span><br><span class="line">E/BlankFragment: ---- onCreateView ----			创建Fragment的布局</span><br><span class="line">E/BlankFragment: ---- onViewCreated ----		onCreateView执行完后被触发</span><br><span class="line">E/BlankFragment: ---- onActivityCreated ----	关联的Activity OnCreate()执行完毕后触发</span><br><span class="line">E/BlankFragment: ---- onStart ----				Fragment可见</span><br><span class="line">E/BlankFragment: ---- onResume ----				Fragment可交互,一般不使用它来判断</span><br></pre></td></tr></table></figure>
-<p>2.正常退出(或者是它关联的Activity被销毁了)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">E/BlankFragment: ---- onPause ----</span><br><span class="line">E/BlankFragment: ---- onStop ----</span><br><span class="line">E/BlankFragment: ---- onDestroyView ----</span><br><span class="line">E/BlankFragment: ---- onDestroy ----</span><br><span class="line">E/BlankFragment: ---- onDetach ----</span><br></pre></td></tr></table></figure>
-<p>3.进入后台</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">E/BlankFragment: ---- onPause ----</span><br><span class="line">E/BlankFragment: ---- onStop ----</span><br></pre></td></tr></table></figure>
-<p>4.从锁屏到解锁</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">E/BlankFragment: ---- onPause ----</span><br><span class="line">E/BlankFragment: ---- onSaveInstanceState ----</span><br><span class="line">E/BlankFragment: ---- onStop ----</span><br><span class="line"></span><br><span class="line">E/BlankFragment: ---- onStart ----</span><br><span class="line">E/BlankFragment: ---- onResume ----</span><br></pre></td></tr></table></figure>
-<p>5.切换到OtherFragment</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">E/BlankFragment: ---- onPause ----</span><br><span class="line">E/BlankFragment: ---- onStop ----</span><br><span class="line">E/BlankFragment: ---- onDestroyView ----</span><br></pre></td></tr></table></figure>
-<p>6.从OtherFragment切换回本Fragment</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">E/BlankFragment: ---- onCreateView ----</span><br><span class="line">E/BlankFragment: ---- onActivityCreated ----</span><br><span class="line">E/BlankFragment: ---- onStart ----   </span><br><span class="line">E/BlankFragment: ---- onResume ----</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/Android-Test/Android-单元测试-二/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wangzhumo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/headimage.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="王诛魔">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Android-Test/Android-单元测试-二/" itemprop="url">
-                  Android 单元测试(二)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-03-01 15:27:56" itemprop="dateCreated datePublished" datetime="2018-03-01T15:27:56+08:00">2018-03-01</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-03-05 14:02:12" itemprop="dateModified" datetime="2018-03-05T14:02:12+08:00">2018-03-05</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android-Test/" itemprop="url" rel="index"><span itemprop="name">Android Test</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>后补.</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/Flutter/Flutter安装指南MAC版/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wangzhumo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/headimage.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="王诛魔">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Flutter/Flutter安装指南MAC版/" itemprop="url">
-                  Flutter安装指南MAC版
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-02-28 23:56:58" itemprop="dateCreated datePublished" datetime="2018-02-28T23:56:58+08:00">2018-02-28</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-03-01 00:44:14" itemprop="dateModified" datetime="2018-03-01T00:44:14+08:00">2018-03-01</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Flutter/" itemprop="url" rel="index"><span itemprop="name">Flutter</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="下载Flutter-SDK"><a href="#下载Flutter-SDK" class="headerlink" title="下载Flutter SDK"></a>下载Flutter SDK</h4><h5 id="使用Git安装"><a href="#使用Git安装" class="headerlink" title="使用Git安装"></a>使用Git安装</h5><p>如果已经下载过flutter的,切换到flutter目录去直接</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">git checkout beta</span><br><span class="line">git pull</span><br><span class="line">//可能会失败,因为这个目录中可能有修改过,要目放弃修改,要么暂存均可</span><br><span class="line"></span><br><span class="line">(如果失败,这里选择了暂存) -- Start</span><br><span class="line">git checkout beta</span><br><span class="line">git stash</span><br><span class="line">git pull</span><br><span class="line">(如果失败,这里选择了暂存)  -- End</span><br></pre></td></tr></table></figure>
-<p>未下载过,第一次安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//克隆flutter的beta分支</span><br><span class="line">git clone -b beta https://github.com/flutter/flutter.git</span><br></pre></td></tr></table></figure>
-<h5 id="配置”环境变量”"><a href="#配置”环境变量”" class="headerlink" title="配置”环境变量”"></a>配置”环境变量”</h5><p>熟悉命令的自己搞一下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//把         安装目录/flutter/bin</span><br><span class="line">export PATH=`pwd`/flutter/bin:$PATH</span><br></pre></td></tr></table></figure>
-<p>不熟悉的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">~ ⌚ 0:01:37</span><br><span class="line">$ vim ~/.bash_profile</span><br><span class="line"></span><br><span class="line">//会进入vim编辑,如下配置即可</span><br><span class="line">export FLUTTER_HOME=/Users/phyooos/develop/flutter</span><br><span class="line"></span><br><span class="line">export PATH=$PATH:$FLUTTER_HOME/bin:</span><br></pre></td></tr></table></figure>
-<p>不会的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">open ~/.bash_profile</span><br><span class="line"></span><br><span class="line">//编辑器,总可以了吧,如下配置即可</span><br><span class="line">export FLUTTER_HOME=/Users/phyooos/develop/flutter</span><br><span class="line"></span><br><span class="line">export PATH=$PATH:$FLUTTER_HOME/bin:</span><br></pre></td></tr></table></figure>
-<p>放一下我自己的配置:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0/Contents/Home</span><br><span class="line">export ANDROID_HOME=/Users/phyooos/Library/Android/sdk</span><br><span class="line">export TOMCAT_HOME=/Users/phyooos/develop/apache-tomcat-7.0.77</span><br><span class="line">export GRADLE_USER_HOME=/Users/phyooos/develop/gradle</span><br><span class="line">export MYSQL_HOME=/usr/local/mysql-5.7.18-macos10.12-x86_64</span><br><span class="line">export GOROOT=/usr/local/go</span><br><span class="line">export GOPATH=/Users/phyooos/develop/workspace</span><br><span class="line">export GOBIN=$GOPATH/bin</span><br><span class="line">export SCALA_HOME=/Users/phyooos/develop/scala-2.11.8</span><br><span class="line">export MAVEN_HOME=/Users/phyooos/develop/apache-maven-3.5.0</span><br><span class="line">export FLUTTER_HOME=/Users/phyooos/develop/flutter</span><br><span class="line">export PATH=/usr/local/Cellar/git/2.15.0/bin:$PATH:$JAVA_HOME/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$TOMCAT_HOME/bin:$GRADLE_HOME/bin:$MYSQL_HOME/bin:$GOROOT/bin:$GOPATH:$GOBIN:$GOPATH/bin:$FLUTTER_HOME/bin:$MAVEN_HOME/bin:$SCALA_HOME/bin</span><br></pre></td></tr></table></figure>
-<h4 id="安装Flutter"><a href="#安装Flutter" class="headerlink" title="安装Flutter"></a>安装Flutter</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flutter doctor</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>这里要注意的是,这个配置需要”良好的网络环境”,最好翻墙下载为妙,但是<strong>终端不走代理</strong></p>
-<p>所以,需要手动给终端配置一下,请看我另一篇文章</p>
-<p><a href="http://www.wangzhumo.com/Flutter/Flutter-%E5%AE%89%E8%A3%85/">Flutter 安装</a></p>
-</blockquote>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2351,7 +2375,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">46</span>
+                    <span class="site-state-item-count">49</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2382,7 +2406,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">9</span>
+                      
+                    
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -2441,7 +2467,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">23</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">26</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

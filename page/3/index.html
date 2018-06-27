@@ -302,6 +302,714 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/Android/Android开发中常用的Adb命令/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wangzhumo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headimage.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王诛魔">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Android/Android开发中常用的Adb命令/" itemprop="url">
+                  Android开发中常用的Adb命令
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-01-11 12:07:40 / 修改时间：13:17:15" itemprop="dateCreated datePublished" datetime="2018-01-11T12:07:40+08:00">2018-01-11</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在做这些之前,先配置好adb环境变量,以我的配置为例</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> vim ~/.bash_profile</span><br><span class="line"></span><br><span class="line">export ANDROID_HOME=/Users/phyooos/Library/Android/sdk</span><br><span class="line">...</span><br><span class="line">export PATH=&#123;省略&#125;:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> source ~/.bas</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> adb</span><br><span class="line">Android Debug Bridge version 1.0.39</span><br><span class="line">Version 0.0.1-4500957</span><br><span class="line">Installed as /Users/phyooos/Library/Android/sdk/platform-tools/adb</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>补充</p>
+<blockquote>
+<p>adb shell pm list packages   当前手机安装的所有app包名<br>adb shell pm list packages | grep ‘google’  在所有包名中查找带’google’的</p>
+</blockquote>
+<h4 id="连接设备"><a href="#连接设备" class="headerlink" title="连接设备"></a>连接设备</h4><p>打开开发者 -&gt; 打开调试 -&gt; 允许调试</p>
+<ul>
+<li><p>通过usb连接</p>
+</li>
+<li><p>通过wifi连接</p>
+<p>保证Android设备与电脑在局域网中,网段好像也要一致 eg:  <code>192.168.2.98 , 192.168.2.111</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">~ ⌚ 9:44:55</span><br><span class="line"><span class="meta">$</span> adb connect 192.168.6.51</span><br><span class="line">unable to connect to 192.168.6.51:5555: Connection refused</span><br></pre></td></tr></table></figure>
+<p>此时是连接不上的,要先tcpip 5555,如下:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>使用Tcp并监听端口5555</span><br><span class="line">adb tcpip 5555</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>连接设备</span><br><span class="line">adb connect 192.168.6.51</span><br></pre></td></tr></table></figure>
+<p>如果你想用usb调试</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>使用usb调试  </span><br><span class="line">adb usb</span><br></pre></td></tr></table></figure>
+<p>PS:有的设备直接adb connect  即可,所以不妨先试试</p>
+<p>​</p>
+</li>
+</ul>
+<h4 id="查看设备"><a href="#查看设备" class="headerlink" title="查看设备"></a>查看设备</h4><ul>
+<li><p>查看所有连接的设备</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb devices</span><br><span class="line">List of devices attached</span><br><span class="line">3080b82d	device</span><br><span class="line">860BCML228J8	device</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>指定设备(adb 命令必须指定一个设备使用)</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">abd -s 编号 命令</span><br><span class="line">比如我要连接3080b82d	device 这个设备,安装一个apk</span><br><span class="line"></span><br><span class="line">eg:</span><br><span class="line"><span class="meta">$</span> adb -s 3080b82d install Test.apk</span><br><span class="line">Success</span><br></pre></td></tr></table></figure>
+<h4 id="安装-卸载apk"><a href="#安装-卸载apk" class="headerlink" title="安装,卸载apk"></a>安装,卸载apk</h4><ul>
+<li>安装<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb -s 3080b82d install Users/phyooos/develop/Test.apk</span><br><span class="line">Success</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>install 跟上apk的path即可</p>
+<p>install 可以搭配几个参数使用,比较常用的是</p>
+<p><code>install -r</code>   替换掉原来的apk.(被称为强制安装)    至于其他的参数去google官网看吧</p>
+<p><code>install -t</code>  可以安装测试包</p>
+<ul>
+<li>卸载</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">adb uninstall [软件包名]</span><br><span class="line"></span><br><span class="line">adb uninstall -k [软件包名]</span><br></pre></td></tr></table></figure>
+<p>-k 参数,卸载软件但是保留配置和缓存文件.</p>
+<p>包名使用文章开始的命令查找即可(当前有两个手机,还要指定设备)<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb -s 3080b82d shell pm list packages | grep 'miui'</span><br><span class="line">package:com.miui.screenrecorder</span><br><span class="line">package:com.miui.contentextension</span><br><span class="line">package:com.miui.powerkeeper</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<h4 id="拉取-推送文件"><a href="#拉取-推送文件" class="headerlink" title="拉取,推送文件"></a>拉取,推送文件</h4><ul>
+<li>发送文件到Android设备</li>
+</ul>
+<p>　　<code>adb push [本地路径] [远程路径]</code></p>
+<ul>
+<li>从Android设备中下载文件</li>
+</ul>
+<p>　　<code>adb pull [远程路径] [本地路径]</code></p>
+<h4 id="截图录屏"><a href="#截图录屏" class="headerlink" title="截图录屏"></a>截图录屏</h4><ul>
+<li><p>截图<code>adb shell screencap [path]</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adb shell screencap /sdcard/screen.png</span><br><span class="line">#截图并保存到/sdcard/screen.png</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>录屏<code>adb shell screenrecord [path]</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adb shell screenrecord /sdcard/demo.mp4</span><br><span class="line">#录屏</span><br></pre></td></tr></table></figure>
+<p>注意:   按Ctrl-C 结束录制</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">adb shell screenrecord --size &lt;WIDTHxHEIGHT&gt;</span><br><span class="line"></span><br><span class="line">adb shell screenrecord --bit-rate &lt;RATE&gt;</span><br><span class="line">adb shell screenrecord --bit-rate 5000000 /sdcard/demo.mp4</span><br><span class="line"></span><br><span class="line">adb shell screenrecord --time-limit &lt;TIME&gt;</span><br><span class="line"></span><br><span class="line">adb shell screenrecord --rotate</span><br><span class="line"></span><br><span class="line">adb shell screenrecord --verbose</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ul>
+<h4 id="Package"><a href="#Package" class="headerlink" title="Package"></a>Package</h4><ul>
+<li><p>查看系统内app信息  <code>adb shell pm list packages</code></p>
+<ul>
+<li><p>查看当前所有包</p>
+<p><code>adb shell pm list packages</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb shell pm list packages</span><br><span class="line">package:com.flyme.roamingpay</span><br><span class="line">package:com.android.cts.priv.ctsshim</span><br><span class="line">package:com.meizu.pps</span><br><span class="line">package:com.meizu.net.pedometer</span><br><span class="line">package:com.android.providers.telephony</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>系统应用</p>
+<p><code>adb shell pm list packages -s</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb shell pm list packages -s</span><br><span class="line">package:com.miui.screenrecorder</span><br><span class="line">package:com.android.cts.priv.ctsshim</span><br><span class="line">package:com.qualcomm.qti.auth.sampleextauthservice</span><br><span class="line">package:com.qualcomm.qti.perfdump</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>普通外来应用</p>
+<p><code>adb shell pm list packages -3</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb shell pm list packages -3</span><br><span class="line">package:com.google.android.youtube</span><br><span class="line">package:com.hpbr.bosszhipin</span><br><span class="line">package:de.blinkt.openvpn</span><br><span class="line">package:org.iggymedia.periodtracker</span><br><span class="line">package:com.daimajia.gold</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>其他参数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>See their associated file.</span><br><span class="line">adb shell pm list packages -f </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>Filter to only show disabled packages.</span><br><span class="line">adb shell pm list packages -d </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>Filter to only show enabled packages.</span><br><span class="line">adb shell pm list packages -e </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>See the installer for the packages.</span><br><span class="line">adb shell pm list packages -i </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>Also include uninstalled packages.</span><br><span class="line">adb shell pm list packages -u</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>通过包名查找app位置 <code>adb shell pm path [packagename]</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ adb shell pm path com.miui.screenrecorder</span><br><span class="line">package:/system/app/MiuiScreenRecorder/MiuiScreenRecorder.apk</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>清除缓存<code>adb shell pm clear  [packageName]</code></p>
+<p>清除了该app的  data  cache</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ adb shell pm clear com.yhcs.carmart</span><br><span class="line">Success</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ul>
+<h4 id="shell"><a href="#shell" class="headerlink" title="shell"></a>shell</h4><p>我们知道android其实精简了linux的命令,有一大部分linux命令没法用的</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb shell</span><br><span class="line"><span class="meta">#</span>即可进入</span><br><span class="line"></span><br><span class="line">如果要root权限,国内手机好像不一致,我是用过的为</span><br><span class="line"><span class="meta">$</span> adb root</span><br><span class="line"><span class="meta">$</span> adb shell</span><br><span class="line"></span><br><span class="line">此时权限就是root</span><br><span class="line"></span><br><span class="line">进入shell后,就可以为所欲为,一般和linux一致</span><br></pre></td></tr></table></figure>
+<p>不过这些,还是管用的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls , cd , rm , mkdir , touch , pwd ,cp , mv ,netstat , ping, ip</span><br></pre></td></tr></table></figure>
+<p>举一个例子,我想查看当前wifi的ip是多少.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb shell</span><br><span class="line">sagit:/ $ ip -f inet addr show wlan0</span><br><span class="line">23: wlan0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP group default qlen 3000</span><br><span class="line">    inet 192.168.6.51/23 brd 192.168.7.255 scope global wlan0</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">sagit:/ $</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>ip  inet 192.168.6.51  这个就是</span><br></pre></td></tr></table></figure>
+<h4 id="Logcat"><a href="#Logcat" class="headerlink" title="Logcat"></a>Logcat</h4><p><code>adb logcat [option] [filter]</code></p>
+<ul>
+<li><p>查看log <code>adb logcat</code></p>
+<p>通过  control + c  退出</p>
+<p>​</p>
+</li>
+<li><p>查看Debug的log <code>adb logcat *:D</code></p>
+</li>
+</ul>
+<p>Logcat,还是Android studio 看起来方便,所以没有继续去看,也就不说了</p>
+<h4 id="dumpsys"><a href="#dumpsys" class="headerlink" title="dumpsys"></a>dumpsys</h4><p>这是一个很强大的命令</p>
+<ul>
+<li><p>电量 <code>adb shell dumpsys battery</code></p>
+<p>​</p>
+</li>
+<li><p>服务列表 <code>adb shell dumpsys</code></p>
+<p>下面的命令  <code>| more</code> 是为了显示所有的数据 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ adb shell dumpsys | more</span><br><span class="line">Currently running services:</span><br><span class="line">  DockObserver</span><br><span class="line">  MiuiBackup</span><br><span class="line">  MiuiInit</span><br><span class="line">  SurfaceFlinger</span><br><span class="line">  accessibility</span><br><span class="line">  account</span><br><span class="line">  activity</span><br><span class="line">  alarm</span><br><span class="line">  ...</span><br></pre></td></tr></table></figure>
+<p>这个Currently running services   所有的项目,都可以详细查询</p>
+</li>
+<li><p>查询单个service  <code>adb shell dumpsys [service name]</code></p>
+<p>搞几个例子看看:</p>
+<ul>
+<li>屏幕分辨率<code>adb shell dumpsys window displays</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ adb shell dumpsys window displays</span><br><span class="line"></span><br><span class="line">WINDOW MANAGER DISPLAY CONTENTS (dumpsys window displays)</span><br><span class="line">  Display: mDisplayId=0</span><br><span class="line">    init=1080x1920 480dpi cur=1080x1920 app=1080x1920 rng=1080x1020-1920x1860</span><br><span class="line">    deferred=false mLayoutNeeded=false</span><br></pre></td></tr></table></figure>
+<p>其中:</p>
+<p>init=1080x1920  分辨率</p>
+<p>480dpi   dpi值</p>
+<p>​</p>
+<ul>
+<li><p>activity信息<code>adb shell dumpsys activity</code></p>
+<p>比如我想看看我activity的信息<code>adb shell dumpsys activity | grep &#39;com.yhcs.carmart&#39;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ adb shell dumpsys activity | grep &quot;com.yhcs.carmart&quot;</span><br><span class="line">  * com.yhcs.carmart: 2 items</span><br><span class="line">    #0: PendingIntentRecord&#123;c526be3 com.yhcs.carmart startService&#125;</span><br><span class="line">    #1: PendingIntentRecord&#123;8949e0 com.yhcs.carmart broadcastIntent&#125;</span><br><span class="line">      -&gt; 8161:com.yhcs.carmart/u0a460 s1/1 u0/0 +44s372ms</span><br><span class="line">      -&gt; 8556:com.yhcs.carmart:channel/u0a460 s1/1 u0/0 +33s684ms</span><br><span class="line">      </span><br><span class="line">      ...</span><br><span class="line">      </span><br><span class="line">  * Recent #0: TaskRecord&#123;6019b81 #14799 A=com.yhcs.carmart U=0 StackId=1 sz=1&#125;</span><br><span class="line">   packageName=com.yhcs.carmart processName=com.yhcs.carmart</span><br><span class="line">   launchedFromUid=10460 launchedFromPackage=com.yhcs.carmart userId=0</span><br><span class="line">   app=ProcessRecord&#123;3c52934 8161:com.yhcs.carmart/u0a460&#125;</span><br><span class="line">   Intent &#123; cmp=com.yhcs.carmart/.ui.main.MainActivity &#125;</span><br><span class="line">   frontOfTask=true task=TaskRecord&#123;6019b81 #14799 A=com.yhcs.carmart U=0 StackId=1 sz=1&#125;</span><br><span class="line">   taskAffinity=com.yhcs.carmart</span><br><span class="line">   realActivity=com.yhcs.carmart/.ui.main.MainActivity</span><br></pre></td></tr></table></figure>
+<p>现在指定查看这个activity</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ adb shell dumpsys activity com.yhcs.carmart/.ui.main.MainActivity</span><br><span class="line">TASK com.yhcs.carmart id=14799 userId=0</span><br><span class="line">  ACTIVITY com.yhcs.carmart/.ui.main.MainActivity a99200b pid=8161</span><br><span class="line">    Local Activity 90efa41 State:</span><br><span class="line">      mResumed=false mStopped=true mFinished=false</span><br><span class="line">      mChangingConfigurations=false</span><br><span class="line">      mCurrentConfig=&#123;1.0 460mcc11mnc [zh_CN] ldltr sw360dp w360dp h620dp 480dpi nrml long port finger -keyb/v/h -nav/h appBounds=Rect(0, 0 - 1080, 1920) s.12 themeChanged=0 themeChangedFlags=0&#125;</span><br><span class="line">      ...</span><br><span class="line">View Hierarchy:</span><br><span class="line">      DecorView@ce71c9e[MainActivity]</span><br><span class="line">        android.widget.LinearLayout&#123;6106377 V.E...... ......ID 0,0-1080,1920&#125;</span><br><span class="line">      ...</span><br><span class="line">Active Fragments </span><br><span class="line">	  ...</span><br></pre></td></tr></table></figure>
+<p>里面有很多信息</p>
+<p>​</p>
+</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/uncategorized/OkHttp中添加https支持/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wangzhumo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headimage.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王诛魔">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/uncategorized/OkHttp中添加https支持/" itemprop="url">
+                  OkHttp中添加https支持
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-01-10 16:43:57 / 修改时间：23:29:54" itemprop="dateCreated datePublished" datetime="2018-01-10T16:43:57+08:00">2018-01-10</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>基础知识</strong></p>
+<p>感觉就是一堆有信誉的机构,说: 我们这些机构的公钥是可信的,我们下面的小弟当然也是可以信任的啦</p>
+<p>然后大家就去当人家小弟,就是可信的了….</p>
+<p>当然这里面有的大佬不高兴,就自己搞一套证书,比如12306</p>
+<p>Https中,值得注意的密钥有:</p>
+<ul>
+<li>服务器端的<code>公钥</code>和<code>私钥</code></li>
+</ul>
+<ul>
+<li>客户端的<code>随机密钥</code></li>
+</ul>
+<p>值得注意的是一个HTTPS请求实际上就是两次HTTP传输.</p>
+<p>1.客户端向服务器发起HTTPS请求，连接到服务器的443端口。</p>
+<p>2.服务端收到请求,向客户端发送自己的<code>公钥</code></p>
+<p>3.客户端收到服务器公钥,开始验证证书的合法性,我们知道系统内置了一些证书,应该是叫顶级证书吧</p>
+<p>我们的证书并不是啥大机构发的,肯定不在里面,那么就没法验证合法.</p>
+<p>​     合法 &gt; 继续</p>
+<p>​     不合法 &gt; 此次Https请求终止</p>
+<p>4.客户端验证公钥合格后(也就是给你发消息的服务器是正经服务器)，那么客户端会生成一个 随机密码,客户端会拿着这个随机密码和刚才收到的服务器密钥做非对称加密 &gt;&gt; 得到密文的密码</p>
+<p>——–以上第一次http请求结束了——–</p>
+<p>5.客户端会发起HTTPS中的第二个HTTP请求,发送客户端密钥(密文)给服务器。</p>
+<p>6.服务器收到密文，会用自己的私钥对其进行非对称解密,得到客户端刚才生成的客户端随机密码.</p>
+<p>此时服务器使用客户端随机密码,对数据进行对称加密</p>
+<p>7.把对称加密后的数据返回给客户端,客户端对称解密,OK    此次Https完美结束</p>
+<p>——–整个https请求结束了——–</p>
+<p>其中 , <code>对称加密</code>和<code>非对称加密</code>,  各司其职,共同完成整个请求.</p>
+<p>  对称加密: 最快速,最简单</p>
+<p>  非对称加密:速度慢,很安全,不需要把秘钥分发,客户端利用公钥加密的数据,只能是拥有秘钥的服务器解密</p>
+<p>利用非对称加密的特性传递  客户端生成的随机密钥 ,达到只有服务器和客户端互相知道的密钥,从而使用密钥进行(高速简单的)对称加密数据.</p>
+<p><strong>第一部分:信任所有</strong></p>
+<p>这就是,我不管是谁传递的消息,不是你家服务器传递的消息,你也会信</p>
+<p><strong>Api.java</strong> (提供okhttp实例,并创建Retroit服务)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">OkHttpClient okHttpClient = new OkHttpClient.Builder()</span><br><span class="line">               .hostnameVerifier(new HostnameVerifier() &#123;</span><br><span class="line">                   @Override</span><br><span class="line">                   public boolean verify(String hostname, SSLSession session) &#123;</span><br><span class="line">                       return true;</span><br><span class="line">                   &#125;</span><br><span class="line">               &#125;)</span><br><span class="line">               .sslSocketFactory(createSSLSocketFactory())</span><br><span class="line">               .build();</span><br><span class="line">               </span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">//这里是创建一个SSLSocketFactory,提供给上面的 .sslSocketFactory()</span><br><span class="line">private  SSLSocketFactory createSSLSocketFactory() &#123;</span><br><span class="line">       SSLSocketFactory ssfFactory = null;</span><br><span class="line">       try &#123;</span><br><span class="line">           SSLContext sc = SSLContext.getInstance(&quot;TLS&quot;);</span><br><span class="line">           sc.init(null, new TrustManager[]&#123;new TrustAllCerts()&#125;, new SecureRandom());</span><br><span class="line">           ssfFactory = sc.getSocketFactory();</span><br><span class="line">       &#125; catch (Exception e) &#123;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       return ssfFactory;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>其中涉及到<strong>TrustAllCerts.java</strong>,可以看到只是实现X509TrustManager,所有方法都是默认实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * If you have any questions, you can contact by email &#123; wangzhumoo@gmail.com&#125;</span><br><span class="line"> * @author 王诛魔 2018/1/8 下午2:25</span><br><span class="line"> */</span><br><span class="line">public class TrustAllCerts implements X509TrustManager &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException &#123;&#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException &#123;&#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public X509Certificate[] getAcceptedIssuers() &#123;</span><br><span class="line">        return new X509Certificate[0];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里就以及可以了,信任所有的连接</p>
+<hr>
+<p><strong>第二部分:(强验证)</strong></p>
+<p>我只信任证书合法的服务器传递的数据.</p>
+<ul>
+<li>查看Https的证书</li>
+</ul>
+<p><img src="images/https_zhengshu.png" alt="https证书"></p>
+<p>在浏览器上看到这个,这个已经是我把证书添加为信任了,所以他是一个 <code>安全</code> 的标志</p>
+<ul>
+<li>分析</li>
+</ul>
+<p><img src="images/https_root.png" alt="https证书"></p>
+<p>这里是我查看当前网站证书的结构</p>
+<p>最顶—是根证书,到期时间是2028年</p>
+<p>最底—是我司证书,到期时间是2018.12.9日</p>
+<p>这里我们可以发现,我们网站的证书是有时间限制的,那么就会有一个问题,到了2018.12.9这一天怎么办.</p>
+<blockquote>
+<p>我也不知道会怎么样,应该是续签吧!那么万一这个证书变化了怎么办?</p>
+</blockquote>
+<p>所以,我们应该把根证书置为信任.</p>
+<ul>
+<li>下载保存</li>
+</ul>
+<p><img src="images/https_save.png" alt="https证书"></p>
+<p>Mac的在  钥匙串访问  中</p>
+<p>Windows 没法放图,在chrome上查看证书的时候应该就能保存.</p>
+<p><strong>HttpsUtils.java </strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * If you have any questions, you can contact by email &#123; wangzhumoo@gmail.com&#125;</span><br><span class="line"> * @author 王诛魔 2018/1/10 下午5:07</span><br><span class="line"> * 支持https的工具类</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">public class HttpsUtils &#123;</span><br><span class="line">    private static final String TAG = &quot;OkHttp&quot;;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 创建一个空白的KeyStore</span><br><span class="line">     * @return KeyStore</span><br><span class="line">     * @throws GeneralSecurityException</span><br><span class="line">     */</span><br><span class="line">    private static KeyStore createEmptyKeyStore() throws GeneralSecurityException &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());</span><br><span class="line">            //此处密码随意,不会产生问题</span><br><span class="line">            keystore.load(null, &quot;password&quot;.toCharArray());</span><br><span class="line">            return keystore;</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * TrustManager  生成</span><br><span class="line">     * @return</span><br><span class="line">     * @throws GeneralSecurityException</span><br><span class="line">     */</span><br><span class="line">    private static TrustManager[] generateTrustManager() throws GeneralSecurityException &#123;</span><br><span class="line"></span><br><span class="line">        //创建一个X.509格式的CertificateFactory</span><br><span class="line">        CertificateFactory certificateFactory = CertificateFactory.getInstance(&quot;X.509&quot;);</span><br><span class="line"></span><br><span class="line">        Certificate ca;</span><br><span class="line">        //证书工厂根据证书文件的流生成证书Certificate</span><br><span class="line">        InputStream assets = App.getContext().getResources().openRawResource(R.raw.rootca);</span><br><span class="line">        ca = certificateFactory.generateCertificate(assets);</span><br><span class="line">        Log.e(TAG, &quot;trustManager: ca = &quot; + ((X509Certificate) ca).getSubjectDN() );</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        //创建KeyStore，用来存储信任证书</span><br><span class="line">        KeyStore keyStor = createEmptyKeyStore();</span><br><span class="line">        keyStor.setCertificateEntry(&quot;ca&quot;,ca);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        //创建一个默认类型的TrustManagerFactory</span><br><span class="line">        String defaultAlgorithm = TrustManagerFactory.getDefaultAlgorithm();</span><br><span class="line">        TrustManagerFactory tmf = TrustManagerFactory.getInstance(defaultAlgorithm);</span><br><span class="line"></span><br><span class="line">        //用keyStore实例初始化TrustManagerFactory,此时TrustManagerFactory会信任我们保存的证书</span><br><span class="line">        tmf.init(keyStor);</span><br><span class="line"></span><br><span class="line">        //通过tmf获取TrustManager数组，TrustManager也会信任keyStor中的证书</span><br><span class="line"></span><br><span class="line">        return tmf.getTrustManagers();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 提供一个一个SSLSocketFactory</span><br><span class="line">     * @return SSLSocketFactory实例</span><br><span class="line">     */</span><br><span class="line">    public static SSLSocketFactory generateSSLSocketFactory()  &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            SSLContext sc = SSLContext.getInstance(&quot;TLS&quot;);</span><br><span class="line">            sc.init(null, generateTrustManager(), new SecureRandom());</span><br><span class="line">            Log.e(TAG, &quot;generateSSLSocketFactory &quot;);</span><br><span class="line">            return sc.getSocketFactory();</span><br><span class="line">        &#125; catch (GeneralSecurityException e) &#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注释很清楚了.</p>
+<p><strong>关键:</strong></p>
+<p>1.拿到帧数的流</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">InputStream assets = App.getContext().getResources().openRawResource(R.raw.rootca);</span><br></pre></td></tr></table></figure>
+<p>2.保存到keystore</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">KeyStore keyStor = createEmptyKeyStore();</span><br><span class="line">keyStor.setCertificateEntry(&quot;ca&quot;,ca);</span><br></pre></td></tr></table></figure>
+<p>3.初始化并拿到TrustManager[]</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tmf.init(keyStor);</span><br><span class="line">tmf.getTrustManagers()</span><br></pre></td></tr></table></figure>
+<p><strong>使用即可:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//这样就Ok</span><br><span class="line">OkHttpClient okHttpClient = new OkHttpClient.Builder()</span><br><span class="line">                .hostnameVerifier((hostname, session) -&gt; true)</span><br><span class="line">                .sslSocketFactory(HttpsUtils.generateSSLSocketFactory())</span><br><span class="line">                .build();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>超好的两篇</p>
+<p><a href="http://blog.csdn.net/lmj623565791/article/details/48129405" target="_blank" rel="noopener">http://blog.csdn.net/lmj623565791/article/details/48129405</a></p>
+<p><a href="http://blog.csdn.net/iispring/article/details/51615631" target="_blank" rel="noopener">http://blog.csdn.net/iispring/article/details/51615631</a></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/Bug/WebView播放H5视屏没有画面-只有声音/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wangzhumo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headimage.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王诛魔">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Bug/WebView播放H5视屏没有画面-只有声音/" itemprop="url">
+                  WebView播放H5视屏没有画面,只有声音
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-01-04 11:03:45" itemprop="dateCreated datePublished" datetime="2018-01-04T11:03:45+08:00">2018-01-04</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-03-01 00:28:33" itemprop="dateModified" datetime="2018-03-01T00:28:33+08:00">2018-03-01</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Bug/" itemprop="url" rel="index"><span itemprop="name">Bug</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>描述:点击播放按钮后,只能听到声音,而画面是白的….一直白…想到应该是硬件加速的问题</strong></p>
+<p><strong>1.确认硬件加速(非此因素)</strong></p>
+<p>在WebViewActivity.java中发现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);</span><br></pre></td></tr></table></figure>
+<p><strong>2.确认AndroidManifest.xml(非此因素)</strong></p>
+<p>application节点下并没有发现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:hardwareAccelerated=&quot;true&quot;</span><br></pre></td></tr></table></figure>
+<p>在WebViewActivity中,也无该配置</p>
+<ul>
+<li>尝试: WebViewActivity.java中,注释</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);</span><br></pre></td></tr></table></figure>
+<p>在AndroidManifest.xml节点下加入<code>android:hardwareAccelerated=&quot;true&quot;</code></p>
+<ul>
+<li>结果……没用</li>
+</ul>
+<p><strong>3.检查activity_web_view.xml</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">WebView</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/webView"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:scrollbars</span>=<span class="string">"none"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:visibility</span>=<span class="string">"@&#123;showError?View.GONE:View.VISIBLE&#125;"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>没问题.</p>
+<p>BUT….</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">LinearLayout</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layerType</span>=<span class="string">"software"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">include</span> <span class="attr">layout</span>=<span class="string">"@layout/layout_toolbar"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">ProgressBar</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/web_load_progress"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">style</span>=<span class="string">"?android:attr/progressBarStyleHorizontal"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"2dp"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:indeterminateOnly</span>=<span class="string">"false"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:max</span>=<span class="string">"100"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:progress</span>=<span class="string">"@&#123;progress&#125;"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:progressDrawable</span>=<span class="string">"@drawable/progress_bar_states"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:visibility</span>=<span class="string">"gone"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">WebView</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/webView"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:scrollbars</span>=<span class="string">"none"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:visibility</span>=<span class="string">"@&#123;showError?View.GONE:View.VISIBLE&#125;"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>####父布局竟然<code>android:layerType=&quot;software&quot;</code></p>
+<ul>
+<li>解决,删掉该属性即可</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/Android/Room中List-使用详解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1597,627 +2305,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/Android/Room数据库使用指北List<>的问题/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wangzhumo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/headimage.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="王诛魔">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Android/Room数据库使用指北List<>的问题/" itemprop="url">
-                  Room数据库使用指北List<>的问题
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2017-12-25 13:08:10" itemprop="dateCreated datePublished" datetime="2017-12-25T13:08:10+08:00">2017-12-25</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-01-09 15:15:26" itemprop="dateModified" datetime="2018-01-09T15:15:26+08:00">2018-01-09</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Room依赖</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">implementation &quot;android.arch.persistence.room:runtime:1.0.0&quot;</span><br><span class="line">annotationProcessor &quot;android.arch.persistence.room:compiler:1.0.0&quot;</span><br></pre></td></tr></table></figure>
-<p><strong>查找</strong></p>
-<ul>
-<li>查找表中所有数据</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">   * 查找user</span><br><span class="line">   * @return</span><br><span class="line">   */</span><br><span class="line">  @Query(&quot;SELECT * FROM banners&quot;)</span><br><span class="line">  List&lt;BannerModel&gt; findBanners();</span><br></pre></td></tr></table></figure>
-<ul>
-<li>按条件查找</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * filters</span><br><span class="line"> * @return</span><br><span class="line"> * @param typeSort</span><br><span class="line"> */</span><br><span class="line">@Query(&quot;SELECT * FROM filters WHERE type != :typeSort&quot;)</span><br><span class="line">List&lt;FilterItemModel&gt; findFilters(String typeSort);</span><br></pre></td></tr></table></figure>
-<ul>
-<li>限制条数的条件查找</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 获取排序</span><br><span class="line"> * @return</span><br><span class="line"> */</span><br><span class="line">@Query(&quot;SELECT * FROM filters WHERE type = :name LIMIT 0,1&quot;)</span><br><span class="line">FilterItemModel findSort(String name);</span><br></pre></td></tr></table></figure>
-<p>现在获取的是第一条数据</p>
-<p>//文档中的例子</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Dao</span><br><span class="line">public interface MyDao &#123;</span><br><span class="line">    @Query(&quot;SELECT first_name, last_name FROM user WHERE region IN (:regions)&quot;)</span><br><span class="line">    public List&lt;NameTuple&gt; loadUsersFromRegions(List&lt;String&gt; regions);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在user表中查找满足集合List<string> regions中条件的元素</string></p>
-<ul>
-<li>获取总行数</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 获取数据库表中总条数</span><br><span class="line"> * @return</span><br><span class="line"> */</span><br><span class="line">@Query(&quot;SELECT count(*) FROM search_history&quot;)</span><br><span class="line">long findHistoryCount();</span><br></pre></td></tr></table></figure>
-<ul>
-<li>获取某一列的和</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 求和</span><br><span class="line"> * @return</span><br><span class="line"> */</span><br><span class="line">@Query(&quot;SELECT sum(count) FROM status_stock&quot;)</span><br><span class="line">long findStatusStockCount();</span><br></pre></td></tr></table></figure>
-<ul>
-<li>按照降序排列(ASC升序  DESC降序)</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 查找user</span><br><span class="line"> * @return</span><br><span class="line"> */</span><br><span class="line">@Query(&quot;SELECT * FROM search_history ORDER BY time DESC&quot;)</span><br><span class="line">List&lt;SearchHistoryModel&gt; findSearchHistory();</span><br></pre></td></tr></table></figure>
-<hr>
-<p>文档中的例子:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">@Dao</span><br><span class="line">public interface MyDao &#123;</span><br><span class="line"></span><br><span class="line">    //正常的查询</span><br><span class="line">    @Query(&quot;SELECT * FROM user WHERE age != :minAge&quot;)</span><br><span class="line">    public User[] loadAllUsersOlderThan(int minAge);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@Dao</span><br><span class="line">public interface MyDao &#123;</span><br><span class="line"></span><br><span class="line">    //区间中的值</span><br><span class="line">    @Query(&quot;SELECT * FROM user WHERE age BETWEEN :minAge AND :maxAge&quot;)</span><br><span class="line">    public User[] loadAllUsersBetweenAges(int minAge, int maxAge);</span><br><span class="line"></span><br><span class="line">    //或关系的查询</span><br><span class="line">    @Query(&quot;SELECT * FROM user WHERE first_name LIKE :search &quot;</span><br><span class="line">           + &quot;OR last_name LIKE :search&quot;)</span><br><span class="line">    public List&lt;User&gt; findUserWithName(String search);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>如果,你不想查到表 行中所有字段,则</strong><br>1.定义一个实体<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class NameTuple &#123;</span><br><span class="line">    @ColumnInfo(name=&quot;first_name&quot;)</span><br><span class="line">    public String firstName;</span><br><span class="line"></span><br><span class="line">    @ColumnInfo(name=&quot;last_name&quot;)</span><br><span class="line">    public String lastName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>2.查询<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Dao</span><br><span class="line">public interface MyDao &#123;</span><br><span class="line">    @Query(&quot;SELECT first_name, last_name FROM user&quot;)</span><br><span class="line">    public List&lt;NameTuple&gt; loadFullName();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>多表查询Querying multiple tables</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@Dao</span><br><span class="line">public interface MyDao &#123;</span><br><span class="line">   @Query(&quot;SELECT user.name AS userName, pet.name AS petName &quot;</span><br><span class="line">          + &quot;FROM user, pet &quot;</span><br><span class="line">          + &quot;WHERE user.id = pet.user_id&quot;)</span><br><span class="line">   public LiveData&lt;List&lt;UserPet&gt;&gt; loadUserAndPetNames();</span><br><span class="line"></span><br><span class="line">   // You can also define this class in a separate file, as long as you add the</span><br><span class="line">   // &quot;public&quot; access modifier.</span><br><span class="line">   //注意 public</span><br><span class="line">   static class UserPet &#123;</span><br><span class="line">       public String userName;</span><br><span class="line">       public String petName;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>更新</strong></p>
-<ul>
-<li>更新指定条目</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 更新时间</span><br><span class="line"> * @param time</span><br><span class="line"> */</span><br><span class="line">@Query(&quot;UPDATE search_history SET time = :time WHERE content = :content&quot;)</span><br><span class="line">void updateSearchHistory(String content,long time);</span><br></pre></td></tr></table></figure>
-<p><strong>删除数据</strong></p>
-<ul>
-<li>删除所有数据</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 删除表</span><br><span class="line"> * @return</span><br><span class="line"> */</span><br><span class="line">@Query(&quot;DELETE FROM filters&quot;)</span><br><span class="line">void delectFilters();</span><br></pre></td></tr></table></figure>
-<ul>
-<li>删除最后一条</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 删除最后一个</span><br><span class="line"> * @return</span><br><span class="line"> */</span><br><span class="line">@Query(&quot;DELETE FROM search_history WHERE time in(SELECT time FROM search_history ORDER BY time ASC LIMIT 1 )&quot;)</span><br><span class="line">void delectLastHistory();</span><br></pre></td></tr></table></figure>
-<ul>
-<li>按条件删除</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 删除表by listtype</span><br><span class="line"> * @return</span><br><span class="line"> */</span><br><span class="line">@Query(&quot;DELETE FROM vehicle_model WHERE listType = :type&quot;)</span><br><span class="line">void delectVehicleByType(String type);</span><br></pre></td></tr></table></figure>
-<p>####补充</p>
-<p><strong><code>1.List&lt;String&gt;</code>这样的元素</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private ArrayList&lt;String&gt; tags;</span><br></pre></td></tr></table></figure></p>
-<p>这样的元素,可以通过Converter搞定</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/**</span><br><span class="line">* If you have any questions, you can contact by email &#123; wangzhumoo@gmail.com&#125;</span><br><span class="line">*</span><br><span class="line">* @author 王诛魔 2017/12/27 上午11:51</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">public class TagsConverter &#123;</span><br><span class="line">    @TypeConverter</span><br><span class="line">    public static ArrayList&lt;String&gt; fromString(String value) &#123;</span><br><span class="line">        Type listType = new TypeToken&lt;ArrayList&lt;String&gt;&gt;() &#123;&#125;.getType();</span><br><span class="line">        return new Gson().fromJson(value, listType);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @TypeConverter</span><br><span class="line">    public static String fromArrayList(ArrayList&lt;String&gt; list) &#123;</span><br><span class="line">        Gson gson = new Gson();</span><br><span class="line">        String json = gson.toJson(list);</span><br><span class="line">        return json;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在db中,会存为 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[&quot;精选&quot;]</span><br><span class="line">[&quot;精选&quot;,&quot;急售&quot;]</span><br><span class="line">[&quot;准新&quot;,&quot;SUV&quot;]</span><br></pre></td></tr></table></figure>
-<p><strong>3.@Embedded</strong></p>
-<p>作用是,把已经写好的普通的类添加到数据表中.<br>用Room的文档做说明:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//这是一个标准的数据表</span><br><span class="line"></span><br><span class="line">@Entity</span><br><span class="line">class User &#123;</span><br><span class="line">    @PrimaryKey</span><br><span class="line">    public int id;</span><br><span class="line"></span><br><span class="line">    public String firstName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>其中只有id , firstName</p>
-<p>而我想添加<br>    street;<br>    state;<br>    city;<br>    postCode;<br>刚好之前写了一个类叫Address</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class Address &#123;</span><br><span class="line">    public String street;</span><br><span class="line">    public String state;</span><br><span class="line">    public String city;</span><br><span class="line">    @Ignore</span><br><span class="line">    public String nothing;</span><br><span class="line">    @ColumnInfo(name = &quot;post_code&quot;)</span><br><span class="line">    public int postCode;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>那么我通过 @Embedded</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Entity</span><br><span class="line">class User &#123;</span><br><span class="line">    @PrimaryKey</span><br><span class="line">    public int id;</span><br><span class="line"></span><br><span class="line">    public String firstName;</span><br><span class="line"></span><br><span class="line">    @Embedded</span><br><span class="line">    public Address address;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>表中就会有:<br><code>names: id, firstName, street, state, city, and post_code</code></p>
-<p>如果你想给@Embedded的类中所有元素前面加上统一的标志</p>
-<p><code>@Embedded(prefix = &quot;address_&quot;)</code></p>
-<p>表中就会有:</p>
-<p><code>names: id, firstName, address_street, address_state, address_city, and address_post_code</code></p>
-<p><strong>3.<code>List&lt;Object&gt;</code>这样的数据</strong></p>
-<ul>
-<li>解决方法<br><a href="https://developer.android.com/reference/android/arch/persistence/room/Relation.html" target="_blank" rel="noopener">google developer</a></li>
-</ul>
-<p>真的给谷歌跪了,什么鬼文档</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">@Entity</span><br><span class="line">public class User &#123;</span><br><span class="line"></span><br><span class="line">    // 这里是用户的 Id</span><br><span class="line">    @PrimaryKey</span><br><span class="line">    public int id;</span><br><span class="line"></span><br><span class="line">    //省略</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@Entity</span><br><span class="line">public class Book &#123;</span><br><span class="line"></span><br><span class="line">    //书的id</span><br><span class="line">    @PrimaryKey</span><br><span class="line">    public int bookId;</span><br><span class="line">    </span><br><span class="line">    //这里就是这本书与 User的关系,这里的是User.id</span><br><span class="line">    public int userId;</span><br><span class="line">    public String name;</span><br><span class="line">    public String desc;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//注意,什么注解也不要加</span><br><span class="line">public class UserAndBooks &#123;</span><br><span class="line"></span><br><span class="line">    //加入所有的user的属性</span><br><span class="line">   @Embedded</span><br><span class="line">   public User user;</span><br><span class="line"></span><br><span class="line">    //这里定义User 和 Book的关系</span><br><span class="line">   @Relation(parentColumn = &quot;id&quot;, entityColumn = &quot;userId&quot;, entity = Book.class)</span><br><span class="line">   public List&lt;Book&gt; books; </span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//文档上还讲了一个比较牛逼的功能,这里不讨论</span><br><span class="line"></span><br><span class="line">public class UserAndAllPets &#123;</span><br><span class="line">   @Embedded</span><br><span class="line">   public User user;</span><br><span class="line">   @Relation(parentColumn = &quot;id&quot;, entityColumn = &quot;userId&quot;, entity = Book.class,</span><br><span class="line">           projection = &#123;&quot;name&quot;&#125;)</span><br><span class="line">   public List&lt;String&gt; bookNames;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//然后,dao是这样的</span><br><span class="line"></span><br><span class="line">@Dao</span><br><span class="line">public interface UserDao &#123;</span><br><span class="line">    @Query(&quot;SELECT * FROM User&quot;)</span><br><span class="line">    public List&lt;UserAndBooks&gt; loadUserWithBooks();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">PS:当然你存的时候,分辨别存User  和 Book 即可</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/Android/Retrofit2-Okhttp3-Rxjava2-网络请求封装-下/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wangzhumo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/headimage.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="王诛魔">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Android/Retrofit2-Okhttp3-Rxjava2-网络请求封装-下/" itemprop="url">
-                  Retrofit2 + Okhttp3 + Rxjava2 网络请求封装(下)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2017-12-25 12:51:47 / 修改时间：16:19:07" itemprop="dateCreated datePublished" datetime="2017-12-25T12:51:47+08:00">2017-12-25</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">//请求:</span><br><span class="line"></span><br><span class="line">RetrofitApis.getNetworkApis().getFriendsCircle(userBean.token, String.valueOf(45),null,lastId)</span><br><span class="line">	.compose(new DefaultTransformer&lt;&gt;())</span><br><span class="line">	.subscribe(new Defaultubscriber&lt;List&lt;FriendItem&gt;&gt;() &#123;</span><br><span class="line">		@Override</span><br><span class="line">		protected void onError(ApiException ex) &#123;</span><br><span class="line">                //请求错误,ex中可以拿到code 和 msg  便于展示给用户</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		@Override</span><br><span class="line">		public void onNext(List&lt;FriendItem&gt; friends) &#123;</span><br><span class="line">		    //请求成功,friends就是数据</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		@Override</span><br><span class="line">		public void onComplete() &#123;</span><br><span class="line">                    //没有错误的话,最后会走着</span><br><span class="line">		&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>compose()  转化<br>subscribe() 订阅</p>
-<p>DefaultTransformer.java</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * If you have any questions, you can contact by email &#123;wangzhumoo@gmail.com&#125;</span><br><span class="line"> * @author 王诛魔 2017/11/3 下午5:06</span><br><span class="line"> *</span><br><span class="line"> * 默认的切换线程,并返回实体类</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">public class DefaultTransformer&lt;T extends ResultResponse&lt;RP&gt;, RP&gt; implements FlowableTransformer&lt;T, RP&gt; &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Publisher&lt;RP&gt; apply(Flowable&lt;T&gt; upstream) &#123;</span><br><span class="line">        return upstream</span><br><span class="line">                .map(t -&gt; t.getResult())</span><br><span class="line">                .subscribeOn(Schedulers.io())</span><br><span class="line">                .observeOn(AndroidSchedulers.mainThread());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>1.map 将返回的ResultResponse&lt;&gt;  转化,直接取ResultResponse的泛型实体<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&#123;&quot;result&quot;:&#123;&#125;</span><br><span class="line">&quot;code&quot;:&quot;&quot;,</span><br><span class="line">&quot;msg&quot;:&quot;&quot;&#125;</span><br></pre></td></tr></table></figure></p>
-<p>中的result</p>
-<p>2.subscribeOn(Schedulers.io())  网络请求的耗时操作,放在方便io操作的线程里面<br>3.observeOn(AndroidSchedulers.mainThread())  后面的操作,都在主线程进行</p>
-<p>Defaultubscriber.java</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * If you have any questions, you can contact by email &#123;wangzhumoo@gmail.com&#125;</span><br><span class="line"> * @author 王诛魔 2017/10/24 上午10:36</span><br><span class="line"> *</span><br><span class="line"> * 用于没有网络时停止网络请求</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">public abstract class Defaultubscriber&lt;T&gt; extends DisposableSubscriber&lt;T&gt; &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @CallSuper</span><br><span class="line">    @Override</span><br><span class="line">    public void onError(Throwable e) &#123;</span><br><span class="line">        if (e instanceof ApiException) &#123;</span><br><span class="line">            onError((ApiException) e);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            onError(new ApiException(&quot;&quot;,&quot;&quot;));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void onStart() &#123;</span><br><span class="line">        if (!SystemUtils.isNetworkConnected()) &#123;</span><br><span class="line">            onError(new ApiException(Utils.getString(R.string.net_error_title),&quot;999&quot;));</span><br><span class="line">            cancel();</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        super.onStart();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 错误回调</span><br><span class="line">     *</span><br><span class="line">     * @param ex 异常信息</span><br><span class="line">     */</span><br><span class="line">    protected abstract void onError(ApiException ex);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>1.extends DisposableSubscriber  便于通过CompositeDisposable管理请求,此处没有展示,不用管<br>2.onStart()  中,判断是否有网络</p>
-<ul>
-<li><p>没有网络<br>onError(new ApiException(Utils.getString(R.string.net_error), false));<br>抛出没有网络的错误,由各个页面自行处理</p>
-<p>cancel(); 取消</p>
-<ul>
-<li>有网络则继续</li>
-</ul>
-</li>
-</ul>
-<p>3.重写的 onError()中.<br>    是ApiException实例的,是自己抛出的异常,已经处理过了,直接onError给各个页面处理<br>    不是的再处理一次,在分发给各个页面处理</p>
-<p>####未完待续…</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/Android/Retrofit2-Okhttp3-Rxjava2-网络请求封装(上)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wangzhumo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/headimage.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="王诛魔">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Android/Retrofit2-Okhttp3-Rxjava2-网络请求封装(上)/" itemprop="url">
-                  Retrofit2 + Okhttp3 + Rxjava2 网络请求封装(上)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2017-12-25 12:14:04 / 修改时间：16:13:49" itemprop="dateCreated datePublished" datetime="2017-12-25T12:14:04+08:00">2017-12-25</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最终结构</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">net</span><br><span class="line">├── RequestBuilder.java</span><br><span class="line">├── RetrofitApis.java</span><br><span class="line">├── base</span><br><span class="line">│   ├── ApiException.java</span><br><span class="line">│   ├── CustomGsonConverter.java</span><br><span class="line">│   ├── DefaultSubscriber.java</span><br><span class="line">│   └── DefaultTransformer.java</span><br><span class="line">└── response</span><br><span class="line">    ├── BaseResponse.java</span><br><span class="line">    └── ResultResponse.java</span><br><span class="line"></span><br><span class="line">NetworkApis.java</span><br></pre></td></tr></table></figure>
-<p><strong>1.添加依赖</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">implementation &quot;io.reactivex.rxjava2:rxjava:2.1.7&quot;</span><br><span class="line">implementation &quot;io.reactivex.rxjava2:rxandroid:2.0.1&quot;</span><br><span class="line">implementation &quot;com.squareup.okhttp3:okhttp:3.9.0&quot;</span><br><span class="line">implementation &quot;com.squareup.okhttp3:logging-interceptor:3.9.0&quot;</span><br><span class="line">implementation &quot;com.squareup.retrofit2:retrofit:2.3.0&quot;</span><br><span class="line">implementation &quot;com.squareup.retrofit2:converter-gson:2.3.0&quot;</span><br><span class="line">implementation &quot;com.squareup.retrofit2:adapter-rxjava2:2.3.0&quot;</span><br></pre></td></tr></table></figure>
-<p><strong>2.请求服务构建</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * If you have any questions, you can contact by email &#123;wangzhumoo@gmail.com&#125;</span><br><span class="line"> * @author 王诛魔 2017/11/1 下午11:13</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public class RetrofitApis &#123;</span><br><span class="line">    private static OkHttpClient okHttpClient = null;</span><br><span class="line">    private static NetworkApis networkApis = null;</span><br><span class="line">    private static Gson gson = new Gson();</span><br><span class="line">    private static final String TAG = &quot;RetrofitApis&quot;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 为HOST创建一个请求客户端</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    public static NetworkApis getNetworkApis() &#123;</span><br><span class="line">        initOkhttp();</span><br><span class="line">        if (networkApis == null) &#123;</span><br><span class="line">            Retrofit retrofit = new Retrofit.Builder()</span><br><span class="line">                    .client(okHttpClient)</span><br><span class="line">                    .baseUrl(Constants.HOST)</span><br><span class="line">                    .addConverterFactory(CustomGsonConverter.create(gson))</span><br><span class="line">                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())</span><br><span class="line">                    .build();</span><br><span class="line">            networkApis = retrofit.create(NetworkApis.class);</span><br><span class="line">        &#125;</span><br><span class="line">        return networkApis;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 初始化一个OkHttpClient</span><br><span class="line">     */</span><br><span class="line">    private static void initOkhttp()&#123;</span><br><span class="line">        //没有创建就实例一个</span><br><span class="line">        if(okHttpClient == null)&#123;</span><br><span class="line">            final OkHttpClient.Builder builder = new OkHttpClient.Builder();</span><br><span class="line">            //设置log等级</span><br><span class="line">            if(BuildConfig.DEBUG)&#123;</span><br><span class="line">                HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();</span><br><span class="line"></span><br><span class="line">                //BODY  包含请求url 参数  response ,会打印在logcat</span><br><span class="line">                interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);</span><br><span class="line">                builder.addInterceptor(interceptor);</span><br><span class="line">            &#125;</span><br><span class="line">            //打开一个File用于缓存</span><br><span class="line">            File cacheFile = new File(Constants.PATH_CACHE);</span><br><span class="line">            Cache cache = new Cache(cacheFile,1024*1024*50);</span><br><span class="line">            //一个拦截器</span><br><span class="line">                Interceptor cacheInterceptor = new Interceptor() &#123;</span><br><span class="line">                @Override</span><br><span class="line">                public Response intercept(Chain chain) throws IOException &#123;</span><br><span class="line">                    Request.Builder builder = chain.request().newBuilder();</span><br><span class="line"></span><br><span class="line">                    if(SystemUtils.isNetworkConnected())&#123;</span><br><span class="line">                        int maxAge = 0 ;</span><br><span class="line">                        //有网络,不缓存,最长保存时间为0</span><br><span class="line">                        builder.removeHeader(&quot;Pragma&quot;)</span><br><span class="line">                                .header(&quot;Cache-Control&quot;, &quot;public, max-age=&quot; + maxAge)</span><br><span class="line">                                .build();</span><br><span class="line">                    &#125; else &#123;</span><br><span class="line">                        // 无网络时，设置超时为2周</span><br><span class="line">                        int maxStale = 60 * 60 * 24 * 14;</span><br><span class="line">                        builder.removeHeader(&quot;Pragma&quot;)</span><br><span class="line">                                .header(&quot;Cache-Control&quot;, &quot;public, only-if-cached, max-stale=&quot; + maxStale)</span><br><span class="line">                                .build();</span><br><span class="line">                      throw new ApiException(false);</span><br><span class="line">                    &#125;</span><br><span class="line">                    return chain.proceed(builder.build());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;;</span><br><span class="line">            //设置缓存拦截器</span><br><span class="line">            builder.addInterceptor(cacheInterceptor);</span><br><span class="line">            builder.addNetworkInterceptor(cacheInterceptor);</span><br><span class="line"></span><br><span class="line">            //这里通过Interceptor 可以实现添加公共参数,不详细说明了</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            //stetho,如果使用则需要添加</span><br><span class="line">            //builder.addNetworkInterceptor(new StethoInterceptor());</span><br><span class="line"></span><br><span class="line">            builder.cache(cache);</span><br><span class="line">            //错误重连</span><br><span class="line">            builder.retryOnConnectionFailure(true);</span><br><span class="line">            //设置超时</span><br><span class="line">            builder.connectTimeout(15, TimeUnit.SECONDS);</span><br><span class="line">            builder.readTimeout(15, TimeUnit.SECONDS);</span><br><span class="line">            builder.writeTimeout(15, TimeUnit.SECONDS);</span><br><span class="line">            okHttpClient = builder.build();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>以上;</p>
-<p>使用 <code>CustomGsonConverter.java / NetworkApis.java</code><br>通过getNetworkApis()方法,向外提供了一个请求服务.<br>其中 .addConverterFactory(CustomGsonConverter.create(gson))<br>是使用自定义的Converter替代了默认提供的</p>
-<p>CustomGsonConverter.java</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * If you have any questions, you can contact by email &#123;wangzhumoo@gmail.com&#125;</span><br><span class="line"> * @author 王诛魔 2017/10/24 上午10:31</span><br><span class="line"> *</span><br><span class="line"> * GsonConverter 用于在不解析返回正文的前提下获取请求成功失败和 返回信息</span><br><span class="line"> */</span><br><span class="line">public class CustomGsonConverter extends Converter.Factory &#123;</span><br><span class="line"></span><br><span class="line">    private final Gson gson;</span><br><span class="line"></span><br><span class="line">    private CustomGsonConverter(Gson gson) &#123;</span><br><span class="line">        if (gson == null) &#123;</span><br><span class="line">            throw new NullPointerException(&quot;gson == null&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        this.gson = gson;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static CustomGsonConverter create() &#123;</span><br><span class="line">        return create(new Gson());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static CustomGsonConverter create(Gson gson) &#123;</span><br><span class="line">        return new CustomGsonConverter(gson);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Converter&lt;ResponseBody, ?&gt; responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) &#123;</span><br><span class="line">        TypeAdapter&lt;?&gt; adapter = gson.getAdapter(TypeToken.get(type));</span><br><span class="line">        return new CustomGsonResponseBodyConverter&lt;&gt;(gson, adapter);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    private class CustomGsonResponseBodyConverter&lt;T&gt; implements Converter&lt;ResponseBody, T&gt; &#123;</span><br><span class="line">        private final Gson gson;</span><br><span class="line">        private final TypeAdapter&lt;T&gt; adapter;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        public CustomGsonResponseBodyConverter(Gson gson, TypeAdapter&lt;T&gt; adapter) &#123;</span><br><span class="line">            this.gson = gson;</span><br><span class="line">            this.adapter = adapter;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public T convert(ResponseBody value) throws IOException &#123;</span><br><span class="line">            String response = value.string();</span><br><span class="line">            BaseResponse baseResponse = gson.fromJson(response,BaseResponse.class);</span><br><span class="line">            if (!baseResponse.isCodeSuccess()) &#123;</span><br><span class="line">                value.close();</span><br><span class="line">                throw new ApiException(baseResponse.error);</span><br><span class="line">            &#125;</span><br><span class="line">            MediaType contentType = value.contentType();</span><br><span class="line">            Charset charset = contentType != null ? contentType.charset(UTF_8) : UTF_8;</span><br><span class="line">            InputStream inputStream = new ByteArrayInputStream(response.getBytes());</span><br><span class="line">            Reader reader = new InputStreamReader(inputStream, charset);</span><br><span class="line">            JsonReader jsonReader = gson.newJsonReader(reader);</span><br><span class="line"></span><br><span class="line">            try &#123;</span><br><span class="line">                return adapter.read(jsonReader);</span><br><span class="line">            &#125; finally &#123;</span><br><span class="line">                value.close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Nullable</span><br><span class="line">    @Override</span><br><span class="line">    public Converter&lt;?, RequestBody&gt; requestBodyConverter(Type type, Annotation[] parameterAnnotations, Annotation[] methodAnnotations, Retrofit retrofit) &#123;</span><br><span class="line">        return super.requestBodyConverter(type,parameterAnnotations,methodAnnotations,retrofit);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>requestBodyConverter没有重写,后面发现了一个bug,上传文件+文字参数时,可能会造成 Length出错.<br>responseBodyConverter 重写,先把response解析,如果有问题则<br><code>throw new ApiException(baseResponse.error);</code><br>会主动走RxJava的 onError()</p>
-<p>如果没有问题,则继续,好像有点多余……</p>
-<p>ApiException.java  就是用于封装异常</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * If you have any questions, you can contact by email &#123;wangzhumoo@gmail.com&#125;</span><br><span class="line"> * @author 王诛魔 2017/10/24 上午10:29</span><br><span class="line"> *</span><br><span class="line"> * 此类作为网络请求异常的基</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">public class ApiException extends IOException &#123;</span><br><span class="line"></span><br><span class="line">    String code;</span><br><span class="line">    String msg;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public ApiException(String code)&#123;</span><br><span class="line">        this.code = code;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public ApiException(String msg, String code)&#123;</span><br><span class="line">        super(msg);</span><br><span class="line">        this.msg = msg;</span><br><span class="line">        this.code = code;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public boolean getCode() &#123;</span><br><span class="line">        return code;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String getMessage() &#123;</span><br><span class="line">        return msg;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>3.Response返回数据的封装</strong></p>
-<blockquote>
-<p>这里根据后台返回数据结构</p>
-</blockquote>
-<p>我们的返回是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;result&quot;:&#123;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;msg&quot;:&quot;请求成功&quot;,</span><br><span class="line">    &quot;code&quot;:&quot;0000&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>BaseResponse.java</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * If you have any questions, you can contact by email &#123;wangzhumoo@gmail.com&#125;</span><br><span class="line"> * @author 王诛魔 2017/10/19 下午5:41</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">public class BaseResponse&#123;</span><br><span class="line"></span><br><span class="line">    public String code;</span><br><span class="line">    public String msg;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * API是否请求失败</span><br><span class="line">     *</span><br><span class="line">     * @return 失败返回true, 成功返回false</span><br><span class="line">     */</span><br><span class="line">    public boolean isCodeSuccess() &#123;</span><br><span class="line">        return &quot;0000&quot;.equals(code);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>所有的返回数据类,都要继承它,便于CustomGsonConverter 中判断返回数据的正确性</p>
-<p>ResultResponse.java</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * If you have any questions, you can contact by email &#123;wangzhumoo@gmail.com&#125;</span><br><span class="line"> * @author 王诛魔 2017/10/19 下午5:37</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">public class ResultResponse&lt;T&gt; extends BaseResponse &#123;</span><br><span class="line"></span><br><span class="line">    private T result;</span><br><span class="line"></span><br><span class="line">    public T getResult() &#123;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>通过T泛型,指定返回result的结构,让gson解析成实体对象</p>
-<p>T 可能是 实体对象  可能是 List&lt;实体对象&gt;  ….</p>
-<p><strong>4.请求数据</strong></p>
-<p>NetworkApis.java</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * If you have any questions, you can contact by email &#123;wangzhumoo@gmail.com&#125;</span><br><span class="line"> * @author 王诛魔 2017/10/19 下午5:40</span><br><span class="line"> *</span><br><span class="line"> * 所有网络请求</span><br><span class="line"> */</span><br><span class="line">public interface NetworkApis &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 获取朋友圈列表</span><br><span class="line">     * @param token</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    @POST(&quot;QCRL/qcrl?command=getFriendsCircle&quot;)</span><br><span class="line">    @FormUrlEncoded</span><br><span class="line">    Flowable&lt;ResultResponse&lt;List&lt;FriendItem&gt;&gt;&gt; getFriendsCircle(</span><br><span class="line">            @Field(&quot;token&quot;) String token,</span><br><span class="line">            @Field(&quot;number&quot;) String number,</span><br><span class="line">            @Field(&quot;userId&quot;) String userId,</span><br><span class="line">            @Field(&quot;lastDate&quot;) String lastId);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 删除</span><br><span class="line">     * @param token</span><br><span class="line">     * @param circleId</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    @POST(&quot;QCRL/qcrl?command=updateFriendsCircle&quot;)</span><br><span class="line">    @FormUrlEncoded</span><br><span class="line">    Flowable&lt;ResultResponse&lt;String&gt;&gt; updateFriendsCircle(</span><br><span class="line">            @Field(&quot;token&quot;) String token,</span><br><span class="line">            @Field(&quot;circleId&quot;) String circleId);</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 赞</span><br><span class="line">     * @param token</span><br><span class="line">     * @param circleId</span><br><span class="line">     * @param userId</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    @POST(&quot;QCRL/qcrl?command=addFavor&quot;)</span><br><span class="line">    @FormUrlEncoded</span><br><span class="line">    Flowable&lt;ResultResponse&lt;Object&gt;&gt; addFavor(</span><br><span class="line">            @Field(&quot;token&quot;) String token,</span><br><span class="line">            @Field(&quot;circleId&quot;) String circleId,</span><br><span class="line">            @Field(&quot;toId&quot;) String userId);</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>根据自己的接口编写即可<br>@POST() 指请求方式为 POST  </p>
-<blockquote>
-<p>注意,括号中的网址,开头不可以使用/QCRL/…<br>否则会直接拼到HOST后面,url可能会错误 </p>
-</blockquote>
-<p>@FormUrlEncoded  表示form表单提交,会Encoded编码参数</p>
-<p>@Field 每一个参数</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2269,7 +2356,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">46</span>
+                    <span class="site-state-item-count">49</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2300,7 +2387,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">9</span>
+                      
+                    
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -2359,7 +2448,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">23</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">26</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

@@ -1,9 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[ServiceLoader 与 责任链设计模式]]></title>
+    <url>%2FJava%2FServiceLoader-%E4%B8%8E-%E8%B4%A3%E4%BB%BB%E9%93%BE%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%2F</url>
+    <content type="text"><![CDATA[前因最近在做人脸识别的一些东西 主要是使用百度的SDK来完成采集, 识别. 这个功能是使用百度云的Api来对人脸进行分析,拿到年龄 颜值 等等信息 第一版设计稿: 那我就直接把请求到的数据展示了一下,然而 第二版设计稿: 这一版就是需要把拿到的数值按照区间来展示成文字描述 那么,应该就是各种switch if else …. 本来也是做Demo,所以我们可以高点其他的东西,于是我就想起了责任链模式,勉强可以做做么 实现责任链定义抽象类com.baidu.aip.fl.func.service.HandlerFace.java 接口 12345678910111213141516public abstract class HandlerFace &#123; private HandlerFace nextHandler; //接收一个实体类 public abstract ResultBean process(ResultBean bean); //返回下一个处理类 public HandlerFace nextHandler()&#123; return nextHandler; &#125; //设置下一个处理类 public void setHandler(HandlerFace handler)&#123; this.nextHandler = handler; &#125;&#125; 具体实现com.baidu.aip.fl.func.service.AgeHandlerFace.java 实现类,处理年龄信息 123456789101112131415161718192021222324252627282930public class AgeHandlerFace extends HandlerFace &#123; @Override public ResultBean process(ResultBean bean) &#123; //1.处理自己的事情 if (bean != null &amp;&amp; bean.getIntAge() == 0 )&#123; bean.setResultAge("-"); &#125;else if (bean != null &amp;&amp; bean.getIntAge() &lt;= 5)&#123; bean.setResultAge("小朋友"); &#125;else if (bean != null &amp;&amp; bean.getIntAge() &lt;= 10)&#123; bean.setResultAge("中等朋友"); &#125;else if (bean != null &amp;&amp; bean.getIntAge() &lt;= 15)&#123; bean.setResultAge("大朋友"); &#125;else if (bean != null &amp;&amp; bean.getIntAge() &lt;= 20)&#123; bean.setResultAge("成年人"); &#125;else if (bean != null &amp;&amp; bean.getIntAge() &lt;= 40)&#123; bean.setResultAge("中年人"); &#125;else if (bean != null &amp;&amp; bean.getIntAge() &lt;= 60)&#123; bean.setResultAge("老年人"); &#125;else if (bean != null &amp;&amp; bean.getIntAge() &lt;= 100)&#123; bean.setResultAge("年纪好大"); &#125; //2.是否有下一个人来处理 if (nextHandler() != null)&#123; //2.1.如果有下一个处理类,则把信息交给他继续处理 return nextHandler().process(bean); &#125; //3.没有下一个处理直接返回 return bean; &#125;&#125; AgeHandlerFace类只处理年纪相关的东西 com.baidu.aip.fl.func.service.BeautyHandlerFace.java com.baidu.aip.fl.func.service.GenderHandlerFace.java 同样实现HandlerFace,分别处理颜值和性别 ServiceLoader上面的责任链其实已经可以使用,但是需要手动来初始化每个具体实现类, 并且一个一个设置 nextHandler ,最后调用处理 123456789101112131415161718192021222324252627282930313233343536public class RealProcessFace&#123; //保存HandlerFace的每一个实现类 private static ArrayList&lt;HandlerFace&gt; arraylist; static &#123; arraylist = new ArrayList(); //通过ServiceLoader来加载所有HandlerFace的实现类 ServiceLoader&lt;HandlerFace&gt; processors = ServiceLoader.load(HandlerFace.class); Iterator iterator = processors.iterator(); while (iterator.hasNext()) &#123; //iterator.next() 这里具体实现类才真正的初始化了 arraylist.add((HandlerFace) iterator.next()); &#125; &#125; /** * 获取组合短语 * @param task 人脸信息 * @return 组合短语 */ public static String process(ResultBean task) &#123; for (int i = 0; i &lt; arraylist.size() - 1 ; i++) &#123; //依次设置setHandler //因为我并不需要他们依次处理,所以我并不关系他们处理的顺序 //如果是需要顺序执行的话,建议还是手动处理 arraylist.get(i).setHandler(arraylist.get(i+1)); &#125; //调用第一个处理类,就会依次调用后面的处理类 ResultBean resultBean = arraylist.get(0).process(task); //返回处理结果 return resultBean.format(); &#125; &#125; 使用方法 1.创建一个base类,就是我上面写过的,可以是接口和抽象类 com.baidu.aip.fl.func.service.HandlerFace 2.一个或多个实现类 com.baidu.aip.fl.func.service.AgeHandlerFace.java com.baidu.aip.fl.func.service.BeautyHandlerFace.java com.baidu.aip.fl.func.service.GenderHandlerFace.java 这里一共是3个 3.定义resources/META-INF/ …. 文件 该文件无拓展名 文件名就是 base类 或者接口 的全路径( 包名 + Filename ) 文件中每一行写一个实现类的全路径名( 包名 + Filename ) src/main/resources/META-INF/services/com.baidu.aip.fl.func.service.HandlerFace 123com.baidu.aip.fl.func.service.GenderHandlerFacecom.baidu.aip.fl.func.service.AgeHandlerFacecom.baidu.aip.fl.func.service.BeautyHandlerFace 4.获取所有实现类 1234567ServiceLoader&lt;HandlerFace&gt; processors = ServiceLoader.load(HandlerFace.class);//注意此时实现类都没有实例化Iterator iterator = processors.iterator();while (iterator.hasNext()) &#123; //iterator.next() 这里具体实现类才真正的初始化了 arraylist.add((HandlerFace) iterator.next());&#125; 这样的懒加载过程是由ServiceLoader实现的 总结责任链这样的形式,为后期的扩展提供了很大的便利 AgeHandlerFace 中,我可以分更细的粒度,也可以合并. eg: 50 以下都是年轻人 ​ 100 - 50 是老年人 责任链虽然Android端最显著的算是 事件分发机制 ,很多框架中也都有使用,filter这样的东西 ServiceLoader这个东西,很强大 在插件化,以及 服务提供等方面都有应用]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>-Java -设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Android自己封装一个VideoPlayer]]></title>
+    <url>%2FVideo%2FAndroid%E8%87%AA%E5%B7%B1%E5%B0%81%E8%A3%85%E4%B8%80%E4%B8%AAVideoPlayer%2F</url>
+    <content type="text"><![CDATA[需求分析定义: 播放器 - TextureView .. 播放控制器 - MeadiaPlayer Ijk 控制器 - 即控制播放的UI部分,快进等等 需求: 播放器 , 播放控制器 , 控制器UI 分离,方便随时替换 对MeadiaPlayer 管理,达到无缝切换播放器 参考: JiaoZiVideoPlayer GSYVideoPlayer 进一步分析: 现在需要实现: 无任何控制器的播放,但是保证其在RecyclerView中的播放 只可以点击播放 滑动到第一个自动播放视频 详情页播放器 时长 播放进度 全屏播放 结构分析 由于一般通过播放器来控制整个播放过程,所以都应该集中到播放器中去 播放控制器 定义一个播放控制器的抽象类,该类应该包含一个播放控制器应该有的功能]]></content>
+      <categories>
+        <category>Video</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+        <tag>Video</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Android自定义一个遮罩引导层]]></title>
+    <url>%2Funcategorized%2FAndroid%E8%87%AA%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E9%81%AE%E7%BD%A9%E5%BC%95%E5%AF%BC%E5%B1%82%2F</url>
+    <content type="text"><![CDATA[分析需求高亮显示指定的控件(1个或者多个) 只有一个高亮控件,则直接绘制即可 多个高亮控件,则分两种效果展示 顺序展示每一个控件 展示所有控件 高亮部分的形状 方形 圆形 展示与消失 自动展示,自动消失 点击消失 点击指定部分消失 实现方式遮罩层 直接在本来的页面是添加,不用时消失 使用DecorView的方式,添加view即可 使用透明Activity覆盖 选择第二种方式来实现 第一种方便但是耗时耗力,并且不能通用 第二种是大家都认可的一种方式,而且支持配置 第三种,对原界面生命周期造成影响,不太好 高亮的实现PorterDuffXfermode :: PorterDuff.Mode.XOR) 代码设计 mask layer View 用来实现遮罩层 高亮显示绘制 指示语位置 mask layer Manager 用来管理 遮罩层 addView Show / hide DecorView 操作 其他配置信息 mask bean 用来存放需要高亮的View信息(高度,宽度..) 实现mask: MaskGuideView 遮罩层容器 MaskLayout 高亮控件与指示语的位置,以及排列展示 MaskManager 加载管理整个遮罩层 MaskType 高亮控件的形状, 圆 方 TargetInfo 高亮控件的位置信息 TargetInfo.java 123456789101112131415161718192021222324252627282930313233343536373839404142/** * If you have any questions, you can contact by email &#123; wangzhumoo@gmail.com&#125; * * @author 王诛魔 2018/5/21 下午7:20 * * 高亮区域信息 */public class TargetInfo &#123; /* * 高亮区域起始X坐标 */ public int startX; /* * 高亮区域起始Y坐标 */ public int startY; /* * 高亮区域宽度 */ public int width; /* * 高亮区域高度 */ public int height; /* * 偏移量 */ public int offset = 10; /** * 获取半径 */ public int getRadius() &#123; return Math.max(width, height) / 2; &#125; &#125; MaskType.java 12345678/** * If you have any questions, you can contact by email &#123; wangzhumoo@gmail.com&#125; * * @author 王诛魔 2018/5/21 下午7:18 */public enum MaskType &#123; Rect,Circle&#125; 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980/** * If you have any questions, you can contact by email &#123; wangzhumoo@gmail.com&#125; * * @author 王诛魔 2018/5/21 下午11:35 * * 负责管理,准备,操作MaskGuideView */public class MaskManager &#123; //属性 private static final String TAG = "MaskManager"; private final ViewGroup mRootView; private final MaskGuideView mMaskGuideView; private final Context mContext; private List&lt;TargetInfo&gt; mTargetInfoList; private List&lt;View&gt; mTargetViewList; private List&lt;MaskLayout&gt; mMaskLayoutList; private MaskType mMaskType; private boolean isShowAll; private int mPadding; /** * 计算targetInfo * * @param targetView view * @return TargetInfo */ private TargetInfo generateTargetInfo(View targetView) &#123; int[] location = new int[2]; //我们需要的是,这个targetView在整个屏幕上的位置 targetView.getLocationOnScreen(location); TargetInfo targetInfo = new TargetInfo(); //计算startX width ... switch (mMaskType) &#123; case Rect: targetInfo.startX = location[0] - mPadding; targetInfo.startY = location[1] - mPadding; targetInfo.width = targetView.getWidth() + 2 * mPadding; targetInfo.height = targetView.getHeight() + 2 * mPadding; break; case Circle: int diameter = Math.max(targetView.getWidth() + 2 * mPadding, targetView.getHeight() + 2 * mPadding); targetInfo.startX = location[0] - mPadding; targetInfo.startY = location[1] - mPadding - (diameter / 2 - targetView.getHeight() / 2 - mPadding); targetInfo.width = diameter; targetInfo.height = diameter; break; &#125; Log.e(TAG, "generateTargetInfo: " + targetInfo.toString() ); return targetInfo; &#125; /* * builder模式 */ public static class Builder &#123; private ViewGroup mRootView; private MaskGuideView mMaskGuideView; private Context mContext; private List&lt;TargetInfo&gt; mTargetInfoList; private List&lt;MaskLayout&gt; mMaskLayoutList; private List&lt;View&gt; mTargetViewList; private MaskType mMaskType = MaskType.Circle; private int mPadding = 0; private int mGravity = Gravity.TOP; private boolean isShowAll; ...省略 public MaskManager build() &#123; this.mMaskGuideView.setOnClickListener(this.mMaskGuideView); return new MaskManager(this); &#125; &#125;&#125; 额,代码传git好了]]></content>
+      <tags>
+        <tag>Android</tag>
+        <tag>View</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Android Binder机制(一)]]></title>
     <url>%2FSource-Code%2FAndroid-Binder%E6%9C%BA%E5%88%B6-%E4%B8%80%2F</url>
-    <content type="text"><![CDATA[ServiceManager首先我们要了解一下ServiceManager. ServiceManager的功能主要就是注册,查询服务,作为一个大管家的角色出现. 注册服务：记录服务名和信息，放到服务列表 查询服务：根据服务名查询相应的的信息 ServiceManager是有权限控制的，只有具有相应权限的进程才能注册,查询服务 Linux内存内核空间为什么进程间不可以直接通讯那? 因为每个进程的内存空间都是隔离起来的,不可能随意去访问其他进程的内存. 在32位系统中,寻址空间最大为4G,那么这4G内存,一般将1G分配给内核空间,3G用户空间,Linux内核由系统内的所有进程共享. 这么一来,我们就可以在内核空间为所欲为了,不,并不能.用户进程不能直接操作内核. Android是在Linux的内核上跑的,那么为什么Android要自己做一个Binder来实现进程间的通讯那? 我们都知道Linux上Socket/管道/消息队列都可以做到进程间的通讯,但是通过这些都需要2次内存拷贝, 而Binder只需要一次就可以完成,大大的提高效率 BINDER_MMAPmmap可以将一个文件或者其它对象映射进内存 在Binder中,通过在用户空间(当前进程的用户空间)创建一个虚拟地址空间,并在内核空间创建相同大小的虚拟地址空间. 接着申请一块物理内存,将物理内存映射到内核虚拟地址空间和用户虚拟内存空间,这样就实现了用户控件和内核空间的同步. 来自Gityuan大神的分享http://gityuan.com/2015/11/01/binder-driver/ binder_init：初始化字符设备； binder_open：打开驱动设备，过程需要持有binder_main_lock同步锁； binder_mmap：申请内存空间，该过程需要持有binder_mmap_lock同步锁； binder_ioctl：执行相应的ioctl操作，该过程需要持有binder_main_lock同步锁； 当处于binder_thread_read过程，read_buffer无数据则释放同步锁，并处于wait_event_freezable过程，等有数据到来则唤醒并尝试持有同步锁。]]></content>
+    <content type="text"><![CDATA[ServiceManager首先我们要了解一下ServiceManager. ServiceManager的功能主要就是注册,查询服务,作为一个大管家的角色出现. 注册服务：记录服务名和信息，放到服务列表 查询服务：根据服务名查询相应的的信息 ServiceManager是有权限控制的，只有具有相应权限的进程才能注册,查询服务 http://gityuan.com/2015/11/08/binder-get-sm/ Linux内存内核空间为什么进程间不可以直接通讯那? 因为每个进程的内存空间都是隔离起来的,不可能随意去访问其他进程的内存. 在32位系统中,寻址空间最大为4G,那么这4G内存,一般将1G分配给内核空间,3G用户空间,Linux内核由系统内的所有进程共享. 这么一来,我们就可以在内核空间为所欲为了,不,并不能.用户进程不能直接操作内核. Android是在Linux的内核上跑的,那么为什么Android要自己做一个Binder来实现进程间的通讯那? 我们都知道Linux上Socket/管道/消息队列都可以做到进程间的通讯,但是通过这些都需要2次内存拷贝, 而Binder只需要一次就可以完成,大大的提高效率 BINDER_MMAPmmap可以将一个文件或者其它对象映射进内存 在Binder中,通过在用户空间(当前进程的用户空间)创建一个虚拟地址空间,并在内核空间创建相同大小的虚拟地址空间. 接着申请一块物理内存,将物理内存映射到内核虚拟地址空间和用户虚拟内存空间,这样就实现了用户控件和内核空间的同步. 大概流程 copy_from_user 首先是要发出消息的,那么先从用户控件from 拷贝数据 binder_thread_write 第二步就是把刚才拷贝的数据写入到内核空间 binder_thread_read 第三步再次读取刚才从用户控件from读取并写入内核空间的数据 copy_to_user 最后当然是从内核空间拷贝数据到用户空间to(即目标) PS:以上均建立在每一次操作都成功的基础上 来自Gityuan大神的分享http://gityuan.com/2015/11/01/binder-driver/ 解释说明: 首先Client端发送消息,通过copy_from_user从Client端拷贝数据到内核空间去 而后还记得BINDER_MMAP中的操作么,内核空间的地址与Server是同一块物理内存, Server就可以通过这个方式,直接同步到Client发送的数据. binder_init：初始化字符设备； binder_open：打开驱动设备，过程需要持有binder_main_lock同步锁； binder_mmap：申请内存空间，该过程需要持有binder_mmap_lock同步锁； binder_ioctl：执行相应的ioctl操作，该过程需要持有binder_main_lock同步锁； 当处于binder_thread_read过程，read_buffer无数据则释放同步锁，并处于wait_event_freezable过程，等有数据到来则唤醒并尝试持有同步锁。]]></content>
       <categories>
         <category>Source Code</category>
       </categories>
@@ -16,7 +48,7 @@
   <entry>
     <title><![CDATA[线程与进程的异同以及Android中的IPC机制]]></title>
     <url>%2FJava%2F%E7%BA%BF%E7%A8%8B%E4%B8%8E%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%BC%82%E5%90%8C%E4%BB%A5%E5%8F%8AAndroid%E4%B8%AD%E7%9A%84IPC%E6%9C%BA%E5%88%B6%2F</url>
-    <content type="text"><![CDATA[线程与进程Google Doc (https://developer.android.com/guide/components/processes-and-threads) 进程是资源分配的最小单位，线程是cpu调度的最小单位. 进程是应用程序的执行实例,一个进程中可以包含多个线程, 而一个进程的创建分配是要消耗较大的性能的,相比来说线程就要比进程的开销小. 对于进程来说不共享资源,内存是独立的.而线程共享它所在的线程的资源,内存. 进程间的通信就要更加麻烦,需要使用IPC( Inter-Proscess Communication)进程间的通讯 线程方便很多,但是线程间的同步又是一个较为大的课题了. ​ 想强调的是，线程关注的是中央处理器的运行，而不是进程那样关注内存等资源的管理。 Android中的IPC机制如下图所示:(已经不知道哪里的配图了…感谢分享) IPC简介IPC(Inter-Process Communication) 进程间通信 使用场景: 在Android程序中，一般情况下一个程序就是一个进程 App间的通信,常见的如需要使用其他App的数据 一个App使用多进程,比如指定运行线程android:process=&quot;:name&quot; 需要注意的是,如果一个App使用多进程,Application也会多次创建 Bundle常见于Activity,service中传递数据 需要注意的是,bundle中的数据必须支持序列化(Serializable,Parcelable) 文件共享SharedPreference就是这种实现的. 适合对同步要求不高的使用方式,需要注意处理好并发的问题. MessengerMessenger 对 AIDL 进行了封装，它实现了一种基于消息的进程间通信的方式 frameworks/base/core/java/android/os/IMessenger.aidl 它的AIDL文件就在这里保存着! AIDLAIDL（Android Interface definition language） 是 Android 提供的一种进程间通信 (IPC) 机制 需要注意的是AIDL支持的数据类型与Java接口支持的数据类型有些不同: 所有基础类型（int, char…） String，List，Map 所有Parcelable的类 并且要根据需要添加 in out 的关键词 ContentProvider主要是针对数据库使用的,最常见的例子就是Android中有很多已经定义好的ContentProvider Socket说道这里,就不得不提一下Binder了]]></content>
+    <content type="text"><![CDATA[线程与进程Google Doc (https://developer.android.com/guide/components/processes-and-threads) 进程是资源分配的最小单位，线程是cpu调度的最小单位. 进程是应用程序的执行实例,一个进程中可以包含多个线程, 而一个进程的创建分配是要消耗较大的性能的,相比来说线程就要比进程的开销小. 对于进程来说不共享资源,内存是独立的.而线程共享它所在的线程的资源,内存. 进程间的通信就要更加麻烦,需要使用IPC( Inter-Proscess Communication)进程间的通讯 线程方便很多,但是线程间的同步又是一个较为大的课题了. ​ 想强调的是，线程关注的是中央处理器的运行，而不是进程那样关注内存等资源的管理。 Android中的IPC机制如下图所示:(已经不知道哪里的配图了…感谢分享) IPC简介IPC(Inter-Process Communication) 进程间通信 使用场景: 在Android程序中，一般情况下一个程序就是一个进程 App间的通信,常见的如需要使用其他App的数据 一个App使用多进程,比如指定运行线程android:process=&quot;:name&quot; 需要注意的是,如果一个App使用多进程,Application也会多次创建 Bundle常见于Activity,service中传递数据 需要注意的是,bundle中的数据必须支持序列化(Serializable,Parcelable) 文件共享SharedPreference就是这种实现的. 适合对同步要求不高的使用方式,需要注意处理好并发的问题. MessengerMessenger 对 AIDL 进行了封装，它实现了一种基于消息的进程间通信的方式 frameworks/base/core/java/android/os/IMessenger.aidl 它的AIDL文件就在这里保存着! AIDLAIDL（Android Interface definition language） 是 Android 提供的一种进程间通信 (IPC) 机制 需要注意的是AIDL支持的数据类型与Java接口支持的数据类型有些不同: 所有基础类型（int, char…） String，List，Map 所有Parcelable的类 并且要根据需要添加 in out 的关键词 ContentProvider主要是针对数据库使用的,最常见的例子就是Android中有很多已经定义好的ContentProvider Socket说到这里,就不得不提一下Binder了 http://www.wangzhumo.com/Source-Code/Android-Binder%E6%9C%BA%E5%88%B6-%E4%B8%80/]]></content>
       <categories>
         <category>Java</category>
       </categories>
@@ -139,8 +171,8 @@
         <category>Android Studio</category>
       </categories>
       <tags>
-        <tag>Android</tag>
         <tag>Android Studio</tag>
+        <tag>Android</tag>
       </tags>
   </entry>
   <entry>
@@ -274,8 +306,8 @@
         <category>Bug</category>
       </categories>
       <tags>
-        <tag>Android</tag>
         <tag>Android Studio</tag>
+        <tag>Android</tag>
         <tag>Bug</tag>
       </tags>
   </entry>
@@ -449,8 +481,8 @@
         <category>Android Studio</category>
       </categories>
       <tags>
-        <tag>Android</tag>
         <tag>Android Studio</tag>
+        <tag>Android</tag>
       </tags>
   </entry>
   <entry>
@@ -483,8 +515,8 @@
         <category>Android Studio</category>
       </categories>
       <tags>
-        <tag>Android</tag>
         <tag>Android Studio</tag>
+        <tag>Android</tag>
       </tags>
   </entry>
   <entry>

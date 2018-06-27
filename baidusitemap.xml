@@ -4,8 +4,69 @@
 
     
   <url>
+    <loc>http://www.wangzhumo.com/Java/ServiceLoader-%E4%B8%8E-%E8%B4%A3%E4%BB%BB%E9%93%BE%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
+    <lastmod>2018-06-27T08:36:54.134Z</lastmod>
+    <data>
+        <display>
+        <title>ServiceLoader 与 责任链设计模式</title>
+        <pubTime>2018-06-26T10:22:46.000Z</pubTime>
+        
+        <tag>-Java -设计模式</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://www.wangzhumo.com/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/Video/Android%E8%87%AA%E5%B7%B1%E5%B0%81%E8%A3%85%E4%B8%80%E4%B8%AAVideoPlayer/</loc>
+    <lastmod>2018-05-23T15:34:52.909Z</lastmod>
+    <data>
+        <display>
+        <title>Android自己封装一个VideoPlayer</title>
+        <pubTime>2018-05-23T08:00:32.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Video</tag>
+         
+         
+           
+             
+              <breadCrumb title="Video" url="http://www.wangzhumo.com/categories/Video/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/uncategorized/Android%E8%87%AA%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E9%81%AE%E7%BD%A9%E5%BC%95%E5%AF%BC%E5%B1%82/</loc>
+    <lastmod>2018-05-23T07:59:43.755Z</lastmod>
+    <data>
+        <display>
+        <title>Android自定义一个遮罩引导层</title>
+        <pubTime>2018-05-21T08:53:08.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>View</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.wangzhumo.com/Source-Code/Android-Binder%E6%9C%BA%E5%88%B6-%E4%B8%80/</loc>
-    <lastmod>2018-05-11T09:35:31.289Z</lastmod>
+    <lastmod>2018-05-14T11:08:24.216Z</lastmod>
     <data>
         <display>
         <title>Android Binder机制(一)</title>
@@ -29,7 +90,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/Java/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%BC%82%E5%90%8C%E4%BB%A5%E5%8F%8AAndroid%E4%B8%AD%E7%9A%84IPC%E6%9C%BA%E5%88%B6/</loc>
-    <lastmod>2018-05-11T05:57:49.516Z</lastmod>
+    <lastmod>2018-05-14T10:26:32.972Z</lastmod>
     <data>
         <display>
         <title>线程与进程的异同以及Android中的IPC机制</title>
@@ -352,9 +413,9 @@
         <title>Android Studio报错Error Running app: cannot debug application</title>
         <pubTime>2017-12-26T07:26:29.000Z</pubTime>
         
-        <tag>Android</tag>
-         
         <tag>Android Studio</tag>
+         
+        <tag>Android</tag>
          
         <tag>Bug</tag>
          
@@ -444,9 +505,9 @@
         <title>Android Studio 中使用tools:sample</title>
         <pubTime>2018-02-26T02:31:28.000Z</pubTime>
         
-        <tag>Android</tag>
-         
         <tag>Android Studio</tag>
+         
+        <tag>Android</tag>
          
          
            
@@ -466,9 +527,9 @@
         <title>Android Studio 导入 Vitamio及横竖屏切换</title>
         <pubTime>2017-12-25T01:28:42.000Z</pubTime>
         
-        <tag>Android</tag>
-         
         <tag>Android Studio</tag>
+         
+        <tag>Android</tag>
          
          
            
@@ -508,9 +569,9 @@
         <title>Android Studio 使用正式签名debug调试</title>
         <pubTime>2017-12-25T01:38:59.000Z</pubTime>
         
-        <tag>Android</tag>
-         
         <tag>Android Studio</tag>
+         
+        <tag>Android</tag>
          
          
            
