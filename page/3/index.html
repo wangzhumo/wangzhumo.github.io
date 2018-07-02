@@ -309,6 +309,168 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/uncategorized/使用Charles抓Https的数据请求/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wangzhumo">
+      <meta itemprop="description" content="王诛魔">
+      <meta itemprop="image" content="/images/headimage.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王诛魔">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/uncategorized/使用Charles抓Https的数据请求/" itemprop="url">
+                  使用Charles抓Https的数据请求
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-01-11 16:09:46" itemprop="dateCreated datePublished" datetime="2018-01-11T16:09:46+08:00">2018-01-11</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-03-01 00:32:52" itemprop="dateModified" datetime="2018-03-01T00:32:52+08:00">2018-03-01</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>之前的文章中给项目中加入了Https,此时使用charles珠宝就是一堆乱码,</p>
+<p>但是我们还需要常常使用Charles,调试接口,查找问题等.</p>
+<h4 id="导出证书"><a href="#导出证书" class="headerlink" title="导出证书"></a>导出证书</h4><p>1.打开Charles</p>
+<p>2.Help -&gt; SSL Proxying -&gt; Save Charles Root Certificate…</p>
+<p>3.保存到~/Downloads/charles-ssl-proxying-certificate.pem</p>
+<h4 id="安装证书到设备"><a href="#安装证书到设备" class="headerlink" title="安装证书到设备"></a>安装证书到设备</h4><p>1.把证书推送到设备</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb push charles-ssl-proxying-certificate.pem /sdcard/Download/</span><br><span class="line">charles-ssl-proxying-certificate.pem: 1 file pushed. 0.1 MB/s (1921 bytes in 0.012s)</span><br></pre></td></tr></table></figure>
+<p>2.安装证书</p>
+<p>设置 -&gt; 安全 -&gt; 设备管理与凭证 -&gt; 从存储安装 -&gt; charles-ssl-proxying-certificate.pem’</p>
+<h4 id="设置Charles"><a href="#设置Charles" class="headerlink" title="设置Charles"></a>设置Charles</h4><p>1.Proxy -&gt; SSL Proxying Settings</p>
+<p>2.打开手机,开始请求</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/Android/Android开发中常用的Adb命令/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2113,205 +2275,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/Server/Nginx安装及其简单配置/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wangzhumo">
-      <meta itemprop="description" content="王诛魔">
-      <meta itemprop="image" content="/images/headimage.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="王诛魔">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Server/Nginx安装及其简单配置/" itemprop="url">
-                  Nginx安装及其简单配置
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2017-12-25 13:39:40 / 修改时间：14:03:27" itemprop="dateCreated datePublished" datetime="2017-12-25T13:39:40+08:00">2017-12-25</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Server/" itemprop="url" rel="index"><span itemprop="name">Server</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>环境: centos7</p>
-<p><strong>1.下载安装</strong></p>
-<p>下载nginx-1.12.0,官网<br><code>sudo wget http://nginx.org/download/nginx-1.12.0.tar.gz</code></p>
-<p>解压<br><code>sudo tar -zxvf nginx-1.12.0.tar.gz</code></p>
-<p>其他的库,nginx依赖的库</p>
-<ul>
-<li>安装gcc<br><code>yum -y install gcc</code></li>
-<li>安装pcre<br><code>yum -y install pcre pcre-devel</code></li>
-<li>安装zlib<br><code>yum -y install zlib zlib-devel</code></li>
-<li>安装openssl<br><code>yum -y install openssl openssl-devel</code></li>
-</ul>
-<p>安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo ./configure</span><br><span class="line">  </span><br><span class="line">sudo make</span><br><span class="line">  </span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>默认位置 /usr/local/nginx</p>
-</blockquote>
-<p>如果安装过程中出现文件目录权限问题,百度即可解决.</p>
-<p><strong>2.系统中配置</strong></p>
-<p>1.在系统服务目录里创建nginx.service文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /lib/systemd/system/nginx.service</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=nginx</span><br><span class="line">After=network.target</span><br><span class="line">  </span><br><span class="line">[Service]</span><br><span class="line">Type=forking</span><br><span class="line">ExecStart=/usr/local/nginx/sbin/nginx</span><br><span class="line">ExecReload=/usr/local/nginx/sbin/nginx -s reload</span><br><span class="line">ExecStop=/usr/local/nginx/sbin/nginx -s quit</span><br><span class="line">PrivateTmp=true</span><br><span class="line">  </span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
-<p>2.设置开机启动</p>
-<p><code>systemctl enable nginx.service</code></p>
-<p>3.其他命令</p>
-<p>启动nginx服务<code>systemctl start nginx.service</code></p>
-<p>设置开机自启动<code>systemctl enable nginx.service</code></p>
-<p>停止开机自启动<code>systemctl disable nginx.service</code></p>
-<p>查看服务当前状态<code>systemctl status nginx.service</code></p>
-<p>重新启动服务<code>systemctl restart nginx.service</code></p>
-<p>查看所有已启动的服务 <code>systemctl list-units --type=service</code></p>
-<p><strong>3.nginx.conf的配置</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@wangzhumo hooks]# cd /usr/local/nginx/</span><br><span class="line">[root@wangzhumo nginx]# ll</span><br><span class="line">total 96</span><br><span class="line">drwx------ 2 root root  4096 Dec 24 20:57 client_body_temp</span><br><span class="line">drwxr-xr-x 3 root root  4096 Dec 24 23:24 conf</span><br><span class="line">drwx------ 2 root root  4096 Dec 24 20:57 fastcgi_temp</span><br><span class="line">drwxr-xr-x 2 root root  4096 Dec 23 10:38 html</span><br><span class="line">drwxr-xr-x 2 root root  4096 Dec 24 22:43 logs</span><br><span class="line">-rw-r--r-- 1 root root 53861 Dec 25 13:37 on</span><br><span class="line">drwx------ 2 root root  4096 Dec 24 20:57 proxy_temp</span><br><span class="line">drwxr-xr-x 2 root root  4096 Dec 23 10:38 sbin</span><br><span class="line">drwx------ 2 root root  4096 Dec 24 20:57 scgi_temp</span><br><span class="line">drwx------ 2 root root  4096 Dec 24 20:57 uwsgi_temp</span><br></pre></td></tr></table></figure>
-<p>其中/conf存放配置文件/conf/nginx.conf<br><code>vim /conf/nginx.conf</code></p>
-<p>什么都不要动,在nginx.conf第一条server配置下面写入:<br><code>include vhost/*.conf;</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#125;</span><br><span class="line">#此处是第一条可用的server的结束</span><br><span class="line"></span><br><span class="line">   #加入这句,其实是把其他地方配置的配置文件加载到里面来</span><br><span class="line">   #主要是为了方便管理,修改</span><br><span class="line">   include vhost/*.conf;</span><br><span class="line">   # another virtual host using mix of IP-, name-, and port-based configuration</span><br><span class="line">   #</span><br><span class="line">   #server &#123;</span><br><span class="line">   #    listen       8000;</span><br><span class="line">   #    listen       somename:8080;</span><br><span class="line">   #    server_name  somename  alias  another.alias;</span><br><span class="line"></span><br><span class="line">   #    location / &#123;</span><br><span class="line">   #        root   html;</span><br><span class="line">   #        index  index.html index.htm;</span><br><span class="line">   #    &#125;</span><br><span class="line">   #&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>3.1 /vhost/*.conf的配置</strong></p>
-<p>当前目录到<br><code>cd /usr/local/nginx/conf</code></p>
-<p>创建目录vhost<br><code>mkdir /usr/local/nginx/conf/vhost</code></p>
-<p>创建.conf文件(我只用到hexo的配置,所以只有一个配置文件)<br><code>vim /usr/local/nginx/conf/vhost/hexo.conf</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">server</span><br><span class="line">&#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    #listen [::]:80;</span><br><span class="line">    server_name www.phyooos.top phyooos.top;</span><br><span class="line">    index index.html index.htm index.php default.html default.htm default.php;</span><br><span class="line">    #web root path</span><br><span class="line">    root  /home/wzm/hexo;</span><br><span class="line"></span><br><span class="line">    #error_page   404   /404.html;</span><br><span class="line">    location ~ .*\.(ico|gif|jpg|jpeg|png|bmp|swf)$</span><br><span class="line">    &#123;</span><br><span class="line">        access_log   on;</span><br><span class="line">        expires      1d;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location ~ .*\.(js|css|txt|xml)?$</span><br><span class="line">    &#123;</span><br><span class="line">        access_log   on;</span><br><span class="line">        expires      12h;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        try_files $uri $uri/ =404;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    access_log  /usr/local/nginx/logs/hexo.log  combined;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>4.重启</strong><br><code>systemctl reload nginx</code></p>
-<p>在外面访问即可</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2363,7 +2326,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">49</span>
+                    <span class="site-state-item-count">50</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2461,7 +2424,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">26</span>
+                      
+                    
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
