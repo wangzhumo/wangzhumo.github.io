@@ -309,6 +309,368 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/Android/EditText的输入属性InputType以及imeOptions/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wangzhumo">
+      <meta itemprop="description" content="王诛魔">
+      <meta itemprop="image" content="/images/headimage.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王诛魔">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Android/EditText的输入属性InputType以及imeOptions/" itemprop="url">
+                  EditText的输入属性InputType以及imeOptions
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-12-25 10:11:15 / 修改时间：10:12:54" itemprop="dateCreated datePublished" datetime="2017-12-25T10:11:15+08:00">2017-12-25</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>EditText的输入属性</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">android:imeOptions=&quot;flagNoExtractUi&quot;  //使软键盘不全屏显示，只占用部分屏幕</span><br><span class="line">android:imeOptions=&quot;actionNone&quot;  //输入框右侧不带任何提示</span><br><span class="line">android:imeOptions=&quot;actionGo&quot;    //右下角按键内容为&apos;开始&apos;</span><br><span class="line">android:imeOptions=&quot;actionSearch&quot;  //右下角按键为搜索</span><br><span class="line">android:imeOptions=&quot;actionSend&quot;    //右下角按键内容为&apos;发送&apos;</span><br><span class="line">android:imeOptions=&quot;actionNext&quot;   //右下角按键内容为&apos;下一步&apos;</span><br><span class="line">android:imeOptions=&quot;actionDone&quot;  //右下角按键内容为&apos;完成&apos;</span><br></pre></td></tr></table></figure></p>
+<p><strong>EditText的inputType属性</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;EditText</span><br><span class="line">    android:inputType=&quot;phone&quot; //电话号码</span><br><span class="line">    android:inputType=&quot;none&quot; </span><br><span class="line">    android:inputType=&quot;text&quot;  //文本类型</span><br><span class="line">    android:inputType=&quot;textCapCharacters&quot; //字母大写 </span><br><span class="line">    android:inputType=&quot;textCapWords&quot; //首字母大写 </span><br><span class="line">    android:inputType=&quot;textCapSentences&quot; //仅第一个字母大写 </span><br><span class="line">    android:inputType=&quot;textAutoCorrect&quot; //自动完成 </span><br><span class="line">    android:inputType=&quot;textAutoComplete&quot; //自动完成 </span><br><span class="line">    android:inputType=&quot;textMultiLine&quot; //多行输入 </span><br><span class="line">    android:inputType=&quot;textImeMultiLine&quot; //输入法多行</span><br><span class="line">    android:inputType=&quot;textNoSuggestions&quot; //不提示 </span><br><span class="line">    android:inputType=&quot;textUri&quot; //网址 </span><br><span class="line">    android:inputType=&quot;textEmailAddress&quot; //电子邮件地址 </span><br><span class="line">    android:inputType=&quot;textEmailSubject&quot; //邮件主题 </span><br><span class="line">    android:inputType=&quot;textShortMessage&quot; //短讯 </span><br><span class="line">    android:inputType=&quot;textLongMessage&quot; //长信息 </span><br><span class="line">    android:inputType=&quot;textPersonName&quot; //人名 </span><br><span class="line">    android:inputType=&quot;textPostalAddress&quot; //地址</span><br><span class="line">    android:inputType=&quot;textPassword&quot; //密码 </span><br><span class="line">    android:inputType=&quot;textVisiblePassword&quot; //可见密码</span><br><span class="line">    android:inputType=&quot;textWebEditText&quot; //作为网页表单的文本 </span><br><span class="line">    android:inputType=&quot;textFilter&quot; //文本筛选过滤 </span><br><span class="line">    android:inputType=&quot;textPhonetic&quot; //拼音输入 </span><br><span class="line">    android:inputType=&quot;number&quot; //数字 </span><br><span class="line">    android:inputType=&quot;numberSigned&quot; //带符号数字格式 </span><br><span class="line">    android:inputType=&quot;numberDecimal&quot; //带小数点的浮点格式 </span><br><span class="line">    android:inputType=&quot;datetime&quot; //时间日期 </span><br><span class="line">    android:inputType=&quot;date&quot; //日期键盘 </span><br><span class="line">    android:inputType=&quot;time&quot; //时间键盘</span><br><span class="line">    /&gt;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/Android/TextView中的文字颜色-点击-斜体等实现-SpannableString/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wangzhumo">
+      <meta itemprop="description" content="王诛魔">
+      <meta itemprop="image" content="/images/headimage.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王诛魔">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Android/TextView中的文字颜色-点击-斜体等实现-SpannableString/" itemprop="url">
+                  TextView中的文字颜色,点击,斜体等实现--SpannableString
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-12-25 10:06:03 / 修改时间：16:19:22" itemprop="dateCreated datePublished" datetime="2017-12-25T10:06:03+08:00">2017-12-25</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>一般实现方式如下</strong>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String html = &quot;文字&lt;font color=\&quot;red\&quot;&gt;变色&lt;/font&gt;的效果&quot;;</span><br><span class="line">tvMainShow.setText(Html.fromHtml(html));</span><br></pre></td></tr></table></figure></p>
+<p>使用Html的方式来实现,简单的还好,复杂一点的真的很不方便</p>
+<p>Google显然早就已经想到了这样的问题,所以  </p>
+<blockquote>
+<p><a href="https://developer.android.com/reference/android/text/SpannedString.html" target="_blank" rel="noopener">SpannedString</a> &amp; <a href="https://developer.android.com/reference/android/text/SpannableStringBuilder.html" target="_blank" rel="noopener">SpannableStringBuilder</a> 就是干这个的</p>
+</blockquote>
+<p>他们都实现了 <a href="https://developer.android.com/reference/java/lang/CharSequence.html" target="_blank" rel="noopener">CharSequence</a>,眼熟么?  <figure class="highlight plain"><figcaption><span>text)```.也就是说,你可以直接赋值给TextView</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">他们两个的区别就是    </span><br><span class="line">This is the class for text whose content is immutable but to which markup objects can be attached and detached. For mutable text, see SpannableStringBuilder</span><br><span class="line">文档说的很清楚了,就是CharSequence是固定长度的,一旦通过 new SpannableString(&quot;设置文字&quot;);则不可以更改文字内容,而SpannableStringBuilder是可以的,个人理解比较像String 和 StringBuilder 的关系</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">###不多说了,开搞:</span><br><span class="line">**1.设置文字**</span><br><span class="line">&gt;SpannableString spannableString = new SpannableString(&quot;文字的前景色与背景色&quot;);</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">**2.通过setSpan来修改文字的样式**</span><br><span class="line">```setSpan [Object what, int start, int end, int flags)</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2520304-e821febbebd4f8dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="入参.png"></p>
+<p>flags:<br>Spannable.SPAN_EXCLUSIVE_EXCLUSIVE：前后都不包括<br>Spannable.SPAN_EXCLUSIVE_INCLUSIVE    ：前面不包括<br>Spannable.SPAN_INCLUSIVE_EXCLUSIVE    ：前面包括<br>Spannable.SPAN_INCLUSIVE_INCLUSIVE    ：前后都包括</p>
+<p>为了说明这四个参数,有例子如下:</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2520304-3784e1b0d6a15d73.gif?imageMogr2/auto-orient/strip" alt="flags.gif"><br>代码如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> *</span><br><span class="line"> * @author 王诛魔 2017/1/21 上午11:31</span><br><span class="line"> * @e-mail  phyooos@163.com</span><br><span class="line"> */</span><br><span class="line">public class MainActivity extends AppCompatActivity &#123;</span><br><span class="line"></span><br><span class="line">    @BindView(R.id.edit_show)</span><br><span class="line">    EditText etMainShow;</span><br><span class="line">    @BindView(R.id.tab_view)</span><br><span class="line">    TabLayout tabLayout;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onCreate(@Nullable Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        ButterKnife.bind(this);</span><br><span class="line">        showText(Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</span><br><span class="line">        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onTabSelected(TabLayout.Tab tab) &#123;</span><br><span class="line">                switch (tab.getPosition()) &#123;</span><br><span class="line">                    case 0:</span><br><span class="line">                        showText(Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</span><br><span class="line">                        break;</span><br><span class="line">                    case 1:</span><br><span class="line">                        showText(Spannable.SPAN_EXCLUSIVE_INCLUSIVE);</span><br><span class="line">                        break;</span><br><span class="line">                    case 2:</span><br><span class="line">                        showText(Spannable.SPAN_INCLUSIVE_EXCLUSIVE);</span><br><span class="line">                        break;</span><br><span class="line">                    case 3:</span><br><span class="line">                        showText(Spannable.SPAN_INCLUSIVE_INCLUSIVE);</span><br><span class="line">                        break;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            @Override</span><br><span class="line">            public void onTabUnselected(TabLayout.Tab tab) &#123;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            @Override</span><br><span class="line">            public void onTabReselected(TabLayout.Tab tab) &#123;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 展示文字</span><br><span class="line">     */</span><br><span class="line">    private void showText(int type) &#123;</span><br><span class="line">        //构造SpannableString</span><br><span class="line">        SpannableString spanString = new SpannableString(&quot;这里是王诛魔的简书文章&quot;);</span><br><span class="line">        //字体颜色的Span</span><br><span class="line">        ForegroundColorSpan span = new ForegroundColorSpan(Color.RED);</span><br><span class="line">        //指定范围</span><br><span class="line">        spanString.setSpan(span, 3, 6, type);</span><br><span class="line">        //设置给EditText显示出来</span><br><span class="line">        etMainShow.setText(spanString);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面的代码中:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//字体颜色的Span</span><br><span class="line">ForegroundColorSpan span = new ForegroundColorSpan(Color.RED);</span><br><span class="line">ForegroundColorSpan就是设置的文字样式,,这个是前景色,,也就是字体的颜色</span><br><span class="line">//指定范围</span><br><span class="line">spanString.setSpan(span, 3, 6, type);</span><br><span class="line">这里的三个参数已经在上面说过了,通过上面的代码也会发现,其实3,6  其中下标3是包含的,而下标6就不会改变</span><br></pre></td></tr></table></figure></p>
+<hr>
+<p><strong>3.至于Span的这些个样式在哪里找,请看文档:</strong><br><strong>关键词:<a href="https://developer.android.com/reference/android/text/style/CharacterStyle.html" target="_blank" rel="noopener">CharacterStyle</a></strong></p>
+<blockquote>
+<p><a href="https://developer.android.com/reference/android/text/style/CharacterStyle.html" target="_blank" rel="noopener">https://developer.android.com/reference/android/text/style/CharacterStyle.html</a></p>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/2520304-50978874ad4c3a7f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Span的一些类型.png"></p>
+<p>说几个常用的吧:</p>
+<ul>
+<li>ForegroundColorSpan  字体颜色</li>
+<li>BackgroundColorSpan 字体背景色设置</li>
+<li>AbsoluteSizeSpan 字体大小</li>
+<li>StyleSpan 粗体等<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//字体由Typeface来控制</span><br><span class="line">StyleSpan span = new StyleSpan(Typeface.BOLD_ITALIC);</span><br><span class="line"></span><br><span class="line">- UnderlineSpan 下划线</span><br><span class="line">- ImageSpan 图片置换</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[ImageSpan https://developer.android.com/reference/android/text/style/ImageSpan.html](https://developer.android.com/reference/android/text/style/ImageSpan.html)</span><br><span class="line"></span><br><span class="line">这个有一点不同,它是将文字中的指定部分替换为一个图片,至于如何构造请参考文档</span><br><span class="line">让我想起来了那个EmojiEditText的库,其实可以用这个ImageSpan实现一个简单的可以显示表情的TextView</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- ClickableSpan 点击</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>//这个有些不同,需要<br>class CustomClickable extends ClickableSpan {</p>
+<pre><code>@Override
+public void updateDrawState(TextPaint ds) {
+    //这里其实还可以对可点击部分设置一些东西
+}
+
+@Override
+public void onClick(View widget) {
+      ...do something
+}
+</code></pre><p>}</p>
+<p>//对了,加上这行代码<br>TextView.setMovementMethod(LinkMovementMethod.getInstance());<br>//要不点不动哦</p>
+<p>```</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2520304-7ccd2161c4d5f5e7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2017-04-05_23-36-38.png"></p>
+<ul>
+<li>URLSpan 这个完全可以用ClickableSpan实现</li>
+</ul>
+<p><strong>SpannableStringBuilder</strong></p>
+<p>SpannableString都说的这么明白了,SpannableStringBuilder就省了</p>
+<p>####End</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/Flutter/Flutter-安装/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2048,353 +2410,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/Android/String-format的参数表/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wangzhumo">
-      <meta itemprop="description" content="王诛魔">
-      <meta itemprop="image" content="/images/headimage.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="王诛魔">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Android/String-format的参数表/" itemprop="url">
-                  String.format的参数表
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2017-12-23 10:56:53" itemprop="dateCreated datePublished" datetime="2017-12-23T10:56:53+08:00">2017-12-23</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2017-12-24 19:48:40" itemprop="dateModified" datetime="2017-12-24T19:48:40+08:00">2017-12-24</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>####String.format()</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">%s  字符串类型 &quot;mingrisoft&quot;</span><br><span class="line">%c  字符类型    &apos;m&apos;</span><br><span class="line">%b  布尔类型    true</span><br><span class="line">%d  整数类型（十进制）   99</span><br><span class="line">%x  整数类型（十六进制）  FF</span><br><span class="line">%o  整数类型（八进制）   77</span><br><span class="line">%f  浮点类型    99.99</span><br><span class="line">%a  十六进制浮点类型    FF.35AE</span><br><span class="line">%e  指数类型    9.38e+5</span><br><span class="line">%g  通用浮点类型（f和e类型中较短的）</span><br><span class="line">%h  散列码 </span><br><span class="line">%%  百分比类型   ％</span><br><span class="line">%n  换行符</span><br><span class="line">%tx 日期与时间类型（x代表不同的日期与时间转换符</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/Tools/透明度对照表/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wangzhumo">
-      <meta itemprop="description" content="王诛魔">
-      <meta itemprop="image" content="/images/headimage.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="王诛魔">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Tools/透明度对照表/" itemprop="url">
-                  透明度对照表
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2017-12-23 10:55:00" itemprop="dateCreated datePublished" datetime="2017-12-23T10:55:00+08:00">2017-12-23</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-03-01 00:33:07" itemprop="dateModified" datetime="2018-03-01T00:33:07+08:00">2018-03-01</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>####透明度对照表</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">100% — FF</span><br><span class="line"></span><br><span class="line">95% — F2</span><br><span class="line"></span><br><span class="line">90% — E6</span><br><span class="line"></span><br><span class="line">85% — D9</span><br><span class="line"></span><br><span class="line">80% — CC</span><br><span class="line"></span><br><span class="line">75% — BF</span><br><span class="line"></span><br><span class="line">70% — B3</span><br><span class="line"></span><br><span class="line">65% — A6</span><br><span class="line"></span><br><span class="line">60% — 99</span><br><span class="line"></span><br><span class="line">55% — 8C</span><br><span class="line"></span><br><span class="line">50% — 80</span><br><span class="line"></span><br><span class="line">45% — 73</span><br><span class="line"></span><br><span class="line">40% — 66</span><br><span class="line"></span><br><span class="line">35% — 59</span><br><span class="line"></span><br><span class="line">30% — 4D</span><br><span class="line"></span><br><span class="line">25% — 40</span><br><span class="line"></span><br><span class="line">20% — 33</span><br><span class="line"></span><br><span class="line">15% — 26</span><br><span class="line"></span><br><span class="line">10% — 1A</span><br><span class="line"></span><br><span class="line">5% — 0D</span><br><span class="line"></span><br><span class="line">0% — 00</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2441,7 +2461,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">50</span>
+                    <span class="site-state-item-count">52</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2474,7 +2494,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">10</span>
+                      
+                    
+                    <span class="site-state-item-count">11</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
