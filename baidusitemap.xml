@@ -4,6 +4,46 @@
 
     
   <url>
+    <loc>http://www.wangzhumo.com/Tools/GitHub%E4%BD%BF%E7%94%A8SSH%E7%9A%84%E6%96%B9%E5%BC%8F%E5%85%8D%E5%AF%86%E4%B8%8A%E4%BC%A0/</loc>
+    <lastmod>2018-07-05T05:29:56.917Z</lastmod>
+    <data>
+        <display>
+        <title>GitHub使用SSH的方式免密上传</title>
+        <pubTime>2018-07-05T05:13:25.000Z</pubTime>
+        
+        <tag>GitHub</tag>
+         
+         
+           
+             
+              <breadCrumb title="Tools" url="http://www.wangzhumo.com/categories/Tools/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/Java/String-format%E7%9A%84%E5%8F%82%E6%95%B0%E8%A1%A8/</loc>
+    <lastmod>2018-07-05T05:14:25.930Z</lastmod>
+    <data>
+        <display>
+        <title>String.format的参数表</title>
+        <pubTime>2017-12-23T02:56:53.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://www.wangzhumo.com/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.wangzhumo.com/Android/Android%E9%9D%9E%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%E4%B8%8E%E5%8C%BF%E5%90%8D%E5%86%85%E9%83%A8%E7%B1%BB%E5%BC%95%E8%B5%B7%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/</loc>
     <lastmod>2018-07-05T04:09:22.075Z</lastmod>
     <data>
@@ -1089,24 +1129,4 @@
 
     
     
-    
-  <url>
-    <loc>http://www.wangzhumo.com/Android/String-format%E7%9A%84%E5%8F%82%E6%95%B0%E8%A1%A8/</loc>
-    <lastmod>2017-12-24T11:48:40.633Z</lastmod>
-    <data>
-        <display>
-        <title>String.format的参数表</title>
-        <pubTime>2017-12-23T02:56:53.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
-          
-        </display>
-    </data>
-    </url>
-
 </urlset>

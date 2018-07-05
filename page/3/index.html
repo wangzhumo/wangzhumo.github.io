@@ -309,6 +309,257 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/Android/Jenkins搭建Android自动打包/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wangzhumo">
+      <meta itemprop="description" content="王诛魔">
+      <meta itemprop="image" content="/images/headimage.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王诛魔">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Android/Jenkins搭建Android自动打包/" itemprop="url">
+                  Jenkins搭建Android自动打包
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-02-05 09:55:44 / 修改时间：12:49:03" itemprop="dateCreated datePublished" datetime="2018-02-05T09:55:44+08:00">2018-02-05</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h4><ul>
+<li><p>Jenkins的下载与安装</p>
+<p><strong>下载</strong></p>
+<blockquote>
+<p> <a href="https://jenkins.io/download/" target="_blank" rel="noopener">https://jenkins.io/download/</a></p>
+<p> 下载war包</p>
+<p> <a href="http://mirrors.jenkins.io/war-stable/latest/jenkins.war" target="_blank" rel="noopener">Generic Java package (.war)</a></p>
+</blockquote>
+<p>因为打算使用Tomcat来部署,所以需要下载war包,也可以直接下对应版本的安装文件,直接安装</p>
+</li>
+</ul>
+<p>​    <strong>安装</strong></p>
+<p>​    war包放到<code>./apache-tomcat-7.0.77/webapps</code>    </p>
+<p>​    Tomcat的wabapps包下即可</p>
+<ul>
+<li><p>Tomcat (略)</p>
+<p>记得配置一下环境变量,等会方便启动</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export TOMCAT_HOME=/Users/phyooos/develop/apache-tomcat-7.0.77</span><br><span class="line"></span><br><span class="line">export PATH.....:$TOMCAT/bin</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ul>
+<h4 id="初始化Jenkins"><a href="#初始化Jenkins" class="headerlink" title="初始化Jenkins"></a>初始化Jenkins</h4><ul>
+<li><p>启动Jenkins,即启动tomcat</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> startup.sh</span><br><span class="line">Using CATALINA_BASE:   /Users/phyooos/develop/apache-tomcat-7.0.77</span><br><span class="line">Using CATALINA_HOME:   /Users/phyooos/develop/apache-tomcat-7.0.77</span><br><span class="line">Using CATALINA_TMPDIR: /Users/phyooos/develop/apache-tomcat-7.0.77/temp</span><br><span class="line">Using JRE_HOME:        /Library/Java/JavaVirtualMachines/jdk1.8.0/Contents/Home</span><br><span class="line">Using CLASSPATH:       /Users/phyooos/develop/apache-tomcat-7.0.77/bin/bootstrap.jar:/Users/phyooos/develop/apache-tomcat-7.0.77/bin/tomcat-juli.jar</span><br><span class="line">Tomcat started.</span><br></pre></td></tr></table></figure>
+<p>看到这个就说明,已经正常启动</p>
+</li>
+<li><p>访问<a href="http://localhost:8080/jenkins/" target="_blank" rel="noopener">http://localhost:8080/jenkins/</a></p>
+<p>打开后需要输入一个密钥,mac的在<code>jenkins/secrets/initialAdminPassword</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">~ ⌚ 10:11:03</span><br><span class="line"><span class="meta">$</span> cat ~/.jenkins/secrets/initialAdminPassword</span><br><span class="line">55ad44431f6d4ebdb53a7c1971d12df4</span><br></pre></td></tr></table></figure>
+<p>输入此密钥即可.</p>
+</li>
+<li><p>创建用户</p>
+</li>
+</ul>
+<h4 id="配置Jenkins"><a href="#配置Jenkins" class="headerlink" title="配置Jenkins"></a>配置Jenkins</h4><h5 id="1-安装插件"><a href="#1-安装插件" class="headerlink" title="1.安装插件"></a>1.安装插件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">	</span><br><span class="line">Build Timeout</span><br><span class="line"></span><br><span class="line">build-name-setter</span><br><span class="line"></span><br><span class="line">Credentials Binding Plugin</span><br><span class="line"></span><br><span class="line">description setter plugin</span><br><span class="line"></span><br><span class="line">Dynamic Parameter Plug-in(这个插件,搜不到了,因为安全问题被屏蔽了)</span><br><span class="line"></span><br><span class="line">Environment Injector Plugin</span><br><span class="line"></span><br><span class="line">Git plugin</span><br><span class="line"></span><br><span class="line">GitHub Branch Source Plugin</span><br><span class="line">	</span><br><span class="line">Gitlab Authentication plugin</span><br><span class="line"></span><br><span class="line">GitLab Plugin</span><br><span class="line"></span><br><span class="line">Gradle Plugin</span><br><span class="line"></span><br><span class="line">Pipeline</span><br><span class="line"></span><br><span class="line">SSH Slaves plugin</span><br><span class="line">	</span><br><span class="line">SSH plugin</span><br><span class="line">	</span><br><span class="line">Timestamper</span><br><span class="line">	</span><br><span class="line">Upload to pgyer(上传到蒲公英,没有需要的不用安装)</span><br><span class="line">	</span><br><span class="line">Workspace Cleanup Plugin</span><br></pre></td></tr></table></figure>
+<p>以上插件,是常用的插件,尽量全部安装</p>
+<h5 id="2-配置环境变量"><a href="#2-配置环境变量" class="headerlink" title="2.配置环境变量"></a>2.配置环境变量</h5><p><strong>系统管理 - 全局工具配置</strong></p>
+<p>需要配置</p>
+<p>Java</p>
+<p><img src="/images/jenkins_java.png" alt="Java"></p>
+<p>Git</p>
+<p><img src="/images/jenkins_git.png" alt="Git"></p>
+<p>Gradle</p>
+<p><img src="/images/jenkins_gradle.png" alt="Gradle"></p>
+<p>配置好保存即可</p>
+<p><strong>系统管理 - 系统设置</strong></p>
+<p>记得配置gitlab或者 github账号</p>
+<h5 id="3-初始化项目"><a href="#3-初始化项目" class="headerlink" title="3.初始化项目"></a>3.初始化项目</h5><p>创建项目</p>
+<p><img src="/images/jenkins_init.png" alt="init"></p>
+<hr>
+<p><strong>General</strong></p>
+<p>选择参数化构建过程</p>
+<p>IS_JENKINS  是否Jenkins打包,这里肯定是一直true的</p>
+<p>PRODUCT_FLAVORS  环境</p>
+<p>BUILD_TYPE  构建版本</p>
+<p>VERSION_NAME 版本名字</p>
+<p>JENKINS_OUTPUT Apk生成目录</p>
+<p>JENKINS_TIME  时间戳</p>
+<p><img src="/images/jenkins_init1.png" alt="General"></p>
+<p><img src="/images/jenkins_init2.png" alt="General"></p>
+<p><img src="/images/jenkins_init3.png" alt="General"></p>
+<p>这些参数定义完就可以使用了 ${参数名} 的形式,这些参数会写入到 App项目中的 gradle.properties文件</p>
+<p>App项目中的 gradle.properties文件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># When configured, Gradle will run in incubating parallel mode.</span><br><span class="line"># This option should only be used with decoupled projects. More details, visit</span><br><span class="line"># http://www.gradle.org/docs/current/userguide/multi_project_builds.html#sec:decoupled_projects</span><br><span class="line"># org.gradle.parallel=true</span><br><span class="line">org.gradle.jvmargs=-Xmx4608M</span><br><span class="line"></span><br><span class="line">VERSION_NAME=<span class="number">1.4</span>.0</span><br><span class="line">VERSION_CODE=<span class="number">12</span></span><br><span class="line">IS_JENKINS=<span class="keyword">false</span></span><br><span class="line">JENKINS_OUTPUT=<span class="string">'output/'</span></span><br><span class="line">JENKINS_TIME=<span class="string">'201802021231'</span></span><br></pre></td></tr></table></figure>
+<hr>
+<p>进入下一个配置页面,到<strong>源码管理</strong>那块</p>
+<p><img src="/images/jenkins_gitlab.png" alt="gitlab"></p>
+<p>只要你能下载到源码即可,无所谓非要和我这个一致,branch  就是指定分支了,我这儿是  dev 分支</p>
+<hr>
+<p>下一个配置<strong>构建</strong></p>
+<p><img src="/images/jenkins_build.png" alt="build"></p>
+<p>选择 Invoke Gradle </p>
+<p>Tasks 里面的命令,我来解释一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#清理</span><br><span class="line">clean  </span><br><span class="line">#打包</span><br><span class="line">assemble$&#123;PRODUCT_FLAVORS&#125;$&#123;BUILD_TYPE&#125;</span><br><span class="line">#这里的意思是 打包指定的一个FLAVOR版本(Release + 版本)</span><br><span class="line">#关于assemble ...  的,请搜 gradle 打包命令</span><br><span class="line"></span><br><span class="line">#其他参数</span><br><span class="line">-PVERSION_NAME=$&#123;VERSION_NAME&#125;</span><br><span class="line">-PVERSION_CODE=$&#123;VERSION_CODE&#125;</span><br><span class="line">-PJENKINS_OUTPUT=$&#123;JENKINS_OUTPUT&#125;</span><br><span class="line">-PJENKINS_TIME=$&#123;JENKINS_TIME&#125;</span><br><span class="line">-PIS_JENKINS=$&#123;IS_JENKINS&#125;</span><br><span class="line"></span><br><span class="line">#-P意味着参数</span><br><span class="line">#-P后面是参数名</span><br><span class="line">#=$&#123;&#125; 则为参数值,就是上面General里面配置的</span><br></pre></td></tr></table></figure>
+<hr>
+<p><strong>构建后操作</strong></p>
+<p><img src="/images/jenkins_pgy.png" alt="pgy"></p>
+<blockquote>
+<p>参考 <a href="https://www.pgyer.com/doc/view/jenkins_plugin" target="_blank" rel="noopener">https://www.pgyer.com/doc/view/jenkins_plugin</a></p>
+</blockquote>
+<p>保存即可</p>
+<h5 id="改造App"><a href="#改造App" class="headerlink" title="改造App"></a>改造App</h5><ul>
+<li>./gradle.properties文件</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">VERSION_NAME=1.4.0</span><br><span class="line">VERSION_CODE=12</span><br><span class="line">IS_JENKINS=false</span><br><span class="line">JENKINS_OUTPUT=&apos;output/&apos;</span><br><span class="line">JENKINS_TIME=&apos;201802021231&apos;</span><br></pre></td></tr></table></figure>
+<p>以上文件,写完请build一次,便于build.gradle中使用</p>
+<p>使用jenkins时,jenkins会把定义的值注入到这里,覆盖这里定义的值</p>
+<ul>
+<li>app/build.gradle</li>
+</ul>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">android&#123;</span><br><span class="line"></span><br><span class="line">	defaultConfig &#123;</span><br><span class="line">    	...</span><br><span class="line">    	<span class="comment">//此处使用gradle.properties中的值   VERSION_CODE和VERSION_NAME</span></span><br><span class="line">    	versionCode VERSION_CODE <span class="keyword">as</span> Integer</span><br><span class="line">    	versionName VERSION_NAME</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//自定义apk名字</span></span><br><span class="line">    android.applicationVariants.all &#123; variant -&gt;</span><br><span class="line">    	<span class="comment">//获取时间戳</span></span><br><span class="line">        <span class="keyword">def</span> timeNow = getDate()</span><br><span class="line">        <span class="comment">//如果是IS_JENKINS构建,则修改打包apk的目录</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="string">'true'</span>.equals(IS_JENKINS)) &#123;</span><br><span class="line">        	<span class="comment">//使用JENKINS_OUTPUT的目录</span></span><br><span class="line">            <span class="keyword">def</span> outputFile = JENKINS_OUTPUT</span><br><span class="line">            <span class="comment">//使用JENKINS_TIME的时间戳</span></span><br><span class="line">            timeNow = JENKINS_TIME</span><br><span class="line">            <span class="comment">//定义apk目录</span></span><br><span class="line">            variant.getPackageApplication().outputDirectory = <span class="keyword">new</span> File(outputFile)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        variant.getPackageApplication().outputScope.apkDatas.forEach &#123; apkData -&gt;</span><br><span class="line">            <span class="comment">//这个修改输出APK的文件名</span></span><br><span class="line">            apkData.outputFileName = <span class="string">"一号车市_$&#123;variant.versionName&#125;_$&#123;timeNow&#125;.apk"</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	flavorDimensions <span class="string">'env'</span></span><br><span class="line"></span><br><span class="line">    productFlavors &#123;</span><br><span class="line">        envapp &#123;</span><br><span class="line">            dimension <span class="string">'env'</span></span><br><span class="line">            <span class="comment">//此处使用jenkins传的VERSION_NAME</span></span><br><span class="line">            versionName VERSION_NAME</span><br><span class="line">            manifestPlaceholders = [<span class="string">UMENG_CHANNEL_VALUE:</span> <span class="string">"app"</span>]</span><br><span class="line">            buildConfigField <span class="string">"String"</span>, <span class="string">"SERVER_HOST"</span>, <span class="string">'"https://app.wangzhumo.com/"'</span></span><br><span class="line">        &#125;</span><br><span class="line">        envtest &#123;</span><br><span class="line">            dimension <span class="string">'env'</span></span><br><span class="line">            <span class="comment">//为了方便测试看出当前app环境,就不用VERSION_NAME了</span></span><br><span class="line">            versionName <span class="string">"Test"</span></span><br><span class="line">            manifestPlaceholders = [<span class="string">UMENG_CHANNEL_VALUE:</span> <span class="string">"app"</span>]</span><br><span class="line">            buildConfigField <span class="string">"String"</span>, <span class="string">"SERVER_HOST"</span>, <span class="string">'"http://app-test.wangzhumo.com/"'</span></span><br><span class="line">        &#125;</span><br><span class="line">        envpre &#123;</span><br><span class="line">            dimension <span class="string">'env'</span></span><br><span class="line">            versionName <span class="string">"Pre"</span></span><br><span class="line">            manifestPlaceholders = [<span class="string">UMENG_CHANNEL_VALUE:</span> <span class="string">"app"</span>]</span><br><span class="line">            buildConfigField <span class="string">"String"</span>, <span class="string">"SERVER_HOST"</span>, <span class="string">'"https://app-pre.wangzhumo.com/"'</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        envdev &#123;</span><br><span class="line">            dimension <span class="string">'env'</span></span><br><span class="line">            versionName <span class="string">"Dev"</span></span><br><span class="line">            manifestPlaceholders = [<span class="string">UMENG_CHANNEL_VALUE:</span> <span class="string">"app"</span>]</span><br><span class="line">            buildConfigField <span class="string">"String"</span>, <span class="string">"SERVER_HOST"</span>, <span class="string">'"http://192.168.1.16:8080/app2c/"'</span></span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//其实UMENG_CHANNEL_VALUE    SERVER_HOST   也都可以使用jenkins定义参数,并使用</span></span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">//一个获取时间戳的方法</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">def</span> getDate() &#123;</span><br><span class="line">    	<span class="keyword">def</span> date = <span class="keyword">new</span> Date()</span><br><span class="line">    	<span class="keyword">def</span> formattedDate = date.format(<span class="string">'yyyyMMddHHmm'</span>)</span><br><span class="line">    	<span class="keyword">return</span> formattedDate</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>记得改完app,上传代码哦</p>
+<h4 id="Jenkins打包"><a href="#Jenkins打包" class="headerlink" title="Jenkins打包"></a>Jenkins打包</h4><p><img src="/images/jenkins_go.png" alt="打包"></p>
+<p>OK了,可以愉快的打包了,打包完就会自动上传到蒲公英.</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/Java/Java中String-format-的使用指北/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2427,183 +2678,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.wangzhumo.com/Bug/Android-Studio报错Error-Running-app-cannot-debug-application/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wangzhumo">
-      <meta itemprop="description" content="王诛魔">
-      <meta itemprop="image" content="/images/headimage.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="王诛魔">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Bug/Android-Studio报错Error-Running-app-cannot-debug-application/" itemprop="url">
-                  Android Studio报错Error Running app: cannot debug application
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2017-12-26 15:26:29" itemprop="dateCreated datePublished" datetime="2017-12-26T15:26:29+08:00">2017-12-26</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-03-01 00:30:01" itemprop="dateModified" datetime="2018-03-01T00:30:01+08:00">2018-03-01</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Bug/" itemprop="url" rel="index"><span itemprop="name">Bug</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Android Studio报错Error Running app: cannot debug application</p>
-<p>这里有一位仁兄帮忙翻译了.</p>
-<blockquote>
-<p><a href="http://blog.csdn.net/yishichangan1/article/details/77451486" target="_blank" rel="noopener">http://blog.csdn.net/yishichangan1/article/details/77451486</a></p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Cannot debug application xx.xxx.xxx.app on device lge_nexus_5x(此处表示你的手机型号).</span><br><span class="line">你的xxxapp不能在型号为Nexus 5x的LGE手机上调试。</span><br><span class="line"></span><br><span class="line">This application does not have the debuggable attribute enabled in its manifest.</span><br><span class="line">这个项目在清单文件（AndroidManifest.xml）中没有设置可以调试的参数。</span><br><span class="line"></span><br><span class="line">If you have manually set it in the manifest, then remove it and let the IDE automatically assign it.</span><br><span class="line">如果你已经手动在清单文件种设置了这个属性，请remove掉，让IDE自动生成。</span><br><span class="line"></span><br><span class="line">If you are using Gradle, make sure that your current variant is debuggable.</span><br><span class="line">如果你使用Gradle，确认你现在的变体是可调试的。</span><br></pre></td></tr></table></figure>
-<p>####我就知道是我自己选了release….果然</p>
-<p><img src="/images/canot_debug.png" alt="cannotdebug"></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2655,7 +2729,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">52</span>
+                    <span class="site-state-item-count">53</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2757,7 +2831,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">27</span>
+                      
+                    
+                    <span class="site-state-item-count">28</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
