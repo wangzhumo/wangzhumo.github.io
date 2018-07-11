@@ -3,6 +3,28 @@
 
 
     
+  <url>
+    <loc>http://www.wangzhumo.com/2018/02/26/Android-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95-%E4%B8%80/</loc>
+    <lastmod>2018-07-11T09:24:06.187Z</lastmod>
+    <data>
+        <display>
+        <title>Android 单元测试(一)</title>
+        <pubTime>2018-02-26T06:25:49.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Android单元测试</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
     
     
     
@@ -439,50 +461,6 @@
            
              
               <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/03/01/Android-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95-%E4%BA%8C/</loc>
-    <lastmod>2018-03-05T06:02:12.092Z</lastmod>
-    <data>
-        <display>
-        <title>Android 单元测试(二)</title>
-        <pubTime>2018-03-01T07:27:56.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>Android单元测试</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android Test" url="http://www.wangzhumo.com/categories/Android-Test/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/02/26/Android-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95-%E4%B8%80/</loc>
-    <lastmod>2018-03-01T07:29:23.818Z</lastmod>
-    <data>
-        <display>
-        <title>Android 单元测试(一)</title>
-        <pubTime>2018-02-26T06:25:49.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>Android单元测试</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android Test" url="http://www.wangzhumo.com/categories/Android-Test/"/>
           
         </display>
     </data>
