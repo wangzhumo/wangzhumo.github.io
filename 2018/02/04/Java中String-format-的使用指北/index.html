@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Java中String.format()的使用指北 | 王诛魔</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="本文非原创,来自http://blog.csdn.net/lonely_fireworks/article/details/7962171/ 这里做一个备份,方便随时查询  常规类型的格式化String类的format()方法用于创建格式化的字符串以及连接多个字符串对象,format()方法有两种重载形式。  format(String format, Object… args)  新字符串使用">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java中String.format()的使用指北">
+<meta property="og:url" content="http://www.wangzhumo.com/2018/02/04/Java中String-format-的使用指北/index.html">
+<meta property="og:site_name" content="王诛魔">
+<meta property="og:description" content="本文非原创,来自http://blog.csdn.net/lonely_fireworks/article/details/7962171/ 这里做一个备份,方便随时查询  常规类型的格式化String类的format()方法用于创建格式化的字符串以及连接多个字符串对象,format()方法有两种重载形式。  format(String format, Object… args)  新字符串使用">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-02-07T10:27:47.957Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java中String.format()的使用指北">
+<meta name="twitter:description" content="本文非原创,来自http://blog.csdn.net/lonely_fireworks/article/details/7962171/ 这里做一个备份,方便随时查询  常规类型的格式化String类的format()方法用于创建格式化的字符串以及连接多个字符串对象,format()方法有两种重载形式。  format(String format, Object… args)  新字符串使用">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon-32x32-next.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">王诛魔</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.png" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="profile-fixed">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.png" />
+            <h2 id="name">王诛魔</h2>
+            <h3 id="title">Android Developer</h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>Beijing, China</span>
+            <a id="follow" target="_blank" href="https://github.com/wangzhumo/">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                57
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                28
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/wangzhumo" target="_blank" title="github" >
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/wangzhumoo@gmail.com" target="_blank" title="envelope-open" >
+                            <i class="fab fa-envelope-open"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://www.jianshu.com/u/1e62cc41ac06" target="_blank" title="book" >
+                            <i class="fab fa-book"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-Java中String-format-的使用指北" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Java中String.format()的使用指北
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/02/04/Java中String-format-的使用指北/">
+            <time datetime="2018-02-04T10:16:12.000Z" itemprop="datePublished">2018-02-04</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Java/">Java</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Java/">Java</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <blockquote>
+<p>本文非原创,来自<a href="http://blog.csdn.net/lonely_fireworks/article/details/7962171/" target="_blank" rel="noopener">http://blog.csdn.net/lonely_fireworks/article/details/7962171/</a></p>
+<p>这里做一个备份,方便随时查询</p>
+</blockquote>
+<h4 id="常规类型的格式化"><a href="#常规类型的格式化" class="headerlink" title="常规类型的格式化"></a>常规类型的格式化</h4><p>String类的format()方法用于创建格式化的字符串以及连接多个字符串对象,format()方法有两种重载形式。</p>
+<ul>
+<li><p>format(String format, Object… args) </p>
+<p>新字符串使用本地语言环境，制定字符串格式和参数生成格式化的新字符串。</p>
+</li>
+<li><p>format(Locale locale, String format, Object… args) </p>
+<p>使用指定的语言环境，制定字符串格式和参数生成格式化的字符串。</p>
+</li>
+</ul>
+<h5 id="显示不同转换符实现不同数据类型到字符串的转换，如图所示。"><a href="#显示不同转换符实现不同数据类型到字符串的转换，如图所示。" class="headerlink" title="显示不同转换符实现不同数据类型到字符串的转换，如图所示。"></a>显示不同转换符实现不同数据类型到字符串的转换，如图所示。</h5><table>
+<thead>
+<tr>
+<th>转  换  符</th>
+<th>说    明</th>
+<th>示    例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%s</td>
+<td>字符串类型</td>
+<td>“mingrisoft”</td>
+</tr>
+<tr>
+<td>%c</td>
+<td>字符类型</td>
+<td>‘m’</td>
+</tr>
+<tr>
+<td>%b</td>
+<td>布尔类型</td>
+<td>true</td>
+</tr>
+<tr>
+<td>%d</td>
+<td>整数类型（十进制）</td>
+<td>99</td>
+</tr>
+<tr>
+<td>%x</td>
+<td>整数类型（十六进制）</td>
+<td>FF</td>
+</tr>
+<tr>
+<td>%o</td>
+<td>整数类型（八进制）</td>
+<td>77</td>
+</tr>
+<tr>
+<td>%f</td>
+<td>浮点类型</td>
+<td>99.99</td>
+</tr>
+<tr>
+<td>%a</td>
+<td>十六进制浮点类型</td>
+<td>FF.35AE</td>
+</tr>
+<tr>
+<td>%e</td>
+<td>指数类型</td>
+<td>9.38e+5</td>
+</tr>
+<tr>
+<td>%g</td>
+<td>通用浮点类型（f和e类型中较短的）</td>
+<td></td>
+</tr>
+<tr>
+<td>%h</td>
+<td>散列码</td>
+<td></td>
+</tr>
+<tr>
+<td>%%</td>
+<td>百分比类型</td>
+<td>％</td>
+</tr>
+<tr>
+<td>%n</td>
+<td>换行符</td>
+<td></td>
+</tr>
+<tr>
+<td>%tx</td>
+<td>日期与时间类型（x代表不同的日期与时间转换符</td>
+</tr>
+</tbody>
+</table>
+<p>测试用例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    String str=<span class="keyword">null</span>;</span><br><span class="line">    str=String.format(<span class="string">"Hi,%s"</span>, <span class="string">"王力"</span>);</span><br><span class="line">    System.out.println(str);</span><br><span class="line">    str=String.format(<span class="string">"Hi,%s:%s.%s"</span>, <span class="string">"王南"</span>,<span class="string">"王力"</span>,<span class="string">"王张"</span>);          </span><br><span class="line">    System.out.println(str);                         </span><br><span class="line">    System.out.printf(<span class="string">"字母a的大写是：%c %n"</span>, <span class="string">'A'</span>);</span><br><span class="line">    System.out.printf(<span class="string">"3&gt;7的结果是：%b %n"</span>, <span class="number">3</span>&gt;<span class="number">7</span>);</span><br><span class="line">    System.out.printf(<span class="string">"100的一半是：%d %n"</span>, <span class="number">100</span>/<span class="number">2</span>);</span><br><span class="line">    System.out.printf(<span class="string">"100的16进制数是：%x %n"</span>, <span class="number">100</span>);</span><br><span class="line">    System.out.printf(<span class="string">"100的8进制数是：%o %n"</span>, <span class="number">100</span>);</span><br><span class="line">    System.out.printf(<span class="string">"50元的书打8.5折扣是：%f 元%n"</span>, <span class="number">50</span>*<span class="number">0.85</span>);</span><br><span class="line">    System.out.printf(<span class="string">"上面价格的16进制数是：%a %n"</span>, <span class="number">50</span>*<span class="number">0.85</span>);</span><br><span class="line">    System.out.printf(<span class="string">"上面价格的指数表示：%e %n"</span>, <span class="number">50</span>*<span class="number">0.85</span>);</span><br><span class="line">    System.out.printf(<span class="string">"上面价格的指数和浮点数结果的长度较短的是：%g %n"</span>, <span class="number">50</span>*<span class="number">0.85</span>);</span><br><span class="line">    System.out.printf(<span class="string">"上面的折扣是%d%% %n"</span>, <span class="number">85</span>);</span><br><span class="line">    System.out.printf(<span class="string">"字母A的散列码是：%h %n"</span>, <span class="string">'A'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Hi,王力</span><br><span class="line">Hi,王南:王力.王张</span><br><span class="line">字母a的大写是：A </span><br><span class="line"><span class="number">3</span>&gt;<span class="number">7</span>的结果是：<span class="keyword">false</span> </span><br><span class="line"><span class="number">100</span>的一半是：<span class="number">50</span> </span><br><span class="line"><span class="number">100</span>的<span class="number">16</span>进制数是：<span class="number">64</span> </span><br><span class="line"><span class="number">100</span>的<span class="number">8</span>进制数是：<span class="number">144</span> </span><br><span class="line"><span class="number">50</span>元的书打<span class="number">8.5</span>折扣是：<span class="number">42.500000</span> 元</span><br><span class="line">上面价格的<span class="number">16</span>进制数是：<span class="number">0x1</span>.54p5 </span><br><span class="line">上面价格的指数表示：<span class="number">4.250000e+01</span> </span><br><span class="line">上面价格的指数和浮点数结果的长度较短的是：<span class="number">42.5000</span> </span><br><span class="line">上面的折扣是<span class="number">85</span>% </span><br><span class="line">字母A的散列码是：<span class="number">41</span></span><br></pre></td></tr></table></figure>
+<h5 id="搭配转换符的标志"><a href="#搭配转换符的标志" class="headerlink" title="搭配转换符的标志"></a>搭配转换符的标志</h5><table>
+<thead>
+<tr>
+<th>标    志</th>
+<th>说    明</th>
+<th>示    例</th>
+<th>结    果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>+</td>
+<td>为正数或者负数添加符号</td>
+<td>(“%+d”,15)</td>
+<td>+15</td>
+</tr>
+<tr>
+<td>−</td>
+<td>左对齐</td>
+<td>(“%-5d”,15)</td>
+<td>\</td>
+<td>15   \</td>
+<td></td>
+</tr>
+<tr>
+<td>0</td>
+<td>数字前面补0</td>
+<td>(“%04d”, 99)</td>
+<td>0099</td>
+</tr>
+<tr>
+<td>空格</td>
+<td>在整数之前添加指定数量的空格</td>
+<td>(“% 4d”, 99)</td>
+<td>\</td>
+<td>99\</td>
+<td></td>
+</tr>
+<tr>
+<td>,</td>
+<td>以“,”对数字分组</td>
+<td>(“%,f”, 9999.99)</td>
+<td>9,999.990000</td>
+</tr>
+<tr>
+<td>(</td>
+<td>使用括号包含负数</td>
+<td>(“%(f”, -99.99)</td>
+<td>(99.990000)</td>
+</tr>
+<tr>
+<td>#</td>
+<td>如果是浮点数则包含小数点，如果是16进制或8进制则添加0x或0</td>
+<td>(“%#x”, 99)(“%#o”, 99)</td>
+<td>0x630143</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>格式化前一个转换符所描述的参数</td>
+<td>(“%f和%&lt;3.2f”, 99.45)</td>
+<td>99.450000和99.45</td>
+</tr>
+<tr>
+<td>$</td>
+<td>被格式化的参数索引</td>
+<td>(“%1$d,%2$s”, 99,”abc”)</td>
+<td>99,abc</td>
+</tr>
+</tbody>
+</table>
+<p>测试用例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;  </span><br><span class="line"></span><br><span class="line">    String str=<span class="keyword">null</span>;  </span><br><span class="line"></span><br><span class="line">    <span class="comment">//$使用  </span></span><br><span class="line">    str=String.format(<span class="string">"格式参数的使用：%1d,%2$s"</span>, <span class="number">99</span>,<span class="string">"abc"</span>);             </span><br><span class="line">    System.out.println(str);                       </span><br><span class="line">   	</span><br><span class="line">   	<span class="comment">//+使用  </span></span><br><span class="line">    System.out.printf(<span class="string">"显示正负数的符号：%+d与%d%n"</span>, <span class="number">99</span>,-<span class="number">99</span>);  </span><br><span class="line"></span><br><span class="line">    <span class="comment">//补O使用  </span></span><br><span class="line">    System.out.printf(<span class="string">"最牛的编号是：%03d%n"</span>, <span class="number">7</span>);  </span><br><span class="line"></span><br><span class="line">    <span class="comment">//空格使用  </span></span><br><span class="line">    System.out.printf(<span class="string">"Tab键的效果是：% 8d%n"</span>, <span class="number">7</span>);  </span><br><span class="line"></span><br><span class="line">    <span class="comment">//.使用  </span></span><br><span class="line">    System.out.printf(<span class="string">"整数分组的效果是：%,d%n"</span>, <span class="number">9989997</span>);  </span><br><span class="line"></span><br><span class="line">    <span class="comment">//空格和小数点后面个数  </span></span><br><span class="line">    System.out.printf(<span class="string">"一本书的价格是：% 50.5f元%n"</span>, <span class="number">49.8</span>);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">格式参数$的使用：<span class="number">99</span>,abc</span><br><span class="line">显示正负数的符号：+<span class="number">99</span>与-<span class="number">99</span></span><br><span class="line">最牛的编号是：<span class="number">007</span></span><br><span class="line">Tab键的效果是：       <span class="number">7</span></span><br><span class="line">整数分组的效果是：<span class="number">9</span>,<span class="number">989</span>,<span class="number">997</span></span><br><span class="line">一本书的价格是： <span class="number">49.80000</span>元</span><br></pre></td></tr></table></figure>
+<h4 id="日期和事件字符串格式化"><a href="#日期和事件字符串格式化" class="headerlink" title="日期和事件字符串格式化"></a>日期和事件字符串格式化</h4><p>字符串格式中还有%tx转换符没有详细介绍，它是专门用来格式化日期和时 间的。%tx转换符中的x代表另外的处理日期和时间格式的转换符，它们的组合能够将日期和时间格式化成多种格式。</p>
+<h5 id="常见日期和时间组合的格式"><a href="#常见日期和时间组合的格式" class="headerlink" title="常见日期和时间组合的格式"></a>常见日期和时间组合的格式</h5><table>
+<thead>
+<tr>
+<th>转  换  符</th>
+<th>说    明</th>
+<th>示    例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>c</td>
+<td>包括全部日期和时间信息</td>
+<td>星期六 十月 27 14:21:20 CST 2007</td>
+</tr>
+<tr>
+<td>F</td>
+<td>“年-月-日”格式</td>
+<td>2007-10-27</td>
+</tr>
+<tr>
+<td>D</td>
+<td>“月/日/年”格式</td>
+<td>10/27/07</td>
+</tr>
+<tr>
+<td>r</td>
+<td>“HH:MM:SS PM”格式（12时制）</td>
+<td>02:25:51 下午</td>
+</tr>
+<tr>
+<td>T</td>
+<td>“HH:MM:SS”格式（24时制）</td>
+<td>14:28:16</td>
+</tr>
+<tr>
+<td>R</td>
+<td>“HH:MM”格式（24时制）</td>
+<td>14:28</td>
+</tr>
+</tbody>
+</table>
+<p>测试用例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">	Date date=<span class="keyword">new</span> Date();                                </span><br><span class="line">	<span class="comment">//c的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"全部日期和时间信息：%tc%n"</span>,date);        </span><br><span class="line">	<span class="comment">//f的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"年-月-日格式：%tF%n"</span>,date);</span><br><span class="line">	<span class="comment">//d的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"月/日/年格式：%tD%n"</span>,date);</span><br><span class="line">	<span class="comment">//r的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"HH:MM:SS PM格式（12时制）：%tr%n"</span>,date);</span><br><span class="line">	<span class="comment">//t的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"HH:MM:SS格式（24时制）：%tT%n"</span>,date);</span><br><span class="line">	<span class="comment">//R的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"HH:MM格式（24时制）：%tR"</span>,date);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">全部日期和时间信息：星期一 九月 10 10:43:36 CST 2012</span><br><span class="line">年-月-日格式：2012-09-10</span><br><span class="line">月/日/年格式：09/10/12</span><br><span class="line">HH:MM:SS PM格式（12时制）：10:43:36 上午</span><br><span class="line">HH:MM:SS格式（24时制）：10:43:36</span><br><span class="line">HH:MM格式（24时制）：10:43</span><br></pre></td></tr></table></figure>
+<p>定义日期格式的转换符可以使日期通过指定的转换符生成新字符串。这些日期转换符如图所示。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">  Date date=<span class="keyword">new</span> Date();                                    </span><br><span class="line">  <span class="comment">//b的使用，月份简称</span></span><br><span class="line">  String str=String.format(Locale.US,<span class="string">"英文月份简称：%tb"</span>,date);     </span><br><span class="line">  System.out.println(str);                                                                            </span><br><span class="line">  System.out.printf(<span class="string">"本地月份简称：%tb%n"</span>,date);</span><br><span class="line">  <span class="comment">//B的使用，月份全称</span></span><br><span class="line">  str=String.format(Locale.US,<span class="string">"英文月份全称：%tB"</span>,date);</span><br><span class="line">  System.out.println(str);</span><br><span class="line">  System.out.printf(<span class="string">"本地月份全称：%tB%n"</span>,date);</span><br><span class="line">  <span class="comment">//a的使用，星期简称</span></span><br><span class="line">  str=String.format(Locale.US,<span class="string">"英文星期的简称：%ta"</span>,date);</span><br><span class="line">  System.out.println(str);</span><br><span class="line">  <span class="comment">//A的使用，星期全称</span></span><br><span class="line">  System.out.printf(<span class="string">"本地星期的简称：%tA%n"</span>,date);</span><br><span class="line">  <span class="comment">//C的使用，年前两位</span></span><br><span class="line">  System.out.printf(<span class="string">"年的前两位数字（不足两位前面补0）：%tC%n"</span>,date);</span><br><span class="line">  <span class="comment">//y的使用，年后两位</span></span><br><span class="line">  System.out.printf(<span class="string">"年的后两位数字（不足两位前面补0）：%ty%n"</span>,date);</span><br><span class="line">  <span class="comment">//j的使用，一年的天数</span></span><br><span class="line">  System.out.printf(<span class="string">"一年中的天数（即年的第几天）：%tj%n"</span>,date);</span><br><span class="line">  <span class="comment">//m的使用，月份</span></span><br><span class="line">  System.out.printf(<span class="string">"两位数字的月份（不足两位前面补0）：%tm%n"</span>,date);</span><br><span class="line">  <span class="comment">//d的使用，日（二位，不够补零）</span></span><br><span class="line">  System.out.printf(<span class="string">"两位数字的日（不足两位前面补0）：%td%n"</span>,date);</span><br><span class="line">  <span class="comment">//e的使用，日（一位不补零）</span></span><br><span class="line">  System.out.printf(<span class="string">"月份的日（前面不补0）：%te"</span>,date);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">英文月份简称：Sep</span><br><span class="line">本地月份简称：九月</span><br><span class="line">英文月份全称：September</span><br><span class="line">本地月份全称：九月</span><br><span class="line">英文星期的简称：Mon</span><br><span class="line">本地星期的简称：星期一</span><br><span class="line">年的前两位数字（不足两位前面补0）：20</span><br><span class="line">年的后两位数字（不足两位前面补0）：12</span><br><span class="line">一年中的天数（即年的第几天）：254</span><br><span class="line">两位数字的月份（不足两位前面补0）：09</span><br><span class="line">两位数字的日（不足两位前面补0）：10</span><br><span class="line">月份的日（前面不补0）：10</span><br></pre></td></tr></table></figure>
+<h5 id="和日期格式转换符相比，时间格式的转换符要更多、更精确。它可以将时间格式化成时、分、秒甚至时毫秒等单位。格式化时间字符串的转换符如图所示。"><a href="#和日期格式转换符相比，时间格式的转换符要更多、更精确。它可以将时间格式化成时、分、秒甚至时毫秒等单位。格式化时间字符串的转换符如图所示。" class="headerlink" title="和日期格式转换符相比，时间格式的转换符要更多、更精确。它可以将时间格式化成时、分、秒甚至时毫秒等单位。格式化时间字符串的转换符如图所示。"></a>和日期格式转换符相比，时间格式的转换符要更多、更精确。它可以将时间格式化成时、分、秒甚至时毫秒等单位。格式化时间字符串的转换符如图所示。</h5><table>
+<thead>
+<tr>
+<th>转  换  符</th>
+<th>说    明</th>
+<th>示    例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>H</td>
+<td>2位数字24时制的小时（不足2位前面补0）</td>
+<td>15</td>
+</tr>
+<tr>
+<td>I</td>
+<td>2位数字12时制的小时（不足2位前面补0）</td>
+<td>03</td>
+</tr>
+<tr>
+<td>k</td>
+<td>2位数字24时制的小时（前面不补0）</td>
+<td>15</td>
+</tr>
+<tr>
+<td>l</td>
+<td>2位数字12时制的小时（前面不补0）</td>
+<td>3</td>
+</tr>
+<tr>
+<td>M</td>
+<td>2位数字的分钟（不足2位前面补0）</td>
+<td>03</td>
+</tr>
+<tr>
+<td>S</td>
+<td>2位数字的秒（不足2位前面补0）</td>
+<td>09</td>
+</tr>
+<tr>
+<td>L</td>
+<td>3位数字的毫秒（不足3位前面补0）</td>
+<td>015</td>
+</tr>
+<tr>
+<td>N</td>
+<td>9位数字的毫秒数（不足9位前面补0）</td>
+<td>562000000</td>
+</tr>
+<tr>
+<td>p</td>
+<td>小写字母的上午或下午标记</td>
+<td>中：下午英：pm</td>
+</tr>
+<tr>
+<td>z</td>
+<td>相对于GMT的RFC822时区的偏移量</td>
+<td>+0800</td>
+</tr>
+<tr>
+<td>Z</td>
+<td>时区缩写字符串</td>
+<td>CST</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>s</th>
+<th>1970-1-1 00:00:00 到现在所经过的秒数</th>
+<th>1193468128</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q</td>
+<td>1970-1-1 00:00:00 到现在所经过的毫秒数</td>
+<td>1193468128984</td>
+</tr>
+</tbody>
+</table>
+<p>测试代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">	Date date = <span class="keyword">new</span> Date();</span><br><span class="line">	<span class="comment">//H的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"2位数字24时制的小时（不足2位前面补0）:%tH%n"</span>, date);</span><br><span class="line">	<span class="comment">//I的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"2位数字12时制的小时（不足2位前面补0）:%tI%n"</span>, date);</span><br><span class="line">	<span class="comment">//k的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"2位数字24时制的小时（前面不补0）:%tk%n"</span>, date);</span><br><span class="line">	<span class="comment">//l的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"2位数字12时制的小时（前面不补0）:%tl%n"</span>, date);</span><br><span class="line">	<span class="comment">//M的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"2位数字的分钟（不足2位前面补0）:%tM%n"</span>, date);</span><br><span class="line">	<span class="comment">//S的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"2位数字的秒（不足2位前面补0）:%tS%n"</span>, date);</span><br><span class="line">	<span class="comment">//L的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"3位数字的毫秒（不足3位前面补0）:%tL%n"</span>, date);</span><br><span class="line">	<span class="comment">//N的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"9位数字的毫秒数（不足9位前面补0）:%tN%n"</span>, date);</span><br><span class="line">	<span class="comment">//p的使用</span></span><br><span class="line">	String str = String.format(Locale.US, <span class="string">"小写字母的上午或下午标记(英)：%tp"</span>, date);</span><br><span class="line">	System.out.println(str); </span><br><span class="line">	System.out.printf(<span class="string">"小写字母的上午或下午标记（中）：%tp%n"</span>, date);</span><br><span class="line">	<span class="comment">//z的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"相对于GMT的RFC822时区的偏移量:%tz%n"</span>, date);</span><br><span class="line">	<span class="comment">//Z的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"时区缩写字符串:%tZ%n"</span>, date);</span><br><span class="line">	<span class="comment">//s的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"1970-1-1 00:00:00 到现在所经过的秒数：%ts%n"</span>, date);</span><br><span class="line">	<span class="comment">//Q的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"1970-1-1 00:00:00 到现在所经过的毫秒数：%tQ%n"</span>, date);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2</span>位数字<span class="number">24</span>时制的小时（不足<span class="number">2</span>位前面补<span class="number">0</span>）:<span class="number">11</span></span><br><span class="line"><span class="number">2</span>位数字<span class="number">12</span>时制的小时（不足<span class="number">2</span>位前面补<span class="number">0</span>）:<span class="number">11</span></span><br><span class="line"><span class="number">2</span>位数字<span class="number">24</span>时制的小时（前面不补<span class="number">0</span>）:<span class="number">11</span></span><br><span class="line"><span class="number">2</span>位数字<span class="number">12</span>时制的小时（前面不补<span class="number">0</span>）:<span class="number">11</span></span><br><span class="line"><span class="number">2</span>位数字的分钟（不足<span class="number">2</span>位前面补<span class="number">0</span>）:<span class="number">03</span></span><br><span class="line"><span class="number">2</span>位数字的秒（不足<span class="number">2</span>位前面补<span class="number">0</span>）:<span class="number">52</span></span><br><span class="line"><span class="number">3</span>位数字的毫秒（不足<span class="number">3</span>位前面补<span class="number">0</span>）:<span class="number">773</span></span><br><span class="line"><span class="number">9</span>位数字的毫秒数（不足<span class="number">9</span>位前面补<span class="number">0</span>）:<span class="number">773000000</span></span><br><span class="line">小写字母的上午或下午标记(英)：am</span><br><span class="line">小写字母的上午或下午标记（中）：上午</span><br><span class="line">相对于GMT的RFC822时区的偏移量:+<span class="number">0800</span></span><br><span class="line">时区缩写字符串:CST</span><br><span class="line"><span class="number">1970</span>-<span class="number">1</span>-<span class="number">1</span> <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> 到现在所经过的秒数：<span class="number">1347246232</span></span><br><span class="line"><span class="number">1970</span>-<span class="number">1</span>-<span class="number">1</span> <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> 到现在所经过的毫秒数：<span class="number">1347246232773</span></span><br></pre></td></tr></table></figure>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wangzhumo.com/2018/02/04/Java中String-format-的使用指北/" data-id="cjjgvjygi003azust8p7y3oet" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/02/05/Jenkins搭建Android自动打包/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    Jenkins搭建Android自动打包
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2018/01/17/Room-AppDatabase-Impl-does-not-exist的异常解决/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Room --AppDatabase_Impl does not exist的异常解决</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">20</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Studio/">Android Studio</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Test/">Android Test</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Bug/">Bug</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Source-Code/">Source Code</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Video/">Video</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/View/">View</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 16.67px;">Android Studio</a> <a href="/tags/Android单元测试/" style="font-size: 11.67px;">Android单元测试</a> <a href="/tags/Binder/" style="font-size: 10px;">Binder</a> <a href="/tags/Bug/" style="font-size: 16.67px;">Bug</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Google/" style="font-size: 11.67px;">Google</a> <a href="/tags/Gradle/" style="font-size: 11.67px;">Gradle</a> <a href="/tags/Handler/" style="font-size: 10px;">Handler</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/Java/" style="font-size: 18.33px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/Okhttp/" style="font-size: 11.67px;">Okhttp</a> <a href="/tags/Room/" style="font-size: 13.33px;">Room</a> <a href="/tags/Rxjava/" style="font-size: 13.33px;">Rxjava</a> <a href="/tags/Server/" style="font-size: 15px;">Server</a> <a href="/tags/Source-Code/" style="font-size: 11.67px;">Source Code</a> <a href="/tags/Video/" style="font-size: 10px;">Video</a> <a href="/tags/View/" style="font-size: 11.67px;">View</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/组件化/" style="font-size: 10px;">组件化</a> <a href="/tags/蓝牙/" style="font-size: 10px;">蓝牙</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/11/JVM的垃圾回收Garbage-Collection/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Java/">Java</a></p>
+                            <p class="item-title"><a href="/2018/07/11/JVM的垃圾回收Garbage-Collection/" class="title">JVM的垃圾回收Garbage Collection</a></p>
+                            <p class="item-date"><time datetime="2018-07-11T07:45:01.000Z" itemprop="datePublished">2018-07-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/05/Android中的贝塞尔曲线/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a></p>
+                            <p class="item-title"><a href="/2018/07/05/Android中的贝塞尔曲线/" class="title">Android中的贝塞尔曲线</a></p>
+                            <p class="item-date"><time datetime="2018-07-05T08:05:12.000Z" itemprop="datePublished">2018-07-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/05/GitHub使用SSH的方式免密上传/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Tools/">Tools</a></p>
+                            <p class="item-title"><a href="/2018/07/05/GitHub使用SSH的方式免密上传/" class="title">GitHub使用SSH的方式免密上传</a></p>
+                            <p class="item-date"><time datetime="2018-07-05T05:13:25.000Z" itemprop="datePublished">2018-07-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/05/Android非静态内部类与匿名内部类引起的内存泄漏/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a></p>
+                            <p class="item-title"><a href="/2018/07/05/Android非静态内部类与匿名内部类引起的内存泄漏/" class="title">Android非静态内部类与匿名内部类引起的内存泄漏</a></p>
+                            <p class="item-date"><time datetime="2018-07-05T04:06:51.000Z" itemprop="datePublished">2018-07-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/02/仿写UC浏览器视频类新闻点赞效果/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/View/">View</a></p>
+                            <p class="item-title"><a href="/2018/07/02/仿写UC浏览器视频类新闻点赞效果/" class="title">仿写UC浏览器视频类新闻点赞效果</a></p>
+                            <p class="item-date"><time datetime="2018-07-02T10:20:49.000Z" itemprop="datePublished">2018-07-02</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">25</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">39</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android单元测试/">Android单元测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bug/">Bug</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Handler/">Handler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Okhttp/">Okhttp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Room/">Room</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Server/">Server</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Source-Code/">Source Code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video/">Video</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 wangzhumo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

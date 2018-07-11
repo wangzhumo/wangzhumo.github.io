@@ -2,273 +2,301 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://www.wangzhumo.com/Java/JVM%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8/</loc>
+    <loc>http://www.wangzhumo.com/tags/index.html</loc>
+    
+    <lastmod>2018-07-11T08:10:48.780Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.wangzhumo.com/about/index.html</loc>
+    
+    <lastmod>2018-07-11T08:10:48.780Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.wangzhumo.com/categories/index.html</loc>
+    
+    <lastmod>2018-07-11T08:10:48.780Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.wangzhumo.com/2018/06/26/ServiceLoader-%E4%B8%8E-%E8%B4%A3%E4%BB%BB%E9%93%BE%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
+    
+    <lastmod>2018-07-11T08:04:20.114Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.wangzhumo.com/2018/07/11/JVM%E7%9A%84%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6Garbage-Collection/</loc>
+    
+    <lastmod>2018-07-11T07:46:21.463Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.wangzhumo.com/2018/03/11/JVM%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8/</loc>
     
     <lastmod>2018-07-11T06:40:45.074Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Java/JVM%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9A%84%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/</loc>
+    <loc>http://www.wangzhumo.com/2018/03/10/JVM%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9A%84%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/</loc>
     
     <lastmod>2018-07-11T02:33:35.322Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Android/Android%E4%B8%AD%E7%9A%84%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/</loc>
+    <loc>http://www.wangzhumo.com/2018/07/05/Android%E4%B8%AD%E7%9A%84%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF/</loc>
     
     <lastmod>2018-07-05T10:37:44.056Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Tools/GitHub%E4%BD%BF%E7%94%A8SSH%E7%9A%84%E6%96%B9%E5%BC%8F%E5%85%8D%E5%AF%86%E4%B8%8A%E4%BC%A0/</loc>
+    <loc>http://www.wangzhumo.com/2018/07/05/GitHub%E4%BD%BF%E7%94%A8SSH%E7%9A%84%E6%96%B9%E5%BC%8F%E5%85%8D%E5%AF%86%E4%B8%8A%E4%BC%A0/</loc>
     
     <lastmod>2018-07-05T05:33:39.132Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Java/String-format%E7%9A%84%E5%8F%82%E6%95%B0%E8%A1%A8/</loc>
+    <loc>http://www.wangzhumo.com/2017/12/23/String-format%E7%9A%84%E5%8F%82%E6%95%B0%E8%A1%A8/</loc>
     
     <lastmod>2018-07-05T05:14:25.930Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Android/Android%E9%9D%9E%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%E4%B8%8E%E5%8C%BF%E5%90%8D%E5%86%85%E9%83%A8%E7%B1%BB%E5%BC%95%E8%B5%B7%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/</loc>
+    <loc>http://www.wangzhumo.com/2018/07/05/Android%E9%9D%9E%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%E4%B8%8E%E5%8C%BF%E5%90%8D%E5%86%85%E9%83%A8%E7%B1%BB%E5%BC%95%E8%B5%B7%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/</loc>
     
     <lastmod>2018-07-05T04:09:22.075Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/View/%E4%BB%BF%E5%86%99UC%E6%B5%8F%E8%A7%88%E5%99%A8%E8%A7%86%E9%A2%91%E7%B1%BB%E6%96%B0%E9%97%BB%E7%82%B9%E8%B5%9E%E6%95%88%E6%9E%9C/</loc>
+    <loc>http://www.wangzhumo.com/2018/07/02/%E4%BB%BF%E5%86%99UC%E6%B5%8F%E8%A7%88%E5%99%A8%E8%A7%86%E9%A2%91%E7%B1%BB%E6%96%B0%E9%97%BB%E7%82%B9%E8%B5%9E%E6%95%88%E6%9E%9C/</loc>
     
     <lastmod>2018-07-03T02:42:14.824Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Tools/Git-Submodule-%E5%AD%90%E6%A8%A1%E5%9D%97%E7%9A%84%E4%BD%BF%E7%94%A8/</loc>
+    <loc>http://www.wangzhumo.com/2018/07/02/Git-Submodule-%E5%AD%90%E6%A8%A1%E5%9D%97%E7%9A%84%E4%BD%BF%E7%94%A8/</loc>
     
     <lastmod>2018-07-02T09:45:25.276Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Java/ServiceLoader-%E4%B8%8E-%E8%B4%A3%E4%BB%BB%E9%93%BE%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
-    
-    <lastmod>2018-06-27T08:36:54.134Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.wangzhumo.com/Video/Android%E8%87%AA%E5%B7%B1%E5%B0%81%E8%A3%85%E4%B8%80%E4%B8%AAVideoPlayer/</loc>
+    <loc>http://www.wangzhumo.com/2018/05/23/Android%E8%87%AA%E5%B7%B1%E5%B0%81%E8%A3%85%E4%B8%80%E4%B8%AAVideoPlayer/</loc>
     
     <lastmod>2018-05-23T15:34:52.909Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/uncategorized/Android%E8%87%AA%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E9%81%AE%E7%BD%A9%E5%BC%95%E5%AF%BC%E5%B1%82/</loc>
+    <loc>http://www.wangzhumo.com/2018/05/21/Android%E8%87%AA%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E9%81%AE%E7%BD%A9%E5%BC%95%E5%AF%BC%E5%B1%82/</loc>
     
     <lastmod>2018-05-23T07:59:43.755Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Source-Code/Android-Binder%E6%9C%BA%E5%88%B6-%E4%B8%80/</loc>
+    <loc>http://www.wangzhumo.com/2018/05/11/Android-Binder%E6%9C%BA%E5%88%B6-%E4%B8%80/</loc>
     
     <lastmod>2018-05-14T11:08:24.216Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Java/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%BC%82%E5%90%8C%E4%BB%A5%E5%8F%8AAndroid%E4%B8%AD%E7%9A%84IPC%E6%9C%BA%E5%88%B6/</loc>
+    <loc>http://www.wangzhumo.com/2018/05/10/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%BC%82%E5%90%8C%E4%BB%A5%E5%8F%8AAndroid%E4%B8%AD%E7%9A%84IPC%E6%9C%BA%E5%88%B6/</loc>
     
     <lastmod>2018-05-14T10:26:32.972Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Java/Java%E4%B8%AD%E7%9A%84%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</loc>
+    <loc>http://www.wangzhumo.com/2018/05/09/Java%E4%B8%AD%E7%9A%84%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</loc>
     
     <lastmod>2018-05-10T09:16:37.418Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Source-Code/Android%E7%9A%84%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/</loc>
+    <loc>http://www.wangzhumo.com/2018/05/09/Android%E7%9A%84%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/</loc>
     
     <lastmod>2018-05-09T10:32:15.451Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Android/Activity%E4%B8%8EFragment%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</loc>
+    <loc>http://www.wangzhumo.com/2018/03/05/Activity%E4%B8%8EFragment%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</loc>
     
     <lastmod>2018-05-09T10:08:36.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Source-Code/Handler%E9%80%9A%E8%AE%AF%E6%9C%BA%E5%88%B6%E5%88%86%E6%9E%90/</loc>
+    <loc>http://www.wangzhumo.com/2018/03/07/Handler%E9%80%9A%E8%AE%AF%E6%9C%BA%E5%88%B6%E5%88%86%E6%9E%90/</loc>
     
     <lastmod>2018-05-09T09:59:02.204Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Android/%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99iBeacon%E7%9A%84%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/</loc>
+    <loc>http://www.wangzhumo.com/2017/12/25/%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99iBeacon%E7%9A%84%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/</loc>
     
     <lastmod>2018-03-08T03:22:17.813Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Bug/RelativeLayout%E4%B8%ADButton%E8%A6%86%E7%9B%96%E5%85%B6%E4%BB%96View/</loc>
+    <loc>http://www.wangzhumo.com/2018/03/07/RelativeLayout%E4%B8%ADButton%E8%A6%86%E7%9B%96%E5%85%B6%E4%BB%96View/</loc>
     
     <lastmod>2018-03-07T05:09:51.138Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Android/ConfigChanges%E7%9A%84%E5%B1%9E%E6%80%A7%E5%80%BC/</loc>
+    <loc>http://www.wangzhumo.com/2018/03/05/ConfigChanges%E7%9A%84%E5%B1%9E%E6%80%A7%E5%80%BC/</loc>
     
     <lastmod>2018-03-05T10:26:08.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Android-Test/Android-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95-%E4%BA%8C/</loc>
+    <loc>http://www.wangzhumo.com/2018/03/01/Android-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95-%E4%BA%8C/</loc>
     
     <lastmod>2018-03-05T06:02:12.092Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Android-Test/Android-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95-%E4%B8%80/</loc>
+    <loc>http://www.wangzhumo.com/2018/02/26/Android-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95-%E4%B8%80/</loc>
     
     <lastmod>2018-03-01T07:29:23.818Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Flutter/Flutter%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97MAC%E7%89%88/</loc>
+    <loc>http://www.wangzhumo.com/2018/02/28/Flutter%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97MAC%E7%89%88/</loc>
     
     <lastmod>2018-02-28T16:44:14.198Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Tools/%E9%80%8F%E6%98%8E%E5%BA%A6%E5%AF%B9%E7%85%A7%E8%A1%A8/</loc>
+    <loc>http://www.wangzhumo.com/2017/12/23/%E9%80%8F%E6%98%8E%E5%BA%A6%E5%AF%B9%E7%85%A7%E8%A1%A8/</loc>
     
     <lastmod>2018-02-28T16:33:07.972Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Tools/%E5%B8%B8%E7%94%A8%E7%9A%84Google-Chrome-%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6/</loc>
+    <loc>http://www.wangzhumo.com/2017/12/25/%E5%B8%B8%E7%94%A8%E7%9A%84Google-Chrome-%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6/</loc>
     
     <lastmod>2018-02-28T16:32:58.322Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/uncategorized/%E4%BD%BF%E7%94%A8Charles%E6%8A%93Https%E7%9A%84%E6%95%B0%E6%8D%AE%E8%AF%B7%E6%B1%82/</loc>
+    <loc>http://www.wangzhumo.com/2018/01/11/%E4%BD%BF%E7%94%A8Charles%E6%8A%93Https%E7%9A%84%E6%95%B0%E6%8D%AE%E8%AF%B7%E6%B1%82/</loc>
     
     <lastmod>2018-02-28T16:32:52.591Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Flutter/Flutter-%E5%AE%89%E8%A3%85/</loc>
+    <loc>http://www.wangzhumo.com/2017/12/25/Flutter-%E5%AE%89%E8%A3%85/</loc>
     
     <lastmod>2018-02-28T16:31:53.550Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Bug/Android-Studio%E6%8A%A5%E9%94%99Error-Running-app-cannot-debug-application/</loc>
+    <loc>http://www.wangzhumo.com/2017/12/26/Android-Studio%E6%8A%A5%E9%94%99Error-Running-app-cannot-debug-application/</loc>
     
     <lastmod>2018-02-28T16:30:01.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Bug/Apk-Install-%E7%9A%84%E5%90%84%E7%A7%8D%E9%97%AE%E9%A2%98/</loc>
+    <loc>http://www.wangzhumo.com/2017/12/28/Apk-Install-%E7%9A%84%E5%90%84%E7%A7%8D%E9%97%AE%E9%A2%98/</loc>
     
     <lastmod>2018-02-28T16:29:52.521Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Bug/Room-AppDatabase-Impl-does-not-exist%E7%9A%84%E5%BC%82%E5%B8%B8%E8%A7%A3%E5%86%B3/</loc>
+    <loc>http://www.wangzhumo.com/2018/01/17/Room-AppDatabase-Impl-does-not-exist%E7%9A%84%E5%BC%82%E5%B8%B8%E8%A7%A3%E5%86%B3/</loc>
     
     <lastmod>2018-02-28T16:29:10.941Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Bug/WebView%E6%92%AD%E6%94%BEH5%E8%A7%86%E5%B1%8F%E6%B2%A1%E6%9C%89%E7%94%BB%E9%9D%A2-%E5%8F%AA%E6%9C%89%E5%A3%B0%E9%9F%B3/</loc>
+    <loc>http://www.wangzhumo.com/2018/01/04/WebView%E6%92%AD%E6%94%BEH5%E8%A7%86%E5%B1%8F%E6%B2%A1%E6%9C%89%E7%94%BB%E9%9D%A2-%E5%8F%AA%E6%9C%89%E5%A3%B0%E9%9F%B3/</loc>
     
     <lastmod>2018-02-28T16:28:33.437Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Android-Studio/Android-Studio-%E4%B8%AD%E4%BD%BF%E7%94%A8tools-sample/</loc>
+    <loc>http://www.wangzhumo.com/2018/02/26/Android-Studio-%E4%B8%AD%E4%BD%BF%E7%94%A8tools-sample/</loc>
     
     <lastmod>2018-02-26T05:42:17.470Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Android-Studio/Android-Studio-%E5%AF%BC%E5%85%A5-Vitamio%E5%8F%8A%E6%A8%AA%E7%AB%96%E5%B1%8F%E5%88%87%E6%8D%A2/</loc>
+    <loc>http://www.wangzhumo.com/2017/12/25/Android-Studio-%E5%AF%BC%E5%85%A5-Vitamio%E5%8F%8A%E6%A8%AA%E7%AB%96%E5%B1%8F%E5%88%87%E6%8D%A2/</loc>
     
     <lastmod>2018-02-26T02:33:06.709Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Android-Studio/Android-Studio-%E5%9F%BA%E6%9C%AC%E8%AE%BE%E7%BD%AE/</loc>
+    <loc>http://www.wangzhumo.com/2017/12/25/Android-Studio-%E5%9F%BA%E6%9C%AC%E8%AE%BE%E7%BD%AE/</loc>
     
     <lastmod>2018-02-26T02:33:01.444Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Android-Studio/Android-Studio-%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%BC%8F%E7%AD%BE%E5%90%8Ddebug%E8%B0%83%E8%AF%95/</loc>
+    <loc>http://www.wangzhumo.com/2017/12/25/Android-Studio-%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%BC%8F%E7%AD%BE%E5%90%8Ddebug%E8%B0%83%E8%AF%95/</loc>
     
     <lastmod>2018-02-26T02:32:53.935Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Java/Java%E4%B8%ADString-format-%E7%9A%84%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8C%97/</loc>
+    <loc>http://www.wangzhumo.com/2018/02/04/Java%E4%B8%ADString-format-%E7%9A%84%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8C%97/</loc>
     
     <lastmod>2018-02-07T10:27:47.957Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Android/Android%E9%A1%B9%E7%9B%AE%E4%B8%AD%E4%BD%BF%E7%94%A8Timber-Logger%E6%97%A5%E5%BF%97%E8%BE%93%E5%87%BA/</loc>
+    <loc>http://www.wangzhumo.com/2018/02/07/Android%E9%A1%B9%E7%9B%AE%E4%B8%AD%E4%BD%BF%E7%94%A8Timber-Logger%E6%97%A5%E5%BF%97%E8%BE%93%E5%87%BA/</loc>
     
     <lastmod>2018-02-07T10:14:43.116Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Android/Jenkins%E6%90%AD%E5%BB%BAAndroid%E8%87%AA%E5%8A%A8%E6%89%93%E5%8C%85/</loc>
+    <loc>http://www.wangzhumo.com/2018/02/05/Jenkins%E6%90%AD%E5%BB%BAAndroid%E8%87%AA%E5%8A%A8%E6%89%93%E5%8C%85/</loc>
     
     <lastmod>2018-02-05T04:49:03.295Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Android/Android%E5%BC%80%E5%8F%91%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84Adb%E5%91%BD%E4%BB%A4/</loc>
+    <loc>http://www.wangzhumo.com/2018/01/11/Android%E5%BC%80%E5%8F%91%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84Adb%E5%91%BD%E4%BB%A4/</loc>
     
     <lastmod>2018-01-11T05:17:15.482Z</lastmod>
     
@@ -282,135 +310,121 @@
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/uncategorized/OkHttp%E4%B8%AD%E6%B7%BB%E5%8A%A0https%E6%94%AF%E6%8C%81/</loc>
+    <loc>http://www.wangzhumo.com/2018/01/10/OkHttp%E4%B8%AD%E6%B7%BB%E5%8A%A0https%E6%94%AF%E6%8C%81/</loc>
     
     <lastmod>2018-01-10T15:29:54.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Android/Room%E4%B8%ADList-%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/</loc>
+    <loc>http://www.wangzhumo.com/2018/01/03/Room%E4%B8%ADList-%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/</loc>
     
     <lastmod>2018-01-09T09:11:17.675Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Android/Room%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8C%97List%3C%3E%E7%9A%84%E9%97%AE%E9%A2%98/</loc>
+    <loc>http://www.wangzhumo.com/2017/12/25/Room%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8C%97List%3C%3E%E7%9A%84%E9%97%AE%E9%A2%98/</loc>
     
     <lastmod>2018-01-09T07:15:26.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Android/Android%E5%AD%97%E4%BD%93%E4%B8%8D%E8%B7%9F%E9%9A%8F%E7%B3%BB%E7%BB%9F%E5%8F%98%E5%8C%96/</loc>
+    <loc>http://www.wangzhumo.com/2017/12/28/Android%E5%AD%97%E4%BD%93%E4%B8%8D%E8%B7%9F%E9%9A%8F%E7%B3%BB%E7%BB%9F%E5%8F%98%E5%8C%96/</loc>
     
     <lastmod>2017-12-28T07:32:46.175Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Server/Centos%20%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%E5%B9%B6%E5%AE%9E%E7%8E%B0%E5%85%8D%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95/</loc>
+    <loc>http://www.wangzhumo.com/2017/12/25/Centos%20%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%E5%B9%B6%E5%AE%9E%E7%8E%B0%E5%85%8D%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95/</loc>
     
     <lastmod>2017-12-25T08:34:09.109Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Android/Android%E9%A1%B9%E7%9B%AE%E4%B8%AD%E4%BD%BF%E7%94%A8RxBus%E8%BF%9B%E8%A1%8C%E9%80%9A%E8%AE%AF/</loc>
+    <loc>http://www.wangzhumo.com/2017/12/25/Android%E9%A1%B9%E7%9B%AE%E4%B8%AD%E4%BD%BF%E7%94%A8RxBus%E8%BF%9B%E8%A1%8C%E9%80%9A%E8%AE%AF/</loc>
     
     <lastmod>2017-12-25T08:19:44.694Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Android/TextView%E4%B8%AD%E7%9A%84%E6%96%87%E5%AD%97%E9%A2%9C%E8%89%B2-%E7%82%B9%E5%87%BB-%E6%96%9C%E4%BD%93%E7%AD%89%E5%AE%9E%E7%8E%B0-SpannableString/</loc>
+    <loc>http://www.wangzhumo.com/2017/12/25/TextView%E4%B8%AD%E7%9A%84%E6%96%87%E5%AD%97%E9%A2%9C%E8%89%B2-%E7%82%B9%E5%87%BB-%E6%96%9C%E4%BD%93%E7%AD%89%E5%AE%9E%E7%8E%B0-SpannableString/</loc>
     
     <lastmod>2017-12-25T08:19:22.197Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Android/Retrofit2-Okhttp3-Rxjava2-%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E5%B0%81%E8%A3%85-%E4%B8%8B/</loc>
+    <loc>http://www.wangzhumo.com/2017/12/25/Retrofit2-Okhttp3-Rxjava2-%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E5%B0%81%E8%A3%85-%E4%B8%8B/</loc>
     
     <lastmod>2017-12-25T08:19:07.794Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Android/Retrofit2-Okhttp3-Rxjava2-%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E5%B0%81%E8%A3%85(%E4%B8%8A)/</loc>
+    <loc>http://www.wangzhumo.com/2017/12/25/Retrofit2-Okhttp3-Rxjava2-%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E5%B0%81%E8%A3%85(%E4%B8%8A)/</loc>
     
     <lastmod>2017-12-25T08:13:49.835Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Server/Nginx%E5%AE%89%E8%A3%85%E5%8F%8A%E5%85%B6%E7%AE%80%E5%8D%95%E9%85%8D%E7%BD%AE/</loc>
+    <loc>http://www.wangzhumo.com/2017/12/25/Nginx%E5%AE%89%E8%A3%85%E5%8F%8A%E5%85%B6%E7%AE%80%E5%8D%95%E9%85%8D%E7%BD%AE/</loc>
     
     <lastmod>2017-12-25T06:03:27.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Server/Linux-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
+    <loc>http://www.wangzhumo.com/2017/12/24/Linux-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
     
     <lastmod>2017-12-25T05:40:28.004Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Android/Android%E9%A1%B9%E7%9B%AE%E7%9A%84build-gradle%E9%80%9A%E7%94%A8%E8%AE%BE%E7%BD%AE/</loc>
+    <loc>http://www.wangzhumo.com/2017/12/25/Android%E9%A1%B9%E7%9B%AE%E7%9A%84build-gradle%E9%80%9A%E7%94%A8%E8%AE%BE%E7%BD%AE/</loc>
     
     <lastmod>2017-12-25T04:25:51.673Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Android/Android-%E9%A1%B9%E7%9B%AE%E7%BB%9F%E4%B8%80%E7%AE%A1%E7%90%86%E4%BE%9D%E8%B5%96%E7%89%88%E6%9C%AC/</loc>
+    <loc>http://www.wangzhumo.com/2017/12/25/Android-%E9%A1%B9%E7%9B%AE%E7%BB%9F%E4%B8%80%E7%AE%A1%E7%90%86%E4%BE%9D%E8%B5%96%E7%89%88%E6%9C%AC/</loc>
     
     <lastmod>2017-12-25T03:57:01.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/uncategorized/jni%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97-%E5%85%B3%E4%BA%8E-so%E4%BD%A0%E5%BA%94%E8%AF%A5%E7%9F%A5%E9%81%93%E7%9A%84/</loc>
+    <loc>http://www.wangzhumo.com/2017/12/25/jni%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97-%E5%85%B3%E4%BA%8E-so%E4%BD%A0%E5%BA%94%E8%AF%A5%E7%9F%A5%E9%81%93%E7%9A%84/</loc>
     
     <lastmod>2017-12-25T02:13:30.345Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Android/EditText%E7%9A%84%E8%BE%93%E5%85%A5%E5%B1%9E%E6%80%A7InputType%E4%BB%A5%E5%8F%8AimeOptions/</loc>
+    <loc>http://www.wangzhumo.com/2017/12/25/EditText%E7%9A%84%E8%BE%93%E5%85%A5%E5%B1%9E%E6%80%A7InputType%E4%BB%A5%E5%8F%8AimeOptions/</loc>
     
     <lastmod>2017-12-25T02:12:54.159Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Android/BottomNavigationView%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/</loc>
+    <loc>http://www.wangzhumo.com/2017/12/25/BottomNavigationView%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/</loc>
     
     <lastmod>2017-12-25T01:47:43.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/Android/Facebook-Stetho%E2%80%94%E2%80%94Android%E5%BC%80%E5%8F%91%E8%B0%83%E8%AF%95%E7%A5%9E%E5%99%A8/</loc>
+    <loc>http://www.wangzhumo.com/2017/12/24/Facebook-Stetho%E2%80%94%E2%80%94Android%E5%BC%80%E5%8F%91%E8%B0%83%E8%AF%95%E7%A5%9E%E5%99%A8/</loc>
     
     <lastmod>2017-12-24T15:49:36.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.wangzhumo.com/categories/index.html</loc>
-    
-    <lastmod>2017-12-24T12:07:01.685Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.wangzhumo.com/tags/index.html</loc>
-    
-    <lastmod>2017-12-24T12:04:52.000Z</lastmod>
     
   </url>
   
