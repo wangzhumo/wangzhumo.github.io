@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="王诛魔">
 <meta property="og:description" content="前言前一段时间换了github账号,各种转移数据,累死我 而后,我顺手添加了github的ssh-key(新创建了一个rsa的Key),然而当我: 1234567# phyooos @ wangzhumo in ~/develop/hexo [12:10:02] C:2$ hexo dINFO  Deploying: gitINFO  Clearing .deploy_git folder...">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-07-05T05:29:56.917Z">
+<meta property="og:updated_time" content="2018-07-05T05:33:39.132Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GitHub使用SSH的方式免密上传">
 <meta name="twitter:description" content="前言前一段时间换了github账号,各种转移数据,累死我 而后,我顺手添加了github的ssh-key(新创建了一个rsa的Key),然而当我: 1234567# phyooos @ wangzhumo in ~/develop/hexo [12:10:02] C:2$ hexo dINFO  Deploying: gitINFO  Clearing .deploy_git folder...">
@@ -352,7 +352,7 @@
                 
               
 
-              <time title="创建时间：2018-07-05 13:13:25 / 修改时间：13:29:56" itemprop="dateCreated datePublished" datetime="2018-07-05T13:13:25+08:00">2018-07-05</time>
+              <time title="创建时间：2018-07-05 13:13:25 / 修改时间：13:33:39" itemprop="dateCreated datePublished" datetime="2018-07-05T13:13:25+08:00">2018-07-05</time>
             
 
             
@@ -418,8 +418,9 @@
 <p>就是我创建用来给github用的</p>
 <h4 id="查看-ssh-config"><a href="#查看-ssh-config" class="headerlink" title="查看~/.ssh/config"></a>查看~/.ssh/config</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> ---- github------------------</span><br><span class="line">Host github</span><br><span class="line">	HostName github.com</span><br><span class="line">	User git</span><br><span class="line">	IdentityFile /Users/phyooos/.ssh/github_rsa</span><br><span class="line"><span class="meta">#</span> -----------------------------</span><br></pre></td></tr></table></figure>
 <p>也是没有问题的,而github上的key也就确实是github_rsa.pub</p>
-<h4 id="Tower"><a href="#Tower" class="headerlink" title="Tower"></a>Tower</h4><p>但是我的Tower上,也有几个github上的项目,却可以正常的上传,那么问题只有可能是终端中没有按照我的配置<code>IdentityFile /Users/phyooos/.ssh/github_rsa</code></p>
-<p>所以出了问题,我尝试把<code>id_rsa.pub</code>密钥加入到github上.</p>
+<h4 id="Tower"><a href="#Tower" class="headerlink" title="Tower"></a>Tower</h4><p>但是我的Tower上,也有几个github上的项目,却可以正常的上传,</p>
+<p>而Tower上的私钥是我手动配上去的,所以问题只有可能是终端中没有按照我的配置<code>IdentityFile /Users/phyooos/.ssh/github_rsa</code>来和github建立连接</p>
+<p>我尝试把<code>id_rsa.pub</code>密钥加入到github上.</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">To github.com:wangzhumo/wangzhumo.github.io.git</span><br><span class="line">   c45bbef..6b25311  HEAD -&gt; master</span><br><span class="line">Branch 'master' set up to track remote branch 'master' from 'git@github.com:wangzhumo/wangzhumo.github.io.git'.</span><br><span class="line">INFO  Deploy done: git</span><br></pre></td></tr></table></figure>
 <p>竟然成功了.</p>
 <h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p><code>~/.ssh/config</code>中的配置,莫名没有生效,我至今也不知道为什么</p>
@@ -467,6 +468,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Android/Android中的贝塞尔曲线/" rel="prev" title="Android中的贝塞尔曲线">
+                Android中的贝塞尔曲线 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -544,7 +549,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">53</span>
+                    <span class="site-state-item-count">55</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
