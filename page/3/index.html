@@ -159,7 +159,7 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                57
+                58
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -188,6 +188,232 @@
 
             
             <section id="main">
+    <article id="post-Activity与Fragment的生命周期" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/03/05/Activity与Fragment的生命周期/">Activity与Fragment的生命周期</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/03/05/Activity与Fragment的生命周期/">
+            <time datetime="2018-03-05T06:02:42.000Z" itemprop="datePublished">2018-03-05</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Android/">Android</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Activity/">Activity</a>, <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/Fragment/">Fragment</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>做Android开发好些年了,这些基础的知识,完完整整的在博客上写一次.</p>
+<h4 id="Activity生命周期"><a href="#Activity生命周期" class="headerlink" title="Activity生命周期"></a>Activity生命周期</h4><p>必不可少的一张图,来自Google Android developer 的文档上</p>
+<p><img src="/images/activity_lifecycle.png" alt="activity_liferycle"></p>
+<h5 id="回调方法简述"><a href="#回调方法简述" class="headerlink" title="回调方法简述"></a>回调方法简述</h5><ul>
+<li><p>onCreate()  </p>
+<p>当Activity创建时,会回调该方法,常用于初始化View 或其他的一些功能的初始化</p>
+</li>
+<li><p>onStart()</p>
+<p>Activity已经初始化完毕,此时的页面是可见状态,则回调onStart();方法</p>
+<p>Activity启动：onCreate() -&gt; onStart() -&gt; onResume()</p>
+</li>
+<li><p>onResume()</p>
+<p>当Activity可见,并且获得焦点,可以与用户交互时回调</p>
+<p>在我们处理一些视屏操作,或者是Fragment懒加载等都可以用到</p>
+</li>
+<li><p>onPause()</p>
+<p>当调用onPause()时,说明Activity被阻挡,部分UI已经不可见了,但是Activity的UI并没有完全消失.</p>
+</li>
+<li><p>onStop()</p>
+<p>当Activity完全不可见,且到了后台之后,如果系统内存不足,系统可能会杀死当前Activity</p>
+<p>在这个方法中可以取消一些动画效果等</p>
+</li>
+<li><p>onDestory()</p>
+<p>Activity退出,销毁</p>
+<p>常用于销毁,回收资源</p>
+</li>
+</ul>
+<h5 id="经典场景"><a href="#经典场景" class="headerlink" title="经典场景"></a>经典场景</h5><p>1.正常启动</p>
+<p>系统调用onCreate方法 , 然后调用onStart() , 最后调用 onResume() ,用户可操作.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">E/MainActivity: ---- onCreate ----</span><br><span class="line">E/MainActivity: ---- onStart ----</span><br><span class="line">E/MainActivity: ---- onResume ----</span><br></pre></td></tr></table></figure>
+<p>2.正常退出</p>
+<p>Activity先失去焦点不可交互</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">E/MainActivity: ---- onPause ----</span><br><span class="line">E/MainActivity: ---- onStop ----</span><br><span class="line">E/MainActivity: ---- onDestroy ----</span><br></pre></td></tr></table></figure>
+<p>2.弹出Dialog</p>
+<p>MainActivity什么log也没有打印,说明不对Activity造成影响</p>
+<p>3.跳转一个透明的Activity页面(1像素的同理)</p>
+<p>MainActivity只调用了onPause()  因为MainActivity的UI被遮挡了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">E/MainActivity: ---- onPause ----</span><br></pre></td></tr></table></figure>
+<p>4.从被遮挡状态恢复</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">E/MainActivity: ---- onResume ----</span><br></pre></td></tr></table></figure>
+<p>6.锁屏</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">E/MainActivity: ---- onPause ----</span><br><span class="line">E/MainActivity: ---- onStop ----</span><br></pre></td></tr></table></figure>
+<p>此时,MainActivity已经在后台了.</p>
+<p>7.从锁屏恢复</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">E/MainActivity: ---- onStart ----</span><br><span class="line">E/MainActivity: ---- onResume ----</span><br></pre></td></tr></table></figure>
+<p>可以发现,不仅仅走了onResume() ,还走了一次onStart()</p>
+<p>8.横竖屏切换</p>
+<ul>
+<li><p>正常切换</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">E/MainActivity: ---- onPause ----</span><br><span class="line">E/MainActivity: ---- onStop ----</span><br><span class="line">E/MainActivity: ---- onDestroy ----</span><br><span class="line"></span><br><span class="line">E/MainActivity: ---- onCreate ----</span><br><span class="line">E/MainActivity: ---- onStart ----</span><br><span class="line">E/MainActivity: ---- onResume ----</span><br><span class="line"></span><br><span class="line">如果你什么都不设置,直接切换是这样的.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>保留Activity的切换</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">我在manifest.xml文件中,添加了</span><br><span class="line"></span><br><span class="line">&lt;activity</span><br><span class="line">	android:name=&quot;.MainActivity&quot;</span><br><span class="line">	android:configChanges=&quot;orientation|screenSize&quot;&gt;</span><br><span class="line">	&lt;intent-filter&gt;</span><br><span class="line">		&lt;action android:name=&quot;android.intent.action.MAIN&quot; /&gt;</span><br><span class="line">	&lt;category android:name=&quot;android.intent.category.LAUNCHER&quot; /&gt;</span><br><span class="line">&lt;/intent-filter&gt;</span><br><span class="line">&lt;/activity&gt;</span><br></pre></td></tr></table></figure>
+<p>此时:</p>
+<p>Activity不会被销毁,从而重新创建,而是调用onConfigurationChanged</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">  public void onConfigurationChanged(Configuration newConfig) &#123;</span><br><span class="line">     super.onConfigurationChanged(newConfig);</span><br><span class="line">     //do somethings</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ul>
+<h4 id="Fragment生命周期"><a href="#Fragment生命周期" class="headerlink" title="Fragment生命周期"></a>Fragment生命周期</h4><p>惯例,如图:</p>
+<p><img src="/images/fragment_lifercycle.png" alt="fragment_lifecycle"></p>
+<h5 id="回调方法简述-1"><a href="#回调方法简述-1" class="headerlink" title="回调方法简述"></a>回调方法简述</h5><p>其中onAttach()  onCreateView() onActivityCreated()  onDestroy() onDetach() 和Activity的不一致</p>
+<ul>
+<li><p>onAttach()</p>
+<p>Fragment与它所依赖的Activity建立关联</p>
+</li>
+<li><p>onCreateView()</p>
+<p>这里是给Fragment创建视图用的,在onCreate()中初始化Fragment,但是视图等还是没有加载上去的</p>
+</li>
+<li><p>onActivityCreated()</p>
+<p>如果调用该方法,说明Fragment依赖的Activity中onCreate()已经执行完毕</p>
+</li>
+<li><p>onDestroyView()</p>
+<p>Fragment中的布局销毁,移除</p>
+<p>要注意的是,此时Fragment与它所依赖的Activity还是关联的</p>
+</li>
+<li><p>onDestroy()</p>
+<p>此时,Fragment被销毁</p>
+</li>
+<li><p>onDetach()</p>
+<p>解除与Activity的关联</p>
+</li>
+</ul>
+<p>PS: Fragment中的onResume()并不十分准确,所以如果要做懒加载,要判断fragment不能使用onResume判断</p>
+<h5 id="经典场景-1"><a href="#经典场景-1" class="headerlink" title="经典场景"></a>经典场景</h5><p>1.正常启动</p>
+<p>真的是超级多啊</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">E/BlankFragment: ---- onAttach ----   			关联Activity</span><br><span class="line">E/BlankFragment: ---- onCreate ----    			Fragment初始化</span><br><span class="line">E/BlankFragment: ---- onCreateView ----			创建Fragment的布局</span><br><span class="line">E/BlankFragment: ---- onViewCreated ----		onCreateView执行完后被触发</span><br><span class="line">E/BlankFragment: ---- onActivityCreated ----	关联的Activity OnCreate()执行完毕后触发</span><br><span class="line">E/BlankFragment: ---- onStart ----				Fragment可见</span><br><span class="line">E/BlankFragment: ---- onResume ----				Fragment可交互,一般不使用它来判断</span><br></pre></td></tr></table></figure>
+<p>2.正常退出(或者是它关联的Activity被销毁了)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">E/BlankFragment: ---- onPause ----</span><br><span class="line">E/BlankFragment: ---- onStop ----</span><br><span class="line">E/BlankFragment: ---- onDestroyView ----</span><br><span class="line">E/BlankFragment: ---- onDestroy ----</span><br><span class="line">E/BlankFragment: ---- onDetach ----</span><br></pre></td></tr></table></figure>
+<p>3.进入后台</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">E/BlankFragment: ---- onPause ----</span><br><span class="line">E/BlankFragment: ---- onStop ----</span><br></pre></td></tr></table></figure>
+<p>4.从锁屏到解锁</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">E/BlankFragment: ---- onPause ----</span><br><span class="line">E/BlankFragment: ---- onSaveInstanceState ----</span><br><span class="line">E/BlankFragment: ---- onStop ----</span><br><span class="line"></span><br><span class="line">E/BlankFragment: ---- onStart ----</span><br><span class="line">E/BlankFragment: ---- onResume ----</span><br></pre></td></tr></table></figure>
+<p>5.切换到OtherFragment</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">E/BlankFragment: ---- onPause ----</span><br><span class="line">E/BlankFragment: ---- onStop ----</span><br><span class="line">E/BlankFragment: ---- onDestroyView ----</span><br></pre></td></tr></table></figure>
+<p>6.从OtherFragment切换回本Fragment</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">E/BlankFragment: ---- onCreateView ----</span><br><span class="line">E/BlankFragment: ---- onActivityCreated ----</span><br><span class="line">E/BlankFragment: ---- onStart ----   </span><br><span class="line">E/BlankFragment: ---- onResume ----</span><br></pre></td></tr></table></figure>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wangzhumo.com/2018/03/05/Activity与Fragment的生命周期/" data-id="cjjk6oq5z0001ahste27audi0" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-Flutter安装指南MAC版" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -259,7 +485,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/02/28/Flutter安装指南MAC版/" data-id="cjjk326j4002cwystvhjg9qi9" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/02/28/Flutter安装指南MAC版/" data-id="cjjk6oq8f002iahstheugqhj7" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -406,7 +632,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/02/26/Android-单元测试-一/" data-id="cjjk326h9000jwysty0u5gr2l" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/02/26/Android-单元测试-一/" data-id="cjjk6oq6n000jahstec7i4oyd" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -573,7 +799,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/02/26/Android-Studio-中使用tools-sample/" data-id="cjjk326gi0004wystx9gg2svj" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/02/26/Android-Studio-中使用tools-sample/" data-id="cjjk6oq6d0007ahstrp4jwysp" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -725,7 +951,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/02/07/Android项目中使用Timber-Logger日志输出/" data-id="cjjk326if001jwystempdm2tq" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/02/07/Android项目中使用Timber-Logger日志输出/" data-id="cjjk6oq7e001iahstkh2gwjlu" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -948,7 +1174,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/02/05/Jenkins搭建Android自动打包/" data-id="cjjk326ka003jwyst9l085hp2" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/02/05/Jenkins搭建Android自动打包/" data-id="cjjk6oq8q003hahstq7pwngcg" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1384,7 +1610,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/02/04/Java中String-format-的使用指北/" data-id="cjjk326k7003bwyst30lrut2d" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/02/04/Java中String-format-的使用指北/" data-id="cjjk6oq8o0039ahst5x3jtott" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1556,7 +1782,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/01/17/Room-AppDatabase-Impl-does-not-exist的异常解决/" data-id="cjjk326km0049wystp04x6e0n" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/01/17/Room-AppDatabase-Impl-does-not-exist的异常解决/" data-id="cjjk6oq96004cahstou58n3nc" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1691,7 +1917,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/01/11/使用Charles抓Https的数据请求/" data-id="cjjk326l40052wystq8icu9k9" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/01/11/使用Charles抓Https的数据请求/" data-id="cjjk6oq9l005dahstgu0uzi20" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1959,210 +2185,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/01/11/Android开发中常用的Adb命令/" data-id="cjjk326hp000wwystfytrfkvc" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-OkHttp中添加https支持" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/01/10/OkHttp中添加https支持/">OkHttp中添加https支持</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/01/10/OkHttp中添加https支持/">
-            <time datetime="2018-01-10T08:43:57.000Z" itemprop="datePublished">2018-01-10</time>
-        </a>
-    </div>
-
-
-                        
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android/">Android</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p><strong>基础知识</strong></p>
-<p>感觉就是一堆有信誉的机构,说: 我们这些机构的公钥是可信的,我们下面的小弟当然也是可以信任的啦</p>
-<p>然后大家就去当人家小弟,就是可信的了….</p>
-<p>当然这里面有的大佬不高兴,就自己搞一套证书,比如12306</p>
-<p>Https中,值得注意的密钥有:</p>
-<ul>
-<li>服务器端的<code>公钥</code>和<code>私钥</code></li>
-</ul>
-<ul>
-<li>客户端的<code>随机密钥</code></li>
-</ul>
-<p>值得注意的是一个HTTPS请求实际上就是两次HTTP传输.</p>
-<p>1.客户端向服务器发起HTTPS请求，连接到服务器的443端口。</p>
-<p>2.服务端收到请求,向客户端发送自己的<code>公钥</code></p>
-<p>3.客户端收到服务器公钥,开始验证证书的合法性,我们知道系统内置了一些证书,应该是叫顶级证书吧</p>
-<p>我们的证书并不是啥大机构发的,肯定不在里面,那么就没法验证合法.</p>
-<p>​     合法 &gt; 继续</p>
-<p>​     不合法 &gt; 此次Https请求终止</p>
-<p>4.客户端验证公钥合格后(也就是给你发消息的服务器是正经服务器)，那么客户端会生成一个 随机密码,客户端会拿着这个随机密码和刚才收到的服务器密钥做非对称加密 &gt;&gt; 得到密文的密码</p>
-<p>——–以上第一次http请求结束了——–</p>
-<p>5.客户端会发起HTTPS中的第二个HTTP请求,发送客户端密钥(密文)给服务器。</p>
-<p>6.服务器收到密文，会用自己的私钥对其进行非对称解密,得到客户端刚才生成的客户端随机密码.</p>
-<p>此时服务器使用客户端随机密码,对数据进行对称加密</p>
-<p>7.把对称加密后的数据返回给客户端,客户端对称解密,OK    此次Https完美结束</p>
-<p>——–整个https请求结束了——–</p>
-<p>其中 , <code>对称加密</code>和<code>非对称加密</code>,  各司其职,共同完成整个请求.</p>
-<p>  对称加密: 最快速,最简单</p>
-<p>  非对称加密:速度慢,很安全,不需要把秘钥分发,客户端利用公钥加密的数据,只能是拥有秘钥的服务器解密</p>
-<p>利用非对称加密的特性传递  客户端生成的随机密钥 ,达到只有服务器和客户端互相知道的密钥,从而使用密钥进行(高速简单的)对称加密数据.</p>
-<p><strong>第一部分:信任所有</strong></p>
-<p>这就是,我不管是谁传递的消息,不是你家服务器传递的消息,你也会信</p>
-<p><strong>Api.java</strong> (提供okhttp实例,并创建Retroit服务)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">OkHttpClient okHttpClient = new OkHttpClient.Builder()</span><br><span class="line">               .hostnameVerifier(new HostnameVerifier() &#123;</span><br><span class="line">                   @Override</span><br><span class="line">                   public boolean verify(String hostname, SSLSession session) &#123;</span><br><span class="line">                       return true;</span><br><span class="line">                   &#125;</span><br><span class="line">               &#125;)</span><br><span class="line">               .sslSocketFactory(createSSLSocketFactory())</span><br><span class="line">               .build();</span><br><span class="line">               </span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">//这里是创建一个SSLSocketFactory,提供给上面的 .sslSocketFactory()</span><br><span class="line">private  SSLSocketFactory createSSLSocketFactory() &#123;</span><br><span class="line">       SSLSocketFactory ssfFactory = null;</span><br><span class="line">       try &#123;</span><br><span class="line">           SSLContext sc = SSLContext.getInstance(&quot;TLS&quot;);</span><br><span class="line">           sc.init(null, new TrustManager[]&#123;new TrustAllCerts()&#125;, new SecureRandom());</span><br><span class="line">           ssfFactory = sc.getSocketFactory();</span><br><span class="line">       &#125; catch (Exception e) &#123;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       return ssfFactory;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-<p>其中涉及到<strong>TrustAllCerts.java</strong>,可以看到只是实现X509TrustManager,所有方法都是默认实现</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * If you have any questions, you can contact by email &#123; wangzhumoo@gmail.com&#125;</span><br><span class="line"> * @author 王诛魔 2018/1/8 下午2:25</span><br><span class="line"> */</span><br><span class="line">public class TrustAllCerts implements X509TrustManager &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException &#123;&#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException &#123;&#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public X509Certificate[] getAcceptedIssuers() &#123;</span><br><span class="line">        return new X509Certificate[0];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里就以及可以了,信任所有的连接</p>
-<hr>
-<p><strong>第二部分:(强验证)</strong></p>
-<p>我只信任证书合法的服务器传递的数据.</p>
-<ul>
-<li>查看Https的证书</li>
-</ul>
-<p><img src="images/https_zhengshu.png" alt="https证书"></p>
-<p>在浏览器上看到这个,这个已经是我把证书添加为信任了,所以他是一个 <code>安全</code> 的标志</p>
-<ul>
-<li>分析</li>
-</ul>
-<p><img src="images/https_root.png" alt="https证书"></p>
-<p>这里是我查看当前网站证书的结构</p>
-<p>最顶—是根证书,到期时间是2028年</p>
-<p>最底—是我司证书,到期时间是2018.12.9日</p>
-<p>这里我们可以发现,我们网站的证书是有时间限制的,那么就会有一个问题,到了2018.12.9这一天怎么办.</p>
-<blockquote>
-<p>我也不知道会怎么样,应该是续签吧!那么万一这个证书变化了怎么办?</p>
-</blockquote>
-<p>所以,我们应该把根证书置为信任.</p>
-<ul>
-<li>下载保存</li>
-</ul>
-<p><img src="images/https_save.png" alt="https证书"></p>
-<p>Mac的在  钥匙串访问  中</p>
-<p>Windows 没法放图,在chrome上查看证书的时候应该就能保存.</p>
-<p><strong>HttpsUtils.java </strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * If you have any questions, you can contact by email &#123; wangzhumoo@gmail.com&#125;</span><br><span class="line"> * @author 王诛魔 2018/1/10 下午5:07</span><br><span class="line"> * 支持https的工具类</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">public class HttpsUtils &#123;</span><br><span class="line">    private static final String TAG = &quot;OkHttp&quot;;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 创建一个空白的KeyStore</span><br><span class="line">     * @return KeyStore</span><br><span class="line">     * @throws GeneralSecurityException</span><br><span class="line">     */</span><br><span class="line">    private static KeyStore createEmptyKeyStore() throws GeneralSecurityException &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());</span><br><span class="line">            //此处密码随意,不会产生问题</span><br><span class="line">            keystore.load(null, &quot;password&quot;.toCharArray());</span><br><span class="line">            return keystore;</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * TrustManager  生成</span><br><span class="line">     * @return</span><br><span class="line">     * @throws GeneralSecurityException</span><br><span class="line">     */</span><br><span class="line">    private static TrustManager[] generateTrustManager() throws GeneralSecurityException &#123;</span><br><span class="line"></span><br><span class="line">        //创建一个X.509格式的CertificateFactory</span><br><span class="line">        CertificateFactory certificateFactory = CertificateFactory.getInstance(&quot;X.509&quot;);</span><br><span class="line"></span><br><span class="line">        Certificate ca;</span><br><span class="line">        //证书工厂根据证书文件的流生成证书Certificate</span><br><span class="line">        InputStream assets = App.getContext().getResources().openRawResource(R.raw.rootca);</span><br><span class="line">        ca = certificateFactory.generateCertificate(assets);</span><br><span class="line">        Log.e(TAG, &quot;trustManager: ca = &quot; + ((X509Certificate) ca).getSubjectDN() );</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        //创建KeyStore，用来存储信任证书</span><br><span class="line">        KeyStore keyStor = createEmptyKeyStore();</span><br><span class="line">        keyStor.setCertificateEntry(&quot;ca&quot;,ca);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        //创建一个默认类型的TrustManagerFactory</span><br><span class="line">        String defaultAlgorithm = TrustManagerFactory.getDefaultAlgorithm();</span><br><span class="line">        TrustManagerFactory tmf = TrustManagerFactory.getInstance(defaultAlgorithm);</span><br><span class="line"></span><br><span class="line">        //用keyStore实例初始化TrustManagerFactory,此时TrustManagerFactory会信任我们保存的证书</span><br><span class="line">        tmf.init(keyStor);</span><br><span class="line"></span><br><span class="line">        //通过tmf获取TrustManager数组，TrustManager也会信任keyStor中的证书</span><br><span class="line"></span><br><span class="line">        return tmf.getTrustManagers();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 提供一个一个SSLSocketFactory</span><br><span class="line">     * @return SSLSocketFactory实例</span><br><span class="line">     */</span><br><span class="line">    public static SSLSocketFactory generateSSLSocketFactory()  &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            SSLContext sc = SSLContext.getInstance(&quot;TLS&quot;);</span><br><span class="line">            sc.init(null, generateTrustManager(), new SecureRandom());</span><br><span class="line">            Log.e(TAG, &quot;generateSSLSocketFactory &quot;);</span><br><span class="line">            return sc.getSocketFactory();</span><br><span class="line">        &#125; catch (GeneralSecurityException e) &#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注释很清楚了.</p>
-<p><strong>关键:</strong></p>
-<p>1.拿到帧数的流</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">InputStream assets = App.getContext().getResources().openRawResource(R.raw.rootca);</span><br></pre></td></tr></table></figure>
-<p>2.保存到keystore</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">KeyStore keyStor = createEmptyKeyStore();</span><br><span class="line">keyStor.setCertificateEntry(&quot;ca&quot;,ca);</span><br></pre></td></tr></table></figure>
-<p>3.初始化并拿到TrustManager[]</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tmf.init(keyStor);</span><br><span class="line">tmf.getTrustManagers()</span><br></pre></td></tr></table></figure>
-<p><strong>使用即可:</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//这样就Ok</span><br><span class="line">OkHttpClient okHttpClient = new OkHttpClient.Builder()</span><br><span class="line">                .hostnameVerifier((hostname, session) -&gt; true)</span><br><span class="line">                .sslSocketFactory(HttpsUtils.generateSSLSocketFactory())</span><br><span class="line">                .build();</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>超好的两篇</p>
-<p><a href="http://blog.csdn.net/lmj623565791/article/details/48129405" target="_blank" rel="noopener">http://blog.csdn.net/lmj623565791/article/details/48129405</a></p>
-<p><a href="http://blog.csdn.net/iispring/article/details/51615631" target="_blank" rel="noopener">http://blog.csdn.net/iispring/article/details/51615631</a></p>
-</blockquote>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.wangzhumo.com/2018/01/10/OkHttp中添加https支持/" data-id="cjjk326kf003uwystg9xvz05l" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/01/11/Android开发中常用的Adb命令/" data-id="cjjk6oq71000vahstoas9ip13" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2250,7 +2273,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Studio/">Android Studio</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Bug/">Bug</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Source-Code/">Source Code</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Video/">Video</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/View/">View</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Studio/">Android Studio</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Bug/">Bug</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Source-Code/">Source Code</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Video/">Video</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/View/">View</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -2259,7 +2282,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 16.67px;">Android Studio</a> <a href="/tags/Android单元测试/" style="font-size: 10px;">Android单元测试</a> <a href="/tags/Binder/" style="font-size: 10px;">Binder</a> <a href="/tags/Bug/" style="font-size: 16.67px;">Bug</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Google/" style="font-size: 11.67px;">Google</a> <a href="/tags/Gradle/" style="font-size: 11.67px;">Gradle</a> <a href="/tags/Handler/" style="font-size: 10px;">Handler</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/Java/" style="font-size: 18.33px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/Okhttp/" style="font-size: 11.67px;">Okhttp</a> <a href="/tags/Room/" style="font-size: 13.33px;">Room</a> <a href="/tags/Rxjava/" style="font-size: 13.33px;">Rxjava</a> <a href="/tags/Server/" style="font-size: 15px;">Server</a> <a href="/tags/Source-Code/" style="font-size: 11.67px;">Source Code</a> <a href="/tags/Video/" style="font-size: 10px;">Video</a> <a href="/tags/View/" style="font-size: 11.67px;">View</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/组件化/" style="font-size: 10px;">组件化</a> <a href="/tags/蓝牙/" style="font-size: 10px;">蓝牙</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a>
+            <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 15.71px;">Android Studio</a> <a href="/tags/Android单元测试/" style="font-size: 10px;">Android单元测试</a> <a href="/tags/Binder/" style="font-size: 10px;">Binder</a> <a href="/tags/Bug/" style="font-size: 17.14px;">Bug</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Google/" style="font-size: 11.43px;">Google</a> <a href="/tags/Gradle/" style="font-size: 11.43px;">Gradle</a> <a href="/tags/Handler/" style="font-size: 10px;">Handler</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/Java/" style="font-size: 18.57px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Linux/" style="font-size: 12.86px;">Linux</a> <a href="/tags/Okhttp/" style="font-size: 11.43px;">Okhttp</a> <a href="/tags/Room/" style="font-size: 12.86px;">Room</a> <a href="/tags/Rxjava/" style="font-size: 12.86px;">Rxjava</a> <a href="/tags/Server/" style="font-size: 14.29px;">Server</a> <a href="/tags/Source-Code/" style="font-size: 11.43px;">Source Code</a> <a href="/tags/Video/" style="font-size: 10px;">Video</a> <a href="/tags/View/" style="font-size: 11.43px;">View</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/组件化/" style="font-size: 10px;">组件化</a> <a href="/tags/蓝牙/" style="font-size: 10px;">蓝牙</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a>
         </div>
     </div>
 
@@ -2269,6 +2292,25 @@
         <h3 class="widget-title">最新文章</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Bug/">Bug</a></p>
+                            <p class="item-title"><a href="/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" class="title">RecyclerView中notifyItemRangeChanged无效的BUG</a></p>
+                            <p class="item-date"><time datetime="2018-07-13T14:39:55.000Z" itemprop="datePublished">2018-07-13</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -2346,25 +2388,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/07/05/Android非静态内部类与匿名内部类引起的内存泄漏/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a></p>
-                            <p class="item-title"><a href="/2018/07/05/Android非静态内部类与匿名内部类引起的内存泄漏/" class="title">Android非静态内部类与匿名内部类引起的内存泄漏</a></p>
-                            <p class="item-date"><time datetime="2018-07-05T04:06:51.000Z" itemprop="datePublished">2018-07-05</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -2374,7 +2397,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">25</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">25</span></li></ul>
         </div>
     </div>
 
@@ -2383,7 +2406,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">39</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android单元测试/">Android单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bug/">Bug</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Handler/">Handler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Okhttp/">Okhttp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Room/">Room</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Server/">Server</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Source-Code/">Source Code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video/">Video</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">40</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android单元测试/">Android单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bug/">Bug</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Handler/">Handler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Okhttp/">Okhttp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Room/">Room</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Server/">Server</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Source-Code/">Source Code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video/">Video</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 

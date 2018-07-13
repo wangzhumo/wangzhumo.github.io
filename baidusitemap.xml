@@ -4,6 +4,29 @@
 
     
   <url>
+    <loc>http://www.wangzhumo.com/2018/07/13/RecyclerView%E4%B8%ADnotifyItemRangeChanged%E6%97%A0%E6%95%88%E7%9A%84BUG/</loc>
+    <lastmod>2018-07-13T16:14:48.491Z</lastmod>
+    <data>
+        <display>
+        <title>RecyclerView中notifyItemRangeChanged无效的BUG</title>
+        <pubTime>2018-07-13T14:39:55.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Bug</tag>
+         
+         
+           
+             
+              <breadCrumb title="Bug" url="http://www.wangzhumo.com/categories/Bug/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+  <url>
     <loc>http://www.wangzhumo.com/2018/07/12/ConstraintLayout%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97-%E5%9F%BA%E7%A1%80%E7%9A%84%E7%BA%A6%E6%9D%9F/</loc>
     <lastmod>2018-07-13T14:33:03.303Z</lastmod>
     <data>
@@ -64,7 +87,6 @@
     </data>
     </url>
 
-    
     
     
     
