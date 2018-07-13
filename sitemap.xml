@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.wangzhumo.com/2018/07/12/ConstraintLayout%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97-%E5%9F%BA%E7%A1%80%E7%9A%84%E7%BA%A6%E6%9D%9F/</loc>
+    
+    <lastmod>2018-07-13T14:33:03.303Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.wangzhumo.com/2018/07/11/JVM%E7%9A%84%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6Garbage-Collection/</loc>
+    
+    <lastmod>2018-07-13T14:26:56.384Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.wangzhumo.com/2018/02/26/Android-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95-%E4%B8%80/</loc>
     
     <lastmod>2018-07-11T09:24:06.187Z</lastmod>
@@ -37,9 +51,9 @@
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/2018/07/11/JVM%E7%9A%84%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6Garbage-Collection/</loc>
+    <loc>http://www.wangzhumo.com/config/package.json</loc>
     
-    <lastmod>2018-07-11T07:46:21.463Z</lastmod>
+    <lastmod>2018-07-11T07:41:23.049Z</lastmod>
     
   </url>
   

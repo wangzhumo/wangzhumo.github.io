@@ -4,6 +4,46 @@
 
     
   <url>
+    <loc>http://www.wangzhumo.com/2018/07/12/ConstraintLayout%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97-%E5%9F%BA%E7%A1%80%E7%9A%84%E7%BA%A6%E6%9D%9F/</loc>
+    <lastmod>2018-07-13T14:33:03.303Z</lastmod>
+    <data>
+        <display>
+        <title>ConstraintLayout使用指南-基础的约束</title>
+        <pubTime>2018-07-12T07:49:34.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/07/11/JVM%E7%9A%84%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6Garbage-Collection/</loc>
+    <lastmod>2018-07-13T14:26:56.384Z</lastmod>
+    <data>
+        <display>
+        <title>JVM的垃圾回收Garbage Collection</title>
+        <pubTime>2018-07-11T07:45:01.000Z</pubTime>
+        
+        <tag>Java</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://www.wangzhumo.com/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.wangzhumo.com/2018/02/26/Android-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95-%E4%B8%80/</loc>
     <lastmod>2018-07-11T09:24:06.187Z</lastmod>
     <data>
@@ -50,25 +90,6 @@
     </url>
 
     
-  <url>
-    <loc>http://www.wangzhumo.com/2018/07/11/JVM%E7%9A%84%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6Garbage-Collection/</loc>
-    <lastmod>2018-07-11T07:46:21.463Z</lastmod>
-    <data>
-        <display>
-        <title>JVM的垃圾回收Garbage Collection</title>
-        <pubTime>2018-07-11T07:45:01.000Z</pubTime>
-        
-        <tag>Java</tag>
-         
-         
-           
-             
-              <breadCrumb title="Java" url="http://www.wangzhumo.com/categories/Java/"/>
-          
-        </display>
-    </data>
-    </url>
-
     
   <url>
     <loc>http://www.wangzhumo.com/2018/03/11/JVM%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8/</loc>
