@@ -159,7 +159,7 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                58
+                59
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -188,6 +188,274 @@
 
             
             <section id="main">
+    <article id="post-Android开发中常用的Adb命令" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/01/11/Android开发中常用的Adb命令/">Android开发中常用的Adb命令</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/01/11/Android开发中常用的Adb命令/">
+            <time datetime="2018-01-11T04:07:40.000Z" itemprop="datePublished">2018-01-11</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Android/">Android</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Android/">Android</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>在做这些之前,先配置好adb环境变量,以我的配置为例</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> vim ~/.bash_profile</span><br><span class="line"></span><br><span class="line">export ANDROID_HOME=/Users/phyooos/Library/Android/sdk</span><br><span class="line">...</span><br><span class="line">export PATH=&#123;省略&#125;:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> source ~/.bas</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> adb</span><br><span class="line">Android Debug Bridge version 1.0.39</span><br><span class="line">Version 0.0.1-4500957</span><br><span class="line">Installed as /Users/phyooos/Library/Android/sdk/platform-tools/adb</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>补充</p>
+<blockquote>
+<p>adb shell pm list packages   当前手机安装的所有app包名<br>adb shell pm list packages | grep ‘google’  在所有包名中查找带’google’的</p>
+</blockquote>
+<h4 id="连接设备"><a href="#连接设备" class="headerlink" title="连接设备"></a>连接设备</h4><p>打开开发者 -&gt; 打开调试 -&gt; 允许调试</p>
+<ul>
+<li><p>通过usb连接</p>
+</li>
+<li><p>通过wifi连接</p>
+<p>保证Android设备与电脑在局域网中,网段好像也要一致 eg:  <code>192.168.2.98 , 192.168.2.111</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">~ ⌚ 9:44:55</span><br><span class="line"><span class="meta">$</span> adb connect 192.168.6.51</span><br><span class="line">unable to connect to 192.168.6.51:5555: Connection refused</span><br></pre></td></tr></table></figure>
+<p>此时是连接不上的,要先tcpip 5555,如下:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>使用Tcp并监听端口5555</span><br><span class="line">adb tcpip 5555</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>连接设备</span><br><span class="line">adb connect 192.168.6.51</span><br></pre></td></tr></table></figure>
+<p>如果你想用usb调试</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>使用usb调试  </span><br><span class="line">adb usb</span><br></pre></td></tr></table></figure>
+<p>PS:有的设备直接adb connect  即可,所以不妨先试试</p>
+<p>​</p>
+</li>
+</ul>
+<h4 id="查看设备"><a href="#查看设备" class="headerlink" title="查看设备"></a>查看设备</h4><ul>
+<li><p>查看所有连接的设备</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb devices</span><br><span class="line">List of devices attached</span><br><span class="line">3080b82d	device</span><br><span class="line">860BCML228J8	device</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>指定设备(adb 命令必须指定一个设备使用)</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">abd -s 编号 命令</span><br><span class="line">比如我要连接3080b82d	device 这个设备,安装一个apk</span><br><span class="line"></span><br><span class="line">eg:</span><br><span class="line"><span class="meta">$</span> adb -s 3080b82d install Test.apk</span><br><span class="line">Success</span><br></pre></td></tr></table></figure>
+<h4 id="安装-卸载apk"><a href="#安装-卸载apk" class="headerlink" title="安装,卸载apk"></a>安装,卸载apk</h4><ul>
+<li>安装<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb -s 3080b82d install Users/phyooos/develop/Test.apk</span><br><span class="line">Success</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>install 跟上apk的path即可</p>
+<p>install 可以搭配几个参数使用,比较常用的是</p>
+<p><code>install -r</code>   替换掉原来的apk.(被称为强制安装)    至于其他的参数去google官网看吧</p>
+<p><code>install -t</code>  可以安装测试包</p>
+<ul>
+<li>卸载</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">adb uninstall [软件包名]</span><br><span class="line"></span><br><span class="line">adb uninstall -k [软件包名]</span><br></pre></td></tr></table></figure>
+<p>-k 参数,卸载软件但是保留配置和缓存文件.</p>
+<p>包名使用文章开始的命令查找即可(当前有两个手机,还要指定设备)<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb -s 3080b82d shell pm list packages | grep 'miui'</span><br><span class="line">package:com.miui.screenrecorder</span><br><span class="line">package:com.miui.contentextension</span><br><span class="line">package:com.miui.powerkeeper</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<h4 id="拉取-推送文件"><a href="#拉取-推送文件" class="headerlink" title="拉取,推送文件"></a>拉取,推送文件</h4><ul>
+<li>发送文件到Android设备</li>
+</ul>
+<p>　　<code>adb push [本地路径] [远程路径]</code></p>
+<ul>
+<li>从Android设备中下载文件</li>
+</ul>
+<p>　　<code>adb pull [远程路径] [本地路径]</code></p>
+<h4 id="截图录屏"><a href="#截图录屏" class="headerlink" title="截图录屏"></a>截图录屏</h4><ul>
+<li><p>截图<code>adb shell screencap [path]</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adb shell screencap /sdcard/screen.png</span><br><span class="line">#截图并保存到/sdcard/screen.png</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>录屏<code>adb shell screenrecord [path]</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adb shell screenrecord /sdcard/demo.mp4</span><br><span class="line">#录屏</span><br></pre></td></tr></table></figure>
+<p>注意:   按Ctrl-C 结束录制</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">adb shell screenrecord --size &lt;WIDTHxHEIGHT&gt;</span><br><span class="line"></span><br><span class="line">adb shell screenrecord --bit-rate &lt;RATE&gt;</span><br><span class="line">adb shell screenrecord --bit-rate 5000000 /sdcard/demo.mp4</span><br><span class="line"></span><br><span class="line">adb shell screenrecord --time-limit &lt;TIME&gt;</span><br><span class="line"></span><br><span class="line">adb shell screenrecord --rotate</span><br><span class="line"></span><br><span class="line">adb shell screenrecord --verbose</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ul>
+<h4 id="Package"><a href="#Package" class="headerlink" title="Package"></a>Package</h4><ul>
+<li><p>查看系统内app信息  <code>adb shell pm list packages</code></p>
+<ul>
+<li><p>查看当前所有包</p>
+<p><code>adb shell pm list packages</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb shell pm list packages</span><br><span class="line">package:com.flyme.roamingpay</span><br><span class="line">package:com.android.cts.priv.ctsshim</span><br><span class="line">package:com.meizu.pps</span><br><span class="line">package:com.meizu.net.pedometer</span><br><span class="line">package:com.android.providers.telephony</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>系统应用</p>
+<p><code>adb shell pm list packages -s</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb shell pm list packages -s</span><br><span class="line">package:com.miui.screenrecorder</span><br><span class="line">package:com.android.cts.priv.ctsshim</span><br><span class="line">package:com.qualcomm.qti.auth.sampleextauthservice</span><br><span class="line">package:com.qualcomm.qti.perfdump</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>普通外来应用</p>
+<p><code>adb shell pm list packages -3</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb shell pm list packages -3</span><br><span class="line">package:com.google.android.youtube</span><br><span class="line">package:com.hpbr.bosszhipin</span><br><span class="line">package:de.blinkt.openvpn</span><br><span class="line">package:org.iggymedia.periodtracker</span><br><span class="line">package:com.daimajia.gold</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>其他参数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>See their associated file.</span><br><span class="line">adb shell pm list packages -f </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>Filter to only show disabled packages.</span><br><span class="line">adb shell pm list packages -d </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>Filter to only show enabled packages.</span><br><span class="line">adb shell pm list packages -e </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>See the installer for the packages.</span><br><span class="line">adb shell pm list packages -i </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>Also include uninstalled packages.</span><br><span class="line">adb shell pm list packages -u</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>通过包名查找app位置 <code>adb shell pm path [packagename]</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ adb shell pm path com.miui.screenrecorder</span><br><span class="line">package:/system/app/MiuiScreenRecorder/MiuiScreenRecorder.apk</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>清除缓存<code>adb shell pm clear  [packageName]</code></p>
+<p>清除了该app的  data  cache</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ adb shell pm clear com.yhcs.carmart</span><br><span class="line">Success</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ul>
+<h4 id="shell"><a href="#shell" class="headerlink" title="shell"></a>shell</h4><p>我们知道android其实精简了linux的命令,有一大部分linux命令没法用的</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb shell</span><br><span class="line"><span class="meta">#</span>即可进入</span><br><span class="line"></span><br><span class="line">如果要root权限,国内手机好像不一致,我是用过的为</span><br><span class="line"><span class="meta">$</span> adb root</span><br><span class="line"><span class="meta">$</span> adb shell</span><br><span class="line"></span><br><span class="line">此时权限就是root</span><br><span class="line"></span><br><span class="line">进入shell后,就可以为所欲为,一般和linux一致</span><br></pre></td></tr></table></figure>
+<p>不过这些,还是管用的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls , cd , rm , mkdir , touch , pwd ,cp , mv ,netstat , ping, ip</span><br></pre></td></tr></table></figure>
+<p>举一个例子,我想查看当前wifi的ip是多少.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb shell</span><br><span class="line">sagit:/ $ ip -f inet addr show wlan0</span><br><span class="line">23: wlan0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP group default qlen 3000</span><br><span class="line">    inet 192.168.6.51/23 brd 192.168.7.255 scope global wlan0</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">sagit:/ $</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>ip  inet 192.168.6.51  这个就是</span><br></pre></td></tr></table></figure>
+<h4 id="Logcat"><a href="#Logcat" class="headerlink" title="Logcat"></a>Logcat</h4><p><code>adb logcat [option] [filter]</code></p>
+<ul>
+<li><p>查看log <code>adb logcat</code></p>
+<p>通过  control + c  退出</p>
+<p>​</p>
+</li>
+<li><p>查看Debug的log <code>adb logcat *:D</code></p>
+</li>
+</ul>
+<p>Logcat,还是Android studio 看起来方便,所以没有继续去看,也就不说了</p>
+<h4 id="dumpsys"><a href="#dumpsys" class="headerlink" title="dumpsys"></a>dumpsys</h4><p>这是一个很强大的命令</p>
+<ul>
+<li><p>电量 <code>adb shell dumpsys battery</code></p>
+<p>​</p>
+</li>
+<li><p>服务列表 <code>adb shell dumpsys</code></p>
+<p>下面的命令  <code>| more</code> 是为了显示所有的数据 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ adb shell dumpsys | more</span><br><span class="line">Currently running services:</span><br><span class="line">  DockObserver</span><br><span class="line">  MiuiBackup</span><br><span class="line">  MiuiInit</span><br><span class="line">  SurfaceFlinger</span><br><span class="line">  accessibility</span><br><span class="line">  account</span><br><span class="line">  activity</span><br><span class="line">  alarm</span><br><span class="line">  ...</span><br></pre></td></tr></table></figure>
+<p>这个Currently running services   所有的项目,都可以详细查询</p>
+</li>
+<li><p>查询单个service  <code>adb shell dumpsys [service name]</code></p>
+<p>搞几个例子看看:</p>
+<ul>
+<li>屏幕分辨率<code>adb shell dumpsys window displays</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ adb shell dumpsys window displays</span><br><span class="line"></span><br><span class="line">WINDOW MANAGER DISPLAY CONTENTS (dumpsys window displays)</span><br><span class="line">  Display: mDisplayId=0</span><br><span class="line">    init=1080x1920 480dpi cur=1080x1920 app=1080x1920 rng=1080x1020-1920x1860</span><br><span class="line">    deferred=false mLayoutNeeded=false</span><br></pre></td></tr></table></figure>
+<p>其中:</p>
+<p>init=1080x1920  分辨率</p>
+<p>480dpi   dpi值</p>
+<p>​</p>
+<ul>
+<li><p>activity信息<code>adb shell dumpsys activity</code></p>
+<p>比如我想看看我activity的信息<code>adb shell dumpsys activity | grep &#39;com.yhcs.carmart&#39;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ adb shell dumpsys activity | grep &quot;com.yhcs.carmart&quot;</span><br><span class="line">  * com.yhcs.carmart: 2 items</span><br><span class="line">    #0: PendingIntentRecord&#123;c526be3 com.yhcs.carmart startService&#125;</span><br><span class="line">    #1: PendingIntentRecord&#123;8949e0 com.yhcs.carmart broadcastIntent&#125;</span><br><span class="line">      -&gt; 8161:com.yhcs.carmart/u0a460 s1/1 u0/0 +44s372ms</span><br><span class="line">      -&gt; 8556:com.yhcs.carmart:channel/u0a460 s1/1 u0/0 +33s684ms</span><br><span class="line">      </span><br><span class="line">      ...</span><br><span class="line">      </span><br><span class="line">  * Recent #0: TaskRecord&#123;6019b81 #14799 A=com.yhcs.carmart U=0 StackId=1 sz=1&#125;</span><br><span class="line">   packageName=com.yhcs.carmart processName=com.yhcs.carmart</span><br><span class="line">   launchedFromUid=10460 launchedFromPackage=com.yhcs.carmart userId=0</span><br><span class="line">   app=ProcessRecord&#123;3c52934 8161:com.yhcs.carmart/u0a460&#125;</span><br><span class="line">   Intent &#123; cmp=com.yhcs.carmart/.ui.main.MainActivity &#125;</span><br><span class="line">   frontOfTask=true task=TaskRecord&#123;6019b81 #14799 A=com.yhcs.carmart U=0 StackId=1 sz=1&#125;</span><br><span class="line">   taskAffinity=com.yhcs.carmart</span><br><span class="line">   realActivity=com.yhcs.carmart/.ui.main.MainActivity</span><br></pre></td></tr></table></figure>
+<p>现在指定查看这个activity</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ adb shell dumpsys activity com.yhcs.carmart/.ui.main.MainActivity</span><br><span class="line">TASK com.yhcs.carmart id=14799 userId=0</span><br><span class="line">  ACTIVITY com.yhcs.carmart/.ui.main.MainActivity a99200b pid=8161</span><br><span class="line">    Local Activity 90efa41 State:</span><br><span class="line">      mResumed=false mStopped=true mFinished=false</span><br><span class="line">      mChangingConfigurations=false</span><br><span class="line">      mCurrentConfig=&#123;1.0 460mcc11mnc [zh_CN] ldltr sw360dp w360dp h620dp 480dpi nrml long port finger -keyb/v/h -nav/h appBounds=Rect(0, 0 - 1080, 1920) s.12 themeChanged=0 themeChangedFlags=0&#125;</span><br><span class="line">      ...</span><br><span class="line">View Hierarchy:</span><br><span class="line">      DecorView@ce71c9e[MainActivity]</span><br><span class="line">        android.widget.LinearLayout&#123;6106377 V.E...... ......ID 0,0-1080,1920&#125;</span><br><span class="line">      ...</span><br><span class="line">Active Fragments </span><br><span class="line">	  ...</span><br></pre></td></tr></table></figure>
+<p>里面有很多信息</p>
+<p>​</p>
+</li>
+</ul>
+</li>
+</ul>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wangzhumo.com/2018/01/11/Android开发中常用的Adb命令/" data-id="cjjktog98001hnostbdxq9v52" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-OkHttp中添加https支持" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -315,7 +583,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/01/10/OkHttp中添加https支持/" data-id="cjjk6oq8x003tahsth4bz1tut" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/01/10/OkHttp中添加https支持/" data-id="cjjktogb3004cnostz4ssptri" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -469,7 +737,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/01/04/WebView播放H5视屏没有画面-只有声音/" data-id="cjjk6oq9e004yahstddckqkwu" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/01/04/WebView播放H5视屏没有画面-只有声音/" data-id="cjjktogbo005fnost7u8u2j4v" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -665,7 +933,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/01/03/Room中List-使用详解/" data-id="cjjk6oq98004gahstl2n9z8bz" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/01/03/Room中List-使用详解/" data-id="cjjktogbd004nnost6sc3gzf8" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -800,7 +1068,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/28/Android字体不跟随系统变化/" data-id="cjjk6oq6x000qahst39vj37t6" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/28/Android字体不跟随系统变化/" data-id="cjjktog8s000wnost8jkeq0w6" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -936,7 +1204,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/28/Apk-Install-的各种问题/" data-id="cjjk6oq7j001pahstor3l32sd" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/28/Apk-Install-的各种问题/" data-id="cjjktog9f001nnostxgug389m" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1073,7 +1341,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/26/Android-Studio报错Error-Running-app-cannot-debug-application/" data-id="cjjk6oq6k000fahstesglg1st" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/26/Android-Studio报错Error-Running-app-cannot-debug-application/" data-id="cjjktog860007nostl77jgblx" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1220,7 +1488,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/25/Centos 创建用户并实现免密码登录/" data-id="cjjk6oq7z001wahstmcslnzwx" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/25/Centos 创建用户并实现免密码登录/" data-id="cjjktog9p0021nost3petydjj" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1376,7 +1644,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/25/Android项目中使用RxBus进行通讯/" data-id="cjjk6oq7c001eahst1qdoowfs" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/25/Android项目中使用RxBus进行通讯/" data-id="cjjktog940019nostbx31v7o0" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1547,219 +1815,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/25/Nginx安装及其简单配置/" data-id="cjjk6oq8v003oahstcf1jx0ql" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Room数据库使用指北List&lt;&gt;的问题" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2017/12/25/Room数据库使用指北List<>的问题/">Room数据库使用指北List&lt;&gt;的问题</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2017/12/25/Room数据库使用指北List<>的问题/">
-            <time datetime="2017-12-25T05:08:10.000Z" itemprop="datePublished">2017-12-25</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/Room/">Room</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>Room依赖</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">implementation &quot;android.arch.persistence.room:runtime:1.0.0&quot;</span><br><span class="line">annotationProcessor &quot;android.arch.persistence.room:compiler:1.0.0&quot;</span><br></pre></td></tr></table></figure>
-<p><strong>查找</strong></p>
-<ul>
-<li>查找表中所有数据</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">   * 查找user</span><br><span class="line">   * @return</span><br><span class="line">   */</span><br><span class="line">  @Query(&quot;SELECT * FROM banners&quot;)</span><br><span class="line">  List&lt;BannerModel&gt; findBanners();</span><br></pre></td></tr></table></figure>
-<ul>
-<li>按条件查找</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * filters</span><br><span class="line"> * @return</span><br><span class="line"> * @param typeSort</span><br><span class="line"> */</span><br><span class="line">@Query(&quot;SELECT * FROM filters WHERE type != :typeSort&quot;)</span><br><span class="line">List&lt;FilterItemModel&gt; findFilters(String typeSort);</span><br></pre></td></tr></table></figure>
-<ul>
-<li>限制条数的条件查找</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 获取排序</span><br><span class="line"> * @return</span><br><span class="line"> */</span><br><span class="line">@Query(&quot;SELECT * FROM filters WHERE type = :name LIMIT 0,1&quot;)</span><br><span class="line">FilterItemModel findSort(String name);</span><br></pre></td></tr></table></figure>
-<p>现在获取的是第一条数据</p>
-<p>//文档中的例子</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Dao</span><br><span class="line">public interface MyDao &#123;</span><br><span class="line">    @Query(&quot;SELECT first_name, last_name FROM user WHERE region IN (:regions)&quot;)</span><br><span class="line">    public List&lt;NameTuple&gt; loadUsersFromRegions(List&lt;String&gt; regions);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在user表中查找满足集合List<string> regions中条件的元素</string></p>
-<ul>
-<li>获取总行数</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 获取数据库表中总条数</span><br><span class="line"> * @return</span><br><span class="line"> */</span><br><span class="line">@Query(&quot;SELECT count(*) FROM search_history&quot;)</span><br><span class="line">long findHistoryCount();</span><br></pre></td></tr></table></figure>
-<ul>
-<li>获取某一列的和</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 求和</span><br><span class="line"> * @return</span><br><span class="line"> */</span><br><span class="line">@Query(&quot;SELECT sum(count) FROM status_stock&quot;)</span><br><span class="line">long findStatusStockCount();</span><br></pre></td></tr></table></figure>
-<ul>
-<li>按照降序排列(ASC升序  DESC降序)</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 查找user</span><br><span class="line"> * @return</span><br><span class="line"> */</span><br><span class="line">@Query(&quot;SELECT * FROM search_history ORDER BY time DESC&quot;)</span><br><span class="line">List&lt;SearchHistoryModel&gt; findSearchHistory();</span><br></pre></td></tr></table></figure>
-<hr>
-<p>文档中的例子:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">@Dao</span><br><span class="line">public interface MyDao &#123;</span><br><span class="line"></span><br><span class="line">    //正常的查询</span><br><span class="line">    @Query(&quot;SELECT * FROM user WHERE age != :minAge&quot;)</span><br><span class="line">    public User[] loadAllUsersOlderThan(int minAge);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@Dao</span><br><span class="line">public interface MyDao &#123;</span><br><span class="line"></span><br><span class="line">    //区间中的值</span><br><span class="line">    @Query(&quot;SELECT * FROM user WHERE age BETWEEN :minAge AND :maxAge&quot;)</span><br><span class="line">    public User[] loadAllUsersBetweenAges(int minAge, int maxAge);</span><br><span class="line"></span><br><span class="line">    //或关系的查询</span><br><span class="line">    @Query(&quot;SELECT * FROM user WHERE first_name LIKE :search &quot;</span><br><span class="line">           + &quot;OR last_name LIKE :search&quot;)</span><br><span class="line">    public List&lt;User&gt; findUserWithName(String search);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>如果,你不想查到表 行中所有字段,则</strong><br>1.定义一个实体<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class NameTuple &#123;</span><br><span class="line">    @ColumnInfo(name=&quot;first_name&quot;)</span><br><span class="line">    public String firstName;</span><br><span class="line"></span><br><span class="line">    @ColumnInfo(name=&quot;last_name&quot;)</span><br><span class="line">    public String lastName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>2.查询<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Dao</span><br><span class="line">public interface MyDao &#123;</span><br><span class="line">    @Query(&quot;SELECT first_name, last_name FROM user&quot;)</span><br><span class="line">    public List&lt;NameTuple&gt; loadFullName();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>多表查询Querying multiple tables</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@Dao</span><br><span class="line">public interface MyDao &#123;</span><br><span class="line">   @Query(&quot;SELECT user.name AS userName, pet.name AS petName &quot;</span><br><span class="line">          + &quot;FROM user, pet &quot;</span><br><span class="line">          + &quot;WHERE user.id = pet.user_id&quot;)</span><br><span class="line">   public LiveData&lt;List&lt;UserPet&gt;&gt; loadUserAndPetNames();</span><br><span class="line"></span><br><span class="line">   // You can also define this class in a separate file, as long as you add the</span><br><span class="line">   // &quot;public&quot; access modifier.</span><br><span class="line">   //注意 public</span><br><span class="line">   static class UserPet &#123;</span><br><span class="line">       public String userName;</span><br><span class="line">       public String petName;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>更新</strong></p>
-<ul>
-<li>更新指定条目</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 更新时间</span><br><span class="line"> * @param time</span><br><span class="line"> */</span><br><span class="line">@Query(&quot;UPDATE search_history SET time = :time WHERE content = :content&quot;)</span><br><span class="line">void updateSearchHistory(String content,long time);</span><br></pre></td></tr></table></figure>
-<p><strong>删除数据</strong></p>
-<ul>
-<li>删除所有数据</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 删除表</span><br><span class="line"> * @return</span><br><span class="line"> */</span><br><span class="line">@Query(&quot;DELETE FROM filters&quot;)</span><br><span class="line">void delectFilters();</span><br></pre></td></tr></table></figure>
-<ul>
-<li>删除最后一条</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 删除最后一个</span><br><span class="line"> * @return</span><br><span class="line"> */</span><br><span class="line">@Query(&quot;DELETE FROM search_history WHERE time in(SELECT time FROM search_history ORDER BY time ASC LIMIT 1 )&quot;)</span><br><span class="line">void delectLastHistory();</span><br></pre></td></tr></table></figure>
-<ul>
-<li>按条件删除</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 删除表by listtype</span><br><span class="line"> * @return</span><br><span class="line"> */</span><br><span class="line">@Query(&quot;DELETE FROM vehicle_model WHERE listType = :type&quot;)</span><br><span class="line">void delectVehicleByType(String type);</span><br></pre></td></tr></table></figure>
-<p>####补充</p>
-<p><strong><code>1.List&lt;String&gt;</code>这样的元素</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private ArrayList&lt;String&gt; tags;</span><br></pre></td></tr></table></figure></p>
-<p>这样的元素,可以通过Converter搞定</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/**</span><br><span class="line">* If you have any questions, you can contact by email &#123; wangzhumoo@gmail.com&#125;</span><br><span class="line">*</span><br><span class="line">* @author 王诛魔 2017/12/27 上午11:51</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">public class TagsConverter &#123;</span><br><span class="line">    @TypeConverter</span><br><span class="line">    public static ArrayList&lt;String&gt; fromString(String value) &#123;</span><br><span class="line">        Type listType = new TypeToken&lt;ArrayList&lt;String&gt;&gt;() &#123;&#125;.getType();</span><br><span class="line">        return new Gson().fromJson(value, listType);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @TypeConverter</span><br><span class="line">    public static String fromArrayList(ArrayList&lt;String&gt; list) &#123;</span><br><span class="line">        Gson gson = new Gson();</span><br><span class="line">        String json = gson.toJson(list);</span><br><span class="line">        return json;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在db中,会存为 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[&quot;精选&quot;]</span><br><span class="line">[&quot;精选&quot;,&quot;急售&quot;]</span><br><span class="line">[&quot;准新&quot;,&quot;SUV&quot;]</span><br></pre></td></tr></table></figure>
-<p><strong>3.@Embedded</strong></p>
-<p>作用是,把已经写好的普通的类添加到数据表中.<br>用Room的文档做说明:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//这是一个标准的数据表</span><br><span class="line"></span><br><span class="line">@Entity</span><br><span class="line">class User &#123;</span><br><span class="line">    @PrimaryKey</span><br><span class="line">    public int id;</span><br><span class="line"></span><br><span class="line">    public String firstName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>其中只有id , firstName</p>
-<p>而我想添加<br>    street;<br>    state;<br>    city;<br>    postCode;<br>刚好之前写了一个类叫Address</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class Address &#123;</span><br><span class="line">    public String street;</span><br><span class="line">    public String state;</span><br><span class="line">    public String city;</span><br><span class="line">    @Ignore</span><br><span class="line">    public String nothing;</span><br><span class="line">    @ColumnInfo(name = &quot;post_code&quot;)</span><br><span class="line">    public int postCode;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>那么我通过 @Embedded</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Entity</span><br><span class="line">class User &#123;</span><br><span class="line">    @PrimaryKey</span><br><span class="line">    public int id;</span><br><span class="line"></span><br><span class="line">    public String firstName;</span><br><span class="line"></span><br><span class="line">    @Embedded</span><br><span class="line">    public Address address;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>表中就会有:<br><code>names: id, firstName, street, state, city, and post_code</code></p>
-<p>如果你想给@Embedded的类中所有元素前面加上统一的标志</p>
-<p><code>@Embedded(prefix = &quot;address_&quot;)</code></p>
-<p>表中就会有:</p>
-<p><code>names: id, firstName, address_street, address_state, address_city, and address_post_code</code></p>
-<p><strong>3.<code>List&lt;Object&gt;</code>这样的数据</strong></p>
-<ul>
-<li>解决方法<br><a href="https://developer.android.com/reference/android/arch/persistence/room/Relation.html" target="_blank" rel="noopener">google developer</a></li>
-</ul>
-<p>真的给谷歌跪了,什么鬼文档</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">@Entity</span><br><span class="line">public class User &#123;</span><br><span class="line"></span><br><span class="line">    // 这里是用户的 Id</span><br><span class="line">    @PrimaryKey</span><br><span class="line">    public int id;</span><br><span class="line"></span><br><span class="line">    //省略</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@Entity</span><br><span class="line">public class Book &#123;</span><br><span class="line"></span><br><span class="line">    //书的id</span><br><span class="line">    @PrimaryKey</span><br><span class="line">    public int bookId;</span><br><span class="line">    </span><br><span class="line">    //这里就是这本书与 User的关系,这里的是User.id</span><br><span class="line">    public int userId;</span><br><span class="line">    public String name;</span><br><span class="line">    public String desc;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//注意,什么注解也不要加</span><br><span class="line">public class UserAndBooks &#123;</span><br><span class="line"></span><br><span class="line">    //加入所有的user的属性</span><br><span class="line">   @Embedded</span><br><span class="line">   public User user;</span><br><span class="line"></span><br><span class="line">    //这里定义User 和 Book的关系</span><br><span class="line">   @Relation(parentColumn = &quot;id&quot;, entityColumn = &quot;userId&quot;, entity = Book.class)</span><br><span class="line">   public List&lt;Book&gt; books; </span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//文档上还讲了一个比较牛逼的功能,这里不讨论</span><br><span class="line"></span><br><span class="line">public class UserAndAllPets &#123;</span><br><span class="line">   @Embedded</span><br><span class="line">   public User user;</span><br><span class="line">   @Relation(parentColumn = &quot;id&quot;, entityColumn = &quot;userId&quot;, entity = Book.class,</span><br><span class="line">           projection = &#123;&quot;name&quot;&#125;)</span><br><span class="line">   public List&lt;String&gt; bookNames;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//然后,dao是这样的</span><br><span class="line"></span><br><span class="line">@Dao</span><br><span class="line">public interface UserDao &#123;</span><br><span class="line">    @Query(&quot;SELECT * FROM User&quot;)</span><br><span class="line">    public List&lt;UserAndBooks&gt; loadUserWithBooks();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">PS:当然你存的时候,分辨别存User  和 Book 即可</span><br></pre></td></tr></table></figure>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.wangzhumo.com/2017/12/25/Room数据库使用指北List<>的问题/" data-id="cjjk6oq9a004kahstn2io53or" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/25/Nginx安装及其简单配置/" data-id="cjjktogap003cnostigtazlk4" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1847,7 +1903,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Studio/">Android Studio</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Bug/">Bug</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Source-Code/">Source Code</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Video/">Video</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/View/">View</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Studio/">Android Studio</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Bug/">Bug</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Source-Code/">Source Code</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Video/">Video</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/View/">View</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -1856,7 +1912,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 15.71px;">Android Studio</a> <a href="/tags/Android单元测试/" style="font-size: 10px;">Android单元测试</a> <a href="/tags/Binder/" style="font-size: 10px;">Binder</a> <a href="/tags/Bug/" style="font-size: 17.14px;">Bug</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Google/" style="font-size: 11.43px;">Google</a> <a href="/tags/Gradle/" style="font-size: 11.43px;">Gradle</a> <a href="/tags/Handler/" style="font-size: 10px;">Handler</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/Java/" style="font-size: 18.57px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Linux/" style="font-size: 12.86px;">Linux</a> <a href="/tags/Okhttp/" style="font-size: 11.43px;">Okhttp</a> <a href="/tags/Room/" style="font-size: 12.86px;">Room</a> <a href="/tags/Rxjava/" style="font-size: 12.86px;">Rxjava</a> <a href="/tags/Server/" style="font-size: 14.29px;">Server</a> <a href="/tags/Source-Code/" style="font-size: 11.43px;">Source Code</a> <a href="/tags/Video/" style="font-size: 10px;">Video</a> <a href="/tags/View/" style="font-size: 11.43px;">View</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/组件化/" style="font-size: 10px;">组件化</a> <a href="/tags/蓝牙/" style="font-size: 10px;">蓝牙</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a>
+            <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 15.71px;">Android Studio</a> <a href="/tags/Android单元测试/" style="font-size: 10px;">Android单元测试</a> <a href="/tags/Binder/" style="font-size: 10px;">Binder</a> <a href="/tags/Bug/" style="font-size: 17.14px;">Bug</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Google/" style="font-size: 11.43px;">Google</a> <a href="/tags/Gradle/" style="font-size: 11.43px;">Gradle</a> <a href="/tags/Handler/" style="font-size: 10px;">Handler</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/Java/" style="font-size: 18.57px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Linux/" style="font-size: 12.86px;">Linux</a> <a href="/tags/Okhttp/" style="font-size: 11.43px;">Okhttp</a> <a href="/tags/Room/" style="font-size: 12.86px;">Room</a> <a href="/tags/Rxjava/" style="font-size: 12.86px;">Rxjava</a> <a href="/tags/Server/" style="font-size: 14.29px;">Server</a> <a href="/tags/Source-Code/" style="font-size: 11.43px;">Source Code</a> <a href="/tags/Video/" style="font-size: 10px;">Video</a> <a href="/tags/View/" style="font-size: 11.43px;">View</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/组件化/" style="font-size: 10px;">组件化</a> <a href="/tags/蓝牙/" style="font-size: 10px;">蓝牙</a> <a href="/tags/设计模式/" style="font-size: 11.43px;">设计模式</a>
         </div>
     </div>
 
@@ -1866,6 +1922,25 @@
         <h3 class="widget-title">最新文章</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/14/设计模式-状态模式的使用/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Java/">Java</a></p>
+                            <p class="item-title"><a href="/2018/07/14/设计模式-状态模式的使用/" class="title">设计模式-状态模式的使用</a></p>
+                            <p class="item-date"><time datetime="2018-07-14T00:45:32.000Z" itemprop="datePublished">2018-07-14</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -1943,25 +2018,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/07/05/GitHub使用SSH的方式免密上传/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Tools/">Tools</a></p>
-                            <p class="item-title"><a href="/2018/07/05/GitHub使用SSH的方式免密上传/" class="title">GitHub使用SSH的方式免密上传</a></p>
-                            <p class="item-date"><time datetime="2018-07-05T05:13:25.000Z" itemprop="datePublished">2018-07-05</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -1971,7 +2027,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">25</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">25</span></li></ul>
         </div>
     </div>
 
@@ -1980,7 +2036,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">40</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android单元测试/">Android单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bug/">Bug</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Handler/">Handler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Okhttp/">Okhttp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Room/">Room</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Server/">Server</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Source-Code/">Source Code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video/">Video</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">40</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android单元测试/">Android单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bug/">Bug</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Handler/">Handler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Okhttp/">Okhttp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Room/">Room</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Server/">Server</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Source-Code/">Source Code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video/">Video</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">2</span></li></ul>
         </div>
     </div>
 

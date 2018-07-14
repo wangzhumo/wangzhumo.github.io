@@ -159,7 +159,7 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                58
+                59
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -188,6 +188,218 @@
 
             
             <section id="main">
+    <article id="post-Room数据库使用指北List&lt;&gt;的问题" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2017/12/25/Room数据库使用指北List<>的问题/">Room数据库使用指北List&lt;&gt;的问题</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2017/12/25/Room数据库使用指北List<>的问题/">
+            <time datetime="2017-12-25T05:08:10.000Z" itemprop="datePublished">2017-12-25</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Android/">Android</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/Room/">Room</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>Room依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">implementation &quot;android.arch.persistence.room:runtime:1.0.0&quot;</span><br><span class="line">annotationProcessor &quot;android.arch.persistence.room:compiler:1.0.0&quot;</span><br></pre></td></tr></table></figure>
+<p><strong>查找</strong></p>
+<ul>
+<li>查找表中所有数据</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">   * 查找user</span><br><span class="line">   * @return</span><br><span class="line">   */</span><br><span class="line">  @Query(&quot;SELECT * FROM banners&quot;)</span><br><span class="line">  List&lt;BannerModel&gt; findBanners();</span><br></pre></td></tr></table></figure>
+<ul>
+<li>按条件查找</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * filters</span><br><span class="line"> * @return</span><br><span class="line"> * @param typeSort</span><br><span class="line"> */</span><br><span class="line">@Query(&quot;SELECT * FROM filters WHERE type != :typeSort&quot;)</span><br><span class="line">List&lt;FilterItemModel&gt; findFilters(String typeSort);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>限制条数的条件查找</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 获取排序</span><br><span class="line"> * @return</span><br><span class="line"> */</span><br><span class="line">@Query(&quot;SELECT * FROM filters WHERE type = :name LIMIT 0,1&quot;)</span><br><span class="line">FilterItemModel findSort(String name);</span><br></pre></td></tr></table></figure>
+<p>现在获取的是第一条数据</p>
+<p>//文档中的例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Dao</span><br><span class="line">public interface MyDao &#123;</span><br><span class="line">    @Query(&quot;SELECT first_name, last_name FROM user WHERE region IN (:regions)&quot;)</span><br><span class="line">    public List&lt;NameTuple&gt; loadUsersFromRegions(List&lt;String&gt; regions);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在user表中查找满足集合List<string> regions中条件的元素</string></p>
+<ul>
+<li>获取总行数</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 获取数据库表中总条数</span><br><span class="line"> * @return</span><br><span class="line"> */</span><br><span class="line">@Query(&quot;SELECT count(*) FROM search_history&quot;)</span><br><span class="line">long findHistoryCount();</span><br></pre></td></tr></table></figure>
+<ul>
+<li>获取某一列的和</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 求和</span><br><span class="line"> * @return</span><br><span class="line"> */</span><br><span class="line">@Query(&quot;SELECT sum(count) FROM status_stock&quot;)</span><br><span class="line">long findStatusStockCount();</span><br></pre></td></tr></table></figure>
+<ul>
+<li>按照降序排列(ASC升序  DESC降序)</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 查找user</span><br><span class="line"> * @return</span><br><span class="line"> */</span><br><span class="line">@Query(&quot;SELECT * FROM search_history ORDER BY time DESC&quot;)</span><br><span class="line">List&lt;SearchHistoryModel&gt; findSearchHistory();</span><br></pre></td></tr></table></figure>
+<hr>
+<p>文档中的例子:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">@Dao</span><br><span class="line">public interface MyDao &#123;</span><br><span class="line"></span><br><span class="line">    //正常的查询</span><br><span class="line">    @Query(&quot;SELECT * FROM user WHERE age != :minAge&quot;)</span><br><span class="line">    public User[] loadAllUsersOlderThan(int minAge);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@Dao</span><br><span class="line">public interface MyDao &#123;</span><br><span class="line"></span><br><span class="line">    //区间中的值</span><br><span class="line">    @Query(&quot;SELECT * FROM user WHERE age BETWEEN :minAge AND :maxAge&quot;)</span><br><span class="line">    public User[] loadAllUsersBetweenAges(int minAge, int maxAge);</span><br><span class="line"></span><br><span class="line">    //或关系的查询</span><br><span class="line">    @Query(&quot;SELECT * FROM user WHERE first_name LIKE :search &quot;</span><br><span class="line">           + &quot;OR last_name LIKE :search&quot;)</span><br><span class="line">    public List&lt;User&gt; findUserWithName(String search);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>如果,你不想查到表 行中所有字段,则</strong><br>1.定义一个实体<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class NameTuple &#123;</span><br><span class="line">    @ColumnInfo(name=&quot;first_name&quot;)</span><br><span class="line">    public String firstName;</span><br><span class="line"></span><br><span class="line">    @ColumnInfo(name=&quot;last_name&quot;)</span><br><span class="line">    public String lastName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>2.查询<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Dao</span><br><span class="line">public interface MyDao &#123;</span><br><span class="line">    @Query(&quot;SELECT first_name, last_name FROM user&quot;)</span><br><span class="line">    public List&lt;NameTuple&gt; loadFullName();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>多表查询Querying multiple tables</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@Dao</span><br><span class="line">public interface MyDao &#123;</span><br><span class="line">   @Query(&quot;SELECT user.name AS userName, pet.name AS petName &quot;</span><br><span class="line">          + &quot;FROM user, pet &quot;</span><br><span class="line">          + &quot;WHERE user.id = pet.user_id&quot;)</span><br><span class="line">   public LiveData&lt;List&lt;UserPet&gt;&gt; loadUserAndPetNames();</span><br><span class="line"></span><br><span class="line">   // You can also define this class in a separate file, as long as you add the</span><br><span class="line">   // &quot;public&quot; access modifier.</span><br><span class="line">   //注意 public</span><br><span class="line">   static class UserPet &#123;</span><br><span class="line">       public String userName;</span><br><span class="line">       public String petName;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>更新</strong></p>
+<ul>
+<li>更新指定条目</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 更新时间</span><br><span class="line"> * @param time</span><br><span class="line"> */</span><br><span class="line">@Query(&quot;UPDATE search_history SET time = :time WHERE content = :content&quot;)</span><br><span class="line">void updateSearchHistory(String content,long time);</span><br></pre></td></tr></table></figure>
+<p><strong>删除数据</strong></p>
+<ul>
+<li>删除所有数据</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 删除表</span><br><span class="line"> * @return</span><br><span class="line"> */</span><br><span class="line">@Query(&quot;DELETE FROM filters&quot;)</span><br><span class="line">void delectFilters();</span><br></pre></td></tr></table></figure>
+<ul>
+<li>删除最后一条</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 删除最后一个</span><br><span class="line"> * @return</span><br><span class="line"> */</span><br><span class="line">@Query(&quot;DELETE FROM search_history WHERE time in(SELECT time FROM search_history ORDER BY time ASC LIMIT 1 )&quot;)</span><br><span class="line">void delectLastHistory();</span><br></pre></td></tr></table></figure>
+<ul>
+<li>按条件删除</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 删除表by listtype</span><br><span class="line"> * @return</span><br><span class="line"> */</span><br><span class="line">@Query(&quot;DELETE FROM vehicle_model WHERE listType = :type&quot;)</span><br><span class="line">void delectVehicleByType(String type);</span><br></pre></td></tr></table></figure>
+<p>####补充</p>
+<p><strong><code>1.List&lt;String&gt;</code>这样的元素</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private ArrayList&lt;String&gt; tags;</span><br></pre></td></tr></table></figure></p>
+<p>这样的元素,可以通过Converter搞定</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/**</span><br><span class="line">* If you have any questions, you can contact by email &#123; wangzhumoo@gmail.com&#125;</span><br><span class="line">*</span><br><span class="line">* @author 王诛魔 2017/12/27 上午11:51</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">public class TagsConverter &#123;</span><br><span class="line">    @TypeConverter</span><br><span class="line">    public static ArrayList&lt;String&gt; fromString(String value) &#123;</span><br><span class="line">        Type listType = new TypeToken&lt;ArrayList&lt;String&gt;&gt;() &#123;&#125;.getType();</span><br><span class="line">        return new Gson().fromJson(value, listType);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @TypeConverter</span><br><span class="line">    public static String fromArrayList(ArrayList&lt;String&gt; list) &#123;</span><br><span class="line">        Gson gson = new Gson();</span><br><span class="line">        String json = gson.toJson(list);</span><br><span class="line">        return json;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在db中,会存为 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[&quot;精选&quot;]</span><br><span class="line">[&quot;精选&quot;,&quot;急售&quot;]</span><br><span class="line">[&quot;准新&quot;,&quot;SUV&quot;]</span><br></pre></td></tr></table></figure>
+<p><strong>3.@Embedded</strong></p>
+<p>作用是,把已经写好的普通的类添加到数据表中.<br>用Room的文档做说明:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//这是一个标准的数据表</span><br><span class="line"></span><br><span class="line">@Entity</span><br><span class="line">class User &#123;</span><br><span class="line">    @PrimaryKey</span><br><span class="line">    public int id;</span><br><span class="line"></span><br><span class="line">    public String firstName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中只有id , firstName</p>
+<p>而我想添加<br>    street;<br>    state;<br>    city;<br>    postCode;<br>刚好之前写了一个类叫Address</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class Address &#123;</span><br><span class="line">    public String street;</span><br><span class="line">    public String state;</span><br><span class="line">    public String city;</span><br><span class="line">    @Ignore</span><br><span class="line">    public String nothing;</span><br><span class="line">    @ColumnInfo(name = &quot;post_code&quot;)</span><br><span class="line">    public int postCode;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>那么我通过 @Embedded</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Entity</span><br><span class="line">class User &#123;</span><br><span class="line">    @PrimaryKey</span><br><span class="line">    public int id;</span><br><span class="line"></span><br><span class="line">    public String firstName;</span><br><span class="line"></span><br><span class="line">    @Embedded</span><br><span class="line">    public Address address;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>表中就会有:<br><code>names: id, firstName, street, state, city, and post_code</code></p>
+<p>如果你想给@Embedded的类中所有元素前面加上统一的标志</p>
+<p><code>@Embedded(prefix = &quot;address_&quot;)</code></p>
+<p>表中就会有:</p>
+<p><code>names: id, firstName, address_street, address_state, address_city, and address_post_code</code></p>
+<p><strong>3.<code>List&lt;Object&gt;</code>这样的数据</strong></p>
+<ul>
+<li>解决方法<br><a href="https://developer.android.com/reference/android/arch/persistence/room/Relation.html" target="_blank" rel="noopener">google developer</a></li>
+</ul>
+<p>真的给谷歌跪了,什么鬼文档</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">@Entity</span><br><span class="line">public class User &#123;</span><br><span class="line"></span><br><span class="line">    // 这里是用户的 Id</span><br><span class="line">    @PrimaryKey</span><br><span class="line">    public int id;</span><br><span class="line"></span><br><span class="line">    //省略</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@Entity</span><br><span class="line">public class Book &#123;</span><br><span class="line"></span><br><span class="line">    //书的id</span><br><span class="line">    @PrimaryKey</span><br><span class="line">    public int bookId;</span><br><span class="line">    </span><br><span class="line">    //这里就是这本书与 User的关系,这里的是User.id</span><br><span class="line">    public int userId;</span><br><span class="line">    public String name;</span><br><span class="line">    public String desc;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//注意,什么注解也不要加</span><br><span class="line">public class UserAndBooks &#123;</span><br><span class="line"></span><br><span class="line">    //加入所有的user的属性</span><br><span class="line">   @Embedded</span><br><span class="line">   public User user;</span><br><span class="line"></span><br><span class="line">    //这里定义User 和 Book的关系</span><br><span class="line">   @Relation(parentColumn = &quot;id&quot;, entityColumn = &quot;userId&quot;, entity = Book.class)</span><br><span class="line">   public List&lt;Book&gt; books; </span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//文档上还讲了一个比较牛逼的功能,这里不讨论</span><br><span class="line"></span><br><span class="line">public class UserAndAllPets &#123;</span><br><span class="line">   @Embedded</span><br><span class="line">   public User user;</span><br><span class="line">   @Relation(parentColumn = &quot;id&quot;, entityColumn = &quot;userId&quot;, entity = Book.class,</span><br><span class="line">           projection = &#123;&quot;name&quot;&#125;)</span><br><span class="line">   public List&lt;String&gt; bookNames;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//然后,dao是这样的</span><br><span class="line"></span><br><span class="line">@Dao</span><br><span class="line">public interface UserDao &#123;</span><br><span class="line">    @Query(&quot;SELECT * FROM User&quot;)</span><br><span class="line">    public List&lt;UserAndBooks&gt; loadUserWithBooks();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">PS:当然你存的时候,分辨别存User  和 Book 即可</span><br></pre></td></tr></table></figure>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wangzhumo.com/2017/12/25/Room数据库使用指北List<>的问题/" data-id="cjjktogb8004gnosteplhhoix" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-Retrofit2-Okhttp3-Rxjava2-网络请求封装-下" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -261,7 +473,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/25/Retrofit2-Okhttp3-Rxjava2-网络请求封装-下/" data-id="cjjk6oq920048ahst6v2p7lnu" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/25/Retrofit2-Okhttp3-Rxjava2-网络请求封装-下/" data-id="cjjktogaz0044nost5uqhmzy7" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -425,7 +637,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/25/Retrofit2-Okhttp3-Rxjava2-网络请求封装(上)/" data-id="cjjk6oq910044ahstb4pjc2fj" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/25/Retrofit2-Okhttp3-Rxjava2-网络请求封装(上)/" data-id="cjjktogax003wnostlm52gexx" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -572,7 +784,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/25/Android项目的build-gradle通用设置/" data-id="cjjk6oq7h001mahstexyin3sh" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/25/Android项目的build-gradle通用设置/" data-id="cjjktog9a001knostaid04xuj" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -717,7 +929,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/25/Android-项目统一管理依赖版本/" data-id="cjjk6oq6p000kahstu2fnxi96" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/25/Android-项目统一管理依赖版本/" data-id="cjjktog8g000gnostc9twrr0p" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -874,7 +1086,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/25/常用的Google-Chrome-浏览器插件/" data-id="cjjk6oq9m005gahstvxy0avru" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/25/常用的Google-Chrome-浏览器插件/" data-id="cjjktogbj0054nostm4dm0r3r" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1022,7 +1234,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/25/jni使用指南-关于-so你应该知道的/" data-id="cjjk6oq9f0051ahst673fetfs" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/25/jni使用指南-关于-so你应该知道的/" data-id="cjjktogbi0050nost8zhagm10" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1153,7 +1365,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/25/EditText的输入属性InputType以及imeOptions/" data-id="cjjk6oq860028ahstoi04j19w" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/25/EditText的输入属性InputType以及imeOptions/" data-id="cjjktog9v002dnost6jiepyg0" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1328,7 +1540,7 @@ public void onClick(View widget) {
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/25/TextView中的文字颜色-点击-斜体等实现-SpannableString/" data-id="cjjk6oq9d004uahstf1ub1ea1" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/25/TextView中的文字颜色-点击-斜体等实现-SpannableString/" data-id="cjjktogbh004xnostmg5kjgik" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1490,194 +1702,7 @@ public void onClick(View widget) {
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/25/Flutter-安装/" data-id="cjjk6oq89002fahst4q1w1pz5" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-BottomNavigationView使用指南" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2017/12/25/BottomNavigationView使用指南/">BottomNavigationView使用指南</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2017/12/25/BottomNavigationView使用指南/">
-            <time datetime="2017-12-25T01:40:44.000Z" itemprop="datePublished">2017-12-25</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android/">Android</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p><strong>最终效果:</strong></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2520304-f952921225e06fb8.gif?imageMogr2/auto-orient/strip" alt="最后效果.gif"></p>
-<p>Android Support Library 25 以上的support包中增加了 BottomNavigationView<br>所以你必须使用<code>com.android.support:design:25.0.0</code>以上的版本才能玩</p>
-<p>1.在 build.gradle 文件中增加依赖：</p>
-<blockquote>
-<figure class="highlight plain"><figcaption><span>'com.android.support:design:25.0.0'```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">2.在main_activity.xml中添加:</span><br></pre></td></tr></table></figure>
-</blockquote>
-<p><android.support.design.widget.bottomnavigationview android:id="@+id/bottom_nav" android:layout_width="match_parent" android:layout_height="@dimen/title_height" android:layout_alignparentbottom="true" app:menu="@menu/menu_tab_button" app:itemicontint="@color/nav_color_select" app:itemtextcolor="@color/nav_color_select" app:itembackground="@color/text_white_color"><br>    </android.support.design.widget.bottomnavigationview></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 其中```app:menu=&quot;@menu/menu_tab_button&quot;```决定了展示几个item,都长什么样</span><br><span class="line">- 其中,分别决定**图标和文字**选中和未选中item的状态,颜色</span><br></pre></td></tr></table></figure>
-<p>app:itemIconTint=”@color/nav_color_select”<br>app:itemTextColor=”@color/nav_color_select”<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 其中```app:itemBackground=&quot;@color/text_white_color&quot;```则是整个view的背景颜色</span><br><span class="line"></span><br><span class="line">3.menu_tab_button.xml的代码如下:</span><br></pre></td></tr></table></figure></p>
-<p>&lt;?xml version=”1.0” encoding=”utf-8”?&gt;</p>
-<p><menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"><br>    <item android:id="@+id/mian_tab_statistics" android:enabled="true" android:checked="true" 默认选中="" android:title="@string/nav_tongji" android:icon="@drawable/tongji"></item></menu></p>
-<pre><code>&lt;item android:id=&quot;@+id/mian_tab_paidui&quot;
-    android:enabled=&quot;true&quot;
-    android:title=&quot;@string/nav_paidui&quot;   //文字内容
-    android:icon=&quot;@drawable/paidui&quot;/&gt;   //icon图标
-
-&lt;item android:id=&quot;@+id/mian_tab_find&quot;
-    android:enabled=&quot;true&quot;
-    android:title=&quot;@string/nav_faxiang&quot;
-    android:icon=&quot;@drawable/faxian&quot;/&gt;
-
-&lt;item android:id=&quot;@+id/mian_tab_more&quot;
-    android:enabled=&quot;true&quot;
-    android:title=&quot;@string/nav_more&quot;
-    android:icon=&quot;@drawable/more&quot;/&gt;
-</code></pre><p><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">###然而,你以为会这么简单?? shiftingMode教你做人()</span><br><span class="line">###这个只会在item个数超过3个才会出现.</span><br><span class="line"></span><br><span class="line">![牛逼的特效(shiftingMode).gif](http://upload-images.jianshu.io/upload_images/2520304-464b090fa4c8919c.gif?imageMogr2/auto-orient/strip)</span><br><span class="line"></span><br><span class="line">4.这让我如何是好?看了半天,在网上找到一个方法.</span><br></pre></td></tr></table></figure></p>
-<p>/**</p>
-<ul>
-<li>一个关于BottomNavigationView的帮助类,用来关闭shiftingMode</li>
-<li>@author 王诛魔 2017/2/10 下午6:35</li>
-<li>@e-mail phyooos@163.com<br>*/</li>
-</ul>
-<p>public class BNVHelper {</p>
-<pre><code>public static void disableShiftMode(BottomNavigationView navigationView) {
-    BottomNavigationMenuView menuView = (BottomNavigationMenuView) navigationView.getChildAt(0);
-    try {
-        Field shiftingMode = menuView.getClass().getDeclaredField(&quot;mShiftingMode&quot;);
-        shiftingMode.setAccessible(true);
-        shiftingMode.setBoolean(menuView, false);
-        shiftingMode.setAccessible(false);
-
-        for (int i = 0; i &lt; menuView.getChildCount(); i++) {
-            BottomNavigationItemView itemView = (BottomNavigationItemView) menuView.getChildAt(i);
-            itemView.setShiftingMode(false);
-            itemView.setChecked(itemView.getItemData().isChecked());
-        }
-    } catch (NoSuchFieldException e) {
-        // Log
-    } catch (IllegalAccessException e) {
-        // Log
-    }
-}
-</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">原作者@[ChristmasJason](http://www.jianshu.com/u/4d132a94e6e8):http://www.jianshu.com/p/e2a8791e80d6</span><br><span class="line"></span><br><span class="line">然后我看了一下源码**mShiftingMode** 这个布尔值决定了是否启用shiftingMode,所以上面的方法就是shiftingMode.setBoolean(menuView, false);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">然后就好了......</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">提示:</span><br><span class="line">google说选中图标的颜色是这么改的,然而都是骗人的,这个应该是默认的设置,我也偷懒没有验证</span><br><span class="line"></span><br><span class="line">![2017-02-21_17-59-10.png](http://upload-images.jianshu.io/upload_images/2520304-c6c71ad14a9e0106.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br></pre></td></tr></table></figure></p>
-<p>app:itemIconTint=”@color/nav_color_select”<br>app:itemTextColor=”@color/nav_color_select”<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">其实你配置了之后,就是这个东西来决定的,而不是app&apos;s primary color</span><br><span class="line">nav_color_select.xml这就是个选择器,代码如下:</span><br></pre></td></tr></table></figure></p>
-<p>&lt;?xml version=”1.0” encoding=”utf-8”?&gt;</p>
-<p><selector xmlns:android="http://schemas.android.com/apk/res/android"><br>    <item android:state_checked="true" android:color="@color/colorPrimary"><br>    <item android:state_pressed="true" android:color="@color/colorPrimary"><br>    <item android:color="@color/gray_light"><br></item></item></item></selector><br>```</p>
-<p>####End,到这里你的导航条也应该ok了</p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.wangzhumo.com/2017/12/25/BottomNavigationView使用指南/" data-id="cjjk6oq7m001tahst7l5ydxff" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/25/Flutter-安装/" data-id="cjjktog9z002knost3drqunhs" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1765,7 +1790,7 @@ public void onClick(View widget) {
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Studio/">Android Studio</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Bug/">Bug</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Source-Code/">Source Code</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Video/">Video</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/View/">View</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Studio/">Android Studio</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Bug/">Bug</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Source-Code/">Source Code</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Video/">Video</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/View/">View</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -1774,7 +1799,7 @@ public void onClick(View widget) {
     <div class="widget-wrap">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 15.71px;">Android Studio</a> <a href="/tags/Android单元测试/" style="font-size: 10px;">Android单元测试</a> <a href="/tags/Binder/" style="font-size: 10px;">Binder</a> <a href="/tags/Bug/" style="font-size: 17.14px;">Bug</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Google/" style="font-size: 11.43px;">Google</a> <a href="/tags/Gradle/" style="font-size: 11.43px;">Gradle</a> <a href="/tags/Handler/" style="font-size: 10px;">Handler</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/Java/" style="font-size: 18.57px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Linux/" style="font-size: 12.86px;">Linux</a> <a href="/tags/Okhttp/" style="font-size: 11.43px;">Okhttp</a> <a href="/tags/Room/" style="font-size: 12.86px;">Room</a> <a href="/tags/Rxjava/" style="font-size: 12.86px;">Rxjava</a> <a href="/tags/Server/" style="font-size: 14.29px;">Server</a> <a href="/tags/Source-Code/" style="font-size: 11.43px;">Source Code</a> <a href="/tags/Video/" style="font-size: 10px;">Video</a> <a href="/tags/View/" style="font-size: 11.43px;">View</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/组件化/" style="font-size: 10px;">组件化</a> <a href="/tags/蓝牙/" style="font-size: 10px;">蓝牙</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a>
+            <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 15.71px;">Android Studio</a> <a href="/tags/Android单元测试/" style="font-size: 10px;">Android单元测试</a> <a href="/tags/Binder/" style="font-size: 10px;">Binder</a> <a href="/tags/Bug/" style="font-size: 17.14px;">Bug</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Google/" style="font-size: 11.43px;">Google</a> <a href="/tags/Gradle/" style="font-size: 11.43px;">Gradle</a> <a href="/tags/Handler/" style="font-size: 10px;">Handler</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/Java/" style="font-size: 18.57px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Linux/" style="font-size: 12.86px;">Linux</a> <a href="/tags/Okhttp/" style="font-size: 11.43px;">Okhttp</a> <a href="/tags/Room/" style="font-size: 12.86px;">Room</a> <a href="/tags/Rxjava/" style="font-size: 12.86px;">Rxjava</a> <a href="/tags/Server/" style="font-size: 14.29px;">Server</a> <a href="/tags/Source-Code/" style="font-size: 11.43px;">Source Code</a> <a href="/tags/Video/" style="font-size: 10px;">Video</a> <a href="/tags/View/" style="font-size: 11.43px;">View</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/组件化/" style="font-size: 10px;">组件化</a> <a href="/tags/蓝牙/" style="font-size: 10px;">蓝牙</a> <a href="/tags/设计模式/" style="font-size: 11.43px;">设计模式</a>
         </div>
     </div>
 
@@ -1784,6 +1809,25 @@ public void onClick(View widget) {
         <h3 class="widget-title">最新文章</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/14/设计模式-状态模式的使用/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Java/">Java</a></p>
+                            <p class="item-title"><a href="/2018/07/14/设计模式-状态模式的使用/" class="title">设计模式-状态模式的使用</a></p>
+                            <p class="item-date"><time datetime="2018-07-14T00:45:32.000Z" itemprop="datePublished">2018-07-14</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -1861,25 +1905,6 @@ public void onClick(View widget) {
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/07/05/GitHub使用SSH的方式免密上传/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Tools/">Tools</a></p>
-                            <p class="item-title"><a href="/2018/07/05/GitHub使用SSH的方式免密上传/" class="title">GitHub使用SSH的方式免密上传</a></p>
-                            <p class="item-date"><time datetime="2018-07-05T05:13:25.000Z" itemprop="datePublished">2018-07-05</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -1889,7 +1914,7 @@ public void onClick(View widget) {
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">25</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">25</span></li></ul>
         </div>
     </div>
 
@@ -1898,7 +1923,7 @@ public void onClick(View widget) {
     <div class="widget-wrap">
         <h3 class="widget-title">标签</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">40</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android单元测试/">Android单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bug/">Bug</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Handler/">Handler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Okhttp/">Okhttp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Room/">Room</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Server/">Server</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Source-Code/">Source Code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video/">Video</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">40</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android单元测试/">Android单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bug/">Bug</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Handler/">Handler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Okhttp/">Okhttp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Room/">Room</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Server/">Server</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Source-Code/">Source Code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video/">Video</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">2</span></li></ul>
         </div>
     </div>
 

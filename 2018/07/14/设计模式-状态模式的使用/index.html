@@ -3,22 +3,24 @@
 <head>
     <meta charset="utf-8">
     
-    <title>RecyclerView中notifyItemRangeChanged无效的BUG | 王诛魔</title>
+    <title>设计模式-状态模式的使用 | 王诛魔</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="前言RecyclerView是我们日常开发中用的最频繁的几个控件之一,可以说一个App没有RecyclerView的参与,可能根本就做不出来.然而同时,RecyclerView尽管有复用机制,我们使用的时候,还是应该尽量的节省内存,提高性能. 所以,对于RecyclerView中的Item,尽量少刷新,越少越好. notifyItemRangeChanged是主要的一个方法,其他的notifyIt">
-<meta name="keywords" content="Android,Bug">
+    <meta name="description" content="状态模式(State)定义允许一个对象在其内部状态改变时改变它的行为,对象看起来似乎修改了它的类,状态模式是一种对象行为型模式。 那么我们在编码的过程中,有什么地方会遇到这样的状况那? 组成环境类(Context) :  它内部维护一个State子类的实例,这个实例定义的是当前状态. 抽象状态类(State) : 定义一个接口,其中封装Context的一个特定状态的相关行为. 具体状态类(Conc">
+<meta name="keywords" content="Java,设计模式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RecyclerView中notifyItemRangeChanged无效的BUG">
-<meta property="og:url" content="http://www.wangzhumo.com/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/index.html">
+<meta property="og:title" content="设计模式-状态模式的使用">
+<meta property="og:url" content="http://www.wangzhumo.com/2018/07/14/设计模式-状态模式的使用/index.html">
 <meta property="og:site_name" content="王诛魔">
-<meta property="og:description" content="前言RecyclerView是我们日常开发中用的最频繁的几个控件之一,可以说一个App没有RecyclerView的参与,可能根本就做不出来.然而同时,RecyclerView尽管有复用机制,我们使用的时候,还是应该尽量的节省内存,提高性能. 所以,对于RecyclerView中的Item,尽量少刷新,越少越好. notifyItemRangeChanged是主要的一个方法,其他的notifyIt">
+<meta property="og:description" content="状态模式(State)定义允许一个对象在其内部状态改变时改变它的行为,对象看起来似乎修改了它的类,状态模式是一种对象行为型模式。 那么我们在编码的过程中,有什么地方会遇到这样的状况那? 组成环境类(Context) :  它内部维护一个State子类的实例,这个实例定义的是当前状态. 抽象状态类(State) : 定义一个接口,其中封装Context的一个特定状态的相关行为. 具体状态类(Conc">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://www.wangzhumo.com/2018/07/13/images/yhcs_zan.png">
-<meta property="og:updated_time" content="2018-07-13T16:14:48.491Z">
+<meta property="og:image" content="http://www.wangzhumo.com/2018/07/14/images/state_simple.png">
+<meta property="og:image" content="http://www.wangzhumo.com/2018/07/14/images/state_level.png">
+<meta property="og:image" content="http://www.wangzhumo.com/2018/07/14/images/state_demo.png">
+<meta property="og:updated_time" content="2018-07-14T02:58:58.490Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="RecyclerView中notifyItemRangeChanged无效的BUG">
-<meta name="twitter:description" content="前言RecyclerView是我们日常开发中用的最频繁的几个控件之一,可以说一个App没有RecyclerView的参与,可能根本就做不出来.然而同时,RecyclerView尽管有复用机制,我们使用的时候,还是应该尽量的节省内存,提高性能. 所以,对于RecyclerView中的Item,尽量少刷新,越少越好. notifyItemRangeChanged是主要的一个方法,其他的notifyIt">
-<meta name="twitter:image" content="http://www.wangzhumo.com/2018/07/13/images/yhcs_zan.png">
+<meta name="twitter:title" content="设计模式-状态模式的使用">
+<meta name="twitter:description" content="状态模式(State)定义允许一个对象在其内部状态改变时改变它的行为,对象看起来似乎修改了它的类,状态模式是一种对象行为型模式。 那么我们在编码的过程中,有什么地方会遇到这样的状况那? 组成环境类(Context) :  它内部维护一个State子类的实例,这个实例定义的是当前状态. 抽象状态类(State) : 定义一个接口,其中封装Context的一个特定状态的相关行为. 具体状态类(Conc">
+<meta name="twitter:image" content="http://www.wangzhumo.com/2018/07/14/images/state_simple.png">
     
 
     
@@ -191,7 +193,7 @@
 </aside>
 
             
-            <section id="main"><article id="post-RecyclerView中notifyItemRangeChanged无效的BUG" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-设计模式-状态模式的使用" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -199,7 +201,7 @@
                 
     
         <h1 class="article-title" itemprop="name">
-            RecyclerView中notifyItemRangeChanged无效的BUG
+            设计模式-状态模式的使用
         </h1>
     
 
@@ -208,8 +210,8 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/">
-            <time datetime="2018-07-13T14:39:55.000Z" itemprop="datePublished">2018-07-13</time>
+        <a href="/2018/07/14/设计模式-状态模式的使用/">
+            <time datetime="2018-07-14T00:45:32.000Z" itemprop="datePublished">2018-07-14</time>
         </a>
     </div>
 
@@ -217,13 +219,13 @@
                         
     <div class="article-category">
     	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Bug/">Bug</a>
+        <a class="article-category-link" href="/categories/Java/">Java</a>
     </div>
 
                         
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/Bug/">Bug</a>
+        <a class="tag-link" href="/tags/Java/">Java</a>, <a class="tag-link" href="/tags/设计模式/">设计模式</a>
     </div>
 
                     </div>
@@ -234,70 +236,36 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>RecyclerView是我们日常开发中用的最频繁的几个控件之一,可以说一个App没有RecyclerView的参与,可能根本就做不出来.然而同时,RecyclerView尽管有复用机制,我们使用的时候,还是应该尽量的节省内存,提高性能.</p>
-<p>所以,对于RecyclerView中的Item,尽量少刷新,越少越好.</p>
-<p><code>notifyItemRangeChanged</code>是主要的一个方法,其他的<code>notifyItemChanged</code>等几个不同入参的方法,其实最后都是调用notifyItemRangeChanged:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">android.support.v7.widget.RecyclerView.Adapter</span><br><span class="line">#notifyItemRangeChanged(int positionStart, int itemCount, @Nullable Object payload)</span><br></pre></td></tr></table></figure>
-<p>我们可以看到它的几个参数</p>
-<blockquote>
-<p>positionStart   开始的位置</p>
-<p>itemCount       需要刷新几个Item</p>
-<p>payload            这个参数比较重要,如果它为null,则回调中会刷新整个View而不是局部刷新</p>
-</blockquote>
-<p>好了,我们来说说这个BUG</p>
-<p><img src="../images/yhcs_zan.png" alt=""></p>
-<p>看到赞,评论两个字段了么?  现在的需求是要加一个阅读量的,如图中的红色字</p>
-<p>这个阅读量本地先做一个点击就加一的东西,而不去请求网络来刷新.</p>
-<p>其实怎么刷这个赞都行,我们都需要先提供一个修改这一个   阅读量View  的功能</p>
-<p>所以我理所当然的用<code>notifyItemRangeChanged</code>来做了一遍.</p>
-<h3 id="BUG再现"><a href="#BUG再现" class="headerlink" title="BUG再现"></a>BUG再现</h3><p>当我信心满满的把这个运行到真机上测试的时候,我是拒绝的,这个阅读量的数字,一直保持0</p>
-<p>一动也不动,于是我就开始了一步步的排除之旅.屋漏偏逢连夜雨,我的数据线好像有点接触不良,只得开启了WIFI ADB用来调试App,但是这就意味着我不能 debug了,那么我只能使出 Log 大法.</p>
-<p>先贴上我当时的代码:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onBindViewHolder</span><span class="params">(@NonNull ViewHolder holder, @NonNull MediaItem item, @NonNull List&lt;Object&gt; payloads)</span> </span>&#123;</span><br><span class="line">       Log.d(<span class="string">"Adapter"</span>,<span class="string">"onBindViewHolder"</span> + payloads.isEmpty());</span><br><span class="line">       <span class="keyword">if</span> (payloads.isEmpty())&#123;</span><br><span class="line">           onBindViewHolder(holder, item);</span><br><span class="line">       &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">           holder.mTvPvNum.setText(payloads.get(<span class="number">0</span>).toString());</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onBindViewHolder</span><span class="params">(@NonNull ViewHolder holder, @NonNull MediaItem item)</span> </span>&#123;</span><br><span class="line">       holder.mTvMediaAuthor.setText(item.getSourceName());</span><br><span class="line">       holder.mTvMediaTime.setText(DateFormatUtil.getDataStringForNews(item.getPublishTimeBO()));</span><br><span class="line">       <span class="comment">//   省略其他不相关代码...</span></span><br><span class="line">       holder.itemView.setOnClickListener(v -&gt; &#123;</span><br><span class="line">           <span class="keyword">if</span> (onNewsClickListener != <span class="keyword">null</span>) &#123;</span><br><span class="line">               Log.d(<span class="string">"Adapter"</span>,<span class="string">"onBindViewHolder"</span> + item.getFormatPvNum());</span><br><span class="line">              getAdapter().notifyItemChanged(holder.getAdapterPosition(),item.addPvNum().getFormatPvNum());</span><br><span class="line">               onNewsClickListener.onArticleClick(item);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-<h4 id="使用notifyItemChanged"><a href="#使用notifyItemChanged" class="headerlink" title="使用notifyItemChanged"></a>使用notifyItemChanged</h4><ol>
-<li>调用<code>notifyItemXXX</code>系列方法</li>
-<li>在<code>onBindViewHolder(ViewHolder,MediaItem item,List&lt;Object&gt; payloads)</code>方法中判断<code>List&lt;Object&gt; payloads</code>的值<ul>
-<li>如果payloads值为空,则刷新全部,我这里直接调用了<code>onBindViewHolder(holder, item);</code>来进行整个Item的更新</li>
-<li>如果payloads的值不为空,则进行局部更新即可</li>
-</ul>
-</li>
+            <h3 id="状态模式-State"><a href="#状态模式-State" class="headerlink" title="状态模式(State)"></a>状态模式(State)</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>允许一个对象在其内部状态改变时改变它的行为,对象看起来似乎修改了它的类,状态模式是一种对象行为型模式。</p>
+<p>那么我们在编码的过程中,有什么地方会遇到这样的状况那?</p>
+<h4 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h4><p>环境类(Context) :  它内部维护一个State子类的实例,这个实例定义的是当前状态.</p>
+<p>抽象状态类(State) : 定义一个接口,其中封装Context的一个特定状态的相关行为.</p>
+<p>具体状态类(ConcreteState): 实现一个与Context的一个状态相关的行为.</p>
+<h4 id="使用情况"><a href="#使用情况" class="headerlink" title="使用情况"></a>使用情况</h4><ol>
+<li>如果一个对象,它的行为完全取决于它的某一种状态,而且这个状态是动态变化的.</li>
+<li>代码中包含大量与对象状态有关的条件语句</li>
 </ol>
-<h4 id="预期效果"><a href="#预期效果" class="headerlink" title="预期效果"></a>预期效果</h4><p>在点击整个Item时调用之前准备的回调方法,并且</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getAdapter().notifyItemChanged(postion,item.addPvNum().getFormatPvNum());</span><br></pre></td></tr></table></figure>
-<p>那么对应postion位置的Item应该会刷新它的  <strong>阅读量</strong> </p>
-<h4 id="BUG发生原因探索"><a href="#BUG发生原因探索" class="headerlink" title="BUG发生原因探索"></a>BUG发生原因探索</h4><h5 id="已知条件-通过Log可知"><a href="#已知条件-通过Log可知" class="headerlink" title="已知条件(通过Log可知)"></a>已知条件(通过Log可知)</h5><ol>
-<li>调用<code>notifyItemChanged</code>成功了</li>
-<li><code>onBindViewHolder(ViewHolder, item,List&lt;Object&gt; payloads)</code>方法没有被成功调起</li>
-</ol>
-<h5 id="推测原因"><a href="#推测原因" class="headerlink" title="推测原因"></a>推测原因</h5><p>如果说我当前的这个Adapter确实调用了<code>notifyItemChanged</code>,并且参数无误,但是却无法拉起回调</p>
-<p>只能是回调方法没有被调起,我记起来了一些当时看过的RecyclerView源码</p>
-<p>慢慢说起:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAdapter</span><span class="params">(Adapter adapter)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// bail out if layout is frozen</span></span><br><span class="line">        setLayoutFrozen(<span class="keyword">false</span>);</span><br><span class="line">        setAdapterInternal(adapter, <span class="keyword">false</span>, <span class="keyword">true</span>);</span><br><span class="line">        processDataSetCompletelyChanged(<span class="keyword">false</span>);</span><br><span class="line">        requestLayout();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>RecyclerView中的<code>setAdapter</code>,我们只需要关注其中的<code>setAdapterInternal(adapter, false, true);</code></p>
-<p>暂时不用去了解其他几个方法,这4个方法中只有这一个方法参数中带了<code>adapter</code>,说明就是这个方法把RecyclerView和Adapter关联了起来.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setAdapterInternal</span><span class="params">(Adapter adapter, <span class="keyword">boolean</span> compatibleWithPrevious,</span></span></span><br><span class="line"><span class="function"><span class="params">            <span class="keyword">boolean</span> removeAndRecycleViews)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (mAdapter != <span class="keyword">null</span>) &#123;</span><br><span class="line">            mAdapter.unregisterAdapterDataObserver(mObserver);</span><br><span class="line">            mAdapter.onDetachedFromRecyclerView(<span class="keyword">this</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!compatibleWithPrevious || removeAndRecycleViews) &#123;</span><br><span class="line">            removeAndRecycleViews();</span><br><span class="line">        &#125;</span><br><span class="line">        mAdapterHelper.reset();</span><br><span class="line">        <span class="keyword">final</span> Adapter oldAdapter = mAdapter;</span><br><span class="line">        mAdapter = adapter;</span><br><span class="line">        <span class="keyword">if</span> (adapter != <span class="keyword">null</span>) &#123;</span><br><span class="line">            adapter.registerAdapterDataObserver(mObserver);</span><br><span class="line">            adapter.onAttachedToRecyclerView(<span class="keyword">this</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (mLayout != <span class="keyword">null</span>) &#123;</span><br><span class="line">            mLayout.onAdapterChanged(oldAdapter, mAdapter);</span><br><span class="line">        &#125;</span><br><span class="line">        mRecycler.onAdapterChanged(oldAdapter, mAdapter, compatibleWithPrevious);</span><br><span class="line">        mState.mStructureChanged = <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>看起来,是把老的Adapter清除,并设置传入的adapter为Adapter的值</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (adapter != <span class="keyword">null</span>) &#123;</span><br><span class="line">      adapter.registerAdapterDataObserver(mObserver);</span><br><span class="line">      adapter.onAttachedToRecyclerView(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>重点在这句话<code>adapter.registerAdapterDataObserver(mObserver);</code></p>
-<p>很明显,这是对数据变化注册成为一个观察者,查看源码发现最后是放到了 <code>mObservable</code> 中</p>
-<p>大概已经知道是怎么回事了,可能我们当前的Adapter没有注册上观察者,所以没有回调过来吧.</p>
-<p>为了证实我的猜测,我借了同事的测试机和线</p>
-<h5 id="证实猜想"><a href="#证实猜想" class="headerlink" title="证实猜想"></a>证实猜想</h5><p>开启DEBUG一步一步跟过来.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android.support.v7.widget.RecyclerView.AdapterDataObserver#onItemRangeChanged(int, int)</span><br></pre></td></tr></table></figure>
-<p>最后,跑到了这里来.一个真真正正的空方法</p>
-<p>于是查看了一下<code>mObservable</code>,只有一个值<code>RefreshAndLoadMoreHelper</code>,而我自己的Adapter明明是叫做<code>MultiTypeAdapter</code></p>
-<p>看到这里,我的猜想已经证实,<code>RefreshAndLoadMoreHelper</code>是我自己封装,用来支持上拉加载,下拉刷新的工具类,其实它自己也继承了RecyclerView.Adapter,并且在<code>RefreshAndLoadMoreHelper</code>的构造方法中,调用了</p>
-<p><code>recyclerView.setAdapter(mHeaderFooterAdapter);</code>,这就是说,我自己设置的Adapter永远会被它覆盖.</p>
-<h3 id="解决BUG"><a href="#解决BUG" class="headerlink" title="解决BUG"></a>解决BUG</h3><p>已经知道了原因,是由于我自己的工具类,替代了本来设置的Adapter,,现在的<code>mHeaderFooterAdapter</code>是与当前RecyclerView关联的,但是我们在代码中</p>
-<p>调用的是(开头的代码):</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getAdapter().notifyItemChanged(holder.getAdapterPosition(),item.addPvNum().getFormatPvNum());</span><br></pre></td></tr></table></figure>
-<p>getAdapter()返回的是Adapter而不是关联RecyclerView的<code>mHeaderFooterAdapter</code></p>
-<p>所以,我们只要想办法,在Adapter中调用了方法后,通知<code>mHeaderFooterAdapter</code>一声,让它去完成操作即可</p>
-<p><strong>代码如下:</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Adapter.registerAdapterDataObserver(<span class="keyword">new</span> RecyclerView.AdapterDataObserver() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onChanged</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                mHeaderFooterAdapter.notifyDataSetChanged();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onItemRangeChanged</span><span class="params">(<span class="keyword">int</span> positionStart, <span class="keyword">int</span> itemCount, @Nullable Object payload)</span> </span>&#123;</span><br><span class="line">                mHeaderFooterAdapter.notifyItemRangeChanged(positionStart, itemCount, payload);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
-<p><code>Adapter</code>是我自己原来设置的</p>
-<p><code>mHeaderFooterAdapter</code>是工具类</p>
-<p>这里面的意思就是,给我自己的Adapter注册了一个观察者,每当我在Adapter中调用了方法,就会回调这里,在这里本来是通知RecyclerView来处理的,但是我们并不需要直接来处理,委托给<code>mHeaderFooterAdapter</code>即可,所以我在回调中直接调用了,<code>mHeaderFooterAdapter.notifyItemRangeChanged</code>这样就OK了.</p>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><p>现在有这么一个需求,用户分为不同的等级,每个等级所进行的操作是不一样的.</p>
+<p>State</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">UserState</span></span>&#123;</span><br><span class="line">  <span class="comment">//接收一个价格,再返回一个处理后的价格  </span></span><br><span class="line">  <span class="function"><span class="keyword">fun</span> <span class="title">pay</span> <span class="params">(level:<span class="type">Double</span>)</span></span> : <span class="built_in">Double</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>ConcreteState</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NormalState</span> :<span class="type">UserState&#123;</span></span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">pay</span><span class="params">(level: <span class="type">Double</span>)</span></span>: <span class="built_in">Double</span> &#123;</span><br><span class="line">        <span class="keyword">val</span> result = level * <span class="number">1.0</span></span><br><span class="line">        println(<span class="string">"<span class="subst">$&#123;javaClass.simpleName&#125;</span> 需要支付 : <span class="variable">$result</span>"</span>)</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BossState</span> : <span class="type">UserState&#123;</span></span></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">pay</span><span class="params">(level: <span class="type">Double</span>)</span></span>: <span class="built_in">Double</span> &#123;</span><br><span class="line">        <span class="keyword">val</span> result = <span class="number">0</span></span><br><span class="line">        println(<span class="string">"<span class="subst">$&#123;javaClass.simpleName&#125;</span> 需要支付 : <span class="variable">$result</span>"</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.0</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">VIPState</span> : <span class="type">UserState&#123;</span></span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">pay</span><span class="params">(level: <span class="type">Double</span>)</span></span>: <span class="built_in">Double</span> &#123;</span><br><span class="line">        <span class="comment">//会员95%</span></span><br><span class="line">        <span class="keyword">val</span> result = level * <span class="number">0.95</span></span><br><span class="line">        println(<span class="string">"<span class="subst">$&#123;javaClass.simpleName&#125;</span> 需要支付 : <span class="variable">$result</span>"</span>)</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Context</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserContext</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//保存状态</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> mState : UserState = NormalState()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">setUser</span><span class="params">(state: <span class="type">UserState</span>)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.mState = state</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">pay</span><span class="params">(price:<span class="type">Double</span>)</span></span>&#123;</span><br><span class="line">        mState.pay(price)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainClass</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        UserContext userContext  = <span class="keyword">new</span> UserContext();</span><br><span class="line">        userContext.pay(<span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">        userContext.setUser(<span class="keyword">new</span> VIPState());</span><br><span class="line">        userContext.pay(<span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">        userContext.setUser(<span class="keyword">new</span> BossState());</span><br><span class="line">        userContext.pay(<span class="number">1000</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//result:</span></span><br><span class="line">NormalState 需要支付 : <span class="number">1000.0</span></span><br><span class="line">VIPState 需要支付 : <span class="number">950.0</span></span><br><span class="line">BossState 需要支付 : <span class="number">0</span></span><br><span class="line"></span><br><span class="line">Process finished with exit code <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<h3 id="StateMachine复杂的状态机"><a href="#StateMachine复杂的状态机" class="headerlink" title="StateMachine复杂的状态机"></a>StateMachine复杂的状态机</h3><p>看着是没啥用的东西,明明可以用if else 搞定的,为什么一定要使用设计模式,而且还多了好几个类</p>
+<p>只是我这里写的例子太简单,但还是把state 和 行为拉了出来,如果后面要加状态再添加实现类即可</p>
+<p>BUT这只是最简单的实现,我们可以看看系统中有什么高级的东西</p>
+<p><code>com/android/internal/util/StateMachine.java</code></p>
+<p>当我看到这个类,我一下就明白为什么要用状态模式</p>
+<p>我们现在的结构,非常简单,确实可以被if else替换,只是不那么优雅</p>
+<p><img src="../images/state_simple.png" alt=""></p>
+<p>但是如果,你的State是这样的那?</p>
+<p><img src="../images/state_level.png" alt=""></p>
+<p>你还可以用if - else么?这时候给你加一个state,不说改代码,起码要理一会才行</p>
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">SmHandle sm;</span><br><span class="line"><span class="comment">//添加状态</span></span><br><span class="line">sm.addState(S0,<span class="keyword">null</span>);</span><br><span class="line"><span class="comment">//S1 S2添加为S0的子类</span></span><br><span class="line">sm.addState(S1,S0);</span><br><span class="line">sm.addState(S2,S0);</span><br><span class="line"><span class="comment">//S3 S3添加为S1的子类</span></span><br><span class="line">sm.addState(S3,S1);</span><br><span class="line">sm.addState(S4,S1);</span><br><span class="line"><span class="comment">//S5 S6 S7添加为S2的子类</span></span><br><span class="line">sm.addState(S5,S2);</span><br><span class="line">sm.addState(S6,S2);</span><br><span class="line">sm.addState(S7,S2);</span><br><span class="line"><span class="comment">//设置初始状态</span></span><br><span class="line">setInitialState(S4);</span><br></pre></td></tr></table></figure>
+<p>这样会构造成</p>
+<p><img src="../images/state_demo.png" alt=""></p>
 
         
         </div>
@@ -308,7 +276,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" data-id="cjjktogay0040nostohh6tlmx" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/14/设计模式-状态模式的使用/" data-id="cjjktogbp005jnostj6c4tnvg" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -383,19 +351,10 @@
         
 <nav id="article-nav">
     
-        <a href="/2018/07/14/设计模式-状态模式的使用/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    设计模式-状态模式的使用
-                
-            </div>
-        </a>
     
-    
-        <a href="/2018/07/12/ConstraintLayout使用指南-基础的约束/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">ConstraintLayout使用指南-基础的约束</div>
+            <div class="article-nav-title">RecyclerView中notifyItemRangeChanged无效的BUG</div>
         </a>
     
 </nav>
