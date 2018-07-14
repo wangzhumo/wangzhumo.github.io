@@ -276,7 +276,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/05/23/Android自己封装一个VideoPlayer/" data-id="cjjktog8x0011nost7zwfiecn" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/05/23/Android自己封装一个VideoPlayer/" data-id="cjjkv6ywc000rxust2ud71cip" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -457,7 +457,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/05/21/Android自定义一个遮罩引导层/" data-id="cjjktog900014nost29sqeep6" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/05/21/Android自定义一个遮罩引导层/" data-id="cjjkv6ywk0017xustcor0zs1z" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -575,52 +575,17 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <h3 id="ServiceManager"><a href="#ServiceManager" class="headerlink" title="ServiceManager"></a>ServiceManager</h3><p>首先我们要了解一下ServiceManager.</p>
+            <p><h3 id="ServiceManager"><a href="#ServiceManager" class="headerlink" title="ServiceManager"></a>ServiceManager</h3><p>首先我们要了解一下ServiceManager.</p>
 <p>ServiceManager的功能主要就是注册,查询服务,作为一个大管家的角色出现.</p>
 <ul>
 <li>注册服务：记录服务名和信息，放到服务列表</li>
 <li>查询服务：根据服务名查询相应的的信息</li>
 </ul>
 <p>ServiceManager是有权限控制的，只有具有相应权限的进程才能注册,查询服务</p>
-<p><a href="http://gityuan.com/2015/11/08/binder-get-sm/" target="_blank" rel="noopener">http://gityuan.com/2015/11/08/binder-get-sm/</a></p>
-<h3 id="Linux内存"><a href="#Linux内存" class="headerlink" title="Linux内存"></a>Linux内存</h3><h4 id="内核空间"><a href="#内核空间" class="headerlink" title="内核空间"></a>内核空间</h4><p>为什么进程间不可以直接通讯那?</p>
-<p>因为每个进程的内存空间都是隔离起来的,不可能随意去访问其他进程的内存.</p>
-<p>在32位系统中,寻址空间最大为4G,那么这4G内存,一般将1G分配给内核空间,3G用户空间,Linux内核由系统内的所有进程共享.</p>
-<p><img src="/images/linux_memory.png" alt=""></p>
-<p>这么一来,我们就可以在内核空间为所欲为了,不,并不能.用户进程不能直接操作内核.</p>
-<p>Android是在Linux的内核上跑的,那么为什么Android要自己做一个Binder来实现进程间的通讯那?</p>
-<p>我们都知道Linux上Socket/管道/消息队列都可以做到进程间的通讯,但是通过这些都需要2次内存拷贝,</p>
-<p>而Binder只需要一次就可以完成,大大的提高效率</p>
-<h4 id="BINDER-MMAP"><a href="#BINDER-MMAP" class="headerlink" title="BINDER_MMAP"></a>BINDER_MMAP</h4><p>mmap可以将一个文件或者其它对象映射进内存</p>
-<p>在Binder中,通过在用户空间(当前进程的用户空间)创建一个虚拟地址空间,并在内核空间创建相同大小的虚拟地址空间.</p>
-<p>接着申请一块物理内存,将物理内存映射到内核虚拟地址空间和用户虚拟内存空间,这样就实现了用户控件和内核空间的同步.</p>
-<p><img src="/images/binder_physical_memory.jpg" alt="来自Gityuan大佬"></p>
-<h4 id="大概流程"><a href="#大概流程" class="headerlink" title="大概流程"></a>大概流程</h4><ol>
-<li>copy_from_user 首先是要发出消息的,那么先从用户控件from 拷贝数据</li>
-<li>binder_thread_write 第二步就是把刚才拷贝的数据写入到内核空间</li>
-<li>binder_thread_read 第三步再次读取刚才从用户控件from读取并写入内核空间的数据</li>
-<li>copy_to_user 最后当然是从内核空间拷贝数据到用户空间to(即目标)</li>
-</ol>
-<p>PS:以上均建立在每一次操作都成功的基础上</p>
-<p>来自Gityuan大神的分享<a href="http://gityuan.com/2015/11/01/binder-driver/" target="_blank" rel="noopener">http://gityuan.com/2015/11/01/binder-driver/</a></p>
-<p><img src="/images/binder_memory_map.jpg" alt="binder_memory"></p>
-<p>解释说明:</p>
-<p>首先Client端发送消息,通过copy_from_user从Client端<strong>拷贝数据</strong>到内核空间去</p>
-<p>而后还记得<strong>BINDER_MMAP</strong>中的操作么,内核空间的地址与Server是同一块物理内存,</p>
-<p>Server就可以通过这个方式,直接同步到Client发送的数据.</p>
-<blockquote>
-<ul>
-<li>binder_init：初始化字符设备；</li>
-<li>binder_open：打开驱动设备，过程需要持有binder_main_lock同步锁；</li>
-<li>binder_mmap：申请内存空间，该过程需要持有binder_mmap_lock同步锁；</li>
-<li>binder_ioctl：执行相应的ioctl操作，该过程需要持有binder_main_lock同步锁；<ul>
-<li>当处于binder_thread_read过程，read_buffer无数据则释放同步锁，并处于wait_event_freezable过程，等有数据到来则唤醒并尝试持有同步锁。</li>
-</ul>
-</li>
-</ul>
-</blockquote>
-
+<p><a href="http://gityuan.com/2015/11/08/binder-get-sm/" target="_blank" rel="noopener">http://gityuan.com/2015/11/08/binder-get-sm/</a></p></p>
+            <p class="article-more-link">
+                <a href="/2018/05/11/Android-Binder机制-一/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -630,7 +595,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/05/11/Android-Binder机制-一/" data-id="cjjktog7z0003nostfwolawc7" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/05/11/Android-Binder机制-一/" data-id="cjjkv6yvi0002xust9h8twbr9" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -748,8 +713,7 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <h3 id="线程与进程"><a href="#线程与进程" class="headerlink" title="线程与进程"></a>线程与进程</h3><p>Google  Doc (<a href="https://developer.android.com/guide/components/processes-and-threads" target="_blank" rel="noopener">https://developer.android.com/guide/components/processes-and-threads</a>)</p>
+            <p><h3 id="线程与进程"><a href="#线程与进程" class="headerlink" title="线程与进程"></a>线程与进程</h3><p>Google  Doc (<a href="https://developer.android.com/guide/components/processes-and-threads" target="_blank" rel="noopener">https://developer.android.com/guide/components/processes-and-threads</a>)</p>
 <ul>
 <li><p>进程是资源分配的最小单位，线程是cpu调度的最小单位.</p>
 </li>
@@ -765,40 +729,10 @@
 <p>想强调的是，线程关注的是中央处理器的运行，而不是进程那样关注内存等资源的管理。</p>
 </blockquote>
 </li>
-</ul>
-<h3 id="Android中的IPC机制"><a href="#Android中的IPC机制" class="headerlink" title="Android中的IPC机制"></a>Android中的IPC机制</h3><p>如下图所示:(已经不知道哪里的配图了…感谢分享)</p>
-<p><img src="/images/android_ipc.png" alt=""></p>
-<h4 id="IPC简介"><a href="#IPC简介" class="headerlink" title="IPC简介"></a>IPC简介</h4><p>IPC(Inter-Process Communication) 进程间通信</p>
-<p>使用场景:</p>
-<p>在Android程序中，一般情况下一个程序就是一个进程</p>
-<ol>
-<li><p>App间的通信,常见的如需要使用其他App的数据</p>
-</li>
-<li><p>一个App使用多进程,比如指定运行线程<code>android:process=&quot;:name&quot;</code></p>
-<blockquote>
-<p>需要注意的是,如果一个App使用多进程,Application也会多次创建</p>
-</blockquote>
-</li>
-</ol>
-<h4 id="Bundle"><a href="#Bundle" class="headerlink" title="Bundle"></a>Bundle</h4><p>常见于Activity,service中传递数据</p>
-<p>需要注意的是,bundle中的数据必须支持序列化(Serializable,Parcelable)</p>
-<h4 id="文件共享"><a href="#文件共享" class="headerlink" title="文件共享"></a>文件共享</h4><p>SharedPreference就是这种实现的.</p>
-<p>适合对同步要求不高的使用方式,需要注意处理好并发的问题.</p>
-<h4 id="Messenger"><a href="#Messenger" class="headerlink" title="Messenger"></a>Messenger</h4><p>Messenger 对 AIDL 进行了封装，它实现了一种基于消息的进程间通信的方式</p>
-<p><code>frameworks/base/core/java/android/os/IMessenger.aidl</code></p>
-<p>它的AIDL文件就在这里保存着!</p>
-<h4 id="AIDL"><a href="#AIDL" class="headerlink" title="AIDL"></a>AIDL</h4><p>AIDL（Android Interface definition language） 是 Android 提供的一种进程间通信 (IPC) 机制</p>
-<p>需要注意的是AIDL支持的数据类型与Java接口支持的数据类型有些不同:</p>
-<ol>
-<li>所有基础类型（int, char…）</li>
-<li>String，List，Map</li>
-<li>所有Parcelable的类</li>
-</ol>
-<p>并且要根据需要添加 in out 的关键词</p>
-<h4 id="ContentProvider"><a href="#ContentProvider" class="headerlink" title="ContentProvider"></a>ContentProvider</h4><p>主要是针对数据库使用的,最常见的例子就是Android中有很多已经定义好的ContentProvider</p>
-<h4 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h4><p>说到这里,就不得不提一下<strong>Binder</strong>了</p>
-<p><a href="http://www.wangzhumo.com/Source-Code/Android-Binder%E6%9C%BA%E5%88%B6-%E4%B8%80/">http://www.wangzhumo.com/Source-Code/Android-Binder%E6%9C%BA%E5%88%B6-%E4%B8%80/</a></p>
-
+</ul></p>
+            <p class="article-more-link">
+                <a href="/2018/05/10/线程与进程的异同以及Android中的IPC机制/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -808,7 +742,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/05/10/线程与进程的异同以及Android中的IPC机制/" data-id="cjjktogbv005tnostw43zw6zp" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/05/10/线程与进程的异同以及Android中的IPC机制/" data-id="cjjkv6yyw005dxust2c99qpnm" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -964,7 +898,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/05/09/Java中的内存模型/" data-id="cjjktogat003knostuc27wufc" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/05/09/Java中的内存模型/" data-id="cjjkv6yy0003fxustj6bj9z9f" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1082,8 +1016,7 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <h5 id="系统结构"><a href="#系统结构" class="headerlink" title="系统结构"></a>系统结构</h5><ul>
+            <p><h5 id="系统结构"><a href="#系统结构" class="headerlink" title="系统结构"></a>系统结构</h5><ul>
 <li><p>应用层</p>
 <p>即为开发出来的一些app,当然还包括了一些系统App</p>
 </li>
@@ -1108,58 +1041,10 @@
 <li><p>Linux内核层</p>
 </li>
 </ul>
-<p><img src="/images/android_boot_process.png" alt="boot"></p>
-<h5 id="Android的启动主要过程"><a href="#Android的启动主要过程" class="headerlink" title="Android的启动主要过程"></a>Android的启动主要过程</h5><ol>
-<li><p><strong>init进程</strong></p>
-<p>init进程是由内核启动的,是用户空间的第一个进程,可以说是一个root进程</p>
-<ul>
-<li>当init进程启动后会创建挂载系统目录,设备节点,</li>
-<li>解析init.rc 和 init.hardware.rc,启动属性服务，以及一系列的服务和进程</li>
-</ul>
-</li>
-</ol>
-<ol>
-<li><p><strong>本地守护进程</strong></p>
-<p>启动</p>
-<blockquote>
-<p>servicemanager  管理binder的通讯</p>
-<p>surfaceflinger  UI</p>
-<p>mediaserver  音视频,相机</p>
-<p>netd  蓝牙、wifi、usb等</p>
-<p>adbd</p>
-<p>rild</p>
-<p>installd </p>
-</blockquote>
-<p>需要注意的是这些都是一个独立的Linux进程</p>
-</li>
-<li><p><strong>Native系统服务</strong></p>
-<p>运行在本地守护进程中,所属进程初始化的时候会将Native系统服务注册到ServiceManager中,方便我们通过Binder机制调用Native系统服务</p>
-</li>
-<li><p><strong>Java服务</strong></p>
-<p>再创建本地服务的同时,init进程还会创建Zygote进程</p>
-<p>Zygote也是Android中相当重要的一个进程了,Zygote进程会建立一个Dalvik VM并且启动</p>
-<p>System Server系统服务</p>
-<p>System Server将启动Android Service</p>
-<blockquote>
-<p>AccessibilityManagerService 截获用户输入，并根据输入给用户一些额外的反馈，起到辅助效果的服务<br>AccountManagerService 管理设备中所有账号的服务，包括账号、密码、授权管理功能<br>ActivityManagerService 管理所有组件的服务，安卓系统的核心服务 AlarmManagerService 管理闹钟的服务<br>AppWidgetService 管理APP widgets的工作，包括加载、删除、布局等<br>AssetAtlasService 将一些系统图片资源合并成一个纹理图传给GPU达到硬件加速的效果的服务<br>AudioService 管理音频的服务<br>BackupManagerService 管理备份和应用数据的服务<br>BatteryService 管理电池的服务<br>BluetoothManagerService 管理系统蓝牙的服务<br>CertBlacklister 更新系统SSL证书的公共秘钥和序列号黑名单的服务<br>ClipboardService 管理系统剪贴板的服务<br>CommonTimeManagementService 管理公共时间配置的服务<br>ConnectivityService 管理网络连接的服务<br>ContentService 管理系统数据更新通知的服务，和ContentProvider密切相关<br>CountryDetectorService 检测当前系统所属国家的服务<br>DevicePolicyManagerService 管理系统设备配置的服务<br>DeviceStorageMonitorService 管理系统存储空间的服务，当存储空间小于某个阈值时，会发出警告广播<br>DiskStateService 管理系统存储空间统计的服务<br>DisplayManagerService 管理显示设备的服务<br>DreamManagerService 管理屏幕保护的服务<br>DropBoxManagerService 生成和管理系统运行中日志文件的服务<br>EntropyMixer 加载和保存随机信息的服务<br>IdleMaintenanceService 管理系统在空闲时执行维护任务的服务<br>InputManagerService 管理触屏输入的服务<br>InputMethodManagerService 管理系统输入法的服务<br>LightsService 管理光传感器的服务<br>LocationManagerService 管理定位和位置的服务<br>LockSettingsService 管理系统锁屏设置的服务<br>MountService 管理系统存储设备挂载和卸载的服务<br>NetWorkManagementService 管理系统网络的服务<br>NetWorkPolicyManagerService 管理网络连接策略的服务<br>NetWorkStatsService 管理网络连接状态的服务<br>NetWorkTimeUpdateService 根据网络时间更新本地时间的服务<br>NotificationManagerService 管理系统通知的服务<br>PackageManagerService 管理应用包的服务<br>PowerManagerService 管理系统电源的服务<br>PrintManagerService 管理打印的服务<br>RecognitionManagerService 管理身份识别的服务<br>SamplingProfilerService 记录和分析系统启动性能的服务<br>SchedulingPolicyService 管理系统调度策略的服务<br>SearchManagerServcie 管理系统搜索功能的服务<br>SerialServie 管理系统串口设备的服务<br>StatusBarManagerService 管理系统状态栏的服务<br>TelephonyRegistry 监听和管理通话事件和状态的服务<br>TextServicesManagerService 文本拼写检查的服务<br>UiModeManagerService 设置和管理系统UI模式的服务<br>UsbService 管理USB连接的服务<br>UserManagerService 管理系统用户身份信息的服务<br>VibratorService 管理系统振动器的服务<br>ＷallpaperManagerService 管理系统桌面背景墙纸的服务<br>WifiP2pService 管理Wifi点对点连接的服务<br>WifiService 管理系统Wifi设备的服务<br>WindowManagerService 管理窗口的服务，安卓系统的核心服务</p>
-</blockquote>
-<p>这些服务都会注册到Service Manager中去,完成ServcieManager对服务的管理</p>
-<p>需要注意的是,由System Server创建的这些服务,都是存在于System Server进程中的线程</p>
-<p>举例说明一下</p>
-<blockquote>
-<p>servicemanager是init的子进程</p>
-<p>Zygote是init的子进程，fork出来所有的虚拟机</p>
-<p>system server是Zygote的子进程</p>
-</blockquote>
-</li>
-</ol>
-<ol>
-<li><p><strong>Home启动</strong></p>
-<p>当所有的任务启动后,会通过ActivityManager启动Home界面</p>
-<p>同时发送ACTION_BOOT_COMPLETED广播</p>
-</li>
-</ol>
-
+<p><img src="/images/android_boot_process.png" alt="boot"></p></p>
+            <p class="article-more-link">
+                <a href="/2018/05/09/Android的启动流程/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -1169,7 +1054,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/05/09/Android的启动流程/" data-id="cjjktog9n001ynostkfw6iy41" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/05/09/Android的启动流程/" data-id="cjjkv6ywj0014xustfi8gm5tp" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1287,8 +1172,7 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>前一篇梳理了一下类加载机制的大概流程,其中就涉及到一个很重要的东西<strong>类加载器</strong>,在加载阶段”通过一个类的全限定名获取描述此类的二进制字节流”</p>
+            <p><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>前一篇梳理了一下类加载机制的大概流程,其中就涉及到一个很重要的东西<strong>类加载器</strong>,在加载阶段”通过一个类的全限定名获取描述此类的二进制字节流”</p>
 <blockquote>
 <p>我们知道二级制字节流不只是我们编写的代码</p>
 <ol>
@@ -1303,80 +1187,10 @@
 <li>类加载器的含义和作用</li>
 <li>类加载器的类型</li>
 <li>类加载器的应用</li>
-</ol>
-<h3 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h3><p>类加载器最初是为了Java Applet的需求而研发的,为了方便应用程序自己决定如何去获取所需要的类,而把这个操作放到了JAVA虚拟机外部去实现.</p>
-<p>实现这个动作的代码模块被称为<code>类加载器</code></p>
-<p>有一点需要注意的是,在JVM中,任意一个类都需要由类加载器和它本省共同确立其在JVM中的唯一性</p>
-<p>每一个类加载器都拥有一个独立的类命名空间.</p>
-<p>变现为:</p>
-<blockquote>
-<p> 如果同一个类,被不同的两个类加载器加载,那么它们就必然不相等.</p>
-</blockquote>
-<h3 id="类加载器的类型"><a href="#类加载器的类型" class="headerlink" title="类加载器的类型"></a>类加载器的类型</h3><ul>
-<li>启动类加载器 Bootstrap ClassLoader ,是由C++实现的,作为虚拟机的一部分</li>
-<li>其他类加载器,这些加载器都是由JAVA语言实现的,独立于JVM之外并且都是java.lang.ClassLoader的子类</li>
-</ul>
-<p>上面的分类是对于JVM而言的分类,在我们编码的过程中,对类加载器分为;</p>
-<ol>
-<li><p>启动类加载器 Bootstrap ClassLoader,</p>
-<p>负责将<java_home>/lib 目录中的文件加载到虚拟机内存中</java_home></p>
-</li>
-<li><p>扩展类加载器 Extension ClassLoader</p>
-<p>负责加载<java_home>/lib/ext 目录中的文件,或者被 java.ext.dirs系统变量指定的路径中文件</java_home></p>
-<p>我们可以直接使用扩展类加载器</p>
-</li>
-<li><p>应用程序类加载器 Application ClassLoader </p>
-<p>ClassLoader.getSystemClassLoader()方法可以返回,一般称为系统类加载器</p>
-<p>负责加载用户路径中的类库,如果程序中没有使用自定义的类加载器,则默认是使用该类加载器的</p>
-</li>
-</ol>
-<h4 id="双亲委派模型"><a href="#双亲委派模型" class="headerlink" title="双亲委派模型"></a>双亲委派模型</h4><p>#####模型结构</p>
-<p><img src="../images/class_loader.png" alt="classLoader"></p>
-<p>//我们看看代码中是怎么组织的</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> Class&lt;?&gt; loadClass(String name, <span class="keyword">boolean</span> resolve)</span><br><span class="line">        <span class="keyword">throws</span> ClassNotFoundException</span><br><span class="line">    &#123;</span><br><span class="line">            <span class="comment">// First, check if the class has already been loaded</span></span><br><span class="line">            Class&lt;?&gt; c = findLoadedClass(name);</span><br><span class="line">            <span class="keyword">if</span> (c == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="keyword">if</span> (parent != <span class="keyword">null</span>) &#123;</span><br><span class="line">                        c = parent.loadClass(name, <span class="keyword">false</span>);</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        c = findBootstrapClassOrNull(name);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">                    <span class="comment">// ClassNotFoundException thrown if class not found</span></span><br><span class="line">                    <span class="comment">// from the non-null parent class loader</span></span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (c == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="comment">// If still not found, then invoke findClass in order</span></span><br><span class="line">                    <span class="comment">// to find the class.</span></span><br><span class="line">                    c = findClass(name);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> c;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>上面的代码,总的来说有</p>
-<ol>
-<li><p><code>findLoadedClass(name)</code></p>
-<p>查找是否已经加载过这个class了,如果不为空就直接返回了这个class</p>
-</li>
-<li><p>在看下一步</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">     <span class="keyword">if</span> (parent != <span class="keyword">null</span>) &#123;</span><br><span class="line">         c = parent.loadClass(name, <span class="keyword">false</span>);</span><br><span class="line">     &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">         c = findBootstrapClassOrNull(name);</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果父加载器 <code>parent</code>不为空,则加载工作交给父加载器去执行,</p>
-<p>而这个父加载器也会有它的父加载器</p>
-</li>
-<li><p>最后如果这个class还没有加载</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (c == <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="comment">// If still not found, then invoke findClass in order</span></span><br><span class="line">    <span class="comment">// to find the class.</span></span><br><span class="line">    c = findClass(name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>才轮到自己去加载</p>
-</li>
-</ol>
-<p><img src="../images/class_process.png" alt="加载过程"></p>
-<blockquote>
-<p> 要注意的是,这些类加载器的父子关系,不是由继承来实现的,而是使用组合</p>
-</blockquote>
-<h5 id="模型加载流程"><a href="#模型加载流程" class="headerlink" title="模型加载流程"></a>模型加载流程</h5><p>类加载器收到了一个类加载的请求,但是不会立马去自己加载,而是委派给父加载器去尝试加载,然后层层委派直到顶层的启动类加载器中.如果没有成功加载,子加载器才会自己去加载.</p>
-<p>这样做是有明显的好处的:</p>
-<ol>
-<li>这些类加载器都具有了优先级关系</li>
-<li>保证了某些类的一致性,如Object,通过委派,最终都是由最顶层的启动类加载器完成加载的.</li>
-</ol>
-<h3 id="类加载器的应用"><a href="#类加载器的应用" class="headerlink" title="类加载器的应用"></a>类加载器的应用</h3><p>先来看一个例子,加深一下理解</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//一个类,需要放在项目目录外,避免被系统类加载器加载</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestClassLoader</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">createBy</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"I'm Batman , Come from "</span> + 				 getClass().getClassLoader().getClass());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>自定义的类加载器</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.FileInputStream;</span><br><span class="line"></span><br><span class="line"><span class="comment">//自定义的类加载器</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MarvelStudios</span> <span class="keyword">extends</span> <span class="title">ClassLoader</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//存放的是TestClassLoader.class的位置,记得先编译成class再使用</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> String CLASS_FILE_PATH =</span><br><span class="line">            <span class="string">"/Users/phyooos/workspace/java_workspace/kotlind/soucre/TestClassLoader.class"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">byte</span>[] loadByte(String name) <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        FileInputStream fis = <span class="keyword">new</span> FileInputStream(CLASS_FILE_PATH);</span><br><span class="line">        <span class="keyword">int</span> len = fis.available();</span><br><span class="line">        <span class="keyword">byte</span>[] data = <span class="keyword">new</span> <span class="keyword">byte</span>[len];</span><br><span class="line">        fis.read(data);</span><br><span class="line">        fis.close();</span><br><span class="line">        <span class="keyword">return</span> data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> Class&lt;?&gt; findClass(String name) <span class="keyword">throws</span> ClassNotFoundException &#123;</span><br><span class="line">        <span class="comment">//这里获取文件</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">byte</span>[] data = loadByte(name);</span><br><span class="line">            <span class="keyword">return</span> defineClass(name, data, <span class="number">0</span>, data.length);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ClassNotFoundException();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>测试一下</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainClass</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        MarvelStudios classLoader = <span class="keyword">new</span> MarvelStudios();</span><br><span class="line">        Class clazz = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            clazz = classLoader.loadClass(<span class="string">"TestClassLoader"</span>);</span><br><span class="line">            Object obj = clazz.newInstance();</span><br><span class="line">            Method createMethod = clazz.getDeclaredMethod(<span class="string">"createBy"</span>,<span class="keyword">null</span>);</span><br><span class="line">            createMethod.invoke(obj, <span class="keyword">null</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行结果为</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">I<span class="string">'m Batman , Come from class MarvelStudios</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Process finished with exit code 0</span></span><br></pre></td></tr></table></figure>
-<p>这里显而易见,使用了自定义的类加载器,从硬盘上加载了一个class文件,如果你想加载一个java文件,也只需要调用</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//defineClass方法可以把二进制流字节组成的文件转换为一个java.lang.Class</span></span><br><span class="line">Class&lt;?&gt; c = <span class="keyword">this</span>.defineClass(name, bytes, <span class="number">0</span>, bytes.length);</span><br></pre></td></tr></table></figure>
-<p>这只是一个简单的自定义类加载器使用,可以从硬盘上加载java代码.</p>
-<p>其他如:</p>
-<ul>
-<li>代码加密</li>
-<li>热部署</li>
-<li>热修复</li>
-</ul>
-
+</ol></p>
+            <p class="article-more-link">
+                <a href="/2018/03/11/JVM虚拟机中的类加载器/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -1386,7 +1200,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/03/11/JVM虚拟机中的类加载器/" data-id="cjjktogan0035nostrc03h4kc" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/03/11/JVM虚拟机中的类加载器/" data-id="cjjkv6yxw0033xusth6knraxi" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1504,54 +1318,14 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>关于JVM虚拟机的类加载机制,大概有如下的几个问题</p>
+            <p><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>关于JVM虚拟机的类加载机制,大概有如下的几个问题</p>
 <ol>
 <li>类加载机制是什么?</li>
 <li>类加载的流程</li>
-</ol>
-<h3 id="类加载机制"><a href="#类加载机制" class="headerlink" title="类加载机制"></a>类加载机制</h3><p>我们所写的Java代码,最终都是编译成class字节码文件,这些字节码文件描述了各种信息</p>
-<p>需要加载到虚拟机中才能使用运行</p>
-<p>而虚拟机啊把描述类的数据从Class文件中加载到内存,并且对数据进行校验,转换解析和初始化,</p>
-<p>最终形成可以被虚拟机直接使用的Java类型,这就是虚拟机的类加载机制.</p>
-<h3 id="类加载机制的流程"><a href="#类加载机制的流程" class="headerlink" title="类加载机制的流程"></a>类加载机制的流程</h3><p>虚拟机中类加载的全过程: 加载 , 验证 ,准备 , 解析 , 初始化这五个部分</p>
-<h4 id="加载"><a href="#加载" class="headerlink" title="加载"></a>加载</h4><p>在加载阶段,完成的是:</p>
-<ol>
-<li>通过类的全限定名(import  <em>*</em> 这些)来获取定义此类的二进制字节流.</li>
-<li>将这个二进制字节流的静态存储结构转化为方法区的运行时数据结构.</li>
-<li>在内存中生成一个代表这个类的java.lang.Class对象,作为方法区这个类的各种数据的访问入口.</li>
-</ol>
-<p>当我们的虚拟机将二进制字节流文件加载后,会存放在方法区中,而后实例化一个Class类的对象,(对于HotSpot虚拟机而言)会放在方法区中,而不是一般存放对象,引用类型的堆(heap)中,这个Class对象就可以作为程序访问方法区中这些类型数据的外部接口.</p>
-<p>PS:加载的过程中,也可能会伴随着 连接过程(检查,准备,解析),但是必然是先发生加载,而后才可能出现连接</p>
-<h4 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h4><p>验证这个阶段非常的重要</p>
-<p>我们知道在JAVA代码中,是无法进行一些不安全的操作的,但是class字节码文件却可以做到,类似数组越界访问,跳转到不存在的代码行….</p>
-<p>那么,验证就非常重要了,直接决定了Java虚拟机的安全性.</p>
-<p>大概包含:</p>
-<h5 id="文件格式验证"><a href="#文件格式验证" class="headerlink" title="文件格式验证"></a>文件格式验证</h5><p>只有通过了文件格式验证,字节码二进制流才会进入到方法区中.</p>
-<p>比如: 魔数CAFEBABE ,主次版本号,常量池中常量类型,编码等等…</p>
-<p>#####元数据验证</p>
-<p>主要目的是对类的元数据进行语义检验,确保描述信息符合JAVA的语言规范</p>
-<p>比如:是否有父类,是否实现了所继承类或实现接口的必要方法,返回值类型…</p>
-<p>#####字节码验证</p>
-<p>在元数据验证对元数据中的数据类型做完检测后,这个阶段会对类的方法体进行校验分析,保证被验证的类方法不会在运行时对虚拟机做出不安全操作.</p>
-<h5 id="符号引用验证"><a href="#符号引用验证" class="headerlink" title="符号引用验证"></a>符号引用验证</h5><p>发生在虚拟机将符号引用转化为直接引用的时候,这个转化的操作将发生在-解析阶段.</p>
-<blockquote>
-<p><strong>符号引用</strong>:符号引用以一组符号来描述所引用的目标，符号可以是任何形式的字面量，只要使用时能够无歧义的定位到目标即可。在编译时，java类并不知道所引用的类的实际地址，因此只能使用符号引用来代替。</p>
-<p><strong>直接引用</strong>:如果有了直接引用，那引用的目标必定已经被加载入内存中了.直接引用有:1直接指向目标的指针</p>
-<p>2.相对偏移量3.一个能间接定位到目标的句柄</p>
-</blockquote>
-<p>####准备</p>
-<p>准备阶段是正式为变量分配内存并设置类变量初始值的阶段,这些变量的内存都将在方法区进行分配.</p>
-<blockquote>
-<p>类变量:被static修饰的变量,这里还有一个要注意的就是final修饰的,这是一种特殊情况,会在准备阶段就初始化为指定的值.(在字段属性表中表现为ConstantValue属性)</p>
-<p>而不是像通常情况下,会给静态变量赋零值.</p>
-</blockquote>
-<h4 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h4><p>在符号引用验证中提到过,这个阶段是虚拟机将常量池内的符号引用替换为直接引用的过程.</p>
-<p>解析的操作一般针对类,接口,字段,类方法,接口方法,方法类型,方法句柄和调用点限定符7类符号引用</p>
-<p>大概分为: <strong>类或者接口的解析</strong>,<strong>字段解析</strong>,<strong>类方法解析</strong>,<strong>接口方法解析</strong></p>
-<h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><p>初始化是类加载的最后一个阶段,之前的阶段,除了在加载阶段可以通过自定义类加载器参与之外,其他的都是由虚拟机主导和控制.而到了初始化阶段,才真正开始执行类中定义的JAVA代码,这个阶段根据代码中定义好的计划去初始化类变量和其他资源.</p>
-<p>初始化阶段是执行类构造器<code>&lt;client&gt;()</code>方法的过程.</p>
-
+</ol></p>
+            <p class="article-more-link">
+                <a href="/2018/03/10/JVM虚拟机的类加载机制/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -1561,7 +1335,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/03/10/JVM虚拟机的类加载机制/" data-id="cjjktogao003anostaxlmi6q3" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/03/10/JVM虚拟机的类加载机制/" data-id="cjjkv6yxy0037xustca2ybfxn" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1679,56 +1453,12 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <p>Handler在Android世界中的地位不言而喻.这篇笔记算是简单的记录一下我对于Handler的理解.</p>
+            <p><p>Handler在Android世界中的地位不言而喻.这篇笔记算是简单的记录一下我对于Handler的理解.</p>
 <p>当时第一次对Handler产生兴趣是我在知乎上看到一个问题:</p>
-<p><strong>Android中为什么主线程不会因为Looper.loop()里的死循环卡死</strong></p>
-<h4 id="Handler消息机制的构成"><a href="#Handler消息机制的构成" class="headerlink" title="Handler消息机制的构成"></a>Handler消息机制的构成</h4><ul>
-<li><p>Handler</p>
-<p>主要就是发送各种消息<code>sendMessage</code>等,以及处理消息<code>handleMessage</code></p>
-</li>
-<li><p>Message</p>
-<p>即是传递消息的载体,有时候也会承载硬件发出的消息.</p>
-</li>
-<li><p>Looper</p>
-<p>这是一个循环<code>Looper.loop</code>,并负责将消息发送给目标.</p>
-</li>
-<li><p>MessageQueue</p>
-<p>消息队负责将消息发送都消息池以及在消息池中拿走消息</p>
-<p>​</p>
-</li>
-</ul>
-<p><img src="/images/handler_class.png" alt="handler"></p>
-<h4 id="Message类分析"><a href="#Message类分析" class="headerlink" title="Message类分析"></a>Message类分析</h4><p>首先我们要看到</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">private static Message sPool;</span><br><span class="line"></span><br><span class="line">// sometimes we store linked lists of these things</span><br><span class="line">/*package*/ Message next;</span><br></pre></td></tr></table></figure>
-<p><code>sPool</code>声明为static 也就是说所有的Message实例共享</p>
-<p><code>next</code>则为每一个实例都有的</p>
-<p>Message类中,一系列的obtain,如下:</p>
-<p>obtain(Handler h)</p>
-<p>obtain(Handler h, int what)</p>
-<p>obtain(Handler h, Runnable callback)</p>
-<p>…</p>
-<p>obtain()</p>
-<ul>
-<li><p>复用机制</p>
-<p>我们查看源码可知,他们最后都调用obtain()获得一个Message实体</p>
-</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">android.os.Message#obtain()</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * Return a new Message instance from the global pool. Allows us to</span></span><br><span class="line"><span class="comment">    * avoid allocating new objects in many cases.</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Message <span class="title">obtain</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="keyword">synchronized</span> (sPoolSync) &#123;</span><br><span class="line">           <span class="keyword">if</span> (sPool != <span class="keyword">null</span>) &#123;</span><br><span class="line">               Message m = sPool;</span><br><span class="line">               sPool = m.next;</span><br><span class="line">               m.next = <span class="keyword">null</span>;</span><br><span class="line">               m.flags = <span class="number">0</span>; <span class="comment">// clear in-use flag</span></span><br><span class="line">               sPoolSize--;</span><br><span class="line">               <span class="keyword">return</span> m;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">new</span> Message();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-<p>可以看到,当<code>sPool</code>为<code>null</code>时才会<code>new Message();</code></p>
-<p>如果不为<code>null</code>则把当前的<code>sPool</code>赋值给<code>Message m</code>  而后把<code>sPool</code>赋值为<code>m.next()</code>(也就是sPool没有赋值前它的下一个Message对象)</p>
-<p>查看源码分析可知,有一个Message的消息池,采用的是单链表头插法,next永远指向的是下一个可复用的实例地址</p>
-<p>所以,如果我们在代码中要使用Message实例,就尽量使用<code>obtain()</code>这一系列方法,而不要直接New</p>
-<ul>
-<li><p>加入消息池</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">android.os.Message#recycleUnchecked</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * Recycles a Message that may be in-use.</span></span><br><span class="line"><span class="comment">    * Used internally by the MessageQueue and Looper when disposing of queued Messages.</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">recycleUnchecked</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="comment">// Mark the message as in use while it remains in the recycled object pool.</span></span><br><span class="line">       <span class="comment">// Clear out all other details.</span></span><br><span class="line">       flags = FLAG_IN_USE;</span><br><span class="line">       what = <span class="number">0</span>;</span><br><span class="line">       arg1 = <span class="number">0</span>;</span><br><span class="line">       arg2 = <span class="number">0</span>;</span><br><span class="line">       obj = <span class="keyword">null</span>;</span><br><span class="line">       replyTo = <span class="keyword">null</span>;</span><br><span class="line">       sendingUid = -<span class="number">1</span>;</span><br><span class="line">       when = <span class="number">0</span>;</span><br><span class="line">       target = <span class="keyword">null</span>;</span><br><span class="line">       callback = <span class="keyword">null</span>;</span><br><span class="line">       data = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">synchronized</span> (sPoolSync) &#123;</span><br><span class="line">           <span class="keyword">if</span> (sPoolSize &lt; MAX_POOL_SIZE) &#123;</span><br><span class="line">               next = sPool;</span><br><span class="line">               sPool = <span class="keyword">this</span>;</span><br><span class="line">               sPoolSize++;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-<p>这里其实就是把无用的Message实例,加入消息池的地方.</p>
-<p><code>sPoolSize &lt; MAX_POOL_SIZE</code>只要当前消息池没有到极限,就<code>next = sPool;</code>且<code>sPool = this;</code></p>
-<p>可以简单理解为把之前的<code>sPool</code>可复用对象向后移动一位,把当前这个要回收的Message置为第一个可复用对象</p>
-</li>
-</ul>
-<p><strong>所以,Message主要就是装载数据,并且实现了Message的复用机制</strong></p>
-<h4 id="MessageQueue类分析"><a href="#MessageQueue类分析" class="headerlink" title="MessageQueue类分析"></a>MessageQueue类分析</h4>
+<p><strong>Android中为什么主线程不会因为Looper.loop()里的死循环卡死</strong></p></p>
+            <p class="article-more-link">
+                <a href="/2018/03/07/Handler通讯机制分析/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -1738,7 +1468,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/03/07/Handler通讯机制分析/" data-id="cjjktogam0033nostxn4dcbnr" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/03/07/Handler通讯机制分析/" data-id="cjjkv6yxs002rxustb0aw2ksz" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1887,7 +1617,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/03/07/RelativeLayout中Button覆盖其他View/" data-id="cjjktogb10048nostyh10icv5" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/03/07/RelativeLayout中Button覆盖其他View/" data-id="cjjkv6yy5003qxustiskhw4me" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2020,7 +1750,7 @@
                             <a href="/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(http://www.wangzhumo.com/images/debug.jpg)" alt="RecyclerView中notifyItemRangeChanged无效的BUG" class="thumbnail-image"></span>
     
 </a>
 
@@ -2039,7 +1769,7 @@
                             <a href="/2018/07/12/ConstraintLayout使用指南-基础的约束/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="ConstraintLayout使用指南-基础的约束" class="thumbnail-image"></span>
     
 </a>
 

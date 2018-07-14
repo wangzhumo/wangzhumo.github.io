@@ -5,20 +5,20 @@
     
     <title>RecyclerView中notifyItemRangeChanged无效的BUG | 王诛魔</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="前言RecyclerView是我们日常开发中用的最频繁的几个控件之一,可以说一个App没有RecyclerView的参与,可能根本就做不出来.然而同时,RecyclerView尽管有复用机制,我们使用的时候,还是应该尽量的节省内存,提高性能. 所以,对于RecyclerView中的Item,尽量少刷新,越少越好. notifyItemRangeChanged是主要的一个方法,其他的notifyIt">
+    <meta name="description" content="前言RecyclerView是我们日常开发中用的最频繁的几个控件之一,可以说一个App没有RecyclerView的参与,可能根本就做不出来.然而同时,RecyclerView尽管有复用机制,我们使用的时候,还是应该尽量的节省内存,提高性能. 所以,对于RecyclerView中的Item,尽量少刷新,越少越好.">
 <meta name="keywords" content="Android,Bug">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RecyclerView中notifyItemRangeChanged无效的BUG">
 <meta property="og:url" content="http://www.wangzhumo.com/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/index.html">
 <meta property="og:site_name" content="王诛魔">
-<meta property="og:description" content="前言RecyclerView是我们日常开发中用的最频繁的几个控件之一,可以说一个App没有RecyclerView的参与,可能根本就做不出来.然而同时,RecyclerView尽管有复用机制,我们使用的时候,还是应该尽量的节省内存,提高性能. 所以,对于RecyclerView中的Item,尽量少刷新,越少越好. notifyItemRangeChanged是主要的一个方法,其他的notifyIt">
+<meta property="og:description" content="前言RecyclerView是我们日常开发中用的最频繁的几个控件之一,可以说一个App没有RecyclerView的参与,可能根本就做不出来.然而同时,RecyclerView尽管有复用机制,我们使用的时候,还是应该尽量的节省内存,提高性能. 所以,对于RecyclerView中的Item,尽量少刷新,越少越好.">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://www.wangzhumo.com/2018/07/13/images/yhcs_zan.png">
-<meta property="og:updated_time" content="2018-07-13T16:14:48.491Z">
+<meta property="og:image" content="http://www.wangzhumo.com/images/debug.jpg">
+<meta property="og:updated_time" content="2018-07-14T03:41:05.756Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RecyclerView中notifyItemRangeChanged无效的BUG">
-<meta name="twitter:description" content="前言RecyclerView是我们日常开发中用的最频繁的几个控件之一,可以说一个App没有RecyclerView的参与,可能根本就做不出来.然而同时,RecyclerView尽管有复用机制,我们使用的时候,还是应该尽量的节省内存,提高性能. 所以,对于RecyclerView中的Item,尽量少刷新,越少越好. notifyItemRangeChanged是主要的一个方法,其他的notifyIt">
-<meta name="twitter:image" content="http://www.wangzhumo.com/2018/07/13/images/yhcs_zan.png">
+<meta name="twitter:description" content="前言RecyclerView是我们日常开发中用的最频繁的几个控件之一,可以说一个App没有RecyclerView的参与,可能根本就做不出来.然而同时,RecyclerView尽管有复用机制,我们使用的时候,还是应该尽量的节省内存,提高性能. 所以,对于RecyclerView中的Item,尽量少刷新,越少越好.">
+<meta name="twitter:image" content="http://www.wangzhumo.com/images/debug.jpg">
     
 
     
@@ -236,6 +236,7 @@
             
             <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>RecyclerView是我们日常开发中用的最频繁的几个控件之一,可以说一个App没有RecyclerView的参与,可能根本就做不出来.然而同时,RecyclerView尽管有复用机制,我们使用的时候,还是应该尽量的节省内存,提高性能.</p>
 <p>所以,对于RecyclerView中的Item,尽量少刷新,越少越好.</p>
+<a id="more"></a>
 <p><code>notifyItemRangeChanged</code>是主要的一个方法,其他的<code>notifyItemChanged</code>等几个不同入参的方法,其实最后都是调用notifyItemRangeChanged:</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">android.support.v7.widget.RecyclerView.Adapter</span><br><span class="line">#notifyItemRangeChanged(int positionStart, int itemCount, @Nullable Object payload)</span><br></pre></td></tr></table></figure>
 <p>我们可以看到它的几个参数</p>
@@ -308,7 +309,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" data-id="cjjktogay0040nostohh6tlmx" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" data-id="cjjkv6yy7003vxust8sp4pe47" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -462,7 +463,7 @@
                             <a href="/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(http://www.wangzhumo.com/images/debug.jpg)" alt="RecyclerView中notifyItemRangeChanged无效的BUG" class="thumbnail-image"></span>
     
 </a>
 
@@ -481,7 +482,7 @@
                             <a href="/2018/07/12/ConstraintLayout使用指南-基础的约束/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="ConstraintLayout使用指南-基础的约束" class="thumbnail-image"></span>
     
 </a>
 

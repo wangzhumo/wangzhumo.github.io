@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="王诛魔">
 <meta property="og:description" content="内存内存泄漏简单的说，当我们的对象创建时，就占用了一部分内存，而在这个对象没有被引用后会进行回收销毁， 以释放掉占用的内存。但是如果jvm没有成功回收这个对象，就会造成内存泄漏。 内存溢出Android中的OOM，系统会给每一个Android程序分配一定的内存。我的的App可能会因为大量的内存泄漏而导致内存耗尽，引发OOM导致整个App的崩溃。 就算内存没有耗尽而崩溃，也会导致App内存不足。此时">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-07-05T04:09:22.075Z">
+<meta property="og:updated_time" content="2018-07-14T03:38:42.247Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android非静态内部类与匿名内部类引起的内存泄漏">
 <meta name="twitter:description" content="内存内存泄漏简单的说，当我们的对象创建时，就占用了一部分内存，而在这个对象没有被引用后会进行回收销毁， 以释放掉占用的内存。但是如果jvm没有成功回收这个对象，就会造成内存泄漏。 内存溢出Android中的OOM，系统会给每一个Android程序分配一定的内存。我的的App可能会因为大量的内存泄漏而导致内存耗尽，引发OOM导致整个App的崩溃。 就算内存没有耗尽而崩溃，也会导致App内存不足。此时">
@@ -239,6 +239,7 @@
 <blockquote>
 <p>所以，我们优化App卡顿时，有一点就是要关注“内存抖动”。</p>
 </blockquote>
+<a id="more"></a>
 <h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><h4 id="handler的内部类"><a href="#handler的内部类" class="headerlink" title="handler的内部类"></a>handler的内部类</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">final</span> Handler mHandler = <span class="keyword">new</span> Handler() &#123;</span><br><span class="line">     <span class="meta">@Override</span></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// do something</span></span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">// 延时60s</span></span><br><span class="line">		mHandler.postDelayed(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">       		<span class="meta">@Override</span></span><br><span class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123; </span><br><span class="line">           		<span class="comment">//run </span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;, <span class="number">6000</span>);</span><br><span class="line">        </span><br><span class="line">        finish();</span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 <p>我们知道在主线程中创建的Handler会被关联到 Looper（主线程的）中去，而主线程的Looper在应用程序的整个生命周期中存在 ，此时的Message会持有Handler对象，用来最后处理消息。</p>
 <p>也就是调用<code>Handler#handleMessage(Message msg)</code></p>
@@ -379,7 +380,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/05/Android非静态内部类与匿名内部类引起的内存泄漏/" data-id="cjjktog96001cnostgmel2hqc" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/05/Android非静态内部类与匿名内部类引起的内存泄漏/" data-id="cjjkv6ywm001cxustzu0qnwsb" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -533,7 +534,7 @@
                             <a href="/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(http://www.wangzhumo.com/images/debug.jpg)" alt="RecyclerView中notifyItemRangeChanged无效的BUG" class="thumbnail-image"></span>
     
 </a>
 
@@ -552,7 +553,7 @@
                             <a href="/2018/07/12/ConstraintLayout使用指南-基础的约束/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="ConstraintLayout使用指南-基础的约束" class="thumbnail-image"></span>
     
 </a>
 

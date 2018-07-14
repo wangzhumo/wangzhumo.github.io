@@ -5,19 +5,19 @@
     
     <title>Android通讯机制分析-Handler | 王诛魔</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="Handler在Android世界中的地位不言而喻.这篇笔记算是简单的记录一下我对于Handler的理解. 当时第一次对Handler产生兴趣是我在知乎上看到一个问题: Android中为什么主线程不会因为Looper.loop()里的死循环卡死 Handler消息机制的构成 Handler 主要就是发送各种消息sendMessage等,以及处理消息handleMessage  Message 即">
+    <meta name="description" content="Handler在Android世界中的地位不言而喻.这篇笔记算是简单的记录一下我对于Handler的理解. 当时第一次对Handler产生兴趣是我在知乎上看到一个问题: Android中为什么主线程不会因为Looper.loop()里的死循环卡死">
 <meta name="keywords" content="Android,Handler">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android通讯机制分析-Handler">
 <meta property="og:url" content="http://www.wangzhumo.com/2018/03/07/Handler通讯机制分析/index.html">
 <meta property="og:site_name" content="王诛魔">
-<meta property="og:description" content="Handler在Android世界中的地位不言而喻.这篇笔记算是简单的记录一下我对于Handler的理解. 当时第一次对Handler产生兴趣是我在知乎上看到一个问题: Android中为什么主线程不会因为Looper.loop()里的死循环卡死 Handler消息机制的构成 Handler 主要就是发送各种消息sendMessage等,以及处理消息handleMessage  Message 即">
+<meta property="og:description" content="Handler在Android世界中的地位不言而喻.这篇笔记算是简单的记录一下我对于Handler的理解. 当时第一次对Handler产生兴趣是我在知乎上看到一个问题: Android中为什么主线程不会因为Looper.loop()里的死循环卡死">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.wangzhumo.com/images/handler_class.png">
-<meta property="og:updated_time" content="2018-05-09T09:59:02.204Z">
+<meta property="og:updated_time" content="2018-07-14T03:40:10.390Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android通讯机制分析-Handler">
-<meta name="twitter:description" content="Handler在Android世界中的地位不言而喻.这篇笔记算是简单的记录一下我对于Handler的理解. 当时第一次对Handler产生兴趣是我在知乎上看到一个问题: Android中为什么主线程不会因为Looper.loop()里的死循环卡死 Handler消息机制的构成 Handler 主要就是发送各种消息sendMessage等,以及处理消息handleMessage  Message 即">
+<meta name="twitter:description" content="Handler在Android世界中的地位不言而喻.这篇笔记算是简单的记录一下我对于Handler的理解. 当时第一次对Handler产生兴趣是我在知乎上看到一个问题: Android中为什么主线程不会因为Looper.loop()里的死循环卡死">
 <meta name="twitter:image" content="http://www.wangzhumo.com/images/handler_class.png">
     
 
@@ -237,6 +237,7 @@
             <p>Handler在Android世界中的地位不言而喻.这篇笔记算是简单的记录一下我对于Handler的理解.</p>
 <p>当时第一次对Handler产生兴趣是我在知乎上看到一个问题:</p>
 <p><strong>Android中为什么主线程不会因为Looper.loop()里的死循环卡死</strong></p>
+<a id="more"></a>
 <h4 id="Handler消息机制的构成"><a href="#Handler消息机制的构成" class="headerlink" title="Handler消息机制的构成"></a>Handler消息机制的构成</h4><ul>
 <li><p>Handler</p>
 <p>主要就是发送各种消息<code>sendMessage</code>等,以及处理消息<code>handleMessage</code></p>
@@ -292,7 +293,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/03/07/Handler通讯机制分析/" data-id="cjjktogam0033nostxn4dcbnr" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/03/07/Handler通讯机制分析/" data-id="cjjkv6yxs002rxustb0aw2ksz" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -446,7 +447,7 @@
                             <a href="/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(http://www.wangzhumo.com/images/debug.jpg)" alt="RecyclerView中notifyItemRangeChanged无效的BUG" class="thumbnail-image"></span>
     
 </a>
 
@@ -465,7 +466,7 @@
                             <a href="/2018/07/12/ConstraintLayout使用指南-基础的约束/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="ConstraintLayout使用指南-基础的约束" class="thumbnail-image"></span>
     
 </a>
 

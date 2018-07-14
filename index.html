@@ -230,38 +230,11 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <h3 id="状态模式-State"><a href="#状态模式-State" class="headerlink" title="状态模式(State)"></a>状态模式(State)</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>允许一个对象在其内部状态改变时改变它的行为,对象看起来似乎修改了它的类,状态模式是一种对象行为型模式。</p>
-<p>那么我们在编码的过程中,有什么地方会遇到这样的状况那?</p>
-<h4 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h4><p>环境类(Context) :  它内部维护一个State子类的实例,这个实例定义的是当前状态.</p>
-<p>抽象状态类(State) : 定义一个接口,其中封装Context的一个特定状态的相关行为.</p>
-<p>具体状态类(ConcreteState): 实现一个与Context的一个状态相关的行为.</p>
-<h4 id="使用情况"><a href="#使用情况" class="headerlink" title="使用情况"></a>使用情况</h4><ol>
-<li>如果一个对象,它的行为完全取决于它的某一种状态,而且这个状态是动态变化的.</li>
-<li>代码中包含大量与对象状态有关的条件语句</li>
-</ol>
-<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><p>现在有这么一个需求,用户分为不同的等级,每个等级所进行的操作是不一样的.</p>
-<p>State</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">UserState</span></span>&#123;</span><br><span class="line">  <span class="comment">//接收一个价格,再返回一个处理后的价格  </span></span><br><span class="line">  <span class="function"><span class="keyword">fun</span> <span class="title">pay</span> <span class="params">(level:<span class="type">Double</span>)</span></span> : <span class="built_in">Double</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>ConcreteState</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NormalState</span> :<span class="type">UserState&#123;</span></span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">pay</span><span class="params">(level: <span class="type">Double</span>)</span></span>: <span class="built_in">Double</span> &#123;</span><br><span class="line">        <span class="keyword">val</span> result = level * <span class="number">1.0</span></span><br><span class="line">        println(<span class="string">"<span class="subst">$&#123;javaClass.simpleName&#125;</span> 需要支付 : <span class="variable">$result</span>"</span>)</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BossState</span> : <span class="type">UserState&#123;</span></span></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">pay</span><span class="params">(level: <span class="type">Double</span>)</span></span>: <span class="built_in">Double</span> &#123;</span><br><span class="line">        <span class="keyword">val</span> result = <span class="number">0</span></span><br><span class="line">        println(<span class="string">"<span class="subst">$&#123;javaClass.simpleName&#125;</span> 需要支付 : <span class="variable">$result</span>"</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.0</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">VIPState</span> : <span class="type">UserState&#123;</span></span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">pay</span><span class="params">(level: <span class="type">Double</span>)</span></span>: <span class="built_in">Double</span> &#123;</span><br><span class="line">        <span class="comment">//会员95%</span></span><br><span class="line">        <span class="keyword">val</span> result = level * <span class="number">0.95</span></span><br><span class="line">        println(<span class="string">"<span class="subst">$&#123;javaClass.simpleName&#125;</span> 需要支付 : <span class="variable">$result</span>"</span>)</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Context</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserContext</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//保存状态</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> mState : UserState = NormalState()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">setUser</span><span class="params">(state: <span class="type">UserState</span>)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.mState = state</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">pay</span><span class="params">(price:<span class="type">Double</span>)</span></span>&#123;</span><br><span class="line">        mState.pay(price)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainClass</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        UserContext userContext  = <span class="keyword">new</span> UserContext();</span><br><span class="line">        userContext.pay(<span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">        userContext.setUser(<span class="keyword">new</span> VIPState());</span><br><span class="line">        userContext.pay(<span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">        userContext.setUser(<span class="keyword">new</span> BossState());</span><br><span class="line">        userContext.pay(<span class="number">1000</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//result:</span></span><br><span class="line">NormalState 需要支付 : <span class="number">1000.0</span></span><br><span class="line">VIPState 需要支付 : <span class="number">950.0</span></span><br><span class="line">BossState 需要支付 : <span class="number">0</span></span><br><span class="line"></span><br><span class="line">Process finished with exit code <span class="number">0</span></span><br></pre></td></tr></table></figure>
-<h3 id="StateMachine复杂的状态机"><a href="#StateMachine复杂的状态机" class="headerlink" title="StateMachine复杂的状态机"></a>StateMachine复杂的状态机</h3><p>看着是没啥用的东西,明明可以用if else 搞定的,为什么一定要使用设计模式,而且还多了好几个类</p>
-<p>只是我这里写的例子太简单,但还是把state 和 行为拉了出来,如果后面要加状态再添加实现类即可</p>
-<p>BUT这只是最简单的实现,我们可以看看系统中有什么高级的东西</p>
-<p><code>com/android/internal/util/StateMachine.java</code></p>
-<p>当我看到这个类,我一下就明白为什么要用状态模式</p>
-<p>我们现在的结构,非常简单,确实可以被if else替换,只是不那么优雅</p>
-<p><img src="../images/state_simple.png" alt=""></p>
-<p>但是如果,你的State是这样的那?</p>
-<p><img src="../images/state_level.png" alt=""></p>
-<p>你还可以用if - else么?这时候给你加一个state,不说改代码,起码要理一会才行</p>
-<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">SmHandle sm;</span><br><span class="line"><span class="comment">//添加状态</span></span><br><span class="line">sm.addState(S0,<span class="keyword">null</span>);</span><br><span class="line"><span class="comment">//S1 S2添加为S0的子类</span></span><br><span class="line">sm.addState(S1,S0);</span><br><span class="line">sm.addState(S2,S0);</span><br><span class="line"><span class="comment">//S3 S3添加为S1的子类</span></span><br><span class="line">sm.addState(S3,S1);</span><br><span class="line">sm.addState(S4,S1);</span><br><span class="line"><span class="comment">//S5 S6 S7添加为S2的子类</span></span><br><span class="line">sm.addState(S5,S2);</span><br><span class="line">sm.addState(S6,S2);</span><br><span class="line">sm.addState(S7,S2);</span><br><span class="line"><span class="comment">//设置初始状态</span></span><br><span class="line">setInitialState(S4);</span><br></pre></td></tr></table></figure>
-<p>这样会构造成</p>
-<p><img src="../images/state_demo.png" alt=""></p>
-
+            <p><h3 id="状态模式-State"><a href="#状态模式-State" class="headerlink" title="状态模式(State)"></a>状态模式(State)</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>允许一个对象在其内部状态改变时改变它的行为,对象看起来似乎修改了它的类,状态模式是一种对象行为型模式。</p>
+<p>那么我们在编码的过程中,有什么地方会遇到这样的状况那?</p></p>
+            <p class="article-more-link">
+                <a href="/2018/07/14/设计模式-状态模式的使用/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -271,7 +244,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/14/设计模式-状态模式的使用/" data-id="cjjktogbp005jnostj6c4tnvg" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/14/设计模式-状态模式的使用/" data-id="cjjkv6yyz005jxust7fja4iqo" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -389,72 +362,11 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>RecyclerView是我们日常开发中用的最频繁的几个控件之一,可以说一个App没有RecyclerView的参与,可能根本就做不出来.然而同时,RecyclerView尽管有复用机制,我们使用的时候,还是应该尽量的节省内存,提高性能.</p>
-<p>所以,对于RecyclerView中的Item,尽量少刷新,越少越好.</p>
-<p><code>notifyItemRangeChanged</code>是主要的一个方法,其他的<code>notifyItemChanged</code>等几个不同入参的方法,其实最后都是调用notifyItemRangeChanged:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">android.support.v7.widget.RecyclerView.Adapter</span><br><span class="line">#notifyItemRangeChanged(int positionStart, int itemCount, @Nullable Object payload)</span><br></pre></td></tr></table></figure>
-<p>我们可以看到它的几个参数</p>
-<blockquote>
-<p>positionStart   开始的位置</p>
-<p>itemCount       需要刷新几个Item</p>
-<p>payload            这个参数比较重要,如果它为null,则回调中会刷新整个View而不是局部刷新</p>
-</blockquote>
-<p>好了,我们来说说这个BUG</p>
-<p><img src="../images/yhcs_zan.png" alt=""></p>
-<p>看到赞,评论两个字段了么?  现在的需求是要加一个阅读量的,如图中的红色字</p>
-<p>这个阅读量本地先做一个点击就加一的东西,而不去请求网络来刷新.</p>
-<p>其实怎么刷这个赞都行,我们都需要先提供一个修改这一个   阅读量View  的功能</p>
-<p>所以我理所当然的用<code>notifyItemRangeChanged</code>来做了一遍.</p>
-<h3 id="BUG再现"><a href="#BUG再现" class="headerlink" title="BUG再现"></a>BUG再现</h3><p>当我信心满满的把这个运行到真机上测试的时候,我是拒绝的,这个阅读量的数字,一直保持0</p>
-<p>一动也不动,于是我就开始了一步步的排除之旅.屋漏偏逢连夜雨,我的数据线好像有点接触不良,只得开启了WIFI ADB用来调试App,但是这就意味着我不能 debug了,那么我只能使出 Log 大法.</p>
-<p>先贴上我当时的代码:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onBindViewHolder</span><span class="params">(@NonNull ViewHolder holder, @NonNull MediaItem item, @NonNull List&lt;Object&gt; payloads)</span> </span>&#123;</span><br><span class="line">       Log.d(<span class="string">"Adapter"</span>,<span class="string">"onBindViewHolder"</span> + payloads.isEmpty());</span><br><span class="line">       <span class="keyword">if</span> (payloads.isEmpty())&#123;</span><br><span class="line">           onBindViewHolder(holder, item);</span><br><span class="line">       &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">           holder.mTvPvNum.setText(payloads.get(<span class="number">0</span>).toString());</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onBindViewHolder</span><span class="params">(@NonNull ViewHolder holder, @NonNull MediaItem item)</span> </span>&#123;</span><br><span class="line">       holder.mTvMediaAuthor.setText(item.getSourceName());</span><br><span class="line">       holder.mTvMediaTime.setText(DateFormatUtil.getDataStringForNews(item.getPublishTimeBO()));</span><br><span class="line">       <span class="comment">//   省略其他不相关代码...</span></span><br><span class="line">       holder.itemView.setOnClickListener(v -&gt; &#123;</span><br><span class="line">           <span class="keyword">if</span> (onNewsClickListener != <span class="keyword">null</span>) &#123;</span><br><span class="line">               Log.d(<span class="string">"Adapter"</span>,<span class="string">"onBindViewHolder"</span> + item.getFormatPvNum());</span><br><span class="line">              getAdapter().notifyItemChanged(holder.getAdapterPosition(),item.addPvNum().getFormatPvNum());</span><br><span class="line">               onNewsClickListener.onArticleClick(item);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-<h4 id="使用notifyItemChanged"><a href="#使用notifyItemChanged" class="headerlink" title="使用notifyItemChanged"></a>使用notifyItemChanged</h4><ol>
-<li>调用<code>notifyItemXXX</code>系列方法</li>
-<li>在<code>onBindViewHolder(ViewHolder,MediaItem item,List&lt;Object&gt; payloads)</code>方法中判断<code>List&lt;Object&gt; payloads</code>的值<ul>
-<li>如果payloads值为空,则刷新全部,我这里直接调用了<code>onBindViewHolder(holder, item);</code>来进行整个Item的更新</li>
-<li>如果payloads的值不为空,则进行局部更新即可</li>
-</ul>
-</li>
-</ol>
-<h4 id="预期效果"><a href="#预期效果" class="headerlink" title="预期效果"></a>预期效果</h4><p>在点击整个Item时调用之前准备的回调方法,并且</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getAdapter().notifyItemChanged(postion,item.addPvNum().getFormatPvNum());</span><br></pre></td></tr></table></figure>
-<p>那么对应postion位置的Item应该会刷新它的  <strong>阅读量</strong> </p>
-<h4 id="BUG发生原因探索"><a href="#BUG发生原因探索" class="headerlink" title="BUG发生原因探索"></a>BUG发生原因探索</h4><h5 id="已知条件-通过Log可知"><a href="#已知条件-通过Log可知" class="headerlink" title="已知条件(通过Log可知)"></a>已知条件(通过Log可知)</h5><ol>
-<li>调用<code>notifyItemChanged</code>成功了</li>
-<li><code>onBindViewHolder(ViewHolder, item,List&lt;Object&gt; payloads)</code>方法没有被成功调起</li>
-</ol>
-<h5 id="推测原因"><a href="#推测原因" class="headerlink" title="推测原因"></a>推测原因</h5><p>如果说我当前的这个Adapter确实调用了<code>notifyItemChanged</code>,并且参数无误,但是却无法拉起回调</p>
-<p>只能是回调方法没有被调起,我记起来了一些当时看过的RecyclerView源码</p>
-<p>慢慢说起:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAdapter</span><span class="params">(Adapter adapter)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// bail out if layout is frozen</span></span><br><span class="line">        setLayoutFrozen(<span class="keyword">false</span>);</span><br><span class="line">        setAdapterInternal(adapter, <span class="keyword">false</span>, <span class="keyword">true</span>);</span><br><span class="line">        processDataSetCompletelyChanged(<span class="keyword">false</span>);</span><br><span class="line">        requestLayout();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>RecyclerView中的<code>setAdapter</code>,我们只需要关注其中的<code>setAdapterInternal(adapter, false, true);</code></p>
-<p>暂时不用去了解其他几个方法,这4个方法中只有这一个方法参数中带了<code>adapter</code>,说明就是这个方法把RecyclerView和Adapter关联了起来.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setAdapterInternal</span><span class="params">(Adapter adapter, <span class="keyword">boolean</span> compatibleWithPrevious,</span></span></span><br><span class="line"><span class="function"><span class="params">            <span class="keyword">boolean</span> removeAndRecycleViews)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (mAdapter != <span class="keyword">null</span>) &#123;</span><br><span class="line">            mAdapter.unregisterAdapterDataObserver(mObserver);</span><br><span class="line">            mAdapter.onDetachedFromRecyclerView(<span class="keyword">this</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!compatibleWithPrevious || removeAndRecycleViews) &#123;</span><br><span class="line">            removeAndRecycleViews();</span><br><span class="line">        &#125;</span><br><span class="line">        mAdapterHelper.reset();</span><br><span class="line">        <span class="keyword">final</span> Adapter oldAdapter = mAdapter;</span><br><span class="line">        mAdapter = adapter;</span><br><span class="line">        <span class="keyword">if</span> (adapter != <span class="keyword">null</span>) &#123;</span><br><span class="line">            adapter.registerAdapterDataObserver(mObserver);</span><br><span class="line">            adapter.onAttachedToRecyclerView(<span class="keyword">this</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (mLayout != <span class="keyword">null</span>) &#123;</span><br><span class="line">            mLayout.onAdapterChanged(oldAdapter, mAdapter);</span><br><span class="line">        &#125;</span><br><span class="line">        mRecycler.onAdapterChanged(oldAdapter, mAdapter, compatibleWithPrevious);</span><br><span class="line">        mState.mStructureChanged = <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>看起来,是把老的Adapter清除,并设置传入的adapter为Adapter的值</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (adapter != <span class="keyword">null</span>) &#123;</span><br><span class="line">      adapter.registerAdapterDataObserver(mObserver);</span><br><span class="line">      adapter.onAttachedToRecyclerView(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>重点在这句话<code>adapter.registerAdapterDataObserver(mObserver);</code></p>
-<p>很明显,这是对数据变化注册成为一个观察者,查看源码发现最后是放到了 <code>mObservable</code> 中</p>
-<p>大概已经知道是怎么回事了,可能我们当前的Adapter没有注册上观察者,所以没有回调过来吧.</p>
-<p>为了证实我的猜测,我借了同事的测试机和线</p>
-<h5 id="证实猜想"><a href="#证实猜想" class="headerlink" title="证实猜想"></a>证实猜想</h5><p>开启DEBUG一步一步跟过来.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android.support.v7.widget.RecyclerView.AdapterDataObserver#onItemRangeChanged(int, int)</span><br></pre></td></tr></table></figure>
-<p>最后,跑到了这里来.一个真真正正的空方法</p>
-<p>于是查看了一下<code>mObservable</code>,只有一个值<code>RefreshAndLoadMoreHelper</code>,而我自己的Adapter明明是叫做<code>MultiTypeAdapter</code></p>
-<p>看到这里,我的猜想已经证实,<code>RefreshAndLoadMoreHelper</code>是我自己封装,用来支持上拉加载,下拉刷新的工具类,其实它自己也继承了RecyclerView.Adapter,并且在<code>RefreshAndLoadMoreHelper</code>的构造方法中,调用了</p>
-<p><code>recyclerView.setAdapter(mHeaderFooterAdapter);</code>,这就是说,我自己设置的Adapter永远会被它覆盖.</p>
-<h3 id="解决BUG"><a href="#解决BUG" class="headerlink" title="解决BUG"></a>解决BUG</h3><p>已经知道了原因,是由于我自己的工具类,替代了本来设置的Adapter,,现在的<code>mHeaderFooterAdapter</code>是与当前RecyclerView关联的,但是我们在代码中</p>
-<p>调用的是(开头的代码):</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getAdapter().notifyItemChanged(holder.getAdapterPosition(),item.addPvNum().getFormatPvNum());</span><br></pre></td></tr></table></figure>
-<p>getAdapter()返回的是Adapter而不是关联RecyclerView的<code>mHeaderFooterAdapter</code></p>
-<p>所以,我们只要想办法,在Adapter中调用了方法后,通知<code>mHeaderFooterAdapter</code>一声,让它去完成操作即可</p>
-<p><strong>代码如下:</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Adapter.registerAdapterDataObserver(<span class="keyword">new</span> RecyclerView.AdapterDataObserver() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onChanged</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                mHeaderFooterAdapter.notifyDataSetChanged();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onItemRangeChanged</span><span class="params">(<span class="keyword">int</span> positionStart, <span class="keyword">int</span> itemCount, @Nullable Object payload)</span> </span>&#123;</span><br><span class="line">                mHeaderFooterAdapter.notifyItemRangeChanged(positionStart, itemCount, payload);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
-<p><code>Adapter</code>是我自己原来设置的</p>
-<p><code>mHeaderFooterAdapter</code>是工具类</p>
-<p>这里面的意思就是,给我自己的Adapter注册了一个观察者,每当我在Adapter中调用了方法,就会回调这里,在这里本来是通知RecyclerView来处理的,但是我们并不需要直接来处理,委托给<code>mHeaderFooterAdapter</code>即可,所以我在回调中直接调用了,<code>mHeaderFooterAdapter.notifyItemRangeChanged</code>这样就OK了.</p>
-
+            <p><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>RecyclerView是我们日常开发中用的最频繁的几个控件之一,可以说一个App没有RecyclerView的参与,可能根本就做不出来.然而同时,RecyclerView尽管有复用机制,我们使用的时候,还是应该尽量的节省内存,提高性能.</p>
+<p>所以,对于RecyclerView中的Item,尽量少刷新,越少越好.</p></p>
+            <p class="article-more-link">
+                <a href="/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -464,7 +376,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" data-id="cjjktogay0040nostohh6tlmx" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" data-id="cjjkv6yy7003vxust8sp4pe47" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -582,37 +494,13 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>ConstraintLayout现在已经是新建布局的默认跟布局了,况且确实好用,有必要学习一波</p>
+            <p><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>ConstraintLayout现在已经是新建布局的默认跟布局了,况且确实好用,有必要学习一波</p>
 <p> <a href="https://developer.android.google.cn/reference/android/support/constraint/ConstraintLayout#Chains" target="_blank" rel="noopener">ConstraintLayout</a>,来自官网的文档,觉得不是很直观,于是我想把它做成GIF图</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile <span class="string">'com.android.support.constraint:constraint-layout:1.1.2'</span></span><br></pre></td></tr></table></figure>
-<p>截止我写下这篇笔记的时候,已经是1.1.2版本了,下面所有的代码都是基于1.1.2版本.</p>
-<h3 id="面板"><a href="#面板" class="headerlink" title="面板"></a>面板</h3><p><img src="../images/cons_broad.png" alt="面板"></p>
-<p>首先应该明白主要的两个面板</p>
-<p>蓝色的区域,我们成为设计蓝图,下文称蓝图面板</p>
-<p>右边的是属性面板,下文称属性面板,可以在这里进行精细调整</p>
-<h3 id="单个控件的约束"><a href="#单个控件的约束" class="headerlink" title="单个控件的约束"></a>单个控件的约束</h3><p>再演示之前,建议大家都使用Android Studio 提供的<code>Design</code> 模式来创建和修改约束布局,方便而且直观</p>
-<p>我的Android Studio 版本是3.1.3,如果有和我操作界面不一致的,请自行对应</p>
-<h4 id="margin效果"><a href="#margin效果" class="headerlink" title="margin效果"></a>margin效果</h4><p><img src="../images/cons_default_move.gif" alt="single_move"></p>
-<p>如果我只给左边和上边加上约束,那么就会是<code>margin</code>的效果,代码表现如下:</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Button</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:id</span>=<span class="string">"@+id/button"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:text</span>=<span class="string">"Button"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:layout_marginStart</span>=<span class="string">"28dp"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:layout_marginTop</span>=<span class="string">"28dp"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">app:layout_constraintStart_toStartOf</span>=<span class="string">"parent"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">app:layout_constraintTop_toTopOf</span>=<span class="string">"parent"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-<p>如果你想调节这个<code>margin</code>,即可以拖动,也可以去属性面板调整,也可以在代码中修改</p>
-<h4 id="居中-偏移效果"><a href="#居中-偏移效果" class="headerlink" title="居中/偏移效果"></a>居中/偏移效果</h4><p><img src="../images/cons_single_center.gif" alt="弹性"></p>
-<p>可以看到,我在左边和上边已经有<code>margin</code>的情况下,给右边和下边也加上了约束,现在<code>BUTTON</code>大体上是居中效果</p>
-<p>为什么是”大体”居中那? 看箭头附近的 28 28 8 8 ,这是在<code>margin</code>的基础上居中的,去掉<code>margin</code>就是绝对居中的了</p>
-<p>现在我们看属性面板:</p>
-<p><img src="../images/cons_attr_2.png" alt=""></p>
-<p>略小的红框中,就是margin,这样的调节框还有3个</p>
-<p>看到那个可以滑动的轴了么? 中间还有个50的数字,这个是调节<code>BUTTON</code>在垂直方向的偏移</p>
-<p>其他几个操作框同理可推其作用</p>
-<p>比如我需要一个<code>登录</code>在垂直方向的0.75处,也就是在整个页面的3/4处</p>
-<p>可以直接拉动这个控制点,使他的数值变为<code>75</code>,也可以在代码中修改,代码表现如下:</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Button</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/button"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:text</span>=<span class="string">"登录"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">app:layout_constraintBottom_toBottomOf</span>=<span class="string">"parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">app:layout_constraintEnd_toEndOf</span>=<span class="string">"parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">app:layout_constraintStart_toStartOf</span>=<span class="string">"parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">app:layout_constraintTop_toTopOf</span>=<span class="string">"parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">app:layout_constraintVertical_bias</span>=<span class="string">"0.75"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-<p>此时的<code>BUTTON</code>就会处在整个布局的3/4处,就不放图了</p>
-<h4 id="纵横比"><a href="#纵横比" class="headerlink" title="纵横比"></a>纵横比</h4><p><img src="../images/cons_ratio.gif" alt="纵横比"></p>
-<p>代码表现如下:</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ImageView</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"0dp"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"0dp"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:src</span>=<span class="string">"@mipmap/login_bg"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:scaleType</span>=<span class="string">"fitXY"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">app:layout_constraintDimensionRatio</span>=<span class="string">"h,16:9"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">app:layout_constraintEnd_toEndOf</span>=<span class="string">"parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">app:layout_constraintStart_toStartOf</span>=<span class="string">"parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">app:layout_constraintTop_toTopOf</span>=<span class="string">"parent"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="多个控件的约束"><a href="#多个控件的约束" class="headerlink" title="多个控件的约束"></a>多个控件的约束</h3>
+<p>截止我写下这篇笔记的时候,已经是1.1.2版本了,下面所有的代码都是基于1.1.2版本.</p></p>
+            <p class="article-more-link">
+                <a href="/2018/07/12/ConstraintLayout使用指南-基础的约束/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -622,7 +510,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/12/ConstraintLayout使用指南-基础的约束/" data-id="cjjktog9t0029nost27vnhzvm" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/12/ConstraintLayout使用指南-基础的约束/" data-id="cjjkv6yxc001yxust2a898cbd" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -740,53 +628,13 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><strong>java.lang.OutOfMemoryError</strong></p>
-<p>我们知道在线程创建时,程序计数器,本地方法栈,虚拟机栈随之创建,线程销毁时随之销毁</p>
+            <p><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>我们知道在线程创建时,程序计数器,本地方法栈,虚拟机栈随之创建,线程销毁时随之销毁</p>
 <p>并且栈中的栈帧也随着方法的进入与退出执行出入栈操作,最重要的是每一个栈帧消耗的内存基本上在类结构确定时就已经知道,这几个区域的内存分配与回收都是确定的,不需要过多考虑回收.</p>
 <p>但是进程中的 堆(heap) 以及 方法区与上面的几个栈是不同的,当程序处于运行时期才能确定,它们的内存分配与回收都是动态的.</p>
-<p>垃圾收集主要就是这部分.</p>
-<h3 id="内存中对象引用状态"><a href="#内存中对象引用状态" class="headerlink" title="内存中对象引用状态"></a>内存中对象引用状态</h3><p>要进行垃圾收集,第一件要确定的就是这个对象是否不被任何方式引用,当确定没有任何引用就可以进行回收.</p>
-<p><strong>引用</strong>：要说引用状态就要明白什么是引用，如果Reference类型的数据中存储的数值代表的是另外一块内存的起始地址，我们就说这块内存代表着一个引用。</p>
-<p>在JDK1.2之后,JAVA对引用的概念进行了扩充,将引用分外4种</p>
-<ol>
-<li>强引用, val onj = Object() </li>
-<li>软引用 ,有用但是非必须的对象</li>
-<li>弱引用,用来描述非必须对象</li>
-<li>虚引用</li>
-</ol>
-<p>那么如何判断呢?</p>
-<h4 id="引用计数法"><a href="#引用计数法" class="headerlink" title="引用计数法"></a>引用计数法</h4><p>即对象有一个引用计数器,每被引用一次就加1,引用释放就减去1,如果计数器为0,那就说明对象”已死”</p>
-<p>但是Java虚拟机并没有采用这种方式,因为没有办法解决循环引用的问题</p>
-<p>A与B对象,互相持有对方的引用,那么就算他们两个计数器永远不可能等于0,哪怕这两个对象都没有用了.</p>
-<h4 id="可达性分析算法"><a href="#可达性分析算法" class="headerlink" title="可达性分析算法"></a>可达性分析算法</h4><p>JVM就是通过这种方式来判断对象是否存活.</p>
-<p>这种算法,就是通过一系列的GC Roots对象作为起始点,从这些节点向下搜索,搜索走过的路径被称为引用链(Reference Chain),当一个对象到GC Roots没有任何引用链相连接的话,就可以判断这个对象不可用了.</p>
-<p>GC Roots：</p>
-<ul>
-<li>虚拟机栈（栈帧中的本地变量表）中的引用对象</li>
-<li>方法区中类静态属性引用变量</li>
-<li>方法区中常量引用对象</li>
-<li>本地方法栈中的JNI引用对象</li>
-</ul>
-<p><img src="../images/jvm_gcroots.png" alt="gcroots"></p>
-<h3 id="回收对象"><a href="#回收对象" class="headerlink" title="回收对象"></a>回收对象</h3><p>通过上面的可达性分析算法,我们就可以判断出那些可回收的对象,但是实际上他们也不是立即被回收</p>
-<p>第一次不可达,没有与GC Roots相连接的引用链,他会被标记一次并且进行一次筛选,筛选是否有必要执行<code>finalize()</code>方法,当对象没有覆盖<code>finalize()</code>或者是该方法已经被虚拟机调用,都将视为”没有必要执行”.</p>
-<p>如果一个对象被判定需要执行<code>finalize()</code>方法,那么这个对象会被放在<code>F-Queue</code>的队列中,并在稍后由虚拟机创建一个低优先级的<code>Finalizer</code>线程去执行它,稍后GC将会对<code>F-Queue</code>中的对象进行第二次筛选,如果该对象重新被引用了,那么它将被移出<code>F-Queue</code>队列,完成自救.否则,就真的被回收了.</p>
-<h3 id="垃圾收集算法"><a href="#垃圾收集算法" class="headerlink" title="垃圾收集算法"></a>垃圾收集算法</h3><h4 id="标记-清除算法"><a href="#标记-清除算法" class="headerlink" title="标记-清除算法"></a>标记-清除算法</h4><p>这个算法分为两个部分,首先标记出所有需要回收的对象，在标记完成后统一回收所有被标记的对象    </p>
-<p>这样的算法虽然可以达到目的,但是效率不高,而且标记-清除后会产生大量的不连续内存碎片,这会导致较大的对象分配内存时无法找到符合的内存块,导致提前触发另一次垃圾回收.</p>
-<h4 id="复制算法"><a href="#复制算法" class="headerlink" title="复制算法"></a>复制算法</h4><p>这种算法的思路是,把一大块内存分为两个部分,A部分正常使用,当A块内存使用完,就把A内存中还存活的对象复制到另一块内存上去,然后一次性清理掉A上所有的内容.</p>
-<p>这样的算法,简单而且高效,而且不会有大量不连续内存的问题产生,但是这样的话,永远只能使用到内存的一半空间,未免有些浪费了.</p>
-<p>IBM通过研究,将内存分为一块较大的Eden空间和两块较小的Survivor空间,8:1:1 </p>
-<h4 id="标记-整理算法"><a href="#标记-整理算法" class="headerlink" title="标记-整理算法"></a>标记-整理算法</h4><p>标记过程 仍然与上面说的“标记-清除”算法一样,但是后续不是直接执行清理,而是把可回收对象都向一端移动,然后直接清理掉端边界以外的内存.</p>
-<h4 id="分代回收算法"><a href="#分代回收算法" class="headerlink" title="分代回收算法"></a>分代回收算法</h4><p>一般是把Java堆 分为新生代和老年代，这样就可以根据各个年代的特点采用最适当的收集算法。</p>
-<p><strong>新生代</strong>:只有少量存活,就选用复制算法,付出少量存活对象的复制成本就可以完成收集</p>
-<p><strong>老年代</strong>:对象存活率高,没有额外空间对它进行分配担保,就要使用“标记—清理”或者“标记—整理”算法来进行回收</p>
-<h3 id="安全点-GC入口"><a href="#安全点-GC入口" class="headerlink" title="安全点(GC入口)"></a>安全点(GC入口)</h3><p>我们都知道GC是阻塞所有线程的,”Stop The  World”这样的.</p>
-<p>程序执行时并非在所有地方都 能停顿下来开始GC,只有在到达安全点时才能暂停 . </p>
-<p>至于对安全点的选定,也是很复杂,这里就不了解了.</p>
-<p><strong>抢先式中断</strong>:GC发生时,把所有线程全部中断,如果有发现线程断的地方不在安全点上,就恢复线程,直到它继续执行指令到达”安全点”.</p>
-<p><strong>主动式中断</strong>:GC需要中断时,设置标识,而每一个线程执行时主动轮询这个标志,发现中断标识就自己主动挂起.</p>
-
+<p>垃圾收集主要就是这部分.</p></p>
+            <p class="article-more-link">
+                <a href="/2018/07/11/JVM的垃圾回收Garbage-Collection/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -796,7 +644,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/11/JVM的垃圾回收Garbage-Collection/" data-id="cjjktogaj002ynostf9netix5" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/11/JVM的垃圾回收Garbage-Collection/" data-id="cjjkv6yxt002vxustn9x6sj0f" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -914,25 +762,17 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>贝塞尔曲线(Bézier curve)</p>
+            <p><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>贝塞尔曲线(Bézier curve)</p>
 <p>我们在很多App种都能发现它的影子,比如说</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">QQ的小红点</span><br><span class="line">下拉刷新的粘连效果</span><br><span class="line">个人动态等页面的波浪效果</span><br><span class="line">阅读软件的翻页效果</span><br></pre></td></tr></table></figure>
 <p>贝塞尔曲线是用一系列点来控制曲线状态，主要就是：数据点、控制点。我们可以通过调整控制点，来使得贝塞尔曲线形状变化</p>
 <ul>
 <li>数据点   指定了起始位置</li>
 <li>控制点   一或多个,决定了曲线的轨迹</li>
-</ul>
-<p>这里放两个在线查看贝塞尔曲线的链接</p>
-<blockquote>
-<p><a href="http://myst729.github.io/bezier-curve/" target="_blank" rel="noopener">http://myst729.github.io/bezier-curve/</a></p>
-<p><a href="http://cubic-bezier.com/#.17,.67,.83,.67" target="_blank" rel="noopener">http://cubic-bezier.com/#.17,.67,.83,.67</a></p>
-</blockquote>
-<p>这里是一个快速确定点位置的教程</p>
-<blockquote>
-<p><a href="https://www.jianshu.com/p/1d766455445b" target="_blank" rel="noopener">https://www.jianshu.com/p/1d766455445b</a></p>
-</blockquote>
-
+</ul></p>
+            <p class="article-more-link">
+                <a href="/2018/07/05/Android中的贝塞尔曲线/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -942,7 +782,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/05/Android中的贝塞尔曲线/" data-id="cjjktog8r000tnost8f63o649" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/05/Android中的贝塞尔曲线/" data-id="cjjkv6yw5000jxustyih72saq" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1060,26 +900,13 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>前一段时间换了github账号,各种转移数据,累死我</p>
+            <p><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>前一段时间换了github账号,各种转移数据,累死我</p>
 <p>而后,我顺手添加了github的ssh-key(新创建了一个rsa的Key),然而当我:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> phyooos @ wangzhumo in ~/develop/hexo [12:10:02] C:2</span><br><span class="line"><span class="meta">$</span> hexo d</span><br><span class="line">INFO  Deploying: git</span><br><span class="line">INFO  Clearing .deploy_git folder...</span><br><span class="line">    #...</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br><span class="line">fatal: Could not read from remote repository.</span><br></pre></td></tr></table></figure>
-<p>很迷,完全不知道为什么</p>
-<h3 id="排除问题"><a href="#排除问题" class="headerlink" title="排除问题"></a>排除问题</h3><h4 id="查看-ssh目录"><a href="#查看-ssh目录" class="headerlink" title="查看~/.ssh目录"></a>查看~/.ssh目录</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-rw-------  1 phyooos  staff   1.6K  6 27  2017 aliyun_rsa</span><br><span class="line">-rw-r--r--  1 phyooos  staff   398B  6 27  2017 aliyun_rsa.pub</span><br><span class="line">-rw-r--r--  1 phyooos  staff   402B  5 22  2017 authorized_keys</span><br><span class="line">-rw-r--r--  1 phyooos  staff   1.1K  6 28 14:48 config</span><br><span class="line">-rw-------  1 phyooos  staff   3.2K  6 27 18:05 github_rsa</span><br><span class="line">-rw-r--r--  1 phyooos  staff   746B  6 27 18:05 github_rsa.pub</span><br><span class="line">-rw-------  1 phyooos  staff   1.6K  5 17  2017 id_rsa</span><br><span class="line">-rw-r--r--@ 1 phyooos  staff   402B  5 17  2017 id_rsa.pub</span><br><span class="line">-rw-r--r--  1 phyooos  staff   1.3K  7  5 12:33 known_hosts</span><br></pre></td></tr></table></figure>
-<p>其中</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-rw-------  1 phyooos  staff   3.2K  6 27 18:05 github_rsa</span><br><span class="line">-rw-r--r--  1 phyooos  staff   746B  6 27 18:05 github_rsa.pub</span><br></pre></td></tr></table></figure>
-<p>就是我创建用来给github用的</p>
-<h4 id="查看-ssh-config"><a href="#查看-ssh-config" class="headerlink" title="查看~/.ssh/config"></a>查看~/.ssh/config</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> ---- github------------------</span><br><span class="line">Host github</span><br><span class="line">	HostName github.com</span><br><span class="line">	User git</span><br><span class="line">	IdentityFile /Users/phyooos/.ssh/github_rsa</span><br><span class="line"><span class="meta">#</span> -----------------------------</span><br></pre></td></tr></table></figure>
-<p>也是没有问题的,而github上的key也就确实是github_rsa.pub</p>
-<h4 id="Tower"><a href="#Tower" class="headerlink" title="Tower"></a>Tower</h4><p>但是我的Tower上,也有几个github上的项目,却可以正常的上传,</p>
-<p>而Tower上的私钥是我手动配上去的,所以问题只有可能是终端中没有按照我的配置<code>IdentityFile /Users/phyooos/.ssh/github_rsa</code>来和github建立连接</p>
-<p>我尝试把<code>id_rsa.pub</code>密钥加入到github上.</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">To github.com:wangzhumo/wangzhumo.github.io.git</span><br><span class="line">   c45bbef..6b25311  HEAD -&gt; master</span><br><span class="line">Branch 'master' set up to track remote branch 'master' from 'git@github.com:wangzhumo/wangzhumo.github.io.git'.</span><br><span class="line">INFO  Deploy done: git</span><br></pre></td></tr></table></figure>
-<p>竟然成功了.</p>
-<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p><code>~/.ssh/config</code>中的配置,莫名没有生效,我至今也不知道为什么</p>
-<p>还是说,github在终端中上传时,只会默认去拿id_rsa???</p>
-<p>那就先这么用吧..迷</p>
-
+<p>很迷,完全不知道为什么</p></p>
+            <p class="article-more-link">
+                <a href="/2018/07/05/GitHub使用SSH的方式免密上传/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -1089,7 +916,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/05/GitHub使用SSH的方式免密上传/" data-id="cjjktogai002vnostyfopglzp" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/05/GitHub使用SSH的方式免密上传/" data-id="cjjkv6yxs002oxustir4d8tx1" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1207,145 +1034,16 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <h3 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h3><h4 id="内存泄漏"><a href="#内存泄漏" class="headerlink" title="内存泄漏"></a>内存泄漏</h4><p>简单的说，当我们的对象创建时，就占用了一部分内存，而在这个对象没有被引用后会进行回收销毁，</p>
+            <p><h3 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h3><h4 id="内存泄漏"><a href="#内存泄漏" class="headerlink" title="内存泄漏"></a>内存泄漏</h4><p>简单的说，当我们的对象创建时，就占用了一部分内存，而在这个对象没有被引用后会进行回收销毁，</p>
 <p>以释放掉占用的内存。但是如果jvm没有成功回收这个对象，就会造成内存泄漏。</p>
 <h4 id="内存溢出"><a href="#内存溢出" class="headerlink" title="内存溢出"></a>内存溢出</h4><p>Android中的OOM，系统会给每一个Android程序分配一定的内存。我的的App可能会因为大量的内存泄漏而导致内存耗尽，引发OOM导致整个App的崩溃。</p>
 <p>就算内存没有耗尽而崩溃，也会导致App内存不足。此时我们创建新的对象或者其他方式需要使用内存时，GC就会主动进行垃圾回收，为你的操作准备好内存空间，每次GC都是阻塞操作，这就会导致我们的App卡顿。</p>
 <blockquote>
 <p>所以，我们优化App卡顿时，有一点就是要关注“内存抖动”。</p>
-</blockquote>
-<h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><h4 id="handler的内部类"><a href="#handler的内部类" class="headerlink" title="handler的内部类"></a>handler的内部类</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">final</span> Handler mHandler = <span class="keyword">new</span> Handler() &#123;</span><br><span class="line">     <span class="meta">@Override</span></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// do something</span></span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">// 延时60s</span></span><br><span class="line">		mHandler.postDelayed(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">       		<span class="meta">@Override</span></span><br><span class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123; </span><br><span class="line">           		<span class="comment">//run </span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;, <span class="number">6000</span>);</span><br><span class="line">        </span><br><span class="line">        finish();</span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-<p>我们知道在主线程中创建的Handler会被关联到 Looper（主线程的）中去，而主线程的Looper在应用程序的整个生命周期中存在 ，此时的Message会持有Handler对象，用来最后处理消息。</p>
-<p>也就是调用<code>Handler#handleMessage(Message msg)</code></p>
-<p><strong>当我们调用<code>test1()</code>方法</strong></p>
-<ul>
-<li>延时60s执行（但实际上，这个message已经发送，在消息队列中了，只是60s后才 handleMessage）</li>
-<li>finish()掉这MainActivity</li>
-<li><code>new Runnable</code>是一个匿名内部类，会持有隐式的外部类引用 </li>
-</ul>
-<p>这下就微妙了，MainActivity已经被finish了，但是延时Message却还存在于消息队列中，直到它被处理</p>
-<p>延时Message 持有 MainActivity的Handler(用来处理这个消息)，而我们知道在Java中，非静态内部类和匿名类会隐式持有一个外部类的引用 ，在这里就是Handler隐式持有MainActivity</p>
-<p>这下就导致，MainActivity 没有被垃圾回收机制回收 </p>
-<p>还有个Runnable那…</p>
-<h4 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h4><ol>
-<li>去除隐式引用，可以把非静态内部类转化成静态的</li>
-<li>手动管理外部类依赖，如果一定要使用，可以手动传入外部类（像Context这样的完全可以使用ApplicationContext替代）</li>
-</ol>
-<h4 id="案例小结"><a href="#案例小结" class="headerlink" title="案例小结"></a>案例小结</h4><p>非静态的内部类，由于它的生命周期不能同外部类一致，它的生存周期已经超过了它的外部类。</p>
-<p>所以在它的外部类被回收时，被它打断了这个操作，导致内存泄漏产生</p>
-<h3 id="内部类"><a href="#内部类" class="headerlink" title="内部类"></a>内部类</h3><p>Java中内部类分为四种 </p>
-<ol>
-<li>静态内部类</li>
-<li>静态匿名内部类</li>
-<li>非静态内部类</li>
-<li>非静态内部匿名类</li>
-</ol>
-<table>
-<thead>
-<tr>
-<th>说明</th>
-<th>成员内部类</th>
-<th>静态内部类</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>静态成员</td>
-<td>静态成员需同时有final关键词修饰</td>
-<td>可以</td>
-</tr>
-<tr>
-<td>静态方法</td>
-<td>不可定义</td>
-<td>可以</td>
-</tr>
-<tr>
-<td>访问外部类非static属性/方法</td>
-<td>外部类名.this.成员方法/属性</td>
-<td>不可以</td>
-</tr>
-<tr>
-<td>外部类访问内部类</td>
-<td>需要通过内部类的一个实例来访问</td>
-<td>需要通过内部类的一个实例来访问</td>
-</tr>
-<tr>
-<td>创建实例</td>
-<td>外部类名.内部类名 实例名 = 外部类实例名.new 内部类构造方法(参数)</td>
-<td>外部类名.内部类名 实例名 = new 外部类名.内部类名(参数)</td>
-</tr>
-<tr>
-<td>编译后的class文件</td>
-<td>单独的class文件(so内部类中的方法和变量可以跟父类的方法和变量同名)，外部类$内部类.class</td>
-<td>单独的class文件(so内部类中的方法和变量可以跟父类的方法和变量同名)，外部类$内部类.class</td>
-</tr>
-<tr>
-<td>其他</td>
-<td>与外部类平级的类继承内部类时，其构造方法中需要传入父类的实例对象。且在构造方法的第一句调用“外部类实例名.super(内部类参数)”</td>
-<td>无</td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th><strong>说明</strong></th>
-<th style="text-align:left"><strong>成员内部类</strong></th>
-<th><strong>匿名内部类</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>静态成员</td>
-<td style="text-align:left">静态成员需同时有final关键词修饰</td>
-<td>不可定义</td>
-</tr>
-<tr>
-<td>静态方法</td>
-<td style="text-align:left">不可定义</td>
-<td>不可定义</td>
-</tr>
-<tr>
-<td>访问外部类非static属性/方法</td>
-<td style="text-align:left">外部类名.this.成员方法/属性</td>
-<td>外部类名.this.成员方法/属性</td>
-</tr>
-<tr>
-<td>外部类访问内部类</td>
-<td style="text-align:left">需要通过内部类的一个实例来访问</td>
-<td>需要通过内部类的一个实例来访问</td>
-</tr>
-<tr>
-<td>创建实例</td>
-<td style="text-align:left">外部类名.内部类名 实例名 = 外部类实例名.new 内部类构造方法(参数)</td>
-<td>如上：父类 实例名 = new 父类（）{}</td>
-</tr>
-<tr>
-<td>编译后的class文件</td>
-<td style="text-align:left">单独的class文件(so内部类中的方法和变量可以跟父类的方法和变量同名)，外部类$内部类.class</td>
-<td>单独的class文件，使用类$数字.class</td>
-</tr>
-<tr>
-<td>其他</td>
-<td style="text-align:left">与外部类平级的类继承内部类时，其构造方法中需要传入父类的实例对象。且在构造方法的第一句调用“外部类实例名.super(内部类参数)”</td>
-<td>无</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p><a href="https://www.cnblogs.com/dorothychai/p/6007709.html" target="_blank" rel="noopener">https://www.cnblogs.com/dorothychai/p/6007709.html</a></p>
-</blockquote>
-<h3 id="启示"><a href="#启示" class="headerlink" title="启示"></a>启示</h3><ol>
-<li><p>非静态内部类 改为 静态非匿名内部类 </p>
-</li>
-<li><p>使用弱引用</p>
-</li>
-<li><p>在适当的时机手动销毁，在onDestory中手动销毁</p>
-<p>养成良好的习惯，Context、Handler、Timer、Thread  、广播 、 IO 等都要注意销毁</p>
-</li>
-</ol>
-
+</blockquote></p>
+            <p class="article-more-link">
+                <a href="/2018/07/05/Android非静态内部类与匿名内部类引起的内存泄漏/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -1355,7 +1053,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/05/Android非静态内部类与匿名内部类引起的内存泄漏/" data-id="cjjktog96001cnostgmel2hqc" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/05/Android非静态内部类与匿名内部类引起的内存泄漏/" data-id="cjjkv6ywm001cxustzu0qnwsb" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1473,19 +1171,17 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <h3 id="目标效果"><a href="#目标效果" class="headerlink" title="目标效果"></a>目标效果</h3><p><img src="../images/ucbrows_favour.gif" alt="目标"></p>
+            <p><h3 id="目标效果"><a href="#目标效果" class="headerlink" title="目标效果"></a>目标效果</h3><p><img src="../images/ucbrows_favour.gif" alt="目标"></p>
 <p>👍 效果</p>
 <ul>
 <li>小物件的抛物线</li>
 <li>小物件的初速度</li>
 <li>小物件的喷射角度</li>
 <li>小物件并不是直接消失的,而是透明度</li>
-</ul>
-<p>分析UC浏览器的apk文件,看到了一个lottie…然而</p>
-<p>这个点赞,每次的效果都不一样,应该考虑使用属性动画去实现</p>
-<p>使用差值器可以模仿抛物线的效果来使用,gogogo</p>
-
+</ul></p>
+            <p class="article-more-link">
+                <a href="/2018/07/02/仿写UC浏览器视频类新闻点赞效果/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -1495,7 +1191,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/02/仿写UC浏览器视频类新闻点赞效果/" data-id="cjjktogbk0057nostx2mwvut5" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/02/仿写UC浏览器视频类新闻点赞效果/" data-id="cjjkv6yyq0051xust2z5501ct" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1613,57 +1309,12 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p><em>Git</em>是一个开源的分布式版本控制系统,大家公司可能都是使用的Git来进行版本控制.</p>
+            <p><h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p><em>Git</em>是一个开源的分布式版本控制系统,大家公司可能都是使用的Git来进行版本控制.</p>
 <p>对于我个人,本地项目也喜欢使用git,万一哪天想回退一下,没有git可就真费劲了.</p>
-<p>对于git的常规操作不用多说,今天贴一个submodule的真实使用过程</p>
-<p><img src="../images/git_all_project.png" alt="project"></p>
-<p>项目结构如上.</p>
-<p>为了方便我自己玩,我开了一个playground的项目</p>
-<p>playground</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── app              #主项目</span><br><span class="line">├── lib_common		 #子项目,其中主要提供三方的依赖,以及整个项目的公共代码部分</span><br><span class="line">                     #因为这个项目需要及时更新,方便每个人使用,所以是一个submodule来管理 </span><br><span class="line">├── lib_player   </span><br><span class="line">├── module_views     #今天要演示的子模块</span><br></pre></td></tr></table></figure>
-<p>其实Submodule 和Android的组件化更配哦,属于强强联合</p>
-<h4 id="创建module-views模块"><a href="#创建module-views模块" class="headerlink" title="创建module_views模块"></a>创建module_views模块</h4><h5 id="建立module"><a href="#建立module" class="headerlink" title="建立module"></a>建立module</h5><p>在我们playground的项目上,创建一个新模块,怎么操作就不说了</p>
-<h5 id="在module-views中初始化Git"><a href="#在module-views中初始化Git" class="headerlink" title="在module_views中初始化Git"></a>在module_views中初始化Git</h5><blockquote>
-<p>注意,当module_views这个模块创建时,一定不要手快把这个模块添加到playground整个项目的版本控制中</p>
-<p>记得<strong>忽略module_views整个module</strong></p>
-</blockquote>
-<p>直接贴操作了</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> phyooos @ wangzhumo in ~ [16:38:01]</span><br><span class="line"><span class="meta">$</span> cd ~/workspace/playground</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> phyooos @ wangzhumo in ~/workspace/playground on git:master x [16:58:48]</span><br><span class="line"><span class="meta">$</span> ll | grep 'module_views'</span><br><span class="line">drwxr-xr-x  11 phyooos  staff   352B  7  2 16:31 module_views</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> phyooos @ wangzhumo in ~/workspace/playground on git:master x [16:59:03]</span><br><span class="line"><span class="meta">$</span> cd module_views</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> phyooos @ wangzhumo in ~/workspace/playground/module_views  [16:59:19]</span><br><span class="line"><span class="meta">$</span> git init</span><br><span class="line">Reinitialized existing Git repository in /Users/phyooos/workspace/playground/module_views/.git/</span><br></pre></td></tr></table></figure>
-<p>因为我的module_views已经创建git仓库了,所以最后一步提示 <code>Reinitialized existing Git repository</code></p>
-<h5 id="关联远程仓库"><a href="#关联远程仓库" class="headerlink" title="关联远程仓库"></a>关联远程仓库</h5><p>这一步随意,我本人是在github上创建了一个名为<a href="https://github.com/wangzhumo/module_views" target="_blank" rel="noopener">module_views</a>的库</p>
-<p>拿到远程仓库地址 git@github.com:wangzhumo/module_views.git</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> phyooos @ wangzhumo in ~/workspace/playground/module_views  [16:59:30]</span><br><span class="line"><span class="meta">$</span> git remote add origin git@github.com:wangzhumo/module_views.git</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> phyooos @ wangzhumo in ~/workspace/playground/module_views on git:master o [16:59:30]</span><br><span class="line"><span class="meta">$</span> git push</span><br><span class="line">Everything up-to-date</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> phyooos @ wangzhumo in ~/workspace/playground/module_views on git:master o [17:06:51]</span><br><span class="line"><span class="meta">$</span> git status</span><br><span class="line">On branch master</span><br><span class="line">Your branch is up to date with 'origin/master'.</span><br><span class="line"></span><br><span class="line">nothing to commit, working tree clean</span><br></pre></td></tr></table></figure>
-<p>添加远程仓库,并push,把本地代码提交到github上去,因为我自己已经提交过了,所以可以看到</p>
-<p><code>Everything up-to-date</code></p>
-<h4 id="添加子模块到playground中"><a href="#添加子模块到playground中" class="headerlink" title="添加子模块到playground中"></a>添加子模块到playground中</h4><p>贴操作</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> phyooos @ wangzhumo in ~/workspace/playground on git:master x [16:38:12]</span><br><span class="line"><span class="meta">$</span> git submodule add git@github.com:wangzhumo/module_views.git ./module_views</span><br><span class="line">The following path is ignored by one of your .gitignore files:</span><br><span class="line">module_views</span><br><span class="line">Use -f if you really want to add it.</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> phyooos @ wangzhumo in ~/workspace/playground on git:master x [16:38:59] C:1</span><br><span class="line"><span class="meta">$</span> git submodule add -f git@github.com:wangzhumo/module_views.git ./module_views</span><br><span class="line">Adding existing repo at 'module_views' to the index</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> phyooos @ wangzhumo in ~/workspace/playground on git:master x [16:39:21]</span><br><span class="line"><span class="meta">$</span> git submodule</span><br><span class="line"> 1616423ab118e2154bcf018c825f6ed3a57cf59b lib_common (heads/master)</span><br><span class="line"> 55ae43eb327207a456624c69e3c01868f8cf43e3 module_views (heads/master)</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> phyooos @ wangzhumo in ~/workspace/playground on git:master x [16:39:48]</span><br><span class="line"><span class="meta">$</span> git submodule foreach git pull</span><br><span class="line">Entering 'lib_common'</span><br><span class="line">Already up to date.</span><br><span class="line">Entering 'module_views'</span><br><span class="line">Already up to date.</span><br></pre></td></tr></table></figure>
-<p>下面解释每一条命令</p>
-<ol>
-<li><p><code>git submodule add git@github.com:wangzhumo/module_views.git ./module_views</code></p>
-<p>添加子模块 <code>git submodule add &lt;repository&gt; &lt;path&gt; 添加子模块</code></p>
-<p>提示如下:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">The following path is ignored by one of your .gitignore files:</span><br><span class="line">module_views</span><br><span class="line">Use -f if you really want to add it.</span><br></pre></td></tr></table></figure>
-<p>说我已经把<code>module_views</code>添加到忽略文件中了,如果确实想这样操作,加上<code>-f</code>强制操作</p>
-</li>
-</ol>
-<ol>
-<li><p><code>git submodule add -f git@github.com:wangzhumo/module_views.git ./module_views</code></p>
-<p>可以看到提示,我已经成功的把<code>module_views</code>作为子项目添加到<code>playground</code>中了</p>
-</li>
-</ol>
-<ol>
-<li><p><code>git submodule</code></p>
-<p>一共看到两个子模块,一个是刚添加的<code>module_views</code>,一个是我之前添加的</p>
-</li>
-</ol>
-<ol>
-<li><p><code>git submodule foreach git pull</code></p>
-<p>拉取最新代码</p>
-</li>
-</ol>
-<h4 id="其他submodule操作"><a href="#其他submodule操作" class="headerlink" title="其他submodule操作"></a>其他submodule操作</h4><p>文档</p>
-
+<p>对于git的常规操作不用多说,今天贴一个submodule的真实使用过程</p></p>
+            <p class="article-more-link">
+                <a href="/2018/07/02/Git-Submodule-子模块的使用/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -1673,7 +1324,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/02/Git-Submodule-子模块的使用/" data-id="cjjktoga5002snosti2vln0nj" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/02/Git-Submodule-子模块的使用/" data-id="cjjkv6yxm002gxust35z7eyfk" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1791,60 +1442,12 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <h3 id="前因"><a href="#前因" class="headerlink" title="前因"></a>前因</h3><p>最近在做人脸识别的一些东西</p>
+            <p><h3 id="前因"><a href="#前因" class="headerlink" title="前因"></a>前因</h3><p>最近在做人脸识别的一些东西</p>
 <p>主要是使用百度的SDK来完成采集, 识别.</p>
-<p>这个功能是使用百度云的Api来对人脸进行分析,拿到年龄 颜值 等等信息</p>
-<p><strong>第一版设计稿:</strong></p>
-<p><img src="../images/face_value.png" alt="之前的效果"></p>
-<p>那我就直接把请求到的数据展示了一下,然而</p>
-<p><strong>第二版设计稿:</strong></p>
-<p><img src="../images/face_text.png" alt="第二版"></p>
-<p>这一版就是需要把拿到的数值按照区间来展示成文字描述</p>
-<p>那么,应该就是各种switch    if else </p>
-<p>….</p>
-<p>本来也是做Demo,所以我们可以高点其他的东西,于是我就想起了责任链模式,勉强可以做做么</p>
-<h3 id="实现责任链"><a href="#实现责任链" class="headerlink" title="实现责任链"></a>实现责任链</h3><h4 id="定义抽象类"><a href="#定义抽象类" class="headerlink" title="定义抽象类"></a>定义抽象类</h4><p>com.baidu.aip.fl.func.service.HandlerFace.java  接口</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">HandlerFace</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> HandlerFace nextHandler;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//接收一个实体类</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> ResultBean <span class="title">process</span><span class="params">(ResultBean bean)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回下一个处理类</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> HandlerFace <span class="title">nextHandler</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> nextHandler;</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">//设置下一个处理类</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setHandler</span><span class="params">(HandlerFace handler)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.nextHandler = handler;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h4><p><code>com.baidu.aip.fl.func.service.AgeHandlerFace.java</code>  实现类,处理年龄信息</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AgeHandlerFace</span> <span class="keyword">extends</span> <span class="title">HandlerFace</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ResultBean <span class="title">process</span><span class="params">(ResultBean bean)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//1.处理自己的事情</span></span><br><span class="line">        <span class="keyword">if</span> (bean != <span class="keyword">null</span> &amp;&amp; bean.getIntAge() == <span class="number">0</span> )&#123;</span><br><span class="line">            bean.setResultAge(<span class="string">"-"</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (bean != <span class="keyword">null</span> &amp;&amp; bean.getIntAge() &lt;= <span class="number">5</span>)&#123;</span><br><span class="line">            bean.setResultAge(<span class="string">"小朋友"</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (bean != <span class="keyword">null</span> &amp;&amp; bean.getIntAge() &lt;= <span class="number">10</span>)&#123;</span><br><span class="line">            bean.setResultAge(<span class="string">"中等朋友"</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (bean != <span class="keyword">null</span> &amp;&amp; bean.getIntAge() &lt;= <span class="number">15</span>)&#123;</span><br><span class="line">            bean.setResultAge(<span class="string">"大朋友"</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (bean != <span class="keyword">null</span> &amp;&amp; bean.getIntAge() &lt;= <span class="number">20</span>)&#123;</span><br><span class="line">            bean.setResultAge(<span class="string">"成年人"</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (bean != <span class="keyword">null</span> &amp;&amp; bean.getIntAge() &lt;= <span class="number">40</span>)&#123;</span><br><span class="line">            bean.setResultAge(<span class="string">"中年人"</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (bean != <span class="keyword">null</span> &amp;&amp; bean.getIntAge() &lt;= <span class="number">60</span>)&#123;</span><br><span class="line">            bean.setResultAge(<span class="string">"老年人"</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (bean != <span class="keyword">null</span> &amp;&amp; bean.getIntAge() &lt;= <span class="number">100</span>)&#123;</span><br><span class="line">            bean.setResultAge(<span class="string">"年纪好大"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//2.是否有下一个人来处理</span></span><br><span class="line">        <span class="keyword">if</span> (nextHandler() != <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="comment">//2.1.如果有下一个处理类,则把信息交给他继续处理</span></span><br><span class="line">            <span class="keyword">return</span> nextHandler().process(bean);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//3.没有下一个处理直接返回</span></span><br><span class="line">        <span class="keyword">return</span> bean;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>AgeHandlerFace类只处理年纪相关的东西</p>
-<p><code>com.baidu.aip.fl.func.service.BeautyHandlerFace.java</code></p>
-<p><code>com.baidu.aip.fl.func.service.GenderHandlerFace.java</code></p>
-<p>同样实现HandlerFace,分别处理颜值和性别</p>
-<h3 id="ServiceLoader"><a href="#ServiceLoader" class="headerlink" title="ServiceLoader"></a>ServiceLoader</h3><p>上面的责任链其实已经可以使用,但是需要手动来初始化每个具体实现类,</p>
-<p>并且一个一个设置 nextHandler ,最后调用处理</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RealProcessFace</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//保存HandlerFace的每一个实现类</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ArrayList&lt;HandlerFace&gt; arraylist;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        arraylist = <span class="keyword">new</span> ArrayList();</span><br><span class="line">        <span class="comment">//通过ServiceLoader来加载所有HandlerFace的实现类</span></span><br><span class="line">        ServiceLoader&lt;HandlerFace&gt; processors = ServiceLoader.load(HandlerFace.class);</span><br><span class="line">        Iterator iterator = processors.iterator();</span><br><span class="line">        <span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">        	<span class="comment">//iterator.next() 这里具体实现类才真正的初始化了</span></span><br><span class="line">            arraylist.add((HandlerFace) iterator.next());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取组合短语</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> task 人脸信息</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 组合短语</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">process</span><span class="params">(ResultBean task)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arraylist.size() - <span class="number">1</span> ; i++) &#123;</span><br><span class="line">            <span class="comment">//依次设置setHandler </span></span><br><span class="line">            <span class="comment">//因为我并不需要他们依次处理,所以我并不关系他们处理的顺序</span></span><br><span class="line">            <span class="comment">//如果是需要顺序执行的话,建议还是手动处理</span></span><br><span class="line">            arraylist.get(i).setHandler(arraylist.get(i+<span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//调用第一个处理类,就会依次调用后面的处理类</span></span><br><span class="line">        ResultBean resultBean = arraylist.get(<span class="number">0</span>).process(task);</span><br><span class="line">        <span class="comment">//返回处理结果</span></span><br><span class="line">        <span class="keyword">return</span> resultBean.format();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h4><p><img src="../images/service_info.png" alt="info"></p>
-<p>1.创建一个base类,就是我上面写过的,可以是接口和抽象类</p>
-<p><code>com.baidu.aip.fl.func.service.HandlerFace</code></p>
-<p>2.一个或多个实现类</p>
-<p><code>com.baidu.aip.fl.func.service.AgeHandlerFace.java</code></p>
-<p><code>com.baidu.aip.fl.func.service.BeautyHandlerFace.java</code></p>
-<p><code>com.baidu.aip.fl.func.service.GenderHandlerFace.java</code></p>
-<p>这里一共是3个</p>
-<p>3.定义resources/META-INF/ …. 文件</p>
-<ul>
-<li><p>该文件无拓展名</p>
-</li>
-<li><p>文件名就是 base类 或者接口 的全路径( 包名 + Filename )</p>
-</li>
-<li><p>文件中每一行写一个实现类的全路径名( 包名 + Filename )</p>
-<p>src/main/resources/META-INF/services/com.baidu.aip.fl.func.service.HandlerFace</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">com.baidu.aip.fl.func.service.GenderHandlerFace</span><br><span class="line">com.baidu.aip.fl.func.service.AgeHandlerFace</span><br><span class="line">com.baidu.aip.fl.func.service.BeautyHandlerFace</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>4.获取所有实现类</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ServiceLoader&lt;HandlerFace&gt; processors = ServiceLoader.load(HandlerFace.class);</span><br><span class="line"><span class="comment">//注意此时实现类都没有实例化</span></span><br><span class="line">Iterator iterator = processors.iterator();</span><br><span class="line"><span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">    <span class="comment">//iterator.next() 这里具体实现类才真正的初始化了</span></span><br><span class="line">    arraylist.add((HandlerFace) iterator.next());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这样的懒加载过程是由ServiceLoader实现的</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><h4 id="责任链"><a href="#责任链" class="headerlink" title="责任链"></a>责任链</h4><p>这样的形式,为后期的扩展提供了很大的便利</p>
-<p>AgeHandlerFace 中,我可以分更细的粒度,也可以合并.</p>
-<p>eg:  50 以下都是年轻人</p>
-<p>​       100 - 50 是老年人</p>
-<p>责任链虽然Android端最显著的算是 <strong>事件分发机制</strong>  ,很多框架中也都有使用,filter这样的东西</p>
-<h4 id="ServiceLoader-1"><a href="#ServiceLoader-1" class="headerlink" title="ServiceLoader"></a>ServiceLoader</h4><p>这个东西,很强大</p>
-<p>在插件化,以及 服务提供等方面都有应用</p>
-
+<p>这个功能是使用百度云的Api来对人脸进行分析,拿到年龄 颜值 等等信息</p></p>
+            <p class="article-more-link">
+                <a href="/2018/06/26/ServiceLoader-与-责任链设计模式/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -1854,7 +1457,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/06/26/ServiceLoader-与-责任链设计模式/" data-id="cjjktogbc004jnostaxtj41q7" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/06/26/ServiceLoader-与-责任链设计模式/" data-id="cjjkv6yyj004kxust00zp76n3" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1987,7 +1590,7 @@
                             <a href="/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(http://www.wangzhumo.com/images/debug.jpg)" alt="RecyclerView中notifyItemRangeChanged无效的BUG" class="thumbnail-image"></span>
     
 </a>
 
@@ -2006,7 +1609,7 @@
                             <a href="/2018/07/12/ConstraintLayout使用指南-基础的约束/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="ConstraintLayout使用指南-基础的约束" class="thumbnail-image"></span>
     
 </a>
 

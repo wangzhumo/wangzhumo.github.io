@@ -5,19 +5,19 @@
     
     <title>Android项目中使用Timber + Logger日志输出 | 王诛魔</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="不啰嗦了,直接开始. 添加依赖 Logger   orhanobut/Logger Timber  JakeWharton/timber  1234//loggerimplementation &apos;com.orhanobut:logger:2.1.1&apos;//timberimplementation &apos;com.jakewharton.timber:timber:4.6.0&apos; 初始化我放在了我的Appli">
+    <meta name="description" content="不啰嗦了,直接开始. 添加依赖 Logger   orhanobut/Logger Timber  JakeWharton/timber  1234//loggerimplementation &apos;com.orhanobut:logger:2.1.1&apos;//timberimplementation &apos;com.jakewharton.timber:timber:4.6.0&apos;">
 <meta name="keywords" content="Android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android项目中使用Timber + Logger日志输出">
 <meta property="og:url" content="http://www.wangzhumo.com/2018/02/07/Android项目中使用Timber-Logger日志输出/index.html">
 <meta property="og:site_name" content="王诛魔">
-<meta property="og:description" content="不啰嗦了,直接开始. 添加依赖 Logger   orhanobut/Logger Timber  JakeWharton/timber  1234//loggerimplementation &apos;com.orhanobut:logger:2.1.1&apos;//timberimplementation &apos;com.jakewharton.timber:timber:4.6.0&apos; 初始化我放在了我的Appli">
+<meta property="og:description" content="不啰嗦了,直接开始. 添加依赖 Logger   orhanobut/Logger Timber  JakeWharton/timber  1234//loggerimplementation &apos;com.orhanobut:logger:2.1.1&apos;//timberimplementation &apos;com.jakewharton.timber:timber:4.6.0&apos;">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://github.com/orhanobut/logger/blob/master/art/logger_output.png">
-<meta property="og:updated_time" content="2018-02-07T10:14:43.116Z">
+<meta property="og:updated_time" content="2018-07-14T03:39:12.031Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android项目中使用Timber + Logger日志输出">
-<meta name="twitter:description" content="不啰嗦了,直接开始. 添加依赖 Logger   orhanobut/Logger Timber  JakeWharton/timber  1234//loggerimplementation &apos;com.orhanobut:logger:2.1.1&apos;//timberimplementation &apos;com.jakewharton.timber:timber:4.6.0&apos; 初始化我放在了我的Appli">
+<meta name="twitter:description" content="不啰嗦了,直接开始. 添加依赖 Logger   orhanobut/Logger Timber  JakeWharton/timber  1234//loggerimplementation &apos;com.orhanobut:logger:2.1.1&apos;//timberimplementation &apos;com.jakewharton.timber:timber:4.6.0&apos;">
 <meta name="twitter:image" content="https://github.com/orhanobut/logger/blob/master/art/logger_output.png">
     
 
@@ -240,6 +240,7 @@
 <p>Timber  <a href="https://github.com/JakeWharton/timber" target="_blank" rel="noopener">JakeWharton/timber</a></p>
 </blockquote>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//logger</span></span><br><span class="line">implementation <span class="string">'com.orhanobut:logger:2.1.1'</span></span><br><span class="line"><span class="comment">//timber</span></span><br><span class="line">implementation <span class="string">'com.jakewharton.timber:timber:4.6.0'</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><p>我放在了我的Application.java中初始化的</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 初始化Timber</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initTimber</span><span class="params">()</span> </span>&#123;</span><br><span class="line">     	<span class="comment">//配置Logger</span></span><br><span class="line">       FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()</span><br><span class="line">               .showThreadInfo(<span class="keyword">true</span>)   </span><br><span class="line">               .methodCount(<span class="number">2</span>)</span><br><span class="line">               .methodOffset(<span class="number">7</span>)</span><br><span class="line">               .tag(<span class="string">"MY_LOG"</span>)</span><br><span class="line">               .build();</span><br><span class="line">     	<span class="comment">//配置Logger在Debug时不打印</span></span><br><span class="line">       Logger.addLogAdapter(<span class="keyword">new</span> AndroidLogAdapter(formatStrategy)&#123;</span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isLoggable</span><span class="params">(<span class="keyword">int</span> priority, String tag)</span> </span>&#123;</span><br><span class="line">               <span class="keyword">return</span> BuildConfig.DEBUG;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br><span class="line">     	<span class="comment">//给Timber一个树...大神这么打比喻的 😆</span></span><br><span class="line">       Timber.plant(<span class="keyword">new</span> Timber.DebugTree()&#123;</span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">log</span><span class="params">(<span class="keyword">int</span> priority, String tag, </span></span></span><br><span class="line"><span class="function"><span class="params">                              @NotNull String message, Throwable t)</span> </span>&#123;</span><br><span class="line">               Logger.log(priority,tag,message,t);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 <p><img src="https://github.com/orhanobut/logger/blob/master/art/logger_output.png" alt="logger"></p>
@@ -267,7 +268,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/02/07/Android项目中使用Timber-Logger日志输出/" data-id="cjjktog9h001rnostovuc8op1" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/02/07/Android项目中使用Timber-Logger日志输出/" data-id="cjjkv6yx2001kxustecav4ago" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -421,7 +422,7 @@
                             <a href="/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(http://www.wangzhumo.com/images/debug.jpg)" alt="RecyclerView中notifyItemRangeChanged无效的BUG" class="thumbnail-image"></span>
     
 </a>
 
@@ -440,7 +441,7 @@
                             <a href="/2018/07/12/ConstraintLayout使用指南-基础的约束/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="ConstraintLayout使用指南-基础的约束" class="thumbnail-image"></span>
     
 </a>
 

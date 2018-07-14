@@ -299,7 +299,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/25/BottomNavigationView使用指南/" data-id="cjjktog9k001unostawj89wpw" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/25/BottomNavigationView使用指南/" data-id="cjjkv6yxk002cxustdwb082s0" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -446,7 +446,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/25/Android-Studio-使用正式签名debug调试/" data-id="cjjktog8e000enostp3wyep0v" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/25/Android-Studio-使用正式签名debug调试/" data-id="cjjkv6yvu0008xust28kafsr4" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -564,58 +564,16 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <p>###1.挣扎的开始<br>各种百度,google,发现国内资料很少,有的也是商业公司提供的sdk,这并不符合我需要,<br>google倒是不少,然而以我的英语水平,望洋兴叹罢了@<br>不发牢骚了:</p>
+            <p><p>###1.挣扎的开始<br>各种百度,google,发现国内资料很少,有的也是商业公司提供的sdk,这并不符合我需要,<br>google倒是不少,然而以我的英语水平,望洋兴叹罢了@</p>
 <blockquote>
 <p>首先你需要了解这些资料<br>1、profile<br> rofile可以理解为一种规范，一个标准的通信协议，它存在于从机中。蓝牙组织规定了一些标准的profile，例如 HID OVER GATT ，防丢器 ，心率计等。每个profile中会包含多个service，每个service代表从机的一种能力。</p>
 <p>2、service<br>service可以理解为一个服务，在ble从机中，通过有多个服务，例如电量信息服务、系统信息服务等，每个service中又包含多个characteristic特征值。每个具体的characteristic特征值才是ble通信的主题。比如当前的电量是80%，所以会通过电量的characteristic特征值存在从机的profile里，这样主机就可以通过这个characteristic来读取80%这个数据</p>
 <p>3、characteristic<br>characteristic特征值，ble主从机的通信均是通过characteristic来实现，可以理解为一个标签，通过这个标签可以获取或者写入想要的内容。</p>
-<p>4、UUID<br>UUID，统一识别码，我们刚才提到的service和characteristic，都需要一个唯一的uuid来标识<br> S: 百度到的,我以一个过来人的身份保证这个很重要</p>
-</blockquote>
-<p>###2.资料,准备<br>资料看这里:</p>
-<ul>
-<li>这也是最重要的资料来源,谷歌SDK的例子里面有的项目<br><img src="http://img.blog.csdn.net/20160710190336812" alt="Android SDK 中的doc文档"></li>
-</ul>
-<ul>
-<li>接上文,说完资料,<blockquote>
-<p>这是一个很好的demo<br>sdk\samples\android-22\connectivity\BluetoothLeGatt</p>
-</blockquote>
-</li>
-</ul>
-<p>该目录下为谷歌提供的demo,我的应用也是在它的基础上改进而成的.<br>由以下部分组成:<br>1.一个服务 BluetoothLeService,主负责与蓝牙设备进行数据交换</p>
-<p>2.两个activity:DeviceControlActivity,DeviceScanActivity<br>    见名知意,一个负责扫描设备,而两外一个与设备进行交互</p>
-<p>3.一个SampleGattAttributes<br>   主要是存储了一些UUID,我对它进行了加强</p>
-<p>###3.BLE设备的使用步骤概况<br>1.首先要说明的一点是,要求Android版本为4.3及其以上<br>  接着确认设备支持<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 支持BLE</span><br><span class="line"> *  check to determine whether BLE is supported on the device</span><br><span class="line"> */</span><br><span class="line">public void isSupported()&#123;</span><br><span class="line">     if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) &#123;</span><br><span class="line">            Toast.makeText(this, &quot;设备不支持BLE功能&quot;, Toast.LENGTH_SHORT).show();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
-<p>2.确认手机支持并打开蓝牙的状态下,你就可以进行设备的搜索了<br>   有两种模式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//第一种</span><br><span class="line">//serviceUuids   指定设备的UUID</span><br><span class="line">//callback       搜索的回调</span><br><span class="line">startLeScan(final UUID[] serviceUuids, final LeScanCallback callback)</span><br><span class="line"></span><br><span class="line">//第二种</span><br><span class="line">//其实就是不传入serviceUuids的,就是说搜索范围内所有蓝牙设备</span><br><span class="line">public boolean startLeScan(LeScanCallback callback) &#123;</span><br><span class="line">     return startLeScan(null, callback);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>3.同时记得停止搜索,当然你也可以一直搜<br>PS：其实我见到的app大部分是不停的搜索，这样的话会有一个广播数据持续刷新的效果,那么很多的距离判断什么的都是通过这种不停搜索的形式来工作的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//mBluetoothAdapter   请自行查看谷歌文档</span><br><span class="line">//mLeScanCallback     这就是上面提过的LeScanCallback的实例</span><br><span class="line">mBluetoothAdapter.stopLeScan(mLeScanCallback);</span><br></pre></td></tr></table></figure></p>
-<p>接着就是在回调中拿到各个设备数据了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 搜索设备回调 </span><br><span class="line"> */</span><br><span class="line">private BluetoothAdapter.LeScanCallback mLeScanCallback =</span><br><span class="line">            new BluetoothAdapter.LeScanCallback() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void onLeScan(final BluetoothDevice device, int rssi, </span><br><span class="line">            byte[] scanRecord) &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<p>这里有几个值得说一下的东西</p>
-<ul>
-<li><strong>1.BluetoothDevice device</strong><br><img src="http://img.blog.csdn.net/20160712000123059" alt="这里写图片描述"><br>  该可以看的很清楚,    device中包含了设备的基本信息               </li>
-</ul>
-<ul>
-<li><strong>2.rssi信号质量,也有人告诉我是质量</strong><br>不过我这次并没有使用到</li>
-</ul>
-<ul>
-<li><strong>3.byte[] scanRecord (重头戏)</strong><br>广播响应包数据<br>一般包括两个部分,我使用的主要是ServiceData域<br><strong>在这里需要注意的是，这两个部分都存在于广播数据，而且并不是两部分都有，有可能是只有一个部分，所以一定要看情设备的硬件规范，因为这涉及到后面解析广播数据</strong></li>
-</ul>
-<p>要知道，我们都是拿byte[]数组中的某些部分对应特定值,一旦对应关系打乱，那么数据解析就没什么正确性可言了<br>这些广播数据都是依据一定的规则指定 的,所以这时候你需要设备厂商的文档来查看对应的数据,以及其结构<br>PS:需要注意的一点是,这些数据都是byte[],你需要将它们转化(一般常用的做法是,先转化为16进制的字符串,而后再进行读取解析)</p>
-<p>###4.读取蓝牙设备内部数据<br>这里涉及到两个重要部分<br>service  以及 characteristic</p>
-<p>一般来说<br> 一个Service  eg: FF01-XXXXXXXXXXX-XXXXX<br> 下面可能有很多的characteristic<br>Marjor : FF16 -XXXXXX<br>Power : FF17 - XXX<br>….一堆的characteristic </p>
-<ul>
-<li><strong>如果需要给指定的项目写入一个数据</strong><br> 条件：<pre><code>1.此特征在哪个Service下，即该service的UUID
-2.该特征的UUID
-3.该特征的写入格式，16进制还是其他的东西
-</code></pre></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//代码片段1</span><br><span class="line">//此方法获取对应特征值的对象BluetoothGattCharacteristic的实体</span><br><span class="line">    public BluetoothGattCharacteristic getCharacteristic(String service,String charact) &#123;</span><br><span class="line">        if (mBluetoothGatt == null) return null;</span><br><span class="line">        if(mBluetoothGatt.getService(UUID.fromString(service))==null)&#123;return null ;&#125;</span><br><span class="line">        return mBluetoothGatt.getService(UUID.fromString(service)).getCharacteristic(UUID.fromString(charact));</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//代码片段2</span><br><span class="line">if(!TextUtils.isEmpty(value))&#123;//输入非空</span><br><span class="line">      byte[] arrayOfByte= new byte[2];//传入数据规定为2个byte</span><br><span class="line">      arrayOfByte[0] = ((byte)Integer.parseInt((value).substring(0, 2), 16));</span><br><span class="line">      arrayOfByte[1] = ((byte)Integer.parseInt((value).substring(2, 4), 16));</span><br><span class="line">      //上面操作，先切，再转为16进制</span><br><span class="line">      characteristic.setValue(arrayOfByte);</span><br><span class="line">      //characteristic实体就是片段1代码获取到的</span><br><span class="line">      gattServer.writeCharacteristic(characteristic);</span><br><span class="line">      //所有的操作都封装在一个service中，gattServer为其实体对象</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//片段3就是服务中的写入方法</span><br><span class="line">/**</span><br><span class="line">   * 写入一个数据</span><br><span class="line">   * @param characteristic</span><br><span class="line">   */</span><br><span class="line">  public void writeCharacteristic(BluetoothGattCharacteristic characteristic) &#123;</span><br><span class="line">      mBluetoothGatt.setCharacteristicNotification(characteristic, true);</span><br><span class="line">      mBluetoothGatt.writeCharacteristic(characteristic);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">//代码片段4   这是回调，</span><br><span class="line">//在连接时就作为参数传入了 mBluetoothGatt = device.connectGatt(this, false, mGattCallback);</span><br><span class="line">private final BluetoothGattCallback mGattCallback = new BluetoothGattCallback() &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) &#123;</span><br><span class="line">            if (newState == BluetoothProfile.STATE_CONNECTED) &#123;            </span><br><span class="line">                Log.e(TAG, &quot;连接至 GATT server.&quot;);</span><br><span class="line">            &#125; else if (newState == BluetoothProfile.STATE_DISCONNECTED) &#123;</span><br><span class="line">                Log.e(TAG, &quot;断开 GATT server.&quot;);             </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public void onServicesDiscovered(BluetoothGatt gatt, int status) &#123;</span><br><span class="line">            if (status == BluetoothGatt.GATT_SUCCESS) &#123;</span><br><span class="line">                Log.e(TAG, &quot;建立连接成功&quot;);              </span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                Log.e(TAG, &quot;连接状态异常: &quot; + status);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) &#123;</span><br><span class="line">            if (status == BluetoothGatt.GATT_SUCCESS) &#123;</span><br><span class="line">                  Log.e(TAG, &quot;写入数据成功&quot;);   </span><br><span class="line">            &#125; </span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic</span><br><span class="line">                characteristic, int status) &#123;</span><br><span class="line">            if (status == BluetoothGatt.GATT_SUCCESS) &#123;</span><br><span class="line">               Log.e(TAG, &quot;读取数据成功&quot;);   </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public void onCharacteristicChanged(BluetoothGatt gatt,</span><br><span class="line">                                            BluetoothGattCharacteristic characteristic) &#123;</span><br><span class="line">            Log.e(TAG, &quot;连接状态发生改变&quot;);      </span><br><span class="line">        &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>PS:<strong>这里的例子是写入，其实读取的操作与此类似，操作完成后在回调里面判断状态以及读取数据即可</strong></p>
-</blockquote>
-
+<p>4、UUID<br>UUID，统一识别码，我们刚才提到的service和characteristic，都需要一个唯一的uuid来标识<br>S: 百度到的,我以一个过来人的身份保证这个很重要</p>
+</blockquote></p>
+            <p class="article-more-link">
+                <a href="/2017/12/25/低功耗蓝牙iBeacon的开发笔记/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -625,7 +583,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/25/低功耗蓝牙iBeacon的开发笔记/" data-id="cjjktogbt005mnosteh42imjz" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/25/低功耗蓝牙iBeacon的开发笔记/" data-id="cjjkv6yz0005nxustajzu1vwh" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -812,7 +770,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/25/Android-Studio-基本设置/" data-id="cjjktog8d000bnostes24wxkr" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/25/Android-Studio-基本设置/" data-id="cjjkv6yvy000bxustd02xrw9d" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -930,58 +888,17 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <p>##建议不要使用Vitamio,各种深坑</p>
+            <p><p>##建议不要使用Vitamio,各种深坑</p>
 <blockquote>
 <p><a href="https://github.com/Bilibili/ijkplayer看看bilibili的开源播放器" target="_blank" rel="noopener">https://github.com/Bilibili/ijkplayer看看bilibili的开源播放器</a></p>
 </blockquote>
 <p>##Vitamio<br>官方:<a href="https://www.vitamio.org/" target="_blank" rel="noopener">https://www.vitamio.org/</a><br>GitHub:<a href="https://github.com/yixia/VitamioBundle" target="_blank" rel="noopener">https://github.com/yixia/VitamioBundle</a></p>
 <blockquote>
 <p><a href="https://www.vitamio.org/" target="_blank" rel="noopener">Vitamio</a> 能够流畅播放720P甚至1080P高清MKV，FLV，MP4，MOV，TS，RMVB等常见格式的视频，支持 MMS, RTSP, RTMP, HLS(m3u8) 等常见的多种视频流媒体协议，包括点播与直播。</p>
-</blockquote>
-<p>###1.下载Vitamio<br>  <img src="http://img.blog.csdn.net/20160408235109325" alt="去官网下载即可"></p>
-<ul>
-<li>地址<a href="https://www.vitamio.org/Download/" target="_blank" rel="noopener">https://www.vitamio.org/Download/</a></li>
-</ul>
-<hr>
-<p>###2.解压并导入Android</p>
-<ul>
-<li><p>找到到文件夹VitamioBundle</p>
-<p><img src="http://img.blog.csdn.net/20160408235743265" alt="VitamioBundle"></p>
-</li>
-<li><p>File &gt; New &gt; New Module<br><img src="http://img.blog.csdn.net/20160409000630784" alt="这里写图片描述"></p>
-</li>
-<li><p>导入完成后是这样的</p>
-<p><img src="http://img.blog.csdn.net/20160409001321974" alt="这里写图片描述"></p>
-</li>
-</ul>
-<p>###3.导入到自己的项目(即不使用Vitamio的libiary,强迫症专属)<br><img src="http://img.blog.csdn.net/20160908231510455" alt="这里写图片描述"></p>
-<p>####A.在自己的目录下建立io.vov.vitamio<br>    并导入所有的类,以及将jniLibs目录拷贝到main目录下,还有相关的资源文件</p>
-<p>####B.在AndroidManifest.xml文件中写入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;activity </span><br><span class="line">android:name=&quot;io.vov.vitamio.activity.InitActivity&quot;             android:configChanges=&quot;orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation&quot;</span><br><span class="line">android:launchMode=&quot;singleTop&quot;</span><br><span class="line">android:theme=&quot;@android:style/Theme.NoTitleBar&quot;</span><br><span class="line">android:windowSoftInputMode=&quot;stateAlwaysHidden&quot;/&gt;</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>并加入相应的权限</p>
-</blockquote>
-<p>####C.在你喜欢的地方初始化Vitamio<br> 开玩笑的,放在activity或者是Application的onCreate中</p>
-<blockquote>
-<p>Vitamio.isInitialized(application.getApplicationContext()); </p>
-</blockquote>
-<hr>
-<p>###3.Vatimio的使用</p>
-<p>####A.界面的搭建<br><img src="http://img.blog.csdn.net/20160908232554310" alt="这里写图片描述"></p>
-<p>可以看到<br>    整个页面主要分上下两层,主要是为了视屏全屏的时候能方便的隐藏整个下面的布局</p>
-<p>####B.使用<br>在此之前为了方便的使用视屏全屏播放,对MediaController(package io.vov.vitamio.widget)做一个小小的改造:<br>添加一个构造:主要用于把视屏,进度条等放到一个View中,便于全屏展示<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//这个全屏的操作可把我难坏了,看到这个真的是为原作者的机智点赞</span><br><span class="line">  public MediaController(Context context,boolean fromXml,View container) &#123;</span><br><span class="line">    super(context);</span><br><span class="line">    initController(context);</span><br><span class="line">    mFromXml = fromXml;</span><br><span class="line">    mRoot = makeControllerView();</span><br><span class="line">    //这个地方的FrameLayout.LayoutpParams是因为布局文件中要把MediaController的视图作为childView加到一个FrameLayout中去</span><br><span class="line">    LayoutParams p = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);</span><br><span class="line">    //想怎样布局MediaController就尽情的发挥这个LayoutParams吧</span><br><span class="line">    p.gravity = Gravity.BOTTOM;</span><br><span class="line">    mRoot.setLayoutParams(p);</span><br><span class="line">    ((FrameLayout)container).addView(mRoot);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
-<p>接着你就可以愉快的玩耍了:<br>在oncreate中调用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">initVitamioView();</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">//初始化控件</span><br><span class="line">private void initVitamioView() &#123;</span><br><span class="line">//VideoView</span><br><span class="line">mVideoView = (VideoView) findViewById(R.id.buffer);</span><br><span class="line">//这个就是包裹整个视屏模块的FrameLayout</span><br><span class="line">fl_controller = (FrameLayout) findViewById(R.id.fl_controller);</span><br><span class="line">//缓冲时出现的进度条</span><br><span class="line">pb = (ProgressBar) findViewById(R.id.probar);</span><br><span class="line">//播放进度,并可以拖动调节视屏播放位置</span><br><span class="line">downloadRateView = (TextView) findViewById(R.id.download_rate);</span><br><span class="line">loadRateView = (TextView) findViewById(R.id.load_rate);</span><br><span class="line">//设置视屏setVideoURI可以缓冲并播放</span><br><span class="line">//setVideoPath()缓冲完再播放</span><br><span class="line">mVideoView.setVideoURI(Uri.parse(TextUtils.isEmpty(path)?defaultPath:path));</span><br><span class="line">//这里使用自定义的那个MediaController构造</span><br><span class="line">mMediaController= new MediaController(this, true, fl_controller);</span><br><span class="line">//这里的监听其实是在MediaController中自己定义的,主要就是全屏的切换按钮</span><br><span class="line">mMediaController.setOnControllerClick(new MediaController.OnControllerClick() &#123;</span><br><span class="line">     @Override</span><br><span class="line">     public void OnClick(int type) &#123;</span><br><span class="line">         if (type == 0) &#123;  //表示点击切换全屏按钮</span><br><span class="line">	          if (isPortrait) &#123;</span><br><span class="line">		          //不是全屏,切换为全屏</span><br><span class="line">	             //代码块1</span><br><span class="line">	           &#125; else &#123;</span><br><span class="line">		          //是全屏,近来就切为原来的大小</span><br><span class="line">	             //代码块2</span><br><span class="line">		       &#125;</span><br><span class="line">          &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">//类似绑定 </span><br><span class="line">mVideoView.setMediaController(mMediaController);</span><br><span class="line">//隐藏控制模块</span><br><span class="line">mMediaController.setVisibility(View.GONE);</span><br><span class="line">mVideoView.requestFocus();</span><br><span class="line">//设置对视屏信息的监听</span><br><span class="line">mVideoView.setOnInfoListener(this);</span><br><span class="line">//视屏缓冲的监听</span><br><span class="line">mVideoView.setOnBufferingUpdateListener(this);</span><br><span class="line">//视屏OK</span><br><span class="line">mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() &#123;</span><br><span class="line">     @Override</span><br><span class="line">     public void onPrepared(MediaPlayer mediaPlayer) &#123;</span><br><span class="line">	     //设置播放速度</span><br><span class="line">         mediaPlayer.setPlaybackSpeed(1.0f);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>补充代码块1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; RelativeLayout.LayoutParams fl_lp = new RelativeLayout.LayoutParams(displayheight, displayWidth);</span><br><span class="line">                        fl_controller.setLayoutParams(fl_lp);</span><br><span class="line">//设置横屏                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);  //这样mVideoView会自己充满全屏</span><br><span class="line">                        mVideoView.setVideoLayout(VideoView.VIDEO_LAYOUT_SCALE, 0);</span><br><span class="line">                        isPortrait = false;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></p>
-<p>代码块2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; RelativeLayout.LayoutParams fl_lp = new RelativeLayout.LayoutParams(</span><br><span class="line">                                LinearLayout.LayoutParams.MATCH_PARENT,</span><br><span class="line">                                DensityUtils.dip2px(ClassRoomActivity.this,200)</span><br><span class="line">                        );</span><br><span class="line">                        fl_controller.setLayoutParams(fl_lp);</span><br><span class="line">                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);</span><br><span class="line">                        isPortrait = true;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> * 横竖屏切换的时候回走这个回调</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">@Override</span><br><span class="line">public void onConfigurationChanged(Configuration newConfig) &#123;</span><br><span class="line">        //屏幕切换时，设置全屏</span><br><span class="line">        if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) &#123;</span><br><span class="line">	        //隐藏下面的布局和标题</span><br><span class="line">            tLBelow.setVisibility(View.GONE);</span><br><span class="line">            mTitlebar.setVisibility(View.GONE);</span><br><span class="line">        &#125;</span><br><span class="line">        if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) &#123;</span><br><span class="line">	         //显示下面的布局和标题</span><br><span class="line">            tLBelow.setVisibility(View.VISIBLE);</span><br><span class="line">            mTitlebar.setVisibility(View.VISIBLE);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        super.onConfigurationChanged(newConfig);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>####C.两个重要的监听(上面已经注册过了)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//缓冲的监听</span><br><span class="line">@Override</span><br><span class="line">    public void onBufferingUpdate(MediaPlayer mp, int percent) &#123;</span><br><span class="line">    //显示缓冲进度</span><br><span class="line">        loadRateView.setText(percent + &quot;%&quot;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">//视屏信息监听</span><br><span class="line">@Override</span><br><span class="line">    public boolean onInfo(MediaPlayer mp, int what, int extra) &#123;</span><br><span class="line">        switch (what) &#123;</span><br><span class="line">        //开始缓冲</span><br><span class="line">            case MediaPlayer.MEDIA_INFO_BUFFERING_START:</span><br><span class="line">                if (mVideoView.isPlaying()) &#123;</span><br><span class="line">                    mVideoView.pause();</span><br><span class="line">                    pb.setVisibility(View.VISIBLE);</span><br><span class="line">                    downloadRateView.setText(&quot;&quot;);</span><br><span class="line">                    loadRateView.setText(&quot;&quot;);</span><br><span class="line">                    downloadRateView.setVisibility(View.VISIBLE);</span><br><span class="line">                    loadRateView.setVisibility(View.VISIBLE);</span><br><span class="line">                &#125;</span><br><span class="line">                break;</span><br><span class="line">                //停止缓冲,这里自动开始播放</span><br><span class="line">            case MediaPlayer.MEDIA_INFO_BUFFERING_END:</span><br><span class="line">                mVideoView.start();</span><br><span class="line">                pb.setVisibility(View.GONE);</span><br><span class="line">                downloadRateView.setVisibility(View.GONE);</span><br><span class="line">                loadRateView.setVisibility(View.GONE);</span><br><span class="line">                break;</span><br><span class="line">            case MediaPlayer.MEDIA_INFO_DOWNLOAD_RATE_CHANGED:</span><br><span class="line">	            //缓冲的...那个啥    change</span><br><span class="line">                downloadRateView.setText(&quot;&quot; + extra + &quot;kb/s&quot; + &quot;  &quot;);</span><br><span class="line">                break;</span><br><span class="line">        &#125;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>###4.就这样<br>   对了,完事记得<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">    protected void onDestroy() &#123;</span><br><span class="line">            mVideoView.stopPlayback();</span><br><span class="line">           super.onDestroy();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
-<p>基本就是这样了,其他的问题自己解决一下就好了…</p>
-
+</blockquote></p>
+            <p class="article-more-link">
+                <a href="/2017/12/25/Android-Studio-导入-Vitamio及横竖屏切换/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -991,7 +908,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/25/Android-Studio-导入-Vitamio及横竖屏切换/" data-id="cjjktog8m000lnostkhmyu7r0" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/25/Android-Studio-导入-Vitamio及横竖屏切换/" data-id="cjjkv6yw7000kxust13h92os5" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1263,7 +1180,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/24/Linux-学习笔记/" data-id="cjjktogav003snostj11p3gx3" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/24/Linux-学习笔记/" data-id="cjjkv6yy90043xustbt8xgqnt" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1408,7 +1325,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/24/Facebook-Stetho——Android开发调试神器/" data-id="cjjktog9x002gnosti0r89hmk" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/24/Facebook-Stetho——Android开发调试神器/" data-id="cjjkv6yxi0029xustuuf7w9nz" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1539,7 +1456,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/23/String-format的参数表/" data-id="cjjktogbf004unostg979mi0d" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/23/String-format的参数表/" data-id="cjjkv6yyn004rxustnb2upz47" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1670,7 +1587,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/23/透明度对照表/" data-id="cjjktogbu005qnostym1sgu2g" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/23/透明度对照表/" data-id="cjjkv6yyy005gxustm5k9cb9c" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1803,7 +1720,7 @@
                             <a href="/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(http://www.wangzhumo.com/images/debug.jpg)" alt="RecyclerView中notifyItemRangeChanged无效的BUG" class="thumbnail-image"></span>
     
 </a>
 
@@ -1822,7 +1739,7 @@
                             <a href="/2018/07/12/ConstraintLayout使用指南-基础的约束/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="ConstraintLayout使用指南-基础的约束" class="thumbnail-image"></span>
     
 </a>
 

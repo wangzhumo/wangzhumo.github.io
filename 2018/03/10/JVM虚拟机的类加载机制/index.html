@@ -5,18 +5,18 @@
     
     <title>JVM虚拟机的类加载机制 | 王诛魔</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="前言关于JVM虚拟机的类加载机制,大概有如下的几个问题  类加载机制是什么? 类加载的流程  类加载机制我们所写的Java代码,最终都是编译成class字节码文件,这些字节码文件描述了各种信息 需要加载到虚拟机中才能使用运行 而虚拟机啊把描述类的数据从Class文件中加载到内存,并且对数据进行校验,转换解析和初始化, 最终形成可以被虚拟机直接使用的Java类型,这就是虚拟机的类加载机制. 类加载机">
+    <meta name="description" content="前言关于JVM虚拟机的类加载机制,大概有如下的几个问题  类加载机制是什么? 类加载的流程">
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM虚拟机的类加载机制">
 <meta property="og:url" content="http://www.wangzhumo.com/2018/03/10/JVM虚拟机的类加载机制/index.html">
 <meta property="og:site_name" content="王诛魔">
-<meta property="og:description" content="前言关于JVM虚拟机的类加载机制,大概有如下的几个问题  类加载机制是什么? 类加载的流程  类加载机制我们所写的Java代码,最终都是编译成class字节码文件,这些字节码文件描述了各种信息 需要加载到虚拟机中才能使用运行 而虚拟机啊把描述类的数据从Class文件中加载到内存,并且对数据进行校验,转换解析和初始化, 最终形成可以被虚拟机直接使用的Java类型,这就是虚拟机的类加载机制. 类加载机">
+<meta property="og:description" content="前言关于JVM虚拟机的类加载机制,大概有如下的几个问题  类加载机制是什么? 类加载的流程">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-07-11T02:33:35.322Z">
+<meta property="og:updated_time" content="2018-07-14T03:40:47.196Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM虚拟机的类加载机制">
-<meta name="twitter:description" content="前言关于JVM虚拟机的类加载机制,大概有如下的几个问题  类加载机制是什么? 类加载的流程  类加载机制我们所写的Java代码,最终都是编译成class字节码文件,这些字节码文件描述了各种信息 需要加载到虚拟机中才能使用运行 而虚拟机啊把描述类的数据从Class文件中加载到内存,并且对数据进行校验,转换解析和初始化, 最终形成可以被虚拟机直接使用的Java类型,这就是虚拟机的类加载机制. 类加载机">
+<meta name="twitter:description" content="前言关于JVM虚拟机的类加载机制,大概有如下的几个问题  类加载机制是什么? 类加载的流程">
     
 
     
@@ -237,6 +237,7 @@
 <li>类加载机制是什么?</li>
 <li>类加载的流程</li>
 </ol>
+<a id="more"></a>
 <h3 id="类加载机制"><a href="#类加载机制" class="headerlink" title="类加载机制"></a>类加载机制</h3><p>我们所写的Java代码,最终都是编译成class字节码文件,这些字节码文件描述了各种信息</p>
 <p>需要加载到虚拟机中才能使用运行</p>
 <p>而虚拟机啊把描述类的数据从Class文件中加载到内存,并且对数据进行校验,转换解析和初始化,</p>
@@ -288,7 +289,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/03/10/JVM虚拟机的类加载机制/" data-id="cjjktogao003anostaxlmi6q3" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/03/10/JVM虚拟机的类加载机制/" data-id="cjjkv6yxy0037xustca2ybfxn" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -442,7 +443,7 @@
                             <a href="/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(http://www.wangzhumo.com/images/debug.jpg)" alt="RecyclerView中notifyItemRangeChanged无效的BUG" class="thumbnail-image"></span>
     
 </a>
 
@@ -461,7 +462,7 @@
                             <a href="/2018/07/12/ConstraintLayout使用指南-基础的约束/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="ConstraintLayout使用指南-基础的约束" class="thumbnail-image"></span>
     
 </a>
 

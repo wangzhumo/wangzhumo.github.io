@@ -5,20 +5,20 @@
     
     <title>低功耗蓝牙iBeacon的开发笔记 | 王诛魔</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="###1.挣扎的开始各种百度,google,发现国内资料很少,有的也是商业公司提供的sdk,这并不符合我需要,google倒是不少,然而以我的英语水平,望洋兴叹罢了@不发牢骚了:  首先你需要了解这些资料1、profile rofile可以理解为一种规范，一个标准的通信协议，它存在于从机中。蓝牙组织规定了一些标准的profile，例如 HID OVER GATT ，防丢器 ，心率计等。每个prof">
+    <meta name="description" content="###1.挣扎的开始各种百度,google,发现国内资料很少,有的也是商业公司提供的sdk,这并不符合我需要,google倒是不少,然而以我的英语水平,望洋兴叹罢了@  首先你需要了解这些资料1、profile rofile可以理解为一种规范，一个标准的通信协议，它存在于从机中。蓝牙组织规定了一些标准的profile，例如 HID OVER GATT ，防丢器 ，心率计等。每个profile中会包">
 <meta name="keywords" content="蓝牙">
 <meta property="og:type" content="article">
 <meta property="og:title" content="低功耗蓝牙iBeacon的开发笔记">
 <meta property="og:url" content="http://www.wangzhumo.com/2017/12/25/低功耗蓝牙iBeacon的开发笔记/index.html">
 <meta property="og:site_name" content="王诛魔">
-<meta property="og:description" content="###1.挣扎的开始各种百度,google,发现国内资料很少,有的也是商业公司提供的sdk,这并不符合我需要,google倒是不少,然而以我的英语水平,望洋兴叹罢了@不发牢骚了:  首先你需要了解这些资料1、profile rofile可以理解为一种规范，一个标准的通信协议，它存在于从机中。蓝牙组织规定了一些标准的profile，例如 HID OVER GATT ，防丢器 ，心率计等。每个prof">
+<meta property="og:description" content="###1.挣扎的开始各种百度,google,发现国内资料很少,有的也是商业公司提供的sdk,这并不符合我需要,google倒是不少,然而以我的英语水平,望洋兴叹罢了@  首先你需要了解这些资料1、profile rofile可以理解为一种规范，一个标准的通信协议，它存在于从机中。蓝牙组织规定了一些标准的profile，例如 HID OVER GATT ，防丢器 ，心率计等。每个profile中会包">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://img.blog.csdn.net/20160710190336812">
 <meta property="og:image" content="http://img.blog.csdn.net/20160712000123059">
-<meta property="og:updated_time" content="2018-03-08T03:22:17.813Z">
+<meta property="og:updated_time" content="2018-07-14T03:34:31.118Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="低功耗蓝牙iBeacon的开发笔记">
-<meta name="twitter:description" content="###1.挣扎的开始各种百度,google,发现国内资料很少,有的也是商业公司提供的sdk,这并不符合我需要,google倒是不少,然而以我的英语水平,望洋兴叹罢了@不发牢骚了:  首先你需要了解这些资料1、profile rofile可以理解为一种规范，一个标准的通信协议，它存在于从机中。蓝牙组织规定了一些标准的profile，例如 HID OVER GATT ，防丢器 ，心率计等。每个prof">
+<meta name="twitter:description" content="###1.挣扎的开始各种百度,google,发现国内资料很少,有的也是商业公司提供的sdk,这并不符合我需要,google倒是不少,然而以我的英语水平,望洋兴叹罢了@  首先你需要了解这些资料1、profile rofile可以理解为一种规范，一个标准的通信协议，它存在于从机中。蓝牙组织规定了一些标准的profile，例如 HID OVER GATT ，防丢器 ，心率计等。每个profile中会包">
 <meta name="twitter:image" content="http://img.blog.csdn.net/20160710190336812">
     
 
@@ -235,13 +235,14 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p>###1.挣扎的开始<br>各种百度,google,发现国内资料很少,有的也是商业公司提供的sdk,这并不符合我需要,<br>google倒是不少,然而以我的英语水平,望洋兴叹罢了@<br>不发牢骚了:</p>
+            <p>###1.挣扎的开始<br>各种百度,google,发现国内资料很少,有的也是商业公司提供的sdk,这并不符合我需要,<br>google倒是不少,然而以我的英语水平,望洋兴叹罢了@</p>
 <blockquote>
 <p>首先你需要了解这些资料<br>1、profile<br> rofile可以理解为一种规范，一个标准的通信协议，它存在于从机中。蓝牙组织规定了一些标准的profile，例如 HID OVER GATT ，防丢器 ，心率计等。每个profile中会包含多个service，每个service代表从机的一种能力。</p>
 <p>2、service<br>service可以理解为一个服务，在ble从机中，通过有多个服务，例如电量信息服务、系统信息服务等，每个service中又包含多个characteristic特征值。每个具体的characteristic特征值才是ble通信的主题。比如当前的电量是80%，所以会通过电量的characteristic特征值存在从机的profile里，这样主机就可以通过这个characteristic来读取80%这个数据</p>
 <p>3、characteristic<br>characteristic特征值，ble主从机的通信均是通过characteristic来实现，可以理解为一个标签，通过这个标签可以获取或者写入想要的内容。</p>
-<p>4、UUID<br>UUID，统一识别码，我们刚才提到的service和characteristic，都需要一个唯一的uuid来标识<br> S: 百度到的,我以一个过来人的身份保证这个很重要</p>
+<p>4、UUID<br>UUID，统一识别码，我们刚才提到的service和characteristic，都需要一个唯一的uuid来标识<br>S: 百度到的,我以一个过来人的身份保证这个很重要</p>
 </blockquote>
+<a id="more"></a>
 <p>###2.资料,准备<br>资料看这里:</p>
 <ul>
 <li>这也是最重要的资料来源,谷歌SDK的例子里面有的项目<br><img src="http://img.blog.csdn.net/20160710190336812" alt="Android SDK 中的doc文档"></li>
@@ -295,7 +296,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/25/低功耗蓝牙iBeacon的开发笔记/" data-id="cjjktogbt005mnosteh42imjz" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/25/低功耗蓝牙iBeacon的开发笔记/" data-id="cjjkv6yz0005nxustajzu1vwh" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -449,7 +450,7 @@
                             <a href="/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(http://www.wangzhumo.com/images/debug.jpg)" alt="RecyclerView中notifyItemRangeChanged无效的BUG" class="thumbnail-image"></span>
     
 </a>
 
@@ -468,7 +469,7 @@
                             <a href="/2018/07/12/ConstraintLayout使用指南-基础的约束/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="ConstraintLayout使用指南-基础的约束" class="thumbnail-image"></span>
     
 </a>
 

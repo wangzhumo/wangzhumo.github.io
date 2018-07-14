@@ -246,7 +246,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/03/05/ConfigChanges的属性值/" data-id="cjjktog9r0025nostq20igncb" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/03/05/ConfigChanges的属性值/" data-id="cjjkv6yxh0025xustuo3uodjg" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -364,105 +364,12 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>做Android开发好些年了,这些基础的知识,完完整整的在博客上写一次.</p>
+            <p><h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>做Android开发好些年了,这些基础的知识,完完整整的在博客上写一次.</p>
 <h4 id="Activity生命周期"><a href="#Activity生命周期" class="headerlink" title="Activity生命周期"></a>Activity生命周期</h4><p>必不可少的一张图,来自Google Android developer 的文档上</p>
-<p><img src="/images/activity_lifecycle.png" alt="activity_liferycle"></p>
-<h5 id="回调方法简述"><a href="#回调方法简述" class="headerlink" title="回调方法简述"></a>回调方法简述</h5><ul>
-<li><p>onCreate()  </p>
-<p>当Activity创建时,会回调该方法,常用于初始化View 或其他的一些功能的初始化</p>
-</li>
-<li><p>onStart()</p>
-<p>Activity已经初始化完毕,此时的页面是可见状态,则回调onStart();方法</p>
-<p>Activity启动：onCreate() -&gt; onStart() -&gt; onResume()</p>
-</li>
-<li><p>onResume()</p>
-<p>当Activity可见,并且获得焦点,可以与用户交互时回调</p>
-<p>在我们处理一些视屏操作,或者是Fragment懒加载等都可以用到</p>
-</li>
-<li><p>onPause()</p>
-<p>当调用onPause()时,说明Activity被阻挡,部分UI已经不可见了,但是Activity的UI并没有完全消失.</p>
-</li>
-<li><p>onStop()</p>
-<p>当Activity完全不可见,且到了后台之后,如果系统内存不足,系统可能会杀死当前Activity</p>
-<p>在这个方法中可以取消一些动画效果等</p>
-</li>
-<li><p>onDestory()</p>
-<p>Activity退出,销毁</p>
-<p>常用于销毁,回收资源</p>
-</li>
-</ul>
-<h5 id="经典场景"><a href="#经典场景" class="headerlink" title="经典场景"></a>经典场景</h5><p>1.正常启动</p>
-<p>系统调用onCreate方法 , 然后调用onStart() , 最后调用 onResume() ,用户可操作.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">E/MainActivity: ---- onCreate ----</span><br><span class="line">E/MainActivity: ---- onStart ----</span><br><span class="line">E/MainActivity: ---- onResume ----</span><br></pre></td></tr></table></figure>
-<p>2.正常退出</p>
-<p>Activity先失去焦点不可交互</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">E/MainActivity: ---- onPause ----</span><br><span class="line">E/MainActivity: ---- onStop ----</span><br><span class="line">E/MainActivity: ---- onDestroy ----</span><br></pre></td></tr></table></figure>
-<p>2.弹出Dialog</p>
-<p>MainActivity什么log也没有打印,说明不对Activity造成影响</p>
-<p>3.跳转一个透明的Activity页面(1像素的同理)</p>
-<p>MainActivity只调用了onPause()  因为MainActivity的UI被遮挡了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">E/MainActivity: ---- onPause ----</span><br></pre></td></tr></table></figure>
-<p>4.从被遮挡状态恢复</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">E/MainActivity: ---- onResume ----</span><br></pre></td></tr></table></figure>
-<p>6.锁屏</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">E/MainActivity: ---- onPause ----</span><br><span class="line">E/MainActivity: ---- onStop ----</span><br></pre></td></tr></table></figure>
-<p>此时,MainActivity已经在后台了.</p>
-<p>7.从锁屏恢复</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">E/MainActivity: ---- onStart ----</span><br><span class="line">E/MainActivity: ---- onResume ----</span><br></pre></td></tr></table></figure>
-<p>可以发现,不仅仅走了onResume() ,还走了一次onStart()</p>
-<p>8.横竖屏切换</p>
-<ul>
-<li><p>正常切换</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">E/MainActivity: ---- onPause ----</span><br><span class="line">E/MainActivity: ---- onStop ----</span><br><span class="line">E/MainActivity: ---- onDestroy ----</span><br><span class="line"></span><br><span class="line">E/MainActivity: ---- onCreate ----</span><br><span class="line">E/MainActivity: ---- onStart ----</span><br><span class="line">E/MainActivity: ---- onResume ----</span><br><span class="line"></span><br><span class="line">如果你什么都不设置,直接切换是这样的.</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>保留Activity的切换</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">我在manifest.xml文件中,添加了</span><br><span class="line"></span><br><span class="line">&lt;activity</span><br><span class="line">	android:name=&quot;.MainActivity&quot;</span><br><span class="line">	android:configChanges=&quot;orientation|screenSize&quot;&gt;</span><br><span class="line">	&lt;intent-filter&gt;</span><br><span class="line">		&lt;action android:name=&quot;android.intent.action.MAIN&quot; /&gt;</span><br><span class="line">	&lt;category android:name=&quot;android.intent.category.LAUNCHER&quot; /&gt;</span><br><span class="line">&lt;/intent-filter&gt;</span><br><span class="line">&lt;/activity&gt;</span><br></pre></td></tr></table></figure>
-<p>此时:</p>
-<p>Activity不会被销毁,从而重新创建,而是调用onConfigurationChanged</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">  public void onConfigurationChanged(Configuration newConfig) &#123;</span><br><span class="line">     super.onConfigurationChanged(newConfig);</span><br><span class="line">     //do somethings</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>​</p>
-</li>
-</ul>
-<h4 id="Fragment生命周期"><a href="#Fragment生命周期" class="headerlink" title="Fragment生命周期"></a>Fragment生命周期</h4><p>惯例,如图:</p>
-<p><img src="/images/fragment_lifercycle.png" alt="fragment_lifecycle"></p>
-<h5 id="回调方法简述-1"><a href="#回调方法简述-1" class="headerlink" title="回调方法简述"></a>回调方法简述</h5><p>其中onAttach()  onCreateView() onActivityCreated()  onDestroy() onDetach() 和Activity的不一致</p>
-<ul>
-<li><p>onAttach()</p>
-<p>Fragment与它所依赖的Activity建立关联</p>
-</li>
-<li><p>onCreateView()</p>
-<p>这里是给Fragment创建视图用的,在onCreate()中初始化Fragment,但是视图等还是没有加载上去的</p>
-</li>
-<li><p>onActivityCreated()</p>
-<p>如果调用该方法,说明Fragment依赖的Activity中onCreate()已经执行完毕</p>
-</li>
-<li><p>onDestroyView()</p>
-<p>Fragment中的布局销毁,移除</p>
-<p>要注意的是,此时Fragment与它所依赖的Activity还是关联的</p>
-</li>
-<li><p>onDestroy()</p>
-<p>此时,Fragment被销毁</p>
-</li>
-<li><p>onDetach()</p>
-<p>解除与Activity的关联</p>
-</li>
-</ul>
-<p>PS: Fragment中的onResume()并不十分准确,所以如果要做懒加载,要判断fragment不能使用onResume判断</p>
-<h5 id="经典场景-1"><a href="#经典场景-1" class="headerlink" title="经典场景"></a>经典场景</h5><p>1.正常启动</p>
-<p>真的是超级多啊</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">E/BlankFragment: ---- onAttach ----   			关联Activity</span><br><span class="line">E/BlankFragment: ---- onCreate ----    			Fragment初始化</span><br><span class="line">E/BlankFragment: ---- onCreateView ----			创建Fragment的布局</span><br><span class="line">E/BlankFragment: ---- onViewCreated ----		onCreateView执行完后被触发</span><br><span class="line">E/BlankFragment: ---- onActivityCreated ----	关联的Activity OnCreate()执行完毕后触发</span><br><span class="line">E/BlankFragment: ---- onStart ----				Fragment可见</span><br><span class="line">E/BlankFragment: ---- onResume ----				Fragment可交互,一般不使用它来判断</span><br></pre></td></tr></table></figure>
-<p>2.正常退出(或者是它关联的Activity被销毁了)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">E/BlankFragment: ---- onPause ----</span><br><span class="line">E/BlankFragment: ---- onStop ----</span><br><span class="line">E/BlankFragment: ---- onDestroyView ----</span><br><span class="line">E/BlankFragment: ---- onDestroy ----</span><br><span class="line">E/BlankFragment: ---- onDetach ----</span><br></pre></td></tr></table></figure>
-<p>3.进入后台</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">E/BlankFragment: ---- onPause ----</span><br><span class="line">E/BlankFragment: ---- onStop ----</span><br></pre></td></tr></table></figure>
-<p>4.从锁屏到解锁</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">E/BlankFragment: ---- onPause ----</span><br><span class="line">E/BlankFragment: ---- onSaveInstanceState ----</span><br><span class="line">E/BlankFragment: ---- onStop ----</span><br><span class="line"></span><br><span class="line">E/BlankFragment: ---- onStart ----</span><br><span class="line">E/BlankFragment: ---- onResume ----</span><br></pre></td></tr></table></figure>
-<p>5.切换到OtherFragment</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">E/BlankFragment: ---- onPause ----</span><br><span class="line">E/BlankFragment: ---- onStop ----</span><br><span class="line">E/BlankFragment: ---- onDestroyView ----</span><br></pre></td></tr></table></figure>
-<p>6.从OtherFragment切换回本Fragment</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">E/BlankFragment: ---- onCreateView ----</span><br><span class="line">E/BlankFragment: ---- onActivityCreated ----</span><br><span class="line">E/BlankFragment: ---- onStart ----   </span><br><span class="line">E/BlankFragment: ---- onResume ----</span><br></pre></td></tr></table></figure>
-
+<p><img src="/images/activity_lifecycle.png" alt="activity_liferycle"></p></p>
+            <p class="article-more-link">
+                <a href="/2018/03/05/Activity与Fragment的生命周期/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -472,7 +379,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/03/05/Activity与Fragment的生命周期/" data-id="cjjktog8b0009nostpvhv14ea" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/03/05/Activity与Fragment的生命周期/" data-id="cjjkv6yvx000axustko228463" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -619,7 +526,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/02/28/Flutter安装指南MAC版/" data-id="cjjktoga3002nnostny88xxjg" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/02/28/Flutter安装指南MAC版/" data-id="cjjkv6yxq002jxusttvt3vafd" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -737,26 +644,13 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <h4 id="初识单元测试"><a href="#初识单元测试" class="headerlink" title="初识单元测试"></a>初识单元测试</h4><p>当项目越来越大的时候,打包 &gt; 测试 &gt; 改代码 &gt; 打包 &gt; 测试 ….这样的流程既费时也费力.</p>
+            <p><h4 id="初识单元测试"><a href="#初识单元测试" class="headerlink" title="初识单元测试"></a>初识单元测试</h4><p>当项目越来越大的时候,打包 &gt; 测试 &gt; 改代码 &gt; 打包 &gt; 测试 ….这样的流程既费时也费力.</p>
 <p>所以,了解一下单元测试,看看是否能够解决这个问题.</p>
 <p>(平时太懒了,就没正经的了解过Android这边的单元测试,没有一个确切的概念)</p>
-<p>那么,我学习单元测试的原因竟然是 <strong>因为我懒</strong></p>
-<p>当我们建立一个项目的时候,Android Studio总会去自动导入一个包</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">testImplementation &apos;junit:junit:4.12&apos;</span><br></pre></td></tr></table></figure>
-<p>这个就是传说中的   Junit 了,这玩意针对Java的,所以不涉及到Android部分的测试可以使用</p>
-<p>跟着介绍也打了一个例子:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在commonlib中写了一个Calculator,里面简单的加法</span></span><br><span class="line"><span class="keyword">package</span> com.wangzhumo.app.commonlib.utils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Calculator</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> a + b;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">verity</span><span class="params">(String phone)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (phone == <span class="keyword">null</span> || phone.isEmpty()) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"phone cannot be empty"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> phone;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//在主项目中</span></span><br><span class="line"><span class="comment">//test目录下</span></span><br><span class="line"><span class="keyword">package</span> com.wangzhumo.app.test;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CalculatorTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    Calculator calculator;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Before</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initCalculator</span><span class="params">()</span></span>&#123;</span><br><span class="line">        calculator = <span class="keyword">new</span> Calculator();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testCalculator</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="keyword">int</span> sum = calculator.add(<span class="number">1</span>,<span class="number">5</span>);</span><br><span class="line">        Assert.assertEquals(<span class="number">6</span>,sum);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 加入提示信息</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testCalculatorWithMessage</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="keyword">int</span> sum = calculator.add(<span class="number">1</span>,<span class="number">5</span>);</span><br><span class="line">        <span class="comment">//assertEquals 方法前面加一个 string 当抛出异常的时候会输出这个message</span></span><br><span class="line">        <span class="comment">//可以让我们更清楚的明白是什么问题</span></span><br><span class="line">        Assert.assertEquals(<span class="string">"你的数学太烂了"</span>,<span class="number">5</span>,sum);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 如果抛出IllegalArgumentException异常才算通过</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span>(expected = IllegalArgumentException.class)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testVerity</span><span class="params">()</span></span>&#123;</span><br><span class="line">        calculator.verity(<span class="string">""</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>然后选中方法直接执行比如 : testCalculatorWithMessage()</p>
-<p>选中Run ‘testCalculatorWithMessage()’ 就可以看到输出 (控制台中  Run 面板)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">java.lang.AssertionError: 你的数学太烂了 </span><br><span class="line">Expected :5</span><br><span class="line">Actual   :6</span><br><span class="line"> &lt;Click to see difference&gt;</span><br></pre></td></tr></table></figure>
-<h4 id="Android-中的单元测试"><a href="#Android-中的单元测试" class="headerlink" title="Android 中的单元测试"></a>Android 中的单元测试</h4><p>上面简单的使用 Junit 就可以测试Java中的方法,但是与我的需求并不符合,所以继续看</p>
-<p>使用<strong>robolectric</strong></p>
-<blockquote>
-<p><a href="https://github.com/robolectric/robolectric" target="_blank" rel="noopener">https://github.com/robolectric/robolectric</a></p>
-<p><a href="http://robolectric.org/" target="_blank" rel="noopener">http://robolectric.org</a></p>
-</blockquote>
-
+<p>那么,我学习单元测试的原因竟然是 <strong>因为我懒</strong></p></p>
+            <p class="article-more-link">
+                <a href="/2018/02/26/Android-单元测试-一/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -766,7 +660,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/02/26/Android-单元测试-一/" data-id="cjjktog8o000onostfyzaxmd4" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/02/26/Android-单元测试-一/" data-id="cjjkv6yw1000fxusttx7ln1jw" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -884,46 +778,14 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <blockquote>
+            <p><blockquote>
 <p>Google 官方文档</p>
 <p><a href="https://developer.android.com/studio/write/tool-attributes.html#toolssample_resources" target="_blank" rel="noopener">https://developer.android.com/studio/write/tool-attributes.html#toolssample_resources</a></p>
 </blockquote>
-<p>他所能达到的效果就是,提供给你一些数据,并直接在 Preview 或者 Design面板中查看样式</p>
-<h4 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h4><p>不如放一个图来的直观</p>
-<p>item中使用 sample资源</p>
-<p><img src="/images/tools_item.png" alt="item"></p>
-<p>将item加入到list中查看效果</p>
-<p><img src="/images/tools_list.png" alt="list"></p>
-<h4 id="准备使用tools"><a href="#准备使用tools" class="headerlink" title="准备使用tools"></a>准备使用tools</h4><h5 id="Android-Studio"><a href="#Android-Studio" class="headerlink" title="Android Studio"></a>Android Studio</h5><p>注意要使用Android Studio 3.0 + 的版本</p>
-<h5 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h5><p><code>xmlns:tools=&quot;http://schemas.android.com/tools&quot;</code></p>
-<p>然后就可以使用tools的相关属性了</p>
-<p>在google文档中我们可以看到有很多其他可用的,具体使用效果请自行查阅文档.</p>
-<p>如:</p>
-<p><strong>context</strong>   <strong>showIn</strong>  <strong>layout</strong>   <strong>listitem</strong>   <strong>layoutManager</strong>     <strong>itemCount</strong></p>
-<p>使用方式为:</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">layout</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:tools</span>=<span class="string">"http://schemas.android.com/tools"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">RelativeLayout</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">tools:context</span>=<span class="string">"com.wangzhumo.app.tips.page.NearbyFragment"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">com.jcodecraeer.xrecyclerview.XRecyclerView</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">"@+id/recycleview"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">tools:layoutManager</span>=<span class="string">"GridLayoutManager"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">tools:itemCount</span>=<span class="string">"5"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">tools:spanCount</span>=<span class="string">"2"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">tools:listitem</span>=<span class="string">"@layout/nearby_list_item"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">com.jcodecraeer.xrecyclerview.XRecyclerView</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">layout</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h4 id="可用资源"><a href="#可用资源" class="headerlink" title="可用资源"></a>可用资源</h4><h5 id="google已提供的资源"><a href="#google已提供的资源" class="headerlink" title="google已提供的资源"></a>google已提供的资源</h5><p><img src="/images/tools_google.png" alt="google"></p>
-<p>这些资源可以在xml中直接使用,也可以在自定义的资源中使用</p>
-<p>使用方式为:</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 这里面的资源在</span></span><br><span class="line"><span class="comment">Android Studio/Applications/Android Studio.app/Contents/plugins/android/lib/sampleData/backgrounds/scenic--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ImageView</span></span></span><br><span class="line"><span class="tag">    <span class="attr">...</span></span></span><br><span class="line"><span class="tag">    <span class="attr">tools:src</span>=<span class="string">"@tools:sample/backgrounds/scenic"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ImageView</span>&gt;</span>    </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 这个是一段假文章 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">TextView</span></span></span><br><span class="line"><span class="tag">    <span class="attr">...</span>      </span></span><br><span class="line"><span class="tag">    <span class="attr">tools:text</span>=<span class="string">"@tools:sample/lorem/random"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">TextView</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h5 id="自定义的资源"><a href="#自定义的资源" class="headerlink" title="自定义的资源"></a>自定义的资源</h5><p><img src="/images/tools_new.png" alt="new"></p>
-<p>创建一个 sampledata 文件夹</p>
-<p><img src="/images/tools_files.png" alt="file"></p>
-<ul>
-<li><p><code>sampledata/images</code> 文件中都是些图片资源</p>
-</li>
-<li><p><code>description</code>文件中是描述性文字, 注意<strong>每一行为一项个元素</strong></p>
-</li>
-<li><p><code>hotels</code> 也是一些文字,不过是一些酒店名字</p>
-</li>
-<li><p><code>hotel.json</code></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"data"</span>:[</span><br><span class="line">    &#123;  </span><br><span class="line">      "name":"@sample/hotels",    //这里使用的是自己定义的  hotels 文件中的字段</span><br><span class="line">      "img":"@tools:sample/backgrounds/scenic",</span><br><span class="line">      "desc":"@sample/description"   //这里使用的是自己定义的  description 文件中的字段</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"name"</span>:<span class="string">"@sample/hotels"</span>,</span><br><span class="line">      "img":"@tools:sample/backgrounds/scenic",  //这里的就是自带的资源了</span><br><span class="line">      "desc":"@sample/description"</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"name"</span>:<span class="string">"@sample/hotels"</span>,</span><br><span class="line">      "img":"@sample/images",  //这种就是/images 文件中的资源</span><br><span class="line">      "desc":"@sample/description"</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"name"</span>:<span class="string">"@sample/hotels"</span>,</span><br><span class="line">      <span class="attr">"img"</span>:<span class="string">"@tools:sample/backgrounds/scenic"</span>,</span><br><span class="line">      <span class="attr">"desc"</span>:<span class="string">"@sample/description"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"name"</span>:<span class="string">"@sample/hotels"</span>,</span><br><span class="line">      <span class="attr">"img"</span>:<span class="string">"@tools:sample/backgrounds/scenic"</span>,</span><br><span class="line">      <span class="attr">"desc"</span>:<span class="string">"@sample/description"</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>使用方式为:</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">TextView</span></span></span><br><span class="line"><span class="tag">	<span class="attr">...</span></span></span><br><span class="line"><span class="tag">    <span class="attr">tools:text</span>=<span class="string">"@sample/hotels"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">ImageView</span></span></span><br><span class="line"><span class="tag">	<span class="attr">...</span></span></span><br><span class="line"><span class="tag">    <span class="attr">tools:src</span>=<span class="string">"@sample/images"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-
+<p>他所能达到的效果就是,提供给你一些数据,并直接在 Preview 或者 Design面板中查看样式</p></p>
+            <p class="article-more-link">
+                <a href="/2018/02/26/Android-Studio-中使用tools-sample/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -933,7 +795,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/02/26/Android-Studio-中使用tools-sample/" data-id="cjjktog7q0001nosts1kp0jo8" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/02/26/Android-Studio-中使用tools-sample/" data-id="cjjkv6yvn0004xust7eyhdqw8" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1051,31 +913,15 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <p>不啰嗦了,直接开始.</p>
+            <p><p>不啰嗦了,直接开始.</p>
 <h4 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h4><blockquote>
 <p>Logger   <a href="https://github.com/orhanobut/logger" target="_blank" rel="noopener">orhanobut/Logger</a></p>
 <p>Timber  <a href="https://github.com/JakeWharton/timber" target="_blank" rel="noopener">JakeWharton/timber</a></p>
 </blockquote>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//logger</span></span><br><span class="line">implementation <span class="string">'com.orhanobut:logger:2.1.1'</span></span><br><span class="line"><span class="comment">//timber</span></span><br><span class="line">implementation <span class="string">'com.jakewharton.timber:timber:4.6.0'</span></span><br></pre></td></tr></table></figure>
-<h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><p>我放在了我的Application.java中初始化的</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 初始化Timber</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initTimber</span><span class="params">()</span> </span>&#123;</span><br><span class="line">     	<span class="comment">//配置Logger</span></span><br><span class="line">       FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()</span><br><span class="line">               .showThreadInfo(<span class="keyword">true</span>)   </span><br><span class="line">               .methodCount(<span class="number">2</span>)</span><br><span class="line">               .methodOffset(<span class="number">7</span>)</span><br><span class="line">               .tag(<span class="string">"MY_LOG"</span>)</span><br><span class="line">               .build();</span><br><span class="line">     	<span class="comment">//配置Logger在Debug时不打印</span></span><br><span class="line">       Logger.addLogAdapter(<span class="keyword">new</span> AndroidLogAdapter(formatStrategy)&#123;</span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isLoggable</span><span class="params">(<span class="keyword">int</span> priority, String tag)</span> </span>&#123;</span><br><span class="line">               <span class="keyword">return</span> BuildConfig.DEBUG;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br><span class="line">     	<span class="comment">//给Timber一个树...大神这么打比喻的 😆</span></span><br><span class="line">       Timber.plant(<span class="keyword">new</span> Timber.DebugTree()&#123;</span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">log</span><span class="params">(<span class="keyword">int</span> priority, String tag, </span></span></span><br><span class="line"><span class="function"><span class="params">                              @NotNull String message, Throwable t)</span> </span>&#123;</span><br><span class="line">               Logger.log(priority,tag,message,t);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://github.com/orhanobut/logger/blob/master/art/logger_output.png" alt="logger"></p>
-<p>其中:</p>
-<p><code>showThreadInfo(true)</code>  是否显示ThreadInfo</p>
-<p><code>methodCount(2)</code>        日志输出时显示几行</p>
-<p><code>methodOffset(7)</code>      方法偏移量,默认是5,这个自己调大,调小看看就明白了</p>
-<p><code>tag(&quot;MY_LOG&quot;)</code>          自定义的Tag,默认值是PRETTY_LOGGER</p>
-<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Timber.e(<span class="string">"下载状态发生改变 = %s"</span>, downLoadInfo.status )</span><br><span class="line">Timber.e(<span class="string">"下载进度 = %d"</span>, mBindingView.progressBar.progress )</span><br></pre></td></tr></table></figure>
-<p>logger负责生成message的方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> String <span class="title">createMessage</span><span class="params">(String message, Object... args)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> args == <span class="keyword">null</span> || args.length == <span class="number">0</span> ? message : String.format(message, args);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>String.format(message, args)</code>这就赋予了我们在写信息的时候使用占位符.记得要符合format的格式哦</p>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>其实按我现在的需求,Logger完全符合我,为什么加上Timber那?</p>
-<p>Timber可以做到分发,到时候我可以加上 DiskFileTree  …  什么的,方便后期有变化的时候修改</p>
-<p>然而,我在Logger里发现了一个类</p>
-<p><code>com.orhanobut.logger.DiskLogAdapter</code></p>
-<p>原来它已经支持写到本地了.. 宝宝心里苦</p>
-
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//logger</span></span><br><span class="line">implementation <span class="string">'com.orhanobut:logger:2.1.1'</span></span><br><span class="line"><span class="comment">//timber</span></span><br><span class="line">implementation <span class="string">'com.jakewharton.timber:timber:4.6.0'</span></span><br></pre></td></tr></table></figure></p>
+            <p class="article-more-link">
+                <a href="/2018/02/07/Android项目中使用Timber-Logger日志输出/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -1085,7 +931,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/02/07/Android项目中使用Timber-Logger日志输出/" data-id="cjjktog9h001rnostovuc8op1" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/02/07/Android项目中使用Timber-Logger日志输出/" data-id="cjjkv6yx2001kxustecav4ago" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1308,7 +1154,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/02/05/Jenkins搭建Android自动打包/" data-id="cjjktogar003hnostqxokerfz" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/02/05/Jenkins搭建Android自动打包/" data-id="cjjkv6yy2003ixustsv7rffnt" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1744,7 +1590,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/02/04/Java中String-format-的使用指北/" data-id="cjjktogau003pnostfzws0ugp" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/02/04/Java中String-format-的使用指北/" data-id="cjjkv6yxz003axustooliarpx" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1916,7 +1762,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/01/17/Room-AppDatabase-Impl-does-not-exist的异常解决/" data-id="cjjktogbe004qnost43jkl7em" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/01/17/Room-AppDatabase-Impl-does-not-exist的异常解决/" data-id="cjjkv6yyg004dxustknd1odv5" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2029,19 +1875,12 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <p>之前的文章中给项目中加入了Https,此时使用charles珠宝就是一堆乱码,</p>
-<p>但是我们还需要常常使用Charles,调试接口,查找问题等.</p>
-<h4 id="导出证书"><a href="#导出证书" class="headerlink" title="导出证书"></a>导出证书</h4><p>1.打开Charles</p>
-<p>2.Help -&gt; SSL Proxying -&gt; Save Charles Root Certificate…</p>
-<p>3.保存到~/Downloads/charles-ssl-proxying-certificate.pem</p>
-<h4 id="安装证书到设备"><a href="#安装证书到设备" class="headerlink" title="安装证书到设备"></a>安装证书到设备</h4><p>1.把证书推送到设备</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb push charles-ssl-proxying-certificate.pem /sdcard/Download/</span><br><span class="line">charles-ssl-proxying-certificate.pem: 1 file pushed. 0.1 MB/s (1921 bytes in 0.012s)</span><br></pre></td></tr></table></figure>
-<p>2.安装证书</p>
-<p>设置 -&gt; 安全 -&gt; 设备管理与凭证 -&gt; 从存储安装 -&gt; charles-ssl-proxying-certificate.pem’</p>
-<h4 id="设置Charles"><a href="#设置Charles" class="headerlink" title="设置Charles"></a>设置Charles</h4><p>1.Proxy -&gt; SSL Proxying Settings</p>
-<p>2.打开手机,开始请求</p>
-
+            <p><p>之前的文章中给项目中加入了Https,此时使用charles抓包就是一堆乱码,</p>
+<p>但是我们还需要常常使用Charles,调试接口,查找问题等,所以就要让Charles作为一个中间人,帮我们接收转发请求</p>
+<p>以达到抓包的效果,其实此时已经完全是Charles与服务器之间的事了.</p></p>
+            <p class="article-more-link">
+                <a href="/2018/01/11/使用Charles抓Https的数据请求/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -2051,7 +1890,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/01/11/使用Charles抓Https的数据请求/" data-id="cjjktogbn005bnost8ugc8fd0" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/01/11/使用Charles抓Https的数据请求/" data-id="cjjkv6yyt0055xustpbrciaic" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2184,7 +2023,7 @@
                             <a href="/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(http://www.wangzhumo.com/images/debug.jpg)" alt="RecyclerView中notifyItemRangeChanged无效的BUG" class="thumbnail-image"></span>
     
 </a>
 
@@ -2203,7 +2042,7 @@
                             <a href="/2018/07/12/ConstraintLayout使用指南-基础的约束/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="ConstraintLayout使用指南-基础的约束" class="thumbnail-image"></span>
     
 </a>
 

@@ -5,21 +5,21 @@
     
     <title>ServiceLoader 与 责任链设计模式 | 王诛魔</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="前因最近在做人脸识别的一些东西 主要是使用百度的SDK来完成采集, 识别. 这个功能是使用百度云的Api来对人脸进行分析,拿到年龄 颜值 等等信息 第一版设计稿:  那我就直接把请求到的数据展示了一下,然而 第二版设计稿:  这一版就是需要把拿到的数值按照区间来展示成文字描述 那么,应该就是各种switch    if else  …. 本来也是做Demo,所以我们可以高点其他的东西,于是我就想起">
+    <meta name="description" content="前因最近在做人脸识别的一些东西 主要是使用百度的SDK来完成采集, 识别. 这个功能是使用百度云的Api来对人脸进行分析,拿到年龄 颜值 等等信息">
 <meta name="keywords" content="Java,设计模式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ServiceLoader 与 责任链设计模式">
 <meta property="og:url" content="http://www.wangzhumo.com/2018/06/26/ServiceLoader-与-责任链设计模式/index.html">
 <meta property="og:site_name" content="王诛魔">
-<meta property="og:description" content="前因最近在做人脸识别的一些东西 主要是使用百度的SDK来完成采集, 识别. 这个功能是使用百度云的Api来对人脸进行分析,拿到年龄 颜值 等等信息 第一版设计稿:  那我就直接把请求到的数据展示了一下,然而 第二版设计稿:  这一版就是需要把拿到的数值按照区间来展示成文字描述 那么,应该就是各种switch    if else  …. 本来也是做Demo,所以我们可以高点其他的东西,于是我就想起">
+<meta property="og:description" content="前因最近在做人脸识别的一些东西 主要是使用百度的SDK来完成采集, 识别. 这个功能是使用百度云的Api来对人脸进行分析,拿到年龄 颜值 等等信息">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.wangzhumo.com/2018/06/26/images/face_value.png">
 <meta property="og:image" content="http://www.wangzhumo.com/2018/06/26/images/face_text.png">
 <meta property="og:image" content="http://www.wangzhumo.com/2018/06/26/images/service_info.png">
-<meta property="og:updated_time" content="2018-07-11T08:04:20.114Z">
+<meta property="og:updated_time" content="2018-07-14T03:41:18.067Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ServiceLoader 与 责任链设计模式">
-<meta name="twitter:description" content="前因最近在做人脸识别的一些东西 主要是使用百度的SDK来完成采集, 识别. 这个功能是使用百度云的Api来对人脸进行分析,拿到年龄 颜值 等等信息 第一版设计稿:  那我就直接把请求到的数据展示了一下,然而 第二版设计稿:  这一版就是需要把拿到的数值按照区间来展示成文字描述 那么,应该就是各种switch    if else  …. 本来也是做Demo,所以我们可以高点其他的东西,于是我就想起">
+<meta name="twitter:description" content="前因最近在做人脸识别的一些东西 主要是使用百度的SDK来完成采集, 识别. 这个功能是使用百度云的Api来对人脸进行分析,拿到年龄 颜值 等等信息">
 <meta name="twitter:image" content="http://www.wangzhumo.com/2018/06/26/images/face_value.png">
     
 
@@ -239,6 +239,7 @@
             <h3 id="前因"><a href="#前因" class="headerlink" title="前因"></a>前因</h3><p>最近在做人脸识别的一些东西</p>
 <p>主要是使用百度的SDK来完成采集, 识别.</p>
 <p>这个功能是使用百度云的Api来对人脸进行分析,拿到年龄 颜值 等等信息</p>
+<a id="more"></a>
 <p><strong>第一版设计稿:</strong></p>
 <p><img src="../images/face_value.png" alt="之前的效果"></p>
 <p>那我就直接把请求到的数据展示了一下,然而</p>
@@ -298,7 +299,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/06/26/ServiceLoader-与-责任链设计模式/" data-id="cjjktogbc004jnostaxtj41q7" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/06/26/ServiceLoader-与-责任链设计模式/" data-id="cjjkv6yyj004kxust00zp76n3" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -452,7 +453,7 @@
                             <a href="/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(http://www.wangzhumo.com/images/debug.jpg)" alt="RecyclerView中notifyItemRangeChanged无效的BUG" class="thumbnail-image"></span>
     
 </a>
 
@@ -471,7 +472,7 @@
                             <a href="/2018/07/12/ConstraintLayout使用指南-基础的约束/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="ConstraintLayout使用指南-基础的约束" class="thumbnail-image"></span>
     
 </a>
 

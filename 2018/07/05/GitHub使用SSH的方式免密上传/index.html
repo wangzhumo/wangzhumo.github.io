@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="王诛魔">
 <meta property="og:description" content="前言前一段时间换了github账号,各种转移数据,累死我 而后,我顺手添加了github的ssh-key(新创建了一个rsa的Key),然而当我: 1234567# phyooos @ wangzhumo in ~/develop/hexo [12:10:02] C:2$ hexo dINFO  Deploying: gitINFO  Clearing .deploy_git folder...">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-07-05T05:33:39.132Z">
+<meta property="og:updated_time" content="2018-07-14T03:39:53.985Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GitHub使用SSH的方式免密上传">
 <meta name="twitter:description" content="前言前一段时间换了github账号,各种转移数据,累死我 而后,我顺手添加了github的ssh-key(新创建了一个rsa的Key),然而当我: 1234567# phyooos @ wangzhumo in ~/develop/hexo [12:10:02] C:2$ hexo dINFO  Deploying: gitINFO  Clearing .deploy_git folder...">
@@ -236,6 +236,7 @@
 <p>而后,我顺手添加了github的ssh-key(新创建了一个rsa的Key),然而当我:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> phyooos @ wangzhumo in ~/develop/hexo [12:10:02] C:2</span><br><span class="line"><span class="meta">$</span> hexo d</span><br><span class="line">INFO  Deploying: git</span><br><span class="line">INFO  Clearing .deploy_git folder...</span><br><span class="line">    #...</span><br><span class="line">git@github.com: Permission denied (publickey).</span><br><span class="line">fatal: Could not read from remote repository.</span><br></pre></td></tr></table></figure>
 <p>很迷,完全不知道为什么</p>
+<a id="more"></a>
 <h3 id="排除问题"><a href="#排除问题" class="headerlink" title="排除问题"></a>排除问题</h3><h4 id="查看-ssh目录"><a href="#查看-ssh目录" class="headerlink" title="查看~/.ssh目录"></a>查看~/.ssh目录</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-rw-------  1 phyooos  staff   1.6K  6 27  2017 aliyun_rsa</span><br><span class="line">-rw-r--r--  1 phyooos  staff   398B  6 27  2017 aliyun_rsa.pub</span><br><span class="line">-rw-r--r--  1 phyooos  staff   402B  5 22  2017 authorized_keys</span><br><span class="line">-rw-r--r--  1 phyooos  staff   1.1K  6 28 14:48 config</span><br><span class="line">-rw-------  1 phyooos  staff   3.2K  6 27 18:05 github_rsa</span><br><span class="line">-rw-r--r--  1 phyooos  staff   746B  6 27 18:05 github_rsa.pub</span><br><span class="line">-rw-------  1 phyooos  staff   1.6K  5 17  2017 id_rsa</span><br><span class="line">-rw-r--r--@ 1 phyooos  staff   402B  5 17  2017 id_rsa.pub</span><br><span class="line">-rw-r--r--  1 phyooos  staff   1.3K  7  5 12:33 known_hosts</span><br></pre></td></tr></table></figure>
 <p>其中</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-rw-------  1 phyooos  staff   3.2K  6 27 18:05 github_rsa</span><br><span class="line">-rw-r--r--  1 phyooos  staff   746B  6 27 18:05 github_rsa.pub</span><br></pre></td></tr></table></figure>
@@ -260,7 +261,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/05/GitHub使用SSH的方式免密上传/" data-id="cjjktogai002vnostyfopglzp" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/05/GitHub使用SSH的方式免密上传/" data-id="cjjkv6yxs002oxustir4d8tx1" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -414,7 +415,7 @@
                             <a href="/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(http://www.wangzhumo.com/images/debug.jpg)" alt="RecyclerView中notifyItemRangeChanged无效的BUG" class="thumbnail-image"></span>
     
 </a>
 
@@ -433,7 +434,7 @@
                             <a href="/2018/07/12/ConstraintLayout使用指南-基础的约束/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="ConstraintLayout使用指南-基础的约束" class="thumbnail-image"></span>
     
 </a>
 

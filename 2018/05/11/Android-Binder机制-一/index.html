@@ -16,7 +16,7 @@
 <meta property="og:image" content="http://www.wangzhumo.com/images/linux_memory.png">
 <meta property="og:image" content="http://www.wangzhumo.com/images/binder_physical_memory.jpg">
 <meta property="og:image" content="http://www.wangzhumo.com/images/binder_memory_map.jpg">
-<meta property="og:updated_time" content="2018-05-14T11:08:24.216Z">
+<meta property="og:updated_time" content="2018-07-14T03:37:07.519Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Binder机制(一)">
 <meta name="twitter:description" content="ServiceManager首先我们要了解一下ServiceManager. ServiceManager的功能主要就是注册,查询服务,作为一个大管家的角色出现.  注册服务：记录服务名和信息，放到服务列表 查询服务：根据服务名查询相应的的信息  ServiceManager是有权限控制的，只有具有相应权限的进程才能注册,查询服务 http://gityuan.com/2015/11/08/bin">
@@ -244,6 +244,7 @@
 </ul>
 <p>ServiceManager是有权限控制的，只有具有相应权限的进程才能注册,查询服务</p>
 <p><a href="http://gityuan.com/2015/11/08/binder-get-sm/" target="_blank" rel="noopener">http://gityuan.com/2015/11/08/binder-get-sm/</a></p>
+<a id="more"></a>
 <h3 id="Linux内存"><a href="#Linux内存" class="headerlink" title="Linux内存"></a>Linux内存</h3><h4 id="内核空间"><a href="#内核空间" class="headerlink" title="内核空间"></a>内核空间</h4><p>为什么进程间不可以直接通讯那?</p>
 <p>因为每个进程的内存空间都是隔离起来的,不可能随意去访问其他进程的内存.</p>
 <p>在32位系统中,寻址空间最大为4G,那么这4G内存,一般将1G分配给内核空间,3G用户空间,Linux内核由系统内的所有进程共享.</p>
@@ -290,7 +291,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/05/11/Android-Binder机制-一/" data-id="cjjktog7z0003nostfwolawc7" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/05/11/Android-Binder机制-一/" data-id="cjjkv6yvi0002xust9h8twbr9" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -444,7 +445,7 @@
                             <a href="/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(http://www.wangzhumo.com/images/debug.jpg)" alt="RecyclerView中notifyItemRangeChanged无效的BUG" class="thumbnail-image"></span>
     
 </a>
 
@@ -463,7 +464,7 @@
                             <a href="/2018/07/12/ConstraintLayout使用指南-基础的约束/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="ConstraintLayout使用指南-基础的约束" class="thumbnail-image"></span>
     
 </a>
 

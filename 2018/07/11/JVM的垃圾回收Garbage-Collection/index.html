@@ -5,19 +5,19 @@
     
     <title>JVM的垃圾回收Garbage Collection | 王诛魔</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="前言java.lang.OutOfMemoryError 我们知道在线程创建时,程序计数器,本地方法栈,虚拟机栈随之创建,线程销毁时随之销毁 并且栈中的栈帧也随着方法的进入与退出执行出入栈操作,最重要的是每一个栈帧消耗的内存基本上在类结构确定时就已经知道,这几个区域的内存分配与回收都是确定的,不需要过多考虑回收. 但是进程中的 堆(heap) 以及 方法区与上面的几个栈是不同的,当程序处于运行时期">
+    <meta name="description" content="前言我们知道在线程创建时,程序计数器,本地方法栈,虚拟机栈随之创建,线程销毁时随之销毁 并且栈中的栈帧也随着方法的进入与退出执行出入栈操作,最重要的是每一个栈帧消耗的内存基本上在类结构确定时就已经知道,这几个区域的内存分配与回收都是确定的,不需要过多考虑回收. 但是进程中的 堆(heap) 以及 方法区与上面的几个栈是不同的,当程序处于运行时期才能确定,它们的内存分配与回收都是动态的. 垃圾收集主">
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM的垃圾回收Garbage Collection">
 <meta property="og:url" content="http://www.wangzhumo.com/2018/07/11/JVM的垃圾回收Garbage-Collection/index.html">
 <meta property="og:site_name" content="王诛魔">
-<meta property="og:description" content="前言java.lang.OutOfMemoryError 我们知道在线程创建时,程序计数器,本地方法栈,虚拟机栈随之创建,线程销毁时随之销毁 并且栈中的栈帧也随着方法的进入与退出执行出入栈操作,最重要的是每一个栈帧消耗的内存基本上在类结构确定时就已经知道,这几个区域的内存分配与回收都是确定的,不需要过多考虑回收. 但是进程中的 堆(heap) 以及 方法区与上面的几个栈是不同的,当程序处于运行时期">
+<meta property="og:description" content="前言我们知道在线程创建时,程序计数器,本地方法栈,虚拟机栈随之创建,线程销毁时随之销毁 并且栈中的栈帧也随着方法的进入与退出执行出入栈操作,最重要的是每一个栈帧消耗的内存基本上在类结构确定时就已经知道,这几个区域的内存分配与回收都是确定的,不需要过多考虑回收. 但是进程中的 堆(heap) 以及 方法区与上面的几个栈是不同的,当程序处于运行时期才能确定,它们的内存分配与回收都是动态的. 垃圾收集主">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.wangzhumo.com/2018/07/11/images/jvm_gcroots.png">
-<meta property="og:updated_time" content="2018-07-13T14:26:56.384Z">
+<meta property="og:updated_time" content="2018-07-14T03:40:38.260Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM的垃圾回收Garbage Collection">
-<meta name="twitter:description" content="前言java.lang.OutOfMemoryError 我们知道在线程创建时,程序计数器,本地方法栈,虚拟机栈随之创建,线程销毁时随之销毁 并且栈中的栈帧也随着方法的进入与退出执行出入栈操作,最重要的是每一个栈帧消耗的内存基本上在类结构确定时就已经知道,这几个区域的内存分配与回收都是确定的,不需要过多考虑回收. 但是进程中的 堆(heap) 以及 方法区与上面的几个栈是不同的,当程序处于运行时期">
+<meta name="twitter:description" content="前言我们知道在线程创建时,程序计数器,本地方法栈,虚拟机栈随之创建,线程销毁时随之销毁 并且栈中的栈帧也随着方法的进入与退出执行出入栈操作,最重要的是每一个栈帧消耗的内存基本上在类结构确定时就已经知道,这几个区域的内存分配与回收都是确定的,不需要过多考虑回收. 但是进程中的 堆(heap) 以及 方法区与上面的几个栈是不同的,当程序处于运行时期才能确定,它们的内存分配与回收都是动态的. 垃圾收集主">
 <meta name="twitter:image" content="http://www.wangzhumo.com/2018/07/11/images/jvm_gcroots.png">
     
 
@@ -234,11 +234,11 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><strong>java.lang.OutOfMemoryError</strong></p>
-<p>我们知道在线程创建时,程序计数器,本地方法栈,虚拟机栈随之创建,线程销毁时随之销毁</p>
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>我们知道在线程创建时,程序计数器,本地方法栈,虚拟机栈随之创建,线程销毁时随之销毁</p>
 <p>并且栈中的栈帧也随着方法的进入与退出执行出入栈操作,最重要的是每一个栈帧消耗的内存基本上在类结构确定时就已经知道,这几个区域的内存分配与回收都是确定的,不需要过多考虑回收.</p>
 <p>但是进程中的 堆(heap) 以及 方法区与上面的几个栈是不同的,当程序处于运行时期才能确定,它们的内存分配与回收都是动态的.</p>
 <p>垃圾收集主要就是这部分.</p>
+<a id="more"></a>
 <h3 id="内存中对象引用状态"><a href="#内存中对象引用状态" class="headerlink" title="内存中对象引用状态"></a>内存中对象引用状态</h3><p>要进行垃圾收集,第一件要确定的就是这个对象是否不被任何方式引用,当确定没有任何引用就可以进行回收.</p>
 <p><strong>引用</strong>：要说引用状态就要明白什么是引用，如果Reference类型的数据中存储的数值代表的是另外一块内存的起始地址，我们就说这块内存代表着一个引用。</p>
 <p>在JDK1.2之后,JAVA对引用的概念进行了扩充,将引用分外4种</p>
@@ -289,7 +289,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/11/JVM的垃圾回收Garbage-Collection/" data-id="cjjktogaj002ynostf9netix5" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/11/JVM的垃圾回收Garbage-Collection/" data-id="cjjkv6yxt002vxustn9x6sj0f" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -443,7 +443,7 @@
                             <a href="/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(http://www.wangzhumo.com/images/debug.jpg)" alt="RecyclerView中notifyItemRangeChanged无效的BUG" class="thumbnail-image"></span>
     
 </a>
 
@@ -462,7 +462,7 @@
                             <a href="/2018/07/12/ConstraintLayout使用指南-基础的约束/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="ConstraintLayout使用指南-基础的约束" class="thumbnail-image"></span>
     
 </a>
 
