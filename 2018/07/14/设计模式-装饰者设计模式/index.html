@@ -14,7 +14,7 @@
 <meta property="og:description" content="认识装饰者模式装饰者模式一般由一下几部分组成:  Component：装饰者和被装饰者的共同父类,是一个接口或者抽象类,定义了基本行为 ConcreteComponent：具体的组件对象,实现了组件的接口,定义具体对象,通常就是被装饰者 Decorator：抽象装饰者,需要继承Component,它内部维护了一个指向Component实例的引用,对于ConcreteComponent来说,不需要知">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.wangzhumo.com/images/coding.png">
-<meta property="og:updated_time" content="2018-07-14T13:06:34.414Z">
+<meta property="og:updated_time" content="2018-07-14T13:14:15.360Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式-装饰者设计模式">
 <meta name="twitter:description" content="认识装饰者模式装饰者模式一般由一下几部分组成:  Component：装饰者和被装饰者的共同父类,是一个接口或者抽象类,定义了基本行为 ConcreteComponent：具体的组件对象,实现了组件的接口,定义具体对象,通常就是被装饰者 Decorator：抽象装饰者,需要继承Component,它内部维护了一个指向Component实例的引用,对于ConcreteComponent来说,不需要知">
@@ -241,6 +241,7 @@
 <li>Decorator：抽象装饰者,需要继承Component,它内部维护了一个指向Component实例的引用,对于ConcreteComponent来说,不需要知道Decorator的存在,就可以完成对ConcreteComponent的装饰</li>
 <li>ConcreteDecorator：具体装饰者,来完成具体的装饰功能,扩展ConcreteComponent.</li>
 </ul>
+<a id="more"></a> 
 <p>我们知道在编码中,倡导使用组合,而不是继承来扩展和复用功能,装饰者模式也是基于组合来完成的.装饰者模式可以很灵活的给对象添加功能,作为一个外部的类给对象添加功能,而不用直接修改对象本身,或者创建子类.</p>
 <h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>那我们就按照上面的结构,一一来创建</p>
 <p>就拿我下班后要干的事说起吧,每天下班我回家必须要背一会单词,这个是我的基本任务</p>
@@ -268,7 +269,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/14/设计模式-装饰者设计模式/" data-id="cjjlfmcua005lddstu5lk4xxo" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/14/设计模式-装饰者设计模式/" data-id="cjjlfoijy005kf4st9r6gtpcf" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -413,7 +414,7 @@
                             <a href="/2018/07/14/设计模式-状态模式的使用/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(http://www.wangzhumo.com/images/coding.png)" alt="设计模式-状态模式的使用" class="thumbnail-image"></span>
     
 </a>
 

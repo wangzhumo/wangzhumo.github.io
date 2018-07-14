@@ -230,32 +230,16 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <h3 id="认识装饰者模式"><a href="#认识装饰者模式" class="headerlink" title="认识装饰者模式"></a>认识装饰者模式</h3><p>装饰者模式一般由一下几部分组成:</p>
+            <p><h3 id="认识装饰者模式"><a href="#认识装饰者模式" class="headerlink" title="认识装饰者模式"></a>认识装饰者模式</h3><p>装饰者模式一般由一下几部分组成:</p>
 <ul>
 <li>Component：装饰者和被装饰者的共同父类,是一个接口或者抽象类,定义了基本行为</li>
 <li>ConcreteComponent：具体的组件对象,实现了组件的接口,定义具体对象,通常就是被装饰者</li>
 <li>Decorator：抽象装饰者,需要继承Component,它内部维护了一个指向Component实例的引用,对于ConcreteComponent来说,不需要知道Decorator的存在,就可以完成对ConcreteComponent的装饰</li>
 <li>ConcreteDecorator：具体装饰者,来完成具体的装饰功能,扩展ConcreteComponent.</li>
-</ul>
-<p>我们知道在编码中,倡导使用组合,而不是继承来扩展和复用功能,装饰者模式也是基于组合来完成的.装饰者模式可以很灵活的给对象添加功能,作为一个外部的类给对象添加功能,而不用直接修改对象本身,或者创建子类.</p>
-<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>那我们就按照上面的结构,一一来创建</p>
-<p>就拿我下班后要干的事说起吧,每天下班我回家必须要背一会单词,这个是我的基本任务</p>
-<p>可选的任务:</p>
-<p>Coding   看书  看电视  玩手机</p>
-<h4 id="Component"><a href="#Component" class="headerlink" title="Component"></a>Component</h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">HomeWork</span></span>&#123;</span><br><span class="line">    <span class="comment">//完成了作业</span></span><br><span class="line">    <span class="keyword">open</span> <span class="function"><span class="keyword">fun</span> <span class="title">doWork</span><span class="params">()</span></span> : String &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"下班后任务"</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//完成作业花费时间</span></span><br><span class="line">    <span class="keyword">abstract</span> <span class="function"><span class="keyword">fun</span> <span class="title">costTime</span><span class="params">()</span></span> : <span class="built_in">Int</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>可以看到,我下班后的任务,定义了一个任务,一个耗费时间</p>
-<p>这个Component可以是接口,也可以是抽象类,根据自己的需要来定就行</p>
-<h4 id="ConcreteComponent"><a href="#ConcreteComponent" class="headerlink" title="ConcreteComponent"></a>ConcreteComponent</h4> <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseWork</span> : <span class="type">HomeWork</span></span>()&#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">doWork</span><span class="params">()</span></span>: String &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"背单词"</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">costTime</span><span class="params">()</span></span> : <span class="built_in">Int</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">30</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="Decorator"><a href="#Decorator" class="headerlink" title="Decorator"></a>Decorator</h4> <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Decorator</span> : <span class="type">HomeWork</span></span>()&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">abstract</span> <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">costTime</span><span class="params">()</span></span>: <span class="built_in">Int</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="ConcreteDecorator"><a href="#ConcreteDecorator" class="headerlink" title="ConcreteDecorator"></a>ConcreteDecorator</h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProgrammeWork</span></span>(<span class="keyword">private</span> <span class="keyword">val</span> work : HomeWork) : Decorator()&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">doWork</span><span class="params">()</span></span>: String &#123;</span><br><span class="line">        <span class="keyword">return</span> work.doWork() + <span class="string">"  Coding"</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">costTime</span><span class="params">()</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> work.costTime() + <span class="number">45</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TelevisionWork</span></span>(<span class="keyword">private</span> <span class="keyword">val</span> work: HomeWork) : Decorator()&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">doWork</span><span class="params">()</span></span>: String &#123;</span><br><span class="line">        <span class="keyword">return</span> work.doWork() + <span class="string">"  看电视"</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">costTime</span><span class="params">()</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> work.costTime() + <span class="number">60</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="执行结果"><a href="#执行结果" class="headerlink" title="执行结果"></a>执行结果</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        BaseWork work = <span class="keyword">new</span> BaseWork();</span><br><span class="line">        System.out.println(work.doWork() +</span><br><span class="line">                String.format(<span class="string">"  耗费时间 : %d 分钟"</span>, work.costTime()));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//如果说我心情好还学了一会代码</span></span><br><span class="line">        ProgrammeWork programmeWork = <span class="keyword">new</span> ProgrammeWork(work);</span><br><span class="line">        System.out.println(programmeWork.doWork() +</span><br><span class="line">                String.format(<span class="string">"  耗费时间 : %d 分钟"</span>, programmeWork.costTime()));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//本来想睡了,但是媳妇看的电视特好看,我又去看了电视</span></span><br><span class="line">        TelevisionWork tvWork = <span class="keyword">new</span> TelevisionWork(programmeWork);</span><br><span class="line">        System.out.println(tvWork.doWork() +</span><br><span class="line">                String.format(<span class="string">"  耗费时间 : %d 分钟"</span>, tvWork.costTime()));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//Run:</span></span><br><span class="line">背单词  耗费时间 : <span class="number">30</span> 分钟</span><br><span class="line">背单词  Coding  耗费时间 : <span class="number">75</span> 分钟</span><br><span class="line">背单词  Coding  看电视  耗费时间 : <span class="number">135</span> 分钟</span><br><span class="line"></span><br><span class="line">Process finished with exit code <span class="number">0</span></span><br></pre></td></tr></table></figure>
-<p>其实我觉得装饰者和代理模式很像,像到我想不到有什么本质的差异,可能是我自己没有深刻的理解这两个设计模式,所以我希望下次有机会能搞明白.</p>
-<blockquote>
-<p><a href="https://blog.csdn.net/yeguxin/article/details/77337649" target="_blank" rel="noopener">https://blog.csdn.net/yeguxin/article/details/77337649</a></p>
-</blockquote>
-<p>这里是我现在觉得讲的有点道理的.</p>
-
+</ul></p>
+            <p class="article-more-link">
+                <a href="/2018/07/14/设计模式-装饰者设计模式/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -265,7 +249,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/14/设计模式-装饰者设计模式/" data-id="cjjlfmcua005lddstu5lk4xxo" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/14/设计模式-装饰者设计模式/" data-id="cjjlfoijy005kf4st9r6gtpcf" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -397,7 +381,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/14/设计模式-状态模式的使用/" data-id="cjjlfmcuc005oddstgu7r8fp0" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/14/设计模式-状态模式的使用/" data-id="cjjlfoijz005of4str4aavikc" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -529,7 +513,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" data-id="cjjlfmcti003uddstuktzg6cg" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" data-id="cjjlfoij3003nf4strtzjz64e" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -663,7 +647,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/12/ConstraintLayout使用指南-基础的约束/" data-id="cjjlfmcsq0024ddst9qud7mhh" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/12/ConstraintLayout使用指南-基础的约束/" data-id="cjjlfoiia001xf4sth0rsbown" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -797,7 +781,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/11/JVM的垃圾回收Garbage-Collection/" data-id="cjjlfmct90036ddstwbwxqh20" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/11/JVM的垃圾回收Garbage-Collection/" data-id="cjjlfoiiq002sf4stnxi6vnkj" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -935,7 +919,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/05/Android中的贝塞尔曲线/" data-id="cjjlfmcr2000kddstj7n0kxbt" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/05/Android中的贝塞尔曲线/" data-id="cjjlfoih4000nf4styk43ghr8" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1069,7 +1053,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/05/GitHub使用SSH的方式免密上传/" data-id="cjjlfmct3002nddst9h572dhm" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/05/GitHub使用SSH的方式免密上传/" data-id="cjjlfoiin002kf4stk9lwujxc" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1206,7 +1190,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/05/Android非静态内部类与匿名内部类引起的内存泄漏/" data-id="cjjlfmcs9001addst3bttnnrk" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/05/Android非静态内部类与匿名内部类引起的内存泄漏/" data-id="cjjlfoihj0016f4st9j3dqlbs" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1344,7 +1328,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/02/仿写UC浏览器视频类新闻点赞效果/" data-id="cjjlfmcu20053ddstrzbrm3h9" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/02/仿写UC浏览器视频类新闻点赞效果/" data-id="cjjlfoijp0050f4stuwxbqhs5" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1477,7 +1461,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/02/Git-Submodule-子模块的使用/" data-id="cjjlfmct1002iddst843vk1wx" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/02/Git-Submodule-子模块的使用/" data-id="cjjlfoiij002gf4stgm9ynww9" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1610,7 +1594,7 @@
                             <a href="/2018/07/14/设计模式-状态模式的使用/" class="thumbnail">
     
     
-        <span class="thumbnail-image thumbnail-none"></span>
+        <span style="background-image:url(http://www.wangzhumo.com/images/coding.png)" alt="设计模式-状态模式的使用" class="thumbnail-image"></span>
     
 </a>
 
