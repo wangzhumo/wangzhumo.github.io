@@ -3,18 +3,22 @@
 <head>
     <meta charset="utf-8">
     
-    <title>归档 | 王诛魔</title>
+    <title>设计模式-装饰者设计模式 | 王诛魔</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="王诛魔">
-<meta property="og:type" content="website">
-<meta property="og:title" content="王诛魔">
-<meta property="og:url" content="http://www.wangzhumo.com/archives/index.html">
+    <meta name="description" content="认识装饰者模式装饰者模式一般由一下几部分组成:  Component：装饰者和被装饰者的共同父类,是一个接口或者抽象类,定义了基本行为 ConcreteComponent：具体的组件对象,实现了组件的接口,定义具体对象,通常就是被装饰者 Decorator：抽象装饰者,需要继承Component,它内部维护了一个指向Component实例的引用,对于ConcreteComponent来说,不需要知">
+<meta name="keywords" content="Java,设计模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式-装饰者设计模式">
+<meta property="og:url" content="http://www.wangzhumo.com/2018/07/14/设计模式-装饰者设计模式/index.html">
 <meta property="og:site_name" content="王诛魔">
-<meta property="og:description" content="王诛魔">
+<meta property="og:description" content="认识装饰者模式装饰者模式一般由一下几部分组成:  Component：装饰者和被装饰者的共同父类,是一个接口或者抽象类,定义了基本行为 ConcreteComponent：具体的组件对象,实现了组件的接口,定义具体对象,通常就是被装饰者 Decorator：抽象装饰者,需要继承Component,它内部维护了一个指向Component实例的引用,对于ConcreteComponent来说,不需要知">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.wangzhumo.com/images/coding.png">
+<meta property="og:updated_time" content="2018-07-14T13:06:34.414Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="王诛魔">
-<meta name="twitter:description" content="王诛魔">
+<meta name="twitter:title" content="设计模式-装饰者设计模式">
+<meta name="twitter:description" content="认识装饰者模式装饰者模式一般由一下几部分组成:  Component：装饰者和被装饰者的共同父类,是一个接口或者抽象类,定义了基本行为 ConcreteComponent：具体的组件对象,实现了组件的接口,定义具体对象,通常就是被装饰者 Decorator：抽象装饰者,需要继承Component,它内部维护了一个指向Component实例的引用,对于ConcreteComponent来说,不需要知">
+<meta name="twitter:image" content="http://www.wangzhumo.com/images/coding.png">
     
 
     
@@ -187,25 +191,21 @@
 </aside>
 
             
-            <section id="main"><div class="timeline timeline-wrap">
-    
-            <div class="timeline-row timeline-row-major">
-                <span class="node"><i class="fas fa-calendar-alt"></i></span>
-                <h1 class="title">2018</h1>
-            </div>
+            <section id="main"><article id="post-设计模式-装饰者设计模式" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+        
+            <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/07/14/设计模式-装饰者设计模式/">设计模式-装饰者设计模式</a>
+        <h1 class="article-title" itemprop="name">
+            设计模式-装饰者设计模式
         </h1>
     
 
-                <div class="article-meta">
-                    
+                
+                    <div class="article-meta">
+                        
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
         <a href="/2018/07/14/设计模式-装饰者设计模式/">
@@ -214,351 +214,151 @@
     </div>
 
 
-                    
+                        
     <div class="article-category">
     	<i class="fas fa-folder"></i>
         <a class="article-category-link" href="/categories/Java/">Java</a>
     </div>
 
-                    
+                        
     <div class="article-tag">
         <i class="fas fa-tag"></i>
         <a class="tag-link" href="/tags/Java/">Java</a>, <a class="tag-link" href="/tags/设计模式/">设计模式</a>
     </div>
 
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+                    </div>
                 
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/07/14/设计模式-状态模式的使用/">设计模式-状态模式的使用</a>
-        </h1>
-    
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h3 id="认识装饰者模式"><a href="#认识装饰者模式" class="headerlink" title="认识装饰者模式"></a>认识装饰者模式</h3><p>装饰者模式一般由一下几部分组成:</p>
+<ul>
+<li>Component：装饰者和被装饰者的共同父类,是一个接口或者抽象类,定义了基本行为</li>
+<li>ConcreteComponent：具体的组件对象,实现了组件的接口,定义具体对象,通常就是被装饰者</li>
+<li>Decorator：抽象装饰者,需要继承Component,它内部维护了一个指向Component实例的引用,对于ConcreteComponent来说,不需要知道Decorator的存在,就可以完成对ConcreteComponent的装饰</li>
+<li>ConcreteDecorator：具体装饰者,来完成具体的装饰功能,扩展ConcreteComponent.</li>
+</ul>
+<p>我们知道在编码中,倡导使用组合,而不是继承来扩展和复用功能,装饰者模式也是基于组合来完成的.装饰者模式可以很灵活的给对象添加功能,作为一个外部的类给对象添加功能,而不用直接修改对象本身,或者创建子类.</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>那我们就按照上面的结构,一一来创建</p>
+<p>就拿我下班后要干的事说起吧,每天下班我回家必须要背一会单词,这个是我的基本任务</p>
+<p>可选的任务:</p>
+<p>Coding   看书  看电视  玩手机</p>
+<h4 id="Component"><a href="#Component" class="headerlink" title="Component"></a>Component</h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">HomeWork</span></span>&#123;</span><br><span class="line">    <span class="comment">//完成了作业</span></span><br><span class="line">    <span class="keyword">open</span> <span class="function"><span class="keyword">fun</span> <span class="title">doWork</span><span class="params">()</span></span> : String &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"下班后任务"</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//完成作业花费时间</span></span><br><span class="line">    <span class="keyword">abstract</span> <span class="function"><span class="keyword">fun</span> <span class="title">costTime</span><span class="params">()</span></span> : <span class="built_in">Int</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到,我下班后的任务,定义了一个任务,一个耗费时间</p>
+<p>这个Component可以是接口,也可以是抽象类,根据自己的需要来定就行</p>
+<h4 id="ConcreteComponent"><a href="#ConcreteComponent" class="headerlink" title="ConcreteComponent"></a>ConcreteComponent</h4> <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseWork</span> : <span class="type">HomeWork</span></span>()&#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">doWork</span><span class="params">()</span></span>: String &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"背单词"</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">costTime</span><span class="params">()</span></span> : <span class="built_in">Int</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">30</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Decorator"><a href="#Decorator" class="headerlink" title="Decorator"></a>Decorator</h4> <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Decorator</span> : <span class="type">HomeWork</span></span>()&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">abstract</span> <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">costTime</span><span class="params">()</span></span>: <span class="built_in">Int</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="ConcreteDecorator"><a href="#ConcreteDecorator" class="headerlink" title="ConcreteDecorator"></a>ConcreteDecorator</h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProgrammeWork</span></span>(<span class="keyword">private</span> <span class="keyword">val</span> work : HomeWork) : Decorator()&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">doWork</span><span class="params">()</span></span>: String &#123;</span><br><span class="line">        <span class="keyword">return</span> work.doWork() + <span class="string">"  Coding"</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">costTime</span><span class="params">()</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> work.costTime() + <span class="number">45</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TelevisionWork</span></span>(<span class="keyword">private</span> <span class="keyword">val</span> work: HomeWork) : Decorator()&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">doWork</span><span class="params">()</span></span>: String &#123;</span><br><span class="line">        <span class="keyword">return</span> work.doWork() + <span class="string">"  看电视"</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">costTime</span><span class="params">()</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> work.costTime() + <span class="number">60</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="执行结果"><a href="#执行结果" class="headerlink" title="执行结果"></a>执行结果</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        BaseWork work = <span class="keyword">new</span> BaseWork();</span><br><span class="line">        System.out.println(work.doWork() +</span><br><span class="line">                String.format(<span class="string">"  耗费时间 : %d 分钟"</span>, work.costTime()));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//如果说我心情好还学了一会代码</span></span><br><span class="line">        ProgrammeWork programmeWork = <span class="keyword">new</span> ProgrammeWork(work);</span><br><span class="line">        System.out.println(programmeWork.doWork() +</span><br><span class="line">                String.format(<span class="string">"  耗费时间 : %d 分钟"</span>, programmeWork.costTime()));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//本来想睡了,但是媳妇看的电视特好看,我又去看了电视</span></span><br><span class="line">        TelevisionWork tvWork = <span class="keyword">new</span> TelevisionWork(programmeWork);</span><br><span class="line">        System.out.println(tvWork.doWork() +</span><br><span class="line">                String.format(<span class="string">"  耗费时间 : %d 分钟"</span>, tvWork.costTime()));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//Run:</span></span><br><span class="line">背单词  耗费时间 : <span class="number">30</span> 分钟</span><br><span class="line">背单词  Coding  耗费时间 : <span class="number">75</span> 分钟</span><br><span class="line">背单词  Coding  看电视  耗费时间 : <span class="number">135</span> 分钟</span><br><span class="line"></span><br><span class="line">Process finished with exit code <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>其实我觉得装饰者和代理模式很像,像到我想不到有什么本质的差异,可能是我自己没有深刻的理解这两个设计模式,所以我希望下次有机会能搞明白.</p>
+<blockquote>
+<p><a href="https://blog.csdn.net/yeguxin/article/details/77337649" target="_blank" rel="noopener">https://blog.csdn.net/yeguxin/article/details/77337649</a></p>
+</blockquote>
+<p>这里是我现在觉得讲的有点道理的.</p>
 
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/07/14/设计模式-状态模式的使用/">
-            <time datetime="2018-07-14T00:45:32.000Z" itemprop="datePublished">2018-07-14</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Java/">Java</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Java/">Java</a>, <a class="tag-link" href="/tags/设计模式/">设计模式</a>
-    </div>
-
-                </div>
-            </div>
+        
         </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/">RecyclerView中notifyItemRangeChanged无效的BUG</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/">
-            <time datetime="2018-07-13T14:39:55.000Z" itemprop="datePublished">2018-07-13</time>
-        </a>
-    </div>
+        <footer class="article-footer">
+            <div class="share-container">
 
 
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Bug/">Bug</a>
-    </div>
 
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/Bug/">Bug</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/07/12/ConstraintLayout使用指南-基础的约束/">ConstraintLayout使用指南-基础的约束</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/07/12/ConstraintLayout使用指南-基础的约束/">
-            <time datetime="2018-07-12T07:49:34.000Z" itemprop="datePublished">2018-07-12</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android/">Android</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/07/11/JVM的垃圾回收Garbage-Collection/">JVM的垃圾回收Garbage Collection</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/07/11/JVM的垃圾回收Garbage-Collection/">
-            <time datetime="2018-07-11T07:45:01.000Z" itemprop="datePublished">2018-07-11</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Java/">Java</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Java/">Java</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/07/05/Android中的贝塞尔曲线/">Android中的贝塞尔曲线</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/07/05/Android中的贝塞尔曲线/">
-            <time datetime="2018-07-05T08:05:12.000Z" itemprop="datePublished">2018-07-05</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android/">Android</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/07/05/GitHub使用SSH的方式免密上传/">GitHub使用SSH的方式免密上传</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/07/05/GitHub使用SSH的方式免密上传/">
-            <time datetime="2018-07-05T05:13:25.000Z" itemprop="datePublished">2018-07-05</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Tools/">Tools</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/GitHub/">GitHub</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/07/05/Android非静态内部类与匿名内部类引起的内存泄漏/">Android非静态内部类与匿名内部类引起的内存泄漏</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/07/05/Android非静态内部类与匿名内部类引起的内存泄漏/">
-            <time datetime="2018-07-05T04:06:51.000Z" itemprop="datePublished">2018-07-05</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/Java/">Java</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/07/02/仿写UC浏览器视频类新闻点赞效果/">仿写UC浏览器视频类新闻点赞效果</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/07/02/仿写UC浏览器视频类新闻点赞效果/">
-            <time datetime="2018-07-02T10:20:49.000Z" itemprop="datePublished">2018-07-02</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/View/">View</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/View/">View</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/07/02/Git-Submodule-子模块的使用/">Git Submodule 子模块的使用</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/07/02/Git-Submodule-子模块的使用/">
-            <time datetime="2018-07-02T08:41:23.000Z" itemprop="datePublished">2018-07-02</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Tools/">Tools</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Git/">Git</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
-    
 </div>
 
-    <nav id="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/6/">6</a><a class="extend next" rel="next" href="/archives/page/2/">下一页 &raquo;</a>
-    </nav>
+    <a data-url="http://www.wangzhumo.com/2018/07/14/设计模式-装饰者设计模式/" data-id="cjjlfmcua005lddstu5lk4xxo" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/07/14/设计模式-状态模式的使用/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">设计模式-状态模式的使用</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+
 </section>
             
                 
