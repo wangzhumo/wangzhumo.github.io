@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://www.wangzhumo.com/2018/07/12/ConstraintLayout%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97-%E5%9F%BA%E7%A1%80%E7%9A%84%E7%BA%A6%E6%9D%9F/</loc>
+    <lastmod>2018-07-19T09:14:34.491Z</lastmod>
+    <data>
+        <display>
+        <title>ConstraintLayout使用指南-基础的约束</title>
+        <pubTime>2018-07-12T07:49:34.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.wangzhumo.com/2018/07/15/%E9%80%92%E5%BD%92%E8%B0%83%E7%94%A8%E5%88%9B%E5%BB%BA%E5%8D%95%E9%93%BE%E8%A1%A8/</loc>
     <lastmod>2018-07-15T03:47:56.497Z</lastmod>
     <data>
@@ -227,26 +247,6 @@
            
              
               <breadCrumb title="Tools" url="http://www.wangzhumo.com/categories/Tools/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/07/12/ConstraintLayout%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97-%E5%9F%BA%E7%A1%80%E7%9A%84%E7%BA%A6%E6%9D%9F/</loc>
-    <lastmod>2018-07-14T03:39:42.952Z</lastmod>
-    <data>
-        <display>
-        <title>ConstraintLayout使用指南-基础的约束</title>
-        <pubTime>2018-07-12T07:49:34.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
           
         </display>
     </data>
@@ -1117,9 +1117,9 @@
         
         <tag>Android</tag>
          
-        <tag>Rxjava</tag>
-         
         <tag>Okhttp</tag>
+         
+        <tag>Rxjava</tag>
          
          
            
@@ -1141,9 +1141,9 @@
         
         <tag>Android</tag>
          
-        <tag>Rxjava</tag>
-         
         <tag>Okhttp</tag>
+         
+        <tag>Rxjava</tag>
          
          
            

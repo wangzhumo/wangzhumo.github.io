@@ -14,7 +14,7 @@
 <meta property="og:description" content="前言ConstraintLayout现在已经是新建布局的默认跟布局了,况且确实好用,有必要学习一波  ConstraintLayout,来自官网的文档,觉得不是很直观,于是我想把它做成GIF图 1compile &apos;com.android.support.constraint:constraint-layout:1.1.2&apos; 截止我写下这篇笔记的时候,已经是1.1.2版本了,下面所有的代码都是基于1">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.wangzhumo.com/images/android.jpg">
-<meta property="og:updated_time" content="2018-07-14T03:39:42.952Z">
+<meta property="og:updated_time" content="2018-07-19T09:14:34.491Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ConstraintLayout使用指南-基础的约束">
 <meta name="twitter:description" content="前言ConstraintLayout现在已经是新建布局的默认跟布局了,况且确实好用,有必要学习一波  ConstraintLayout,来自官网的文档,觉得不是很直观,于是我想把它做成GIF图 1compile &apos;com.android.support.constraint:constraint-layout:1.1.2&apos; 截止我写下这篇笔记的时候,已经是1.1.2版本了,下面所有的代码都是基于1">
@@ -239,21 +239,21 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile <span class="string">'com.android.support.constraint:constraint-layout:1.1.2'</span></span><br></pre></td></tr></table></figure>
 <p>截止我写下这篇笔记的时候,已经是1.1.2版本了,下面所有的代码都是基于1.1.2版本.</p>
 <a id="more"></a>
-<h3 id="面板"><a href="#面板" class="headerlink" title="面板"></a>面板</h3><p><img src="../images/cons_broad.png" alt="面板"></p>
+<h3 id="面板"><a href="#面板" class="headerlink" title="面板"></a>面板</h3><p><img src="/images/cons_broad.png" alt="面板"></p>
 <p>首先应该明白主要的两个面板</p>
 <p>蓝色的区域,我们成为设计蓝图,下文称蓝图面板</p>
 <p>右边的是属性面板,下文称属性面板,可以在这里进行精细调整</p>
 <h3 id="单个控件的约束"><a href="#单个控件的约束" class="headerlink" title="单个控件的约束"></a>单个控件的约束</h3><p>再演示之前,建议大家都使用Android Studio 提供的<code>Design</code> 模式来创建和修改约束布局,方便而且直观</p>
 <p>我的Android Studio 版本是3.1.3,如果有和我操作界面不一致的,请自行对应</p>
-<h4 id="margin效果"><a href="#margin效果" class="headerlink" title="margin效果"></a>margin效果</h4><p><img src="../images/cons_default_move.gif" alt="single_move"></p>
+<h4 id="margin效果"><a href="#margin效果" class="headerlink" title="margin效果"></a>margin效果</h4><p><img src="/images/cons_default_move.gif" alt="single_move"></p>
 <p>如果我只给左边和上边加上约束,那么就会是<code>margin</code>的效果,代码表现如下:</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Button</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:id</span>=<span class="string">"@+id/button"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:text</span>=<span class="string">"Button"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:layout_marginStart</span>=<span class="string">"28dp"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:layout_marginTop</span>=<span class="string">"28dp"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">app:layout_constraintStart_toStartOf</span>=<span class="string">"parent"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">app:layout_constraintTop_toTopOf</span>=<span class="string">"parent"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
 <p>如果你想调节这个<code>margin</code>,即可以拖动,也可以去属性面板调整,也可以在代码中修改</p>
-<h4 id="居中-偏移效果"><a href="#居中-偏移效果" class="headerlink" title="居中/偏移效果"></a>居中/偏移效果</h4><p><img src="../images/cons_single_center.gif" alt="弹性"></p>
+<h4 id="居中-偏移效果"><a href="#居中-偏移效果" class="headerlink" title="居中/偏移效果"></a>居中/偏移效果</h4><p><img src="/images/cons_single_center.gif" alt="弹性"></p>
 <p>可以看到,我在左边和上边已经有<code>margin</code>的情况下,给右边和下边也加上了约束,现在<code>BUTTON</code>大体上是居中效果</p>
 <p>为什么是”大体”居中那? 看箭头附近的 28 28 8 8 ,这是在<code>margin</code>的基础上居中的,去掉<code>margin</code>就是绝对居中的了</p>
 <p>现在我们看属性面板:</p>
-<p><img src="../images/cons_attr_2.png" alt=""></p>
+<p><img src="/images/cons_attr_2.png" alt=""></p>
 <p>略小的红框中,就是margin,这样的调节框还有3个</p>
 <p>看到那个可以滑动的轴了么? 中间还有个50的数字,这个是调节<code>BUTTON</code>在垂直方向的偏移</p>
 <p>其他几个操作框同理可推其作用</p>
@@ -261,7 +261,7 @@
 <p>可以直接拉动这个控制点,使他的数值变为<code>75</code>,也可以在代码中修改,代码表现如下:</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Button</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/button"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:text</span>=<span class="string">"登录"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">app:layout_constraintBottom_toBottomOf</span>=<span class="string">"parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">app:layout_constraintEnd_toEndOf</span>=<span class="string">"parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">app:layout_constraintStart_toStartOf</span>=<span class="string">"parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">app:layout_constraintTop_toTopOf</span>=<span class="string">"parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">app:layout_constraintVertical_bias</span>=<span class="string">"0.75"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
 <p>此时的<code>BUTTON</code>就会处在整个布局的3/4处,就不放图了</p>
-<h4 id="纵横比"><a href="#纵横比" class="headerlink" title="纵横比"></a>纵横比</h4><p><img src="../images/cons_ratio.gif" alt="纵横比"></p>
+<h4 id="纵横比"><a href="#纵横比" class="headerlink" title="纵横比"></a>纵横比</h4><p><img src="/images/cons_ratio.gif" alt="纵横比"></p>
 <p>代码表现如下:</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ImageView</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"0dp"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"0dp"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:src</span>=<span class="string">"@mipmap/login_bg"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:scaleType</span>=<span class="string">"fitXY"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">app:layout_constraintDimensionRatio</span>=<span class="string">"h,16:9"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">app:layout_constraintEnd_toEndOf</span>=<span class="string">"parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">app:layout_constraintStart_toStartOf</span>=<span class="string">"parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">app:layout_constraintTop_toTopOf</span>=<span class="string">"parent"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
 <h3 id="多个控件的约束"><a href="#多个控件的约束" class="headerlink" title="多个控件的约束"></a>多个控件的约束</h3>
@@ -274,7 +274,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/12/ConstraintLayout使用指南-基础的约束/" data-id="cjjmav4vz00248ist6am3m0e8" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/12/ConstraintLayout使用指南-基础的约束/" data-id="cjjscazks0027ccstw967pryu" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
