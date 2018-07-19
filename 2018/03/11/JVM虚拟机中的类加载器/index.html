@@ -13,13 +13,13 @@
 <meta property="og:site_name" content="王诛魔">
 <meta property="og:description" content="前言前一篇梳理了一下类加载机制的大概流程,其中就涉及到一个很重要的东西类加载器,在加载阶段”通过一个类的全限定名获取描述此类的二进制字节流”  我们知道二级制字节流不只是我们编写的代码  可以从一些jar,war包等压缩文件中获取 已经凉了的Applet,也就是可以从网络中获取 运行时生成,如动态代理,retrofit中使用的技术之一 其他…   那么下面我要知道的是:  类加载器的含义和作用 类">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://www.wangzhumo.com/2018/03/11/images/class_loader.png">
-<meta property="og:image" content="http://www.wangzhumo.com/2018/03/11/images/class_process.png">
-<meta property="og:updated_time" content="2018-07-14T03:40:53.265Z">
+<meta property="og:image" content="http://www.wangzhumo.com/images/class_loader.png">
+<meta property="og:image" content="http://www.wangzhumo.com/images/class_process.png">
+<meta property="og:updated_time" content="2018-07-19T09:16:38.712Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM虚拟机中的类加载器">
 <meta name="twitter:description" content="前言前一篇梳理了一下类加载机制的大概流程,其中就涉及到一个很重要的东西类加载器,在加载阶段”通过一个类的全限定名获取描述此类的二进制字节流”  我们知道二级制字节流不只是我们编写的代码  可以从一些jar,war包等压缩文件中获取 已经凉了的Applet,也就是可以从网络中获取 运行时生成,如动态代理,retrofit中使用的技术之一 其他…   那么下面我要知道的是:  类加载器的含义和作用 类">
-<meta name="twitter:image" content="http://www.wangzhumo.com/2018/03/11/images/class_loader.png">
+<meta name="twitter:image" content="http://www.wangzhumo.com/images/class_loader.png">
     
 
     
@@ -279,7 +279,7 @@
 </li>
 </ol>
 <h4 id="双亲委派模型"><a href="#双亲委派模型" class="headerlink" title="双亲委派模型"></a>双亲委派模型</h4><p>#####模型结构</p>
-<p><img src="../images/class_loader.png" alt="classLoader"></p>
+<p><img src="/images/class_loader.png" alt="classLoader"></p>
 <p>//我们看看代码中是怎么组织的</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> Class&lt;?&gt; loadClass(String name, <span class="keyword">boolean</span> resolve)</span><br><span class="line">        <span class="keyword">throws</span> ClassNotFoundException</span><br><span class="line">    &#123;</span><br><span class="line">            <span class="comment">// First, check if the class has already been loaded</span></span><br><span class="line">            Class&lt;?&gt; c = findLoadedClass(name);</span><br><span class="line">            <span class="keyword">if</span> (c == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="keyword">if</span> (parent != <span class="keyword">null</span>) &#123;</span><br><span class="line">                        c = parent.loadClass(name, <span class="keyword">false</span>);</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        c = findBootstrapClassOrNull(name);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">                    <span class="comment">// ClassNotFoundException thrown if class not found</span></span><br><span class="line">                    <span class="comment">// from the non-null parent class loader</span></span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (c == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="comment">// If still not found, then invoke findClass in order</span></span><br><span class="line">                    <span class="comment">// to find the class.</span></span><br><span class="line">                    c = findClass(name);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> c;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>上面的代码,总的来说有</p>
@@ -297,7 +297,7 @@
 <p>才轮到自己去加载</p>
 </li>
 </ol>
-<p><img src="../images/class_process.png" alt="加载过程"></p>
+<p><img src="/images/class_process.png" alt="加载过程"></p>
 <blockquote>
 <p> 要注意的是,这些类加载器的父子关系,不是由继承来实现的,而是使用组合</p>
 </blockquote>
@@ -334,7 +334,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/03/11/JVM虚拟机中的类加载器/" data-id="cjjscazm70055ccstzpnph9ex" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/03/11/JVM虚拟机中的类加载器/" data-id="cjjscr8py0036iqstu21urr97" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

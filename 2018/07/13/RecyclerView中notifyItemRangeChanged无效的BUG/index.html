@@ -14,7 +14,7 @@
 <meta property="og:description" content="前言RecyclerView是我们日常开发中用的最频繁的几个控件之一,可以说一个App没有RecyclerView的参与,可能根本就做不出来.然而同时,RecyclerView尽管有复用机制,我们使用的时候,还是应该尽量的节省内存,提高性能. 所以,对于RecyclerView中的Item,尽量少刷新,越少越好.">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.wangzhumo.com/images/debug.jpg">
-<meta property="og:updated_time" content="2018-07-14T03:41:05.756Z">
+<meta property="og:updated_time" content="2018-07-19T09:17:30.585Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RecyclerView中notifyItemRangeChanged无效的BUG">
 <meta name="twitter:description" content="前言RecyclerView是我们日常开发中用的最频繁的几个控件之一,可以说一个App没有RecyclerView的参与,可能根本就做不出来.然而同时,RecyclerView尽管有复用机制,我们使用的时候,还是应该尽量的节省内存,提高性能. 所以,对于RecyclerView中的Item,尽量少刷新,越少越好.">
@@ -246,7 +246,7 @@
 <p>payload            这个参数比较重要,如果它为null,则回调中会刷新整个View而不是局部刷新</p>
 </blockquote>
 <p>好了,我们来说说这个BUG</p>
-<p><img src="../images/yhcs_zan.png" alt=""></p>
+<p><img src="/images/yhcs_zan.png" alt=""></p>
 <p>看到赞,评论两个字段了么?  现在的需求是要加一个阅读量的,如图中的红色字</p>
 <p>这个阅读量本地先做一个点击就加一的东西,而不去请求网络来刷新.</p>
 <p>其实怎么刷这个赞都行,我们都需要先提供一个修改这一个   阅读量View  的功能</p>
@@ -309,7 +309,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" data-id="cjjscazli003qccsto82bt1co" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" data-id="cjjscr8qa003xiqstgdo3gvw5" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

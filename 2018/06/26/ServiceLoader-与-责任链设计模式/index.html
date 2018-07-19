@@ -13,14 +13,14 @@
 <meta property="og:site_name" content="王诛魔">
 <meta property="og:description" content="前因最近在做人脸识别的一些东西 主要是使用百度的SDK来完成采集, 识别. 这个功能是使用百度云的Api来对人脸进行分析,拿到年龄 颜值 等等信息">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://www.wangzhumo.com/2018/06/26/images/face_value.png">
-<meta property="og:image" content="http://www.wangzhumo.com/2018/06/26/images/face_text.png">
-<meta property="og:image" content="http://www.wangzhumo.com/2018/06/26/images/service_info.png">
-<meta property="og:updated_time" content="2018-07-14T03:41:18.067Z">
+<meta property="og:image" content="http://www.wangzhumo.com/images/face_value.png">
+<meta property="og:image" content="http://www.wangzhumo.com/images/face_text.png">
+<meta property="og:image" content="http://www.wangzhumo.com/images/service_info.png">
+<meta property="og:updated_time" content="2018-07-19T09:17:56.635Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ServiceLoader 与 责任链设计模式">
 <meta name="twitter:description" content="前因最近在做人脸识别的一些东西 主要是使用百度的SDK来完成采集, 识别. 这个功能是使用百度云的Api来对人脸进行分析,拿到年龄 颜值 等等信息">
-<meta name="twitter:image" content="http://www.wangzhumo.com/2018/06/26/images/face_value.png">
+<meta name="twitter:image" content="http://www.wangzhumo.com/images/face_value.png">
     
 
     
@@ -241,10 +241,10 @@
 <p>这个功能是使用百度云的Api来对人脸进行分析,拿到年龄 颜值 等等信息</p>
 <a id="more"></a>
 <p><strong>第一版设计稿:</strong></p>
-<p><img src="../images/face_value.png" alt="之前的效果"></p>
+<p><img src="/images/face_value.png" alt="之前的效果"></p>
 <p>那我就直接把请求到的数据展示了一下,然而</p>
 <p><strong>第二版设计稿:</strong></p>
-<p><img src="../images/face_text.png" alt="第二版"></p>
+<p><img src="/images/face_text.png" alt="第二版"></p>
 <p>这一版就是需要把拿到的数值按照区间来展示成文字描述</p>
 <p>那么,应该就是各种switch    if else </p>
 <p>….</p>
@@ -260,7 +260,7 @@
 <h3 id="ServiceLoader"><a href="#ServiceLoader" class="headerlink" title="ServiceLoader"></a>ServiceLoader</h3><p>上面的责任链其实已经可以使用,但是需要手动来初始化每个具体实现类,</p>
 <p>并且一个一个设置 nextHandler ,最后调用处理</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RealProcessFace</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//保存HandlerFace的每一个实现类</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ArrayList&lt;HandlerFace&gt; arraylist;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        arraylist = <span class="keyword">new</span> ArrayList();</span><br><span class="line">        <span class="comment">//通过ServiceLoader来加载所有HandlerFace的实现类</span></span><br><span class="line">        ServiceLoader&lt;HandlerFace&gt; processors = ServiceLoader.load(HandlerFace.class);</span><br><span class="line">        Iterator iterator = processors.iterator();</span><br><span class="line">        <span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">        	<span class="comment">//iterator.next() 这里具体实现类才真正的初始化了</span></span><br><span class="line">            arraylist.add((HandlerFace) iterator.next());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取组合短语</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> task 人脸信息</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 组合短语</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">process</span><span class="params">(ResultBean task)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arraylist.size() - <span class="number">1</span> ; i++) &#123;</span><br><span class="line">            <span class="comment">//依次设置setHandler </span></span><br><span class="line">            <span class="comment">//因为我并不需要他们依次处理,所以我并不关系他们处理的顺序</span></span><br><span class="line">            <span class="comment">//如果是需要顺序执行的话,建议还是手动处理</span></span><br><span class="line">            arraylist.get(i).setHandler(arraylist.get(i+<span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//调用第一个处理类,就会依次调用后面的处理类</span></span><br><span class="line">        ResultBean resultBean = arraylist.get(<span class="number">0</span>).process(task);</span><br><span class="line">        <span class="comment">//返回处理结果</span></span><br><span class="line">        <span class="keyword">return</span> resultBean.format();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h4><p><img src="../images/service_info.png" alt="info"></p>
+<h4 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h4><p><img src="/images/service_info.png" alt="info"></p>
 <p>1.创建一个base类,就是我上面写过的,可以是接口和抽象类</p>
 <p><code>com.baidu.aip.fl.func.service.HandlerFace</code></p>
 <p>2.一个或多个实现类</p>
@@ -299,7 +299,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/06/26/ServiceLoader-与-责任链设计模式/" data-id="cjjscazlv004dccsttg5r6gs3" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/06/26/ServiceLoader-与-责任链设计模式/" data-id="cjjscr8ql004jiqstpt0uzwuc" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
