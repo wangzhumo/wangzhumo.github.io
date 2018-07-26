@@ -1,6 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Android Studio中使用CMake进行JNI开发]]></title>
+    <url>%2F2018%2F07%2F25%2FAndroid-Studio%E4%B8%AD%E4%BD%BF%E7%94%A8CMake%E8%BF%9B%E8%A1%8CJNI%E5%BC%80%E5%8F%91%2F</url>
+    <content type="text"><![CDATA[前言定一个小目标,替代RenderScript来做一个图片的高斯模糊,因为这是一个比较考验性能的操作,所以我打算用C来做这个操作(主要原因是我自己不会写C++,刚好看到有这个开源算法…) 创建项目new -&gt; new Module -&gt; Android Library 当项目创建好之后,这只是一个单纯的Library,并不能使用JNI开发 下面,我们把它改造一下: 添加CMakeLists.txt选中lib_blur - new File - CMakeLists.txt 1234567891011121314151617181920212223242526272829cmake_minimum_required(VERSION 3.4.1)#设置生成的so动态库最后输出的路径#set(CMAKE_LIBRARY_OUTPUT_DIRECTORY $&#123;PROJECT_SOURCE_DIR&#125;/src/main/jniLibs/$&#123;ANDROID_ABI&#125;)add_library( # 库名 sample # 该库生成动态函数 SHARED # 依赖的文件 src/main/cpp/samplelib.cpp)find_library( # 设置Path变量的名称 log-lib # 指定要查询的库名字 # 在ndk中查找 liblog.so 函数库 log )target_link_libraries( # 目标库 sample # 要链接的库 android # Links the target library to the log library # included in the NDK. $&#123;log-lib&#125; ) 修改build.grade1234567891011121314151617181920212223android &#123; defaultConfig &#123; //... ndk &#123; // 设置支持的SO库架构 abiFilters 'armeabi-v7a', 'x86' &#125; externalNativeBuild &#123; cmake &#123; cppFlags "-std=c++14", "-frtti", "-fexceptions" &#125; &#125; &#125; //... externalNativeBuild &#123; cmake &#123; path "CMakeLists.txt" &#125; &#125;&#125; 编写C++文件我们的C文件都在src/main/cpp文件夹下,每一个C文件都需要在CMakeLists.txt文件中指定 12# 依赖的文件src/main/cpp/samplelib.cpp samplelib.cpp 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273#include &lt;jni.h&gt;#include &lt;stdlib.h&gt;#include &lt;string&gt;#include &lt;android/log.h&gt;#define TAG "JNI_LOG"#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR,TAG ,__VA_ARGS__)using namespace std;#ifdef __cplusplusextern "C" &#123;#endif//定义我Java文件的位置,注意是'/'分开static const char *className = "com/wangzhumo/app/commonlib/jni/JniManager";//返回一个stringjstring stringFromJNI(JNIEnv *env,jclass clz) &#123; std::string hello = "Hello from C++"; return env-&gt;NewStringUTF(hello.c_str());&#125;//返回一个string 并把这句话打印到logcat中去jstring sayHello(JNIEnv* env,jclass clz) &#123; std::string hello = "Say Hello from C++"; LOGE("Say Hello and value"); return env-&gt;NewStringUTF(hello.c_str());&#125;//获取所有方法名static JNINativeMethod gJniMethods[] = &#123; &#123;"sayHello", "()Ljava/lang/String;", (void*)sayHello&#125;, &#123;"stringFromJNI", "()Ljava/lang/String;", (void*)stringFromJNI&#125;,&#125;;//其中&#123;"MethodName","(入参)返回值",()Method&#125; //动态注册本地方法static int jniRegisterNativeMethods(JNIEnv* env, const char* className, const JNINativeMethod* gMethods, int numMethods) &#123; jclass clazz; clazz = (env)-&gt;FindClass( className); if (clazz == NULL) &#123; return -1; &#125; int result = 0; if ((env)-&gt;RegisterNatives(clazz, gMethods, numMethods) &lt; 0) &#123; result = -1; &#125; (env)-&gt;DeleteLocalRef(clazz); return result;&#125;//JNI_OnLoad回调JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved)&#123; JNIEnv* env = NULL; jint result = -1; if (vm-&gt;GetEnv((void**) &amp;env, JNI_VERSION_1_6) != JNI_OK) &#123; return result; &#125; jniRegisterNativeMethods(env, className, gJniMethods, sizeof(gJniMethods) / sizeof(JNINativeMethod)); return JNI_VERSION_1_6;&#125;#ifdef __cplusplus&#125;#endif 编写Java文件123456789public class JniManager &#123; static&#123; System.loadLibrary("sample"); &#125; public static native String sayHello(); public static native String stringFromJNI();&#125; 编译 Build -&gt; Make Project 编译完成,如果成功则 build -&gt; intermediates -&gt; cmake 下就有 .so文件 如图所示: 我们可以看到,生成了 armeabi-v7a, x86两种类型的.so文件,如果不在build.gradle中声明: 1234ndk &#123; // 设置支持的SO库架构 abiFilters 'armeabi-v7a', 'x86'&#125; 调用12345678910111213class MainActivity : AppCompatActivity() &#123; override fun onCreate(savedInstanceState: Bundle?) &#123; super.onCreate(savedInstanceState) setContentView(R.layout.activity_main) &#125; override fun onResume() &#123; super.onResume() Log.e("JNI",JniManager.sayHello()) Log.e("JNI",JniManager.stringFromJNI()) &#125;&#125; 结果: 12307-26 17:42:41.420 6685-6685/com.wangzhumo.playground E/JNI_LOG: Say Hello and value07-26 17:42:41.420 6685-6685/com.wangzhumo.playground E/JNI: Say Hello from C++07-26 17:42:41.420 6685-6685/com.wangzhumo.playground E/JNI: Hello from C++ 其中JNI_LOG是由 cpp 中的方法打印到Android的控制台的 JNI是我们在MainActivity中调用的 12Log.e("JNI",JniManager.sayHello())Log.e("JNI",JniManager.stringFromJNI()) 结语以上说明我的JNI算是初步完成了调用 http://zhixinliu.com/2015/07/01/2015-07-01-jni-register/ https://developer.android.com/ndk/guides/ 前言中的Flag真是立的好,C++不是很会,所以只能往简单了写,真是可怜的我]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[开发板Firefly-RK3399初探]]></title>
+    <url>%2F2018%2F07%2F24%2F%E5%BC%80%E5%8F%91%E6%9D%BFFirefly-RK3399%E5%88%9D%E6%8E%A2%2F</url>
+    <content type="text"><![CDATA[Firefly-RK3399 Firefly-RK3399 是 Firefly 团队精心打造的高性能开源主板,采用瑞芯微 RK3399 6 核芯片方案,主频 2.0GHz。具备 3G,4G 数据通信接口,USB3.0,PCIE 高性能设备接口,支持常用外接设备,接口丰富,性能稳定. 支持 Android\Linux\Ubuntu 系统，软件支持完善，开放源代码适合企业二次开发带高清显示的商显广 告机、自助售货机、教育终端等，可降低研发门槛，缩短产品研发周期. 以上是厂家的介绍,总的来说,这玩意的性能还是可以的,特别擅长的是对视屏功能的支持,最高可以流程的解析4k的视屏,可以接受双摄像头.那么对于我来说,就是非常适合的一个开发板,因为我的目的就是想在这个开发板上连接一个海康的摄像头,然后做人脸识别.]]></content>
+      <categories>
+        <category>Other</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+        <tag>RK3399</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[数据结构-下笔记]]></title>
+    <url>%2F2018%2F07%2F22%2F%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E4%B8%8B%E7%AC%94%E8%AE%B0%2F</url>
+    <content type="text"><![CDATA[算法 输入,待处理的信息 输出,经处理的信息 正确性,的确可以解决问题 确定性,任意算法都可以描述为由基本操作(明确,精密的)组成的序列 可行性,每一基本操作都可以实现,并在常数时间内完成 有穷性,对任何输入,经有穷次基本操作,都可以得到输出]]></content>
+      <categories>
+        <category>Programme</category>
+      </categories>
+      <tags>
+        <tag>Programme</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Vultr购买到使用详情]]></title>
+    <url>%2F2018%2F07%2F20%2FVultr%E8%B4%AD%E4%B9%B0%E5%88%B0%E4%BD%BF%E7%94%A8%E8%AF%A6%E6%83%85%2F</url>
+    <content type="text"><![CDATA[前言注册账号,购买VPS 我选择的是 洛杉矶 Centos7 的机子. 开始使用先Ping一下看到上图的 IP Address 了么? 复制那个地址 123456$ ping 149.28.86.54PING 149.28.86.54 (149.28.86.54): 56 data bytes64 bytes from 149.28.86.54: icmp_seq=0 ttl=43 time=329.703 ms64 bytes from 149.28.86.54: icmp_seq=1 ttl=43 time=352.446 ms64 bytes from 149.28.86.54: icmp_seq=2 ttl=43 time=372.199 ms64 bytes from 149.28.86.54: icmp_seq=3 ttl=43 time=290.125 ms 有速度就行,等你装好东西了,直接快照然后换机子就OK 登录服务器12# phyooos @ wangzhumo in ~/develop/hexo/source on git:master x [11:37:19]$ ssh root@149.28.xx.xx ssh 用户名@IP地址 回车 123The authenticity of host '149.28.xx.xx (149.28.xx.xx)' can't be established.ECDSA key fingerprint is SHA256:lMfGSYiwCJfoaRHJUUx7QedxZsv//cBY2xx9ctiAFfA.Are you sure you want to continue connecting (yes/no)? yes 这个输入yes即可 回车 1root@149.28.xx.xx's password: 注意你输入密码,光标是没有变化的,继续输就行,输完了 回车 如果成功登录是这样的 12Last login: Fri Jul 20 03:32:58 2018 from 118.192.166.xxx[root@xxx ~]#]]></content>
+      <categories>
+        <category>Server</category>
+      </categories>
+      <tags>
+        <tag>Server</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[递归调用创建单链表]]></title>
     <url>%2F2018%2F07%2F15%2F%E9%80%92%E5%BD%92%E8%B0%83%E7%94%A8%E5%88%9B%E5%BB%BA%E5%8D%95%E9%93%BE%E8%A1%A8%2F</url>
     <content type="text"><![CDATA[前言很多的面试中,都有要求实现一个单链表,这里就搞一个试试. 实现Node.kt 1234//创建一个Nodeclass Node(val value:Int)&#123; var next : Node? = null&#125; 这个Node有一个value,它是一个必传且不可修改的参数,就直接放在了构造了 next指向了下一个Node,这样就可以完成一个单向的链表,让我想起了 Message的next next默认是null,这是因为单链表最后一个next中就是null. ListCreated.kt 1234567891011121314151617181920212223242526272829303132333435363738394041424344class ListCreated &#123; fun createList(list: List&lt;Int&gt;): Node? &#123; //1. if (list.isEmpty()) &#123; return null &#125; //2. val currentNode = Node(list[0]) println("before $&#123;currentNode.value&#125;") //3. val nextNode = createList(list.subList(1, list.size)) if (nextNode != null) &#123; println("after $&#123;currentNode.value&#125;") &#125; //4. currentNode.next = nextNode return currentNode &#125;&#125;class ListCreated &#123; fun createList(list: List&lt;Int&gt;): Node? &#123; //1. if (list.isEmpty()) &#123; return null &#125; //2. val currentNode = Node(list[0]) println("before $&#123;currentNode.value&#125;") //3. val nextNode = createList(list.subList(1, list.size)) if (nextNode != null) &#123; println("after $&#123;currentNode.value&#125;") &#125; //4. currentNode.next = nextNode return currentNode &#125;&#125; 我们需要去判断List,如果为空就直接返回null了 这里就是当前的这个Node,保存了当前的value,但是next还是为null的 这里就是递归调用的地方,传入的参数是一个subList,当然是去掉了第一个,因为第一个已经是currentNode了 把currentNode的next指向了nextNode,构成单向 MainTest.java 1234567891011121314151617public class MainClass &#123; public static void main(String[] args)&#123; List&lt;Integer&gt; integerList = Arrays.asList(1,4,6,2); ListCreated created = new ListCreated(); Node node = created.createList(integerList); printAll(node); &#125; public static void printAll(Node node)&#123; while (node != null)&#123; System.out.print(node.getValue()); System.out.print(" "); node = node.getNext(); &#125; &#125;&#125; 打印结果: 12345678before 1before 4before 6before 2after 6after 4after 11 4 6 2 我们可以清楚的知道before 1,4,6,2 而没有打印,说明压入了栈,指令没有返回 after本来应该是 2,6,4,1的,为什么2没有打印出来,是因为 123if (nextNode != null) &#123; println("after $&#123;currentNode.value&#125;")&#125; 链表最后一个Node的next是为null的,所以没有打印 出栈的顺序,也是按照栈的规则,先进后出. 可以看到出入栈的顺序]]></content>
@@ -142,7 +187,7 @@
     <url>%2F2018%2F05%2F23%2FAndroid%E8%87%AA%E5%B7%B1%E5%B0%81%E8%A3%85%E4%B8%80%E4%B8%AAVideoPlayer%2F</url>
     <content type="text"><![CDATA[需求分析定义: 播放器 - TextureView .. 播放控制器 - MeadiaPlayer Ijk 控制器 - 即控制播放的UI部分,快进等等 需求: 播放器 , 播放控制器 , 控制器UI 分离,方便随时替换 对MeadiaPlayer 管理,达到无缝切换播放器 参考: JiaoZiVideoPlayer GSYVideoPlayer 进一步分析: 现在需要实现: 无任何控制器的播放,但是保证其在RecyclerView中的播放 只可以点击播放 滑动到第一个自动播放视频 详情页播放器 时长 播放进度 全屏播放 结构分析 由于一般通过播放器来控制整个播放过程,所以都应该集中到播放器中去 播放控制器 定义一个播放控制器的抽象类,该类应该包含一个播放控制器应该有的功能]]></content>
       <categories>
-        <category>Video</category>
+        <category>Android</category>
       </categories>
       <tags>
         <tag>Android</tag>
@@ -503,8 +548,8 @@
       </categories>
       <tags>
         <tag>Android</tag>
-        <tag>Rxjava</tag>
         <tag>Okhttp</tag>
+        <tag>Rxjava</tag>
       </tags>
   </entry>
   <entry>
@@ -516,8 +561,8 @@
       </categories>
       <tags>
         <tag>Android</tag>
-        <tag>Rxjava</tag>
         <tag>Okhttp</tag>
+        <tag>Rxjava</tag>
       </tags>
   </entry>
   <entry>

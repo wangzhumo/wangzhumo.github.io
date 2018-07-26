@@ -159,11 +159,11 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                61
+                65
                 <span>文章</span>
             </div>
             <div class="article-info-block">
-                28
+                30
                 <span>标签</span>
             </div>
         </div>
@@ -188,6 +188,936 @@
 
             
             <section id="main">
+    <article id="post-Android-Studio-中使用tools-sample" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/02/26/Android-Studio-中使用tools-sample/">Android Studio 中使用tools:sample</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/02/26/Android-Studio-中使用tools-sample/">
+            <time datetime="2018-02-26T02:31:28.000Z" itemprop="datePublished">2018-02-26</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Android-Studio/">Android Studio</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/Android-Studio/">Android Studio</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><blockquote>
+<p>Google 官方文档</p>
+<p><a href="https://developer.android.com/studio/write/tool-attributes.html#toolssample_resources" target="_blank" rel="noopener">https://developer.android.com/studio/write/tool-attributes.html#toolssample_resources</a></p>
+</blockquote>
+<p>他所能达到的效果就是,提供给你一些数据,并直接在 Preview 或者 Design面板中查看样式</p></p>
+            <p class="article-more-link">
+                <a href="/2018/02/26/Android-Studio-中使用tools-sample/#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wangzhumo.com/2018/02/26/Android-Studio-中使用tools-sample/" data-id="cjk2dl0l0000bf4st3xqqykwh" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-Android项目中使用Timber-Logger日志输出" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/02/07/Android项目中使用Timber-Logger日志输出/">Android项目中使用Timber + Logger日志输出</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/02/07/Android项目中使用Timber-Logger日志输出/">
+            <time datetime="2018-02-07T09:48:58.000Z" itemprop="datePublished">2018-02-07</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Android/">Android</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Android/">Android</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>不啰嗦了,直接开始.</p>
+<h4 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h4><blockquote>
+<p>Logger   <a href="https://github.com/orhanobut/logger" target="_blank" rel="noopener">orhanobut/Logger</a></p>
+<p>Timber  <a href="https://github.com/JakeWharton/timber" target="_blank" rel="noopener">JakeWharton/timber</a></p>
+</blockquote>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//logger</span></span><br><span class="line">implementation <span class="string">'com.orhanobut:logger:2.1.1'</span></span><br><span class="line"><span class="comment">//timber</span></span><br><span class="line">implementation <span class="string">'com.jakewharton.timber:timber:4.6.0'</span></span><br></pre></td></tr></table></figure></p>
+            <p class="article-more-link">
+                <a href="/2018/02/07/Android项目中使用Timber-Logger日志输出/#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wangzhumo.com/2018/02/07/Android项目中使用Timber-Logger日志输出/" data-id="cjk2dl0m8001mf4stuikvc5ux" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-Jenkins搭建Android自动打包" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/02/05/Jenkins搭建Android自动打包/">Jenkins搭建Android自动打包</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/02/05/Jenkins搭建Android自动打包/">
+            <time datetime="2018-02-05T01:55:44.000Z" itemprop="datePublished">2018-02-05</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Android/">Android</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/Jenkins/">Jenkins</a>, <a class="tag-link" href="/tags/Server/">Server</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h4 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h4><ul>
+<li><p>Jenkins的下载与安装</p>
+<p><strong>下载</strong></p>
+<blockquote>
+<p> <a href="https://jenkins.io/download/" target="_blank" rel="noopener">https://jenkins.io/download/</a></p>
+<p> 下载war包</p>
+<p> <a href="http://mirrors.jenkins.io/war-stable/latest/jenkins.war" target="_blank" rel="noopener">Generic Java package (.war)</a></p>
+</blockquote>
+<p>因为打算使用Tomcat来部署,所以需要下载war包,也可以直接下对应版本的安装文件,直接安装</p>
+</li>
+</ul>
+<p>​    <strong>安装</strong></p>
+<p>​    war包放到<code>./apache-tomcat-7.0.77/webapps</code>    </p>
+<p>​    Tomcat的wabapps包下即可</p>
+<ul>
+<li><p>Tomcat (略)</p>
+<p>记得配置一下环境变量,等会方便启动</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export TOMCAT_HOME=/Users/phyooos/develop/apache-tomcat-7.0.77</span><br><span class="line"></span><br><span class="line">export PATH.....:$TOMCAT/bin</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ul>
+<h4 id="初始化Jenkins"><a href="#初始化Jenkins" class="headerlink" title="初始化Jenkins"></a>初始化Jenkins</h4><ul>
+<li><p>启动Jenkins,即启动tomcat</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> startup.sh</span><br><span class="line">Using CATALINA_BASE:   /Users/phyooos/develop/apache-tomcat-7.0.77</span><br><span class="line">Using CATALINA_HOME:   /Users/phyooos/develop/apache-tomcat-7.0.77</span><br><span class="line">Using CATALINA_TMPDIR: /Users/phyooos/develop/apache-tomcat-7.0.77/temp</span><br><span class="line">Using JRE_HOME:        /Library/Java/JavaVirtualMachines/jdk1.8.0/Contents/Home</span><br><span class="line">Using CLASSPATH:       /Users/phyooos/develop/apache-tomcat-7.0.77/bin/bootstrap.jar:/Users/phyooos/develop/apache-tomcat-7.0.77/bin/tomcat-juli.jar</span><br><span class="line">Tomcat started.</span><br></pre></td></tr></table></figure>
+<p>看到这个就说明,已经正常启动</p>
+</li>
+<li><p>访问<a href="http://localhost:8080/jenkins/" target="_blank" rel="noopener">http://localhost:8080/jenkins/</a></p>
+<p>打开后需要输入一个密钥,mac的在<code>jenkins/secrets/initialAdminPassword</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">~ ⌚ 10:11:03</span><br><span class="line"><span class="meta">$</span> cat ~/.jenkins/secrets/initialAdminPassword</span><br><span class="line">55ad44431f6d4ebdb53a7c1971d12df4</span><br></pre></td></tr></table></figure>
+<p>输入此密钥即可.</p>
+</li>
+<li><p>创建用户</p>
+</li>
+</ul>
+<h4 id="配置Jenkins"><a href="#配置Jenkins" class="headerlink" title="配置Jenkins"></a>配置Jenkins</h4><h5 id="1-安装插件"><a href="#1-安装插件" class="headerlink" title="1.安装插件"></a>1.安装插件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">	</span><br><span class="line">Build Timeout</span><br><span class="line"></span><br><span class="line">build-name-setter</span><br><span class="line"></span><br><span class="line">Credentials Binding Plugin</span><br><span class="line"></span><br><span class="line">description setter plugin</span><br><span class="line"></span><br><span class="line">Dynamic Parameter Plug-in(这个插件,搜不到了,因为安全问题被屏蔽了)</span><br><span class="line"></span><br><span class="line">Environment Injector Plugin</span><br><span class="line"></span><br><span class="line">Git plugin</span><br><span class="line"></span><br><span class="line">GitHub Branch Source Plugin</span><br><span class="line">	</span><br><span class="line">Gitlab Authentication plugin</span><br><span class="line"></span><br><span class="line">GitLab Plugin</span><br><span class="line"></span><br><span class="line">Gradle Plugin</span><br><span class="line"></span><br><span class="line">Pipeline</span><br><span class="line"></span><br><span class="line">SSH Slaves plugin</span><br><span class="line">	</span><br><span class="line">SSH plugin</span><br><span class="line">	</span><br><span class="line">Timestamper</span><br><span class="line">	</span><br><span class="line">Upload to pgyer(上传到蒲公英,没有需要的不用安装)</span><br><span class="line">	</span><br><span class="line">Workspace Cleanup Plugin</span><br></pre></td></tr></table></figure>
+<p>以上插件,是常用的插件,尽量全部安装</p>
+<h5 id="2-配置环境变量"><a href="#2-配置环境变量" class="headerlink" title="2.配置环境变量"></a>2.配置环境变量</h5><p><strong>系统管理 - 全局工具配置</strong></p>
+<p>需要配置</p>
+<p>Java</p>
+<p><img src="/images/jenkins_java.png" alt="Java"></p>
+<p>Git</p>
+<p><img src="/images/jenkins_git.png" alt="Git"></p>
+<p>Gradle</p>
+<p><img src="/images/jenkins_gradle.png" alt="Gradle"></p>
+<p>配置好保存即可</p>
+<p><strong>系统管理 - 系统设置</strong></p>
+<p>记得配置gitlab或者 github账号</p>
+<h5 id="3-初始化项目"><a href="#3-初始化项目" class="headerlink" title="3.初始化项目"></a>3.初始化项目</h5><p>创建项目</p>
+<p><img src="/images/jenkins_init.png" alt="init"></p>
+<hr>
+<p><strong>General</strong></p>
+<p>选择参数化构建过程</p>
+<p>IS_JENKINS  是否Jenkins打包,这里肯定是一直true的</p>
+<p>PRODUCT_FLAVORS  环境</p>
+<p>BUILD_TYPE  构建版本</p>
+<p>VERSION_NAME 版本名字</p>
+<p>JENKINS_OUTPUT Apk生成目录</p>
+<p>JENKINS_TIME  时间戳</p>
+<p><img src="/images/jenkins_init1.png" alt="General"></p>
+<p><img src="/images/jenkins_init2.png" alt="General"></p>
+<p><img src="/images/jenkins_init3.png" alt="General"></p>
+<p>这些参数定义完就可以使用了 ${参数名} 的形式,这些参数会写入到 App项目中的 gradle.properties文件</p>
+<p>App项目中的 gradle.properties文件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># When configured, Gradle will run in incubating parallel mode.</span><br><span class="line"># This option should only be used with decoupled projects. More details, visit</span><br><span class="line"># http://www.gradle.org/docs/current/userguide/multi_project_builds.html#sec:decoupled_projects</span><br><span class="line"># org.gradle.parallel=true</span><br><span class="line">org.gradle.jvmargs=-Xmx4608M</span><br><span class="line"></span><br><span class="line">VERSION_NAME=<span class="number">1.4</span>.0</span><br><span class="line">VERSION_CODE=<span class="number">12</span></span><br><span class="line">IS_JENKINS=<span class="keyword">false</span></span><br><span class="line">JENKINS_OUTPUT=<span class="string">'output/'</span></span><br><span class="line">JENKINS_TIME=<span class="string">'201802021231'</span></span><br></pre></td></tr></table></figure>
+<hr>
+<p>进入下一个配置页面,到<strong>源码管理</strong>那块</p>
+<p><img src="/images/jenkins_gitlab.png" alt="gitlab"></p>
+<p>只要你能下载到源码即可,无所谓非要和我这个一致,branch  就是指定分支了,我这儿是  dev 分支</p>
+<hr>
+<p>下一个配置<strong>构建</strong></p>
+<p><img src="/images/jenkins_build.png" alt="build"></p>
+<p>选择 Invoke Gradle </p>
+<p>Tasks 里面的命令,我来解释一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#清理</span><br><span class="line">clean  </span><br><span class="line">#打包</span><br><span class="line">assemble$&#123;PRODUCT_FLAVORS&#125;$&#123;BUILD_TYPE&#125;</span><br><span class="line">#这里的意思是 打包指定的一个FLAVOR版本(Release + 版本)</span><br><span class="line">#关于assemble ...  的,请搜 gradle 打包命令</span><br><span class="line"></span><br><span class="line">#其他参数</span><br><span class="line">-PVERSION_NAME=$&#123;VERSION_NAME&#125;</span><br><span class="line">-PVERSION_CODE=$&#123;VERSION_CODE&#125;</span><br><span class="line">-PJENKINS_OUTPUT=$&#123;JENKINS_OUTPUT&#125;</span><br><span class="line">-PJENKINS_TIME=$&#123;JENKINS_TIME&#125;</span><br><span class="line">-PIS_JENKINS=$&#123;IS_JENKINS&#125;</span><br><span class="line"></span><br><span class="line">#-P意味着参数</span><br><span class="line">#-P后面是参数名</span><br><span class="line">#=$&#123;&#125; 则为参数值,就是上面General里面配置的</span><br></pre></td></tr></table></figure>
+<hr>
+<p><strong>构建后操作</strong></p>
+<p><img src="/images/jenkins_pgy.png" alt="pgy"></p>
+<blockquote>
+<p>参考 <a href="https://www.pgyer.com/doc/view/jenkins_plugin" target="_blank" rel="noopener">https://www.pgyer.com/doc/view/jenkins_plugin</a></p>
+</blockquote>
+<p>保存即可</p>
+<h5 id="改造App"><a href="#改造App" class="headerlink" title="改造App"></a>改造App</h5><ul>
+<li>./gradle.properties文件</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">VERSION_NAME=1.4.0</span><br><span class="line">VERSION_CODE=12</span><br><span class="line">IS_JENKINS=false</span><br><span class="line">JENKINS_OUTPUT=&apos;output/&apos;</span><br><span class="line">JENKINS_TIME=&apos;201802021231&apos;</span><br></pre></td></tr></table></figure>
+<p>以上文件,写完请build一次,便于build.gradle中使用</p>
+<p>使用jenkins时,jenkins会把定义的值注入到这里,覆盖这里定义的值</p>
+<ul>
+<li>app/build.gradle</li>
+</ul>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">android&#123;</span><br><span class="line"></span><br><span class="line">	defaultConfig &#123;</span><br><span class="line">    	...</span><br><span class="line">    	<span class="comment">//此处使用gradle.properties中的值   VERSION_CODE和VERSION_NAME</span></span><br><span class="line">    	versionCode VERSION_CODE <span class="keyword">as</span> Integer</span><br><span class="line">    	versionName VERSION_NAME</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//自定义apk名字</span></span><br><span class="line">    android.applicationVariants.all &#123; variant -&gt;</span><br><span class="line">    	<span class="comment">//获取时间戳</span></span><br><span class="line">        <span class="keyword">def</span> timeNow = getDate()</span><br><span class="line">        <span class="comment">//如果是IS_JENKINS构建,则修改打包apk的目录</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="string">'true'</span>.equals(IS_JENKINS)) &#123;</span><br><span class="line">        	<span class="comment">//使用JENKINS_OUTPUT的目录</span></span><br><span class="line">            <span class="keyword">def</span> outputFile = JENKINS_OUTPUT</span><br><span class="line">            <span class="comment">//使用JENKINS_TIME的时间戳</span></span><br><span class="line">            timeNow = JENKINS_TIME</span><br><span class="line">            <span class="comment">//定义apk目录</span></span><br><span class="line">            variant.getPackageApplication().outputDirectory = <span class="keyword">new</span> File(outputFile)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        variant.getPackageApplication().outputScope.apkDatas.forEach &#123; apkData -&gt;</span><br><span class="line">            <span class="comment">//这个修改输出APK的文件名</span></span><br><span class="line">            apkData.outputFileName = <span class="string">"一号车市_$&#123;variant.versionName&#125;_$&#123;timeNow&#125;.apk"</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	flavorDimensions <span class="string">'env'</span></span><br><span class="line"></span><br><span class="line">    productFlavors &#123;</span><br><span class="line">        envapp &#123;</span><br><span class="line">            dimension <span class="string">'env'</span></span><br><span class="line">            <span class="comment">//此处使用jenkins传的VERSION_NAME</span></span><br><span class="line">            versionName VERSION_NAME</span><br><span class="line">            manifestPlaceholders = [<span class="string">UMENG_CHANNEL_VALUE:</span> <span class="string">"app"</span>]</span><br><span class="line">            buildConfigField <span class="string">"String"</span>, <span class="string">"SERVER_HOST"</span>, <span class="string">'"https://app.wangzhumo.com/"'</span></span><br><span class="line">        &#125;</span><br><span class="line">        envtest &#123;</span><br><span class="line">            dimension <span class="string">'env'</span></span><br><span class="line">            <span class="comment">//为了方便测试看出当前app环境,就不用VERSION_NAME了</span></span><br><span class="line">            versionName <span class="string">"Test"</span></span><br><span class="line">            manifestPlaceholders = [<span class="string">UMENG_CHANNEL_VALUE:</span> <span class="string">"app"</span>]</span><br><span class="line">            buildConfigField <span class="string">"String"</span>, <span class="string">"SERVER_HOST"</span>, <span class="string">'"http://app-test.wangzhumo.com/"'</span></span><br><span class="line">        &#125;</span><br><span class="line">        envpre &#123;</span><br><span class="line">            dimension <span class="string">'env'</span></span><br><span class="line">            versionName <span class="string">"Pre"</span></span><br><span class="line">            manifestPlaceholders = [<span class="string">UMENG_CHANNEL_VALUE:</span> <span class="string">"app"</span>]</span><br><span class="line">            buildConfigField <span class="string">"String"</span>, <span class="string">"SERVER_HOST"</span>, <span class="string">'"https://app-pre.wangzhumo.com/"'</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        envdev &#123;</span><br><span class="line">            dimension <span class="string">'env'</span></span><br><span class="line">            versionName <span class="string">"Dev"</span></span><br><span class="line">            manifestPlaceholders = [<span class="string">UMENG_CHANNEL_VALUE:</span> <span class="string">"app"</span>]</span><br><span class="line">            buildConfigField <span class="string">"String"</span>, <span class="string">"SERVER_HOST"</span>, <span class="string">'"http://192.168.1.16:8080/app2c/"'</span></span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//其实UMENG_CHANNEL_VALUE    SERVER_HOST   也都可以使用jenkins定义参数,并使用</span></span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">//一个获取时间戳的方法</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">def</span> getDate() &#123;</span><br><span class="line">    	<span class="keyword">def</span> date = <span class="keyword">new</span> Date()</span><br><span class="line">    	<span class="keyword">def</span> formattedDate = date.format(<span class="string">'yyyyMMddHHmm'</span>)</span><br><span class="line">    	<span class="keyword">return</span> formattedDate</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>记得改完app,上传代码哦</p>
+<h4 id="Jenkins打包"><a href="#Jenkins打包" class="headerlink" title="Jenkins打包"></a>Jenkins打包</h4><p><img src="/images/jenkins_go.png" alt="打包"></p>
+<p>OK了,可以愉快的打包了,打包完就会自动上传到蒲公英.</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wangzhumo.com/2018/02/05/Jenkins搭建Android自动打包/" data-id="cjk2dl0n3003jf4st44i08447" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-Java中String-format-的使用指北" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/02/04/Java中String-format-的使用指北/">Java中String.format()的使用指北</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/02/04/Java中String-format-的使用指北/">
+            <time datetime="2018-02-04T10:16:12.000Z" itemprop="datePublished">2018-02-04</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Java/">Java</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Java/">Java</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <blockquote>
+<p>本文非原创,来自<a href="http://blog.csdn.net/lonely_fireworks/article/details/7962171/" target="_blank" rel="noopener">http://blog.csdn.net/lonely_fireworks/article/details/7962171/</a></p>
+<p>这里做一个备份,方便随时查询</p>
+</blockquote>
+<h4 id="常规类型的格式化"><a href="#常规类型的格式化" class="headerlink" title="常规类型的格式化"></a>常规类型的格式化</h4><p>String类的format()方法用于创建格式化的字符串以及连接多个字符串对象,format()方法有两种重载形式。</p>
+<ul>
+<li><p>format(String format, Object… args) </p>
+<p>新字符串使用本地语言环境，制定字符串格式和参数生成格式化的新字符串。</p>
+</li>
+<li><p>format(Locale locale, String format, Object… args) </p>
+<p>使用指定的语言环境，制定字符串格式和参数生成格式化的字符串。</p>
+</li>
+</ul>
+<h5 id="显示不同转换符实现不同数据类型到字符串的转换，如图所示。"><a href="#显示不同转换符实现不同数据类型到字符串的转换，如图所示。" class="headerlink" title="显示不同转换符实现不同数据类型到字符串的转换，如图所示。"></a>显示不同转换符实现不同数据类型到字符串的转换，如图所示。</h5><table>
+<thead>
+<tr>
+<th>转  换  符</th>
+<th>说    明</th>
+<th>示    例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%s</td>
+<td>字符串类型</td>
+<td>“mingrisoft”</td>
+</tr>
+<tr>
+<td>%c</td>
+<td>字符类型</td>
+<td>‘m’</td>
+</tr>
+<tr>
+<td>%b</td>
+<td>布尔类型</td>
+<td>true</td>
+</tr>
+<tr>
+<td>%d</td>
+<td>整数类型（十进制）</td>
+<td>99</td>
+</tr>
+<tr>
+<td>%x</td>
+<td>整数类型（十六进制）</td>
+<td>FF</td>
+</tr>
+<tr>
+<td>%o</td>
+<td>整数类型（八进制）</td>
+<td>77</td>
+</tr>
+<tr>
+<td>%f</td>
+<td>浮点类型</td>
+<td>99.99</td>
+</tr>
+<tr>
+<td>%a</td>
+<td>十六进制浮点类型</td>
+<td>FF.35AE</td>
+</tr>
+<tr>
+<td>%e</td>
+<td>指数类型</td>
+<td>9.38e+5</td>
+</tr>
+<tr>
+<td>%g</td>
+<td>通用浮点类型（f和e类型中较短的）</td>
+<td></td>
+</tr>
+<tr>
+<td>%h</td>
+<td>散列码</td>
+<td></td>
+</tr>
+<tr>
+<td>%%</td>
+<td>百分比类型</td>
+<td>％</td>
+</tr>
+<tr>
+<td>%n</td>
+<td>换行符</td>
+<td></td>
+</tr>
+<tr>
+<td>%tx</td>
+<td>日期与时间类型（x代表不同的日期与时间转换符</td>
+</tr>
+</tbody>
+</table>
+<p>测试用例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    String str=<span class="keyword">null</span>;</span><br><span class="line">    str=String.format(<span class="string">"Hi,%s"</span>, <span class="string">"王力"</span>);</span><br><span class="line">    System.out.println(str);</span><br><span class="line">    str=String.format(<span class="string">"Hi,%s:%s.%s"</span>, <span class="string">"王南"</span>,<span class="string">"王力"</span>,<span class="string">"王张"</span>);          </span><br><span class="line">    System.out.println(str);                         </span><br><span class="line">    System.out.printf(<span class="string">"字母a的大写是：%c %n"</span>, <span class="string">'A'</span>);</span><br><span class="line">    System.out.printf(<span class="string">"3&gt;7的结果是：%b %n"</span>, <span class="number">3</span>&gt;<span class="number">7</span>);</span><br><span class="line">    System.out.printf(<span class="string">"100的一半是：%d %n"</span>, <span class="number">100</span>/<span class="number">2</span>);</span><br><span class="line">    System.out.printf(<span class="string">"100的16进制数是：%x %n"</span>, <span class="number">100</span>);</span><br><span class="line">    System.out.printf(<span class="string">"100的8进制数是：%o %n"</span>, <span class="number">100</span>);</span><br><span class="line">    System.out.printf(<span class="string">"50元的书打8.5折扣是：%f 元%n"</span>, <span class="number">50</span>*<span class="number">0.85</span>);</span><br><span class="line">    System.out.printf(<span class="string">"上面价格的16进制数是：%a %n"</span>, <span class="number">50</span>*<span class="number">0.85</span>);</span><br><span class="line">    System.out.printf(<span class="string">"上面价格的指数表示：%e %n"</span>, <span class="number">50</span>*<span class="number">0.85</span>);</span><br><span class="line">    System.out.printf(<span class="string">"上面价格的指数和浮点数结果的长度较短的是：%g %n"</span>, <span class="number">50</span>*<span class="number">0.85</span>);</span><br><span class="line">    System.out.printf(<span class="string">"上面的折扣是%d%% %n"</span>, <span class="number">85</span>);</span><br><span class="line">    System.out.printf(<span class="string">"字母A的散列码是：%h %n"</span>, <span class="string">'A'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Hi,王力</span><br><span class="line">Hi,王南:王力.王张</span><br><span class="line">字母a的大写是：A </span><br><span class="line"><span class="number">3</span>&gt;<span class="number">7</span>的结果是：<span class="keyword">false</span> </span><br><span class="line"><span class="number">100</span>的一半是：<span class="number">50</span> </span><br><span class="line"><span class="number">100</span>的<span class="number">16</span>进制数是：<span class="number">64</span> </span><br><span class="line"><span class="number">100</span>的<span class="number">8</span>进制数是：<span class="number">144</span> </span><br><span class="line"><span class="number">50</span>元的书打<span class="number">8.5</span>折扣是：<span class="number">42.500000</span> 元</span><br><span class="line">上面价格的<span class="number">16</span>进制数是：<span class="number">0x1</span>.54p5 </span><br><span class="line">上面价格的指数表示：<span class="number">4.250000e+01</span> </span><br><span class="line">上面价格的指数和浮点数结果的长度较短的是：<span class="number">42.5000</span> </span><br><span class="line">上面的折扣是<span class="number">85</span>% </span><br><span class="line">字母A的散列码是：<span class="number">41</span></span><br></pre></td></tr></table></figure>
+<h5 id="搭配转换符的标志"><a href="#搭配转换符的标志" class="headerlink" title="搭配转换符的标志"></a>搭配转换符的标志</h5><table>
+<thead>
+<tr>
+<th>标    志</th>
+<th>说    明</th>
+<th>示    例</th>
+<th>结    果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>+</td>
+<td>为正数或者负数添加符号</td>
+<td>(“%+d”,15)</td>
+<td>+15</td>
+</tr>
+<tr>
+<td>−</td>
+<td>左对齐</td>
+<td>(“%-5d”,15)</td>
+<td>\</td>
+<td>15   \</td>
+<td></td>
+</tr>
+<tr>
+<td>0</td>
+<td>数字前面补0</td>
+<td>(“%04d”, 99)</td>
+<td>0099</td>
+</tr>
+<tr>
+<td>空格</td>
+<td>在整数之前添加指定数量的空格</td>
+<td>(“% 4d”, 99)</td>
+<td>\</td>
+<td>99\</td>
+<td></td>
+</tr>
+<tr>
+<td>,</td>
+<td>以“,”对数字分组</td>
+<td>(“%,f”, 9999.99)</td>
+<td>9,999.990000</td>
+</tr>
+<tr>
+<td>(</td>
+<td>使用括号包含负数</td>
+<td>(“%(f”, -99.99)</td>
+<td>(99.990000)</td>
+</tr>
+<tr>
+<td>#</td>
+<td>如果是浮点数则包含小数点，如果是16进制或8进制则添加0x或0</td>
+<td>(“%#x”, 99)(“%#o”, 99)</td>
+<td>0x630143</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>格式化前一个转换符所描述的参数</td>
+<td>(“%f和%&lt;3.2f”, 99.45)</td>
+<td>99.450000和99.45</td>
+</tr>
+<tr>
+<td>$</td>
+<td>被格式化的参数索引</td>
+<td>(“%1$d,%2$s”, 99,”abc”)</td>
+<td>99,abc</td>
+</tr>
+</tbody>
+</table>
+<p>测试用例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;  </span><br><span class="line"></span><br><span class="line">    String str=<span class="keyword">null</span>;  </span><br><span class="line"></span><br><span class="line">    <span class="comment">//$使用  </span></span><br><span class="line">    str=String.format(<span class="string">"格式参数的使用：%1d,%2$s"</span>, <span class="number">99</span>,<span class="string">"abc"</span>);             </span><br><span class="line">    System.out.println(str);                       </span><br><span class="line">   	</span><br><span class="line">   	<span class="comment">//+使用  </span></span><br><span class="line">    System.out.printf(<span class="string">"显示正负数的符号：%+d与%d%n"</span>, <span class="number">99</span>,-<span class="number">99</span>);  </span><br><span class="line"></span><br><span class="line">    <span class="comment">//补O使用  </span></span><br><span class="line">    System.out.printf(<span class="string">"最牛的编号是：%03d%n"</span>, <span class="number">7</span>);  </span><br><span class="line"></span><br><span class="line">    <span class="comment">//空格使用  </span></span><br><span class="line">    System.out.printf(<span class="string">"Tab键的效果是：% 8d%n"</span>, <span class="number">7</span>);  </span><br><span class="line"></span><br><span class="line">    <span class="comment">//.使用  </span></span><br><span class="line">    System.out.printf(<span class="string">"整数分组的效果是：%,d%n"</span>, <span class="number">9989997</span>);  </span><br><span class="line"></span><br><span class="line">    <span class="comment">//空格和小数点后面个数  </span></span><br><span class="line">    System.out.printf(<span class="string">"一本书的价格是：% 50.5f元%n"</span>, <span class="number">49.8</span>);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">格式参数$的使用：<span class="number">99</span>,abc</span><br><span class="line">显示正负数的符号：+<span class="number">99</span>与-<span class="number">99</span></span><br><span class="line">最牛的编号是：<span class="number">007</span></span><br><span class="line">Tab键的效果是：       <span class="number">7</span></span><br><span class="line">整数分组的效果是：<span class="number">9</span>,<span class="number">989</span>,<span class="number">997</span></span><br><span class="line">一本书的价格是： <span class="number">49.80000</span>元</span><br></pre></td></tr></table></figure>
+<h4 id="日期和事件字符串格式化"><a href="#日期和事件字符串格式化" class="headerlink" title="日期和事件字符串格式化"></a>日期和事件字符串格式化</h4><p>字符串格式中还有%tx转换符没有详细介绍，它是专门用来格式化日期和时 间的。%tx转换符中的x代表另外的处理日期和时间格式的转换符，它们的组合能够将日期和时间格式化成多种格式。</p>
+<h5 id="常见日期和时间组合的格式"><a href="#常见日期和时间组合的格式" class="headerlink" title="常见日期和时间组合的格式"></a>常见日期和时间组合的格式</h5><table>
+<thead>
+<tr>
+<th>转  换  符</th>
+<th>说    明</th>
+<th>示    例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>c</td>
+<td>包括全部日期和时间信息</td>
+<td>星期六 十月 27 14:21:20 CST 2007</td>
+</tr>
+<tr>
+<td>F</td>
+<td>“年-月-日”格式</td>
+<td>2007-10-27</td>
+</tr>
+<tr>
+<td>D</td>
+<td>“月/日/年”格式</td>
+<td>10/27/07</td>
+</tr>
+<tr>
+<td>r</td>
+<td>“HH:MM:SS PM”格式（12时制）</td>
+<td>02:25:51 下午</td>
+</tr>
+<tr>
+<td>T</td>
+<td>“HH:MM:SS”格式（24时制）</td>
+<td>14:28:16</td>
+</tr>
+<tr>
+<td>R</td>
+<td>“HH:MM”格式（24时制）</td>
+<td>14:28</td>
+</tr>
+</tbody>
+</table>
+<p>测试用例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">	Date date=<span class="keyword">new</span> Date();                                </span><br><span class="line">	<span class="comment">//c的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"全部日期和时间信息：%tc%n"</span>,date);        </span><br><span class="line">	<span class="comment">//f的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"年-月-日格式：%tF%n"</span>,date);</span><br><span class="line">	<span class="comment">//d的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"月/日/年格式：%tD%n"</span>,date);</span><br><span class="line">	<span class="comment">//r的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"HH:MM:SS PM格式（12时制）：%tr%n"</span>,date);</span><br><span class="line">	<span class="comment">//t的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"HH:MM:SS格式（24时制）：%tT%n"</span>,date);</span><br><span class="line">	<span class="comment">//R的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"HH:MM格式（24时制）：%tR"</span>,date);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">全部日期和时间信息：星期一 九月 10 10:43:36 CST 2012</span><br><span class="line">年-月-日格式：2012-09-10</span><br><span class="line">月/日/年格式：09/10/12</span><br><span class="line">HH:MM:SS PM格式（12时制）：10:43:36 上午</span><br><span class="line">HH:MM:SS格式（24时制）：10:43:36</span><br><span class="line">HH:MM格式（24时制）：10:43</span><br></pre></td></tr></table></figure>
+<p>定义日期格式的转换符可以使日期通过指定的转换符生成新字符串。这些日期转换符如图所示。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">  Date date=<span class="keyword">new</span> Date();                                    </span><br><span class="line">  <span class="comment">//b的使用，月份简称</span></span><br><span class="line">  String str=String.format(Locale.US,<span class="string">"英文月份简称：%tb"</span>,date);     </span><br><span class="line">  System.out.println(str);                                                                            </span><br><span class="line">  System.out.printf(<span class="string">"本地月份简称：%tb%n"</span>,date);</span><br><span class="line">  <span class="comment">//B的使用，月份全称</span></span><br><span class="line">  str=String.format(Locale.US,<span class="string">"英文月份全称：%tB"</span>,date);</span><br><span class="line">  System.out.println(str);</span><br><span class="line">  System.out.printf(<span class="string">"本地月份全称：%tB%n"</span>,date);</span><br><span class="line">  <span class="comment">//a的使用，星期简称</span></span><br><span class="line">  str=String.format(Locale.US,<span class="string">"英文星期的简称：%ta"</span>,date);</span><br><span class="line">  System.out.println(str);</span><br><span class="line">  <span class="comment">//A的使用，星期全称</span></span><br><span class="line">  System.out.printf(<span class="string">"本地星期的简称：%tA%n"</span>,date);</span><br><span class="line">  <span class="comment">//C的使用，年前两位</span></span><br><span class="line">  System.out.printf(<span class="string">"年的前两位数字（不足两位前面补0）：%tC%n"</span>,date);</span><br><span class="line">  <span class="comment">//y的使用，年后两位</span></span><br><span class="line">  System.out.printf(<span class="string">"年的后两位数字（不足两位前面补0）：%ty%n"</span>,date);</span><br><span class="line">  <span class="comment">//j的使用，一年的天数</span></span><br><span class="line">  System.out.printf(<span class="string">"一年中的天数（即年的第几天）：%tj%n"</span>,date);</span><br><span class="line">  <span class="comment">//m的使用，月份</span></span><br><span class="line">  System.out.printf(<span class="string">"两位数字的月份（不足两位前面补0）：%tm%n"</span>,date);</span><br><span class="line">  <span class="comment">//d的使用，日（二位，不够补零）</span></span><br><span class="line">  System.out.printf(<span class="string">"两位数字的日（不足两位前面补0）：%td%n"</span>,date);</span><br><span class="line">  <span class="comment">//e的使用，日（一位不补零）</span></span><br><span class="line">  System.out.printf(<span class="string">"月份的日（前面不补0）：%te"</span>,date);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">英文月份简称：Sep</span><br><span class="line">本地月份简称：九月</span><br><span class="line">英文月份全称：September</span><br><span class="line">本地月份全称：九月</span><br><span class="line">英文星期的简称：Mon</span><br><span class="line">本地星期的简称：星期一</span><br><span class="line">年的前两位数字（不足两位前面补0）：20</span><br><span class="line">年的后两位数字（不足两位前面补0）：12</span><br><span class="line">一年中的天数（即年的第几天）：254</span><br><span class="line">两位数字的月份（不足两位前面补0）：09</span><br><span class="line">两位数字的日（不足两位前面补0）：10</span><br><span class="line">月份的日（前面不补0）：10</span><br></pre></td></tr></table></figure>
+<h5 id="和日期格式转换符相比，时间格式的转换符要更多、更精确。它可以将时间格式化成时、分、秒甚至时毫秒等单位。格式化时间字符串的转换符如图所示。"><a href="#和日期格式转换符相比，时间格式的转换符要更多、更精确。它可以将时间格式化成时、分、秒甚至时毫秒等单位。格式化时间字符串的转换符如图所示。" class="headerlink" title="和日期格式转换符相比，时间格式的转换符要更多、更精确。它可以将时间格式化成时、分、秒甚至时毫秒等单位。格式化时间字符串的转换符如图所示。"></a>和日期格式转换符相比，时间格式的转换符要更多、更精确。它可以将时间格式化成时、分、秒甚至时毫秒等单位。格式化时间字符串的转换符如图所示。</h5><table>
+<thead>
+<tr>
+<th>转  换  符</th>
+<th>说    明</th>
+<th>示    例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>H</td>
+<td>2位数字24时制的小时（不足2位前面补0）</td>
+<td>15</td>
+</tr>
+<tr>
+<td>I</td>
+<td>2位数字12时制的小时（不足2位前面补0）</td>
+<td>03</td>
+</tr>
+<tr>
+<td>k</td>
+<td>2位数字24时制的小时（前面不补0）</td>
+<td>15</td>
+</tr>
+<tr>
+<td>l</td>
+<td>2位数字12时制的小时（前面不补0）</td>
+<td>3</td>
+</tr>
+<tr>
+<td>M</td>
+<td>2位数字的分钟（不足2位前面补0）</td>
+<td>03</td>
+</tr>
+<tr>
+<td>S</td>
+<td>2位数字的秒（不足2位前面补0）</td>
+<td>09</td>
+</tr>
+<tr>
+<td>L</td>
+<td>3位数字的毫秒（不足3位前面补0）</td>
+<td>015</td>
+</tr>
+<tr>
+<td>N</td>
+<td>9位数字的毫秒数（不足9位前面补0）</td>
+<td>562000000</td>
+</tr>
+<tr>
+<td>p</td>
+<td>小写字母的上午或下午标记</td>
+<td>中：下午英：pm</td>
+</tr>
+<tr>
+<td>z</td>
+<td>相对于GMT的RFC822时区的偏移量</td>
+<td>+0800</td>
+</tr>
+<tr>
+<td>Z</td>
+<td>时区缩写字符串</td>
+<td>CST</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>s</th>
+<th>1970-1-1 00:00:00 到现在所经过的秒数</th>
+<th>1193468128</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q</td>
+<td>1970-1-1 00:00:00 到现在所经过的毫秒数</td>
+<td>1193468128984</td>
+</tr>
+</tbody>
+</table>
+<p>测试代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">	Date date = <span class="keyword">new</span> Date();</span><br><span class="line">	<span class="comment">//H的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"2位数字24时制的小时（不足2位前面补0）:%tH%n"</span>, date);</span><br><span class="line">	<span class="comment">//I的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"2位数字12时制的小时（不足2位前面补0）:%tI%n"</span>, date);</span><br><span class="line">	<span class="comment">//k的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"2位数字24时制的小时（前面不补0）:%tk%n"</span>, date);</span><br><span class="line">	<span class="comment">//l的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"2位数字12时制的小时（前面不补0）:%tl%n"</span>, date);</span><br><span class="line">	<span class="comment">//M的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"2位数字的分钟（不足2位前面补0）:%tM%n"</span>, date);</span><br><span class="line">	<span class="comment">//S的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"2位数字的秒（不足2位前面补0）:%tS%n"</span>, date);</span><br><span class="line">	<span class="comment">//L的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"3位数字的毫秒（不足3位前面补0）:%tL%n"</span>, date);</span><br><span class="line">	<span class="comment">//N的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"9位数字的毫秒数（不足9位前面补0）:%tN%n"</span>, date);</span><br><span class="line">	<span class="comment">//p的使用</span></span><br><span class="line">	String str = String.format(Locale.US, <span class="string">"小写字母的上午或下午标记(英)：%tp"</span>, date);</span><br><span class="line">	System.out.println(str); </span><br><span class="line">	System.out.printf(<span class="string">"小写字母的上午或下午标记（中）：%tp%n"</span>, date);</span><br><span class="line">	<span class="comment">//z的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"相对于GMT的RFC822时区的偏移量:%tz%n"</span>, date);</span><br><span class="line">	<span class="comment">//Z的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"时区缩写字符串:%tZ%n"</span>, date);</span><br><span class="line">	<span class="comment">//s的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"1970-1-1 00:00:00 到现在所经过的秒数：%ts%n"</span>, date);</span><br><span class="line">	<span class="comment">//Q的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"1970-1-1 00:00:00 到现在所经过的毫秒数：%tQ%n"</span>, date);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2</span>位数字<span class="number">24</span>时制的小时（不足<span class="number">2</span>位前面补<span class="number">0</span>）:<span class="number">11</span></span><br><span class="line"><span class="number">2</span>位数字<span class="number">12</span>时制的小时（不足<span class="number">2</span>位前面补<span class="number">0</span>）:<span class="number">11</span></span><br><span class="line"><span class="number">2</span>位数字<span class="number">24</span>时制的小时（前面不补<span class="number">0</span>）:<span class="number">11</span></span><br><span class="line"><span class="number">2</span>位数字<span class="number">12</span>时制的小时（前面不补<span class="number">0</span>）:<span class="number">11</span></span><br><span class="line"><span class="number">2</span>位数字的分钟（不足<span class="number">2</span>位前面补<span class="number">0</span>）:<span class="number">03</span></span><br><span class="line"><span class="number">2</span>位数字的秒（不足<span class="number">2</span>位前面补<span class="number">0</span>）:<span class="number">52</span></span><br><span class="line"><span class="number">3</span>位数字的毫秒（不足<span class="number">3</span>位前面补<span class="number">0</span>）:<span class="number">773</span></span><br><span class="line"><span class="number">9</span>位数字的毫秒数（不足<span class="number">9</span>位前面补<span class="number">0</span>）:<span class="number">773000000</span></span><br><span class="line">小写字母的上午或下午标记(英)：am</span><br><span class="line">小写字母的上午或下午标记（中）：上午</span><br><span class="line">相对于GMT的RFC822时区的偏移量:+<span class="number">0800</span></span><br><span class="line">时区缩写字符串:CST</span><br><span class="line"><span class="number">1970</span>-<span class="number">1</span>-<span class="number">1</span> <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> 到现在所经过的秒数：<span class="number">1347246232</span></span><br><span class="line"><span class="number">1970</span>-<span class="number">1</span>-<span class="number">1</span> <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> 到现在所经过的毫秒数：<span class="number">1347246232773</span></span><br></pre></td></tr></table></figure>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wangzhumo.com/2018/02/04/Java中String-format-的使用指北/" data-id="cjk2dl0n7003rf4st8jzlb7g5" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-Room-AppDatabase-Impl-does-not-exist的异常解决" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -284,7 +1214,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/01/17/Room-AppDatabase-Impl-does-not-exist的异常解决/" data-id="cjjscr8qm004miqstljl6tz8r" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/01/17/Room-AppDatabase-Impl-does-not-exist的异常解决/" data-id="cjk2dl0nj004hf4stz6dyrglu" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -412,7 +1342,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/01/11/使用Charles抓Https的数据请求/" data-id="cjjscr8qy005iiqst465ftkfo" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/01/11/使用Charles抓Https的数据请求/" data-id="cjk2dl0ny005nf4st7tmktc9g" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -548,7 +1478,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/01/11/Android开发中常用的Adb命令/" data-id="cjjscr8od000viqstnxn1q5ew" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/01/11/Android开发中常用的Adb命令/" data-id="cjk2dl0ln0014f4stst9ze50a" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -751,7 +1681,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/01/10/OkHttp中添加https支持/" data-id="cjjscr8qb0042iqstsej6j0g6" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/01/10/OkHttp中添加https支持/" data-id="cjk2dl0n9003yf4stp7erpit9" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -905,7 +1835,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/01/04/WebView播放H5视屏没有画面-只有声音/" data-id="cjjscr8qs0054iqstj4e7ajl4" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/01/04/WebView播放H5视屏没有画面-只有声音/" data-id="cjk2dl0no004vf4stexsvbluq" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1101,556 +2031,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/01/03/Room中List-使用详解/" data-id="cjjscr8qn004qiqstdq5g8x3j" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Android字体不跟随系统变化" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2017/12/28/Android字体不跟随系统变化/">Android字体不跟随系统变化</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2017/12/28/Android字体不跟随系统变化/">
-            <time datetime="2017-12-28T07:30:11.000Z" itemprop="datePublished">2017-12-28</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android/">Android</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>已知的方法有两种:</p>
-<p><strong>第一种</strong></p>
-<p>不使用sp 而使用 dp</p>
-<p><strong>第二种</strong></p>
-<p>在Application中加入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public void onConfigurationChanged(Configuration newConfig) &#123;</span><br><span class="line">    if (newConfig.fontScale != 1)</span><br><span class="line">        getResources();</span><br><span class="line">    super.onConfigurationChanged(newConfig);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Override</span><br><span class="line">public Resources getResources() &#123;</span><br><span class="line">     Resources res = super.getResources();</span><br><span class="line">     if (res.getConfiguration().fontScale != 1) &#123;</span><br><span class="line">        Configuration newConfig = new Configuration();</span><br><span class="line">        newConfig.setToDefaults();</span><br><span class="line">        res.updateConfiguration(newConfig, res.getDisplayMetrics()); </span><br><span class="line">     &#125;</span><br><span class="line">     return res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.wangzhumo.com/2017/12/28/Android字体不跟随系统变化/" data-id="cjjscr8o9000qiqstqvn3pwwx" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Apk-Install-的各种问题" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2017/12/28/Apk-Install-的各种问题/">Apk Install 的各种问题</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2017/12/28/Apk-Install-的各种问题/">
-            <time datetime="2017-12-28T06:48:09.000Z" itemprop="datePublished">2017-12-28</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Bug/">Bug</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/Bug/">Bug</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p><strong>[INSTALL_FAILED_TEST_ONLY: installPackageLI]</strong></p>
-<ul>
-<li><p>方法1：<br>AndroidManifest.xml 加入android:testOnly=”false”。</p>
-</li>
-<li><p>方法2：<br>adb install -t *.apk</p>
-</li>
-</ul>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.wangzhumo.com/2017/12/28/Apk-Install-的各种问题/" data-id="cjjscr8p9001piqstd6fqcjwg" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Android-Studio报错Error-Running-app-cannot-debug-application" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2017/12/26/Android-Studio报错Error-Running-app-cannot-debug-application/">Android Studio报错Error Running app: cannot debug application</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2017/12/26/Android-Studio报错Error-Running-app-cannot-debug-application/">
-            <time datetime="2017-12-26T07:26:29.000Z" itemprop="datePublished">2017-12-26</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Bug/">Bug</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/Android-Studio/">Android Studio</a>, <a class="tag-link" href="/tags/Bug/">Bug</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p>Android Studio报错Error Running app: cannot debug application</p></p>
-            <p class="article-more-link">
-                <a href="/2017/12/26/Android-Studio报错Error-Running-app-cannot-debug-application/#more">查看更多</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.wangzhumo.com/2017/12/26/Android-Studio报错Error-Running-app-cannot-debug-application/" data-id="cjjscr8nq000aiqstxojkbhf8" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Centos 创建用户并实现免密码登录" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2017/12/25/Centos 创建用户并实现免密码登录/">Centos 创建用户并实现免密码登录</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2017/12/25/Centos 创建用户并实现免密码登录/">
-            <time datetime="2017-12-25T08:25:04.000Z" itemprop="datePublished">2017-12-25</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Server/">Server</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Linux/">Linux</a>, <a class="tag-link" href="/tags/Server/">Server</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <blockquote>
-<p>比如,创建一个名为wzm的账号</p>
-</blockquote>
-<p>####创建账号</p>
-<p>1.创建</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# adduser wzm</span><br><span class="line">[root@localhost ~]# passwd wzm</span><br><span class="line"></span><br><span class="line">#此时,输入两次密码即可</span><br></pre></td></tr></table></figure>
-<p>2.赋予sudo</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#找到sudoers</span><br><span class="line">[root@localhost ~]# whereis sudoers</span><br><span class="line"></span><br><span class="line">#修改sudoers的读写权限</span><br><span class="line">[root@localhost ~]# chmod -v u+w /etc/sudoers</span><br><span class="line"></span><br><span class="line">#加入新用户</span><br><span class="line"></span><br><span class="line">## Allow root to run any commands anywher  </span><br><span class="line">root    ALL=(ALL)       ALL  </span><br><span class="line">linuxidc  ALL=(ALL)       ALL  #这个是新增的用户</span><br><span class="line"></span><br><span class="line">#把sudoers权限还给他</span><br><span class="line">[root@localhost ~]# chmod -v u-w /etc/sudoers</span><br></pre></td></tr></table></figure>
-<p>3.尽情享用吧</p>
-<p>####ssh免密码登录</p>
-<p>1.修改配置文件<br><code>sudo vim /etc/ssh/sshd_config</code></p>
-<p>2.重启ssh服务<br><code>service sshd restart</code></p>
-<p>3.生成密钥<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br><span class="line">     默认在 ~/.ssh目录生成两个文件：</span><br><span class="line">    id_rsa      ：私钥</span><br><span class="line">    id_rsa.pub  ：公钥</span><br></pre></td></tr></table></figure></p>
-<p>4.导入本机<br><code>cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys</code></p>
-<p>5.下载到客户端并设置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">scp [-r] 用户名@ip:文件路径 本地路径</span><br><span class="line">#下载文件</span><br><span class="line"></span><br><span class="line">scp [-r] 本地文件 用户名@ip:上传路径 </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">eg:</span><br><span class="line">~/.ssh ⌚ 16:27:33</span><br><span class="line">$ scp id_rsa.pub root@45.XX.XX.XX:/home/</span><br><span class="line">id_rsa.pub</span><br></pre></td></tr></table></figure></p>
-<p>6.改权限<br>如果希望ssh公钥生效需满足至少下面两个条件：　　　　　<br>1) .ssh目录的权限必须是700<br>2) .ssh/authorized_keys文件权限必须是600</p>
-<p>eg:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">~ ⌚ 16:33:21</span><br><span class="line">$ ssh wzm@45.XX.XX.XX</span><br><span class="line">Last login: Mon Dec 25 16:21:11 2017 from 118.102.XXX.XXX</span><br><span class="line">[wzm@wangzhumo ~]$</span><br></pre></td></tr></table></figure>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.wangzhumo.com/2017/12/25/Centos 创建用户并实现免密码登录/" data-id="cjjscr8ph0023iqstzk34qq0x" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/01/03/Room中List-使用详解/" data-id="cjk2dl0np004yf4stx9py9m42" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1738,7 +2119,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Studio/">Android Studio</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Bug/">Bug</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Source-Code/">Source Code</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Video/">Video</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/View/">View</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">24</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Studio/">Android Studio</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Bug/">Bug</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programme/">Programme</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Source-Code/">Source Code</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/View/">View</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -1747,7 +2128,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 15.71px;">Android Studio</a> <a href="/tags/Android单元测试/" style="font-size: 10px;">Android单元测试</a> <a href="/tags/Binder/" style="font-size: 10px;">Binder</a> <a href="/tags/Bug/" style="font-size: 17.14px;">Bug</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Google/" style="font-size: 11.43px;">Google</a> <a href="/tags/Gradle/" style="font-size: 11.43px;">Gradle</a> <a href="/tags/Handler/" style="font-size: 10px;">Handler</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/Java/" style="font-size: 18.57px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Linux/" style="font-size: 12.86px;">Linux</a> <a href="/tags/Okhttp/" style="font-size: 11.43px;">Okhttp</a> <a href="/tags/Room/" style="font-size: 12.86px;">Room</a> <a href="/tags/Rxjava/" style="font-size: 12.86px;">Rxjava</a> <a href="/tags/Server/" style="font-size: 14.29px;">Server</a> <a href="/tags/Source-Code/" style="font-size: 11.43px;">Source Code</a> <a href="/tags/Video/" style="font-size: 10px;">Video</a> <a href="/tags/View/" style="font-size: 11.43px;">View</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/组件化/" style="font-size: 10px;">组件化</a> <a href="/tags/蓝牙/" style="font-size: 10px;">蓝牙</a> <a href="/tags/设计模式/" style="font-size: 12.86px;">设计模式</a>
+            <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 15px;">Android Studio</a> <a href="/tags/Android单元测试/" style="font-size: 10px;">Android单元测试</a> <a href="/tags/Binder/" style="font-size: 10px;">Binder</a> <a href="/tags/Bug/" style="font-size: 16.67px;">Bug</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Google/" style="font-size: 11.67px;">Google</a> <a href="/tags/Gradle/" style="font-size: 11.67px;">Gradle</a> <a href="/tags/Handler/" style="font-size: 10px;">Handler</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/Java/" style="font-size: 18.33px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/Okhttp/" style="font-size: 11.67px;">Okhttp</a> <a href="/tags/Programme/" style="font-size: 10px;">Programme</a> <a href="/tags/RK3399/" style="font-size: 10px;">RK3399</a> <a href="/tags/Room/" style="font-size: 13.33px;">Room</a> <a href="/tags/Rxjava/" style="font-size: 13.33px;">Rxjava</a> <a href="/tags/Server/" style="font-size: 15px;">Server</a> <a href="/tags/Source-Code/" style="font-size: 11.67px;">Source Code</a> <a href="/tags/Video/" style="font-size: 10px;">Video</a> <a href="/tags/View/" style="font-size: 11.67px;">View</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/组件化/" style="font-size: 10px;">组件化</a> <a href="/tags/蓝牙/" style="font-size: 10px;">蓝牙</a> <a href="/tags/设计模式/" style="font-size: 13.33px;">设计模式</a>
         </div>
     </div>
 
@@ -1757,6 +2138,82 @@
         <h3 class="widget-title">最新文章</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/25/Android-Studio中使用CMake进行JNI开发/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a></p>
+                            <p class="item-title"><a href="/2018/07/25/Android-Studio中使用CMake进行JNI开发/" class="title">Android Studio中使用CMake进行JNI开发</a></p>
+                            <p class="item-date"><time datetime="2018-07-25T03:07:06.000Z" itemprop="datePublished">2018-07-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/24/开发板Firefly-RK3399初探/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://www.wangzhumo.com/images/rk3399_info.png)" alt="开发板Firefly-RK3399初探" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Other/">Other</a></p>
+                            <p class="item-title"><a href="/2018/07/24/开发板Firefly-RK3399初探/" class="title">开发板Firefly-RK3399初探</a></p>
+                            <p class="item-date"><time datetime="2018-07-24T08:47:17.000Z" itemprop="datePublished">2018-07-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/22/数据结构-下笔记/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Programme/">Programme</a></p>
+                            <p class="item-title"><a href="/2018/07/22/数据结构-下笔记/" class="title">数据结构-下笔记</a></p>
+                            <p class="item-date"><time datetime="2018-07-22T01:50:38.000Z" itemprop="datePublished">2018-07-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/20/Vultr购买到使用详情/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Server/">Server</a></p>
+                            <p class="item-title"><a href="/2018/07/20/Vultr购买到使用详情/" class="title">Vultr购买到使用详情</a></p>
+                            <p class="item-date"><time datetime="2018-07-20T03:30:01.000Z" itemprop="datePublished">2018-07-20</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -1777,82 +2234,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/07/14/设计模式-装饰者设计模式/" class="thumbnail">
-    
-    
-        <span style="background-image:url(http://www.wangzhumo.com/images/coding.png)" alt="设计模式-装饰者设计模式" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Java/">Java</a></p>
-                            <p class="item-title"><a href="/2018/07/14/设计模式-装饰者设计模式/" class="title">设计模式-装饰者设计模式</a></p>
-                            <p class="item-date"><time datetime="2018-07-14T11:05:28.000Z" itemprop="datePublished">2018-07-14</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/07/14/设计模式-状态模式的使用/" class="thumbnail">
-    
-    
-        <span style="background-image:url(http://www.wangzhumo.com/images/coding.png)" alt="设计模式-状态模式的使用" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Java/">Java</a></p>
-                            <p class="item-title"><a href="/2018/07/14/设计模式-状态模式的使用/" class="title">设计模式-状态模式的使用</a></p>
-                            <p class="item-date"><time datetime="2018-07-14T00:45:32.000Z" itemprop="datePublished">2018-07-14</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" class="thumbnail">
-    
-    
-        <span style="background-image:url(http://www.wangzhumo.com/images/debug.jpg)" alt="RecyclerView中notifyItemRangeChanged无效的BUG" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Bug/">Bug</a></p>
-                            <p class="item-title"><a href="/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" class="title">RecyclerView中notifyItemRangeChanged无效的BUG</a></p>
-                            <p class="item-date"><time datetime="2018-07-13T14:39:55.000Z" itemprop="datePublished">2018-07-13</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/07/12/ConstraintLayout使用指南-基础的约束/" class="thumbnail">
-    
-    
-        <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="ConstraintLayout使用指南-基础的约束" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a></p>
-                            <p class="item-title"><a href="/2018/07/12/ConstraintLayout使用指南-基础的约束/" class="title">ConstraintLayout使用指南-基础的约束</a></p>
-                            <p class="item-date"><time datetime="2018-07-12T07:49:34.000Z" itemprop="datePublished">2018-07-12</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -1862,7 +2243,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">25</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">25</span></li></ul>
         </div>
     </div>
 
@@ -1871,7 +2252,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">40</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android单元测试/">Android单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bug/">Bug</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Handler/">Handler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Okhttp/">Okhttp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Room/">Room</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Server/">Server</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Source-Code/">Source Code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video/">Video</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">3</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">42</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android单元测试/">Android单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bug/">Bug</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Handler/">Handler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Okhttp/">Okhttp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Programme/">Programme</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RK3399/">RK3399</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Room/">Room</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Server/">Server</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Source-Code/">Source Code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video/">Video</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">3</span></li></ul>
         </div>
     </div>
 
