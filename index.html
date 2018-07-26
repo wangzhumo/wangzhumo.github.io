@@ -159,7 +159,7 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                65
+                64
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -230,40 +230,15 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>定一个小目标,替代RenderScript来做一个图片的高斯模糊,因为这是一个比较考验性能的操作,所以我打算用C来做这个操作(主要原因是我自己不会写C++,刚好看到有这个开源算法…)</p>
-<h3 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h3><p>new -&gt; new Module -&gt; Android Library </p>
+            <p><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>定一个小目标,替代RenderScript来做一个图片的高斯模糊,因为这是一个比较考验性能的操作,所以我打算用C来做这个操作(主要原因是我自己不会写C++,刚好看到有这个开源算法…)</p>
+<h3 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h3><blockquote>
+<p>new -&gt; new Module -&gt; Android Library </p>
+</blockquote>
 <p>当项目创建好之后,这只是一个单纯的Library,并不能使用JNI开发</p>
-<p>下面,我们把它改造一下:</p>
-<h4 id="添加CMakeLists-txt"><a href="#添加CMakeLists-txt" class="headerlink" title="添加CMakeLists.txt"></a>添加CMakeLists.txt</h4><p>选中lib_blur - new File - CMakeLists.txt</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">cmake_minimum_required(VERSION <span class="number">3.4</span>.1)</span><br><span class="line">#设置生成的so动态库最后输出的路径</span><br><span class="line">#set(CMAKE_LIBRARY_OUTPUT_DIRECTORY $&#123;PROJECT_SOURCE_DIR&#125;/src/main/jniLibs/$&#123;ANDROID_ABI&#125;)</span><br><span class="line">add_library( # 库名</span><br><span class="line">             sample</span><br><span class="line"></span><br><span class="line">             # 该库生成动态函数</span><br><span class="line">             SHARED</span><br><span class="line"></span><br><span class="line">             # 依赖的文件</span><br><span class="line">             src/main/cpp/samplelib.cpp)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">find_library( # 设置Path变量的名称</span><br><span class="line">              log-lib</span><br><span class="line"></span><br><span class="line">              # 指定要查询的库名字</span><br><span class="line">              # 在ndk中查找 liblog.so 函数库</span><br><span class="line">              log )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">target_link_libraries( # 目标库</span><br><span class="line">                       sample</span><br><span class="line"></span><br><span class="line">                       # 要链接的库</span><br><span class="line">                       android</span><br><span class="line">                       # Links the target library to the log library</span><br><span class="line">                       # included in the NDK.</span><br><span class="line">                       $&#123;log-lib&#125; )</span><br></pre></td></tr></table></figure>
-<h4 id="修改build-grade"><a href="#修改build-grade" class="headerlink" title="修改build.grade"></a>修改build.grade</h4><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">            </span><br><span class="line">        ndk &#123;</span><br><span class="line">            <span class="comment">// 设置支持的SO库架构</span></span><br><span class="line">            abiFilters <span class="string">'armeabi-v7a'</span>, <span class="string">'x86'</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        externalNativeBuild &#123;</span><br><span class="line">            cmake &#123;</span><br><span class="line">                cppFlags <span class="string">"-std=c++14"</span>, <span class="string">"-frtti"</span>, <span class="string">"-fexceptions"</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;    </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    externalNativeBuild &#123;</span><br><span class="line">        cmake &#123;</span><br><span class="line">            path <span class="string">"CMakeLists.txt"</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="编写C-文件"><a href="#编写C-文件" class="headerlink" title="编写C++文件"></a>编写C++文件</h4><p>我们的C文件都在<code>src/main/cpp</code>文件夹下,每一个C文件都需要在<code>CMakeLists.txt</code>文件中指定</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 依赖的文件</span><br><span class="line">src<span class="regexp">/main/</span>cpp/samplelib.cpp</span><br></pre></td></tr></table></figure>
-<p>samplelib.cpp</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;jni.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;android/log.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TAG    <span class="meta-string">"JNI_LOG"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,TAG ,__VA_ARGS__)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __cplusplus</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span> &#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//定义我Java文件的位置,注意是'/'分开</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">char</span> *className = <span class="string">"com/wangzhumo/app/commonlib/jni/JniManager"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//返回一个string</span></span><br><span class="line"><span class="function">jstring <span class="title">stringFromJNI</span><span class="params">(JNIEnv *env,jclass clz)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> hello = <span class="string">"Hello from C++"</span>;</span><br><span class="line">    <span class="keyword">return</span> env-&gt;NewStringUTF(hello.c_str());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//返回一个string 并把这句话打印到logcat中去</span></span><br><span class="line"><span class="function">jstring <span class="title">sayHello</span><span class="params">(JNIEnv* env,jclass clz)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> hello = <span class="string">"Say Hello from C++"</span>;</span><br><span class="line">    LOGE(<span class="string">"Say Hello and value"</span>);</span><br><span class="line">    <span class="keyword">return</span> env-&gt;NewStringUTF(hello.c_str());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取所有方法名</span></span><br><span class="line"><span class="keyword">static</span> JNINativeMethod gJniMethods[] = &#123;</span><br><span class="line">        &#123;<span class="string">"sayHello"</span>, <span class="string">"()Ljava/lang/String;"</span>, (<span class="keyword">void</span>*)sayHello&#125;,</span><br><span class="line">        &#123;<span class="string">"stringFromJNI"</span>, <span class="string">"()Ljava/lang/String;"</span>, (<span class="keyword">void</span>*)stringFromJNI&#125;,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//其中&#123;"MethodName","(入参)返回值",()Method&#125;</span></span><br><span class="line">   </span><br><span class="line"><span class="comment">//动态注册本地方法</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">jniRegisterNativeMethods</span><span class="params">(JNIEnv* env, <span class="keyword">const</span> <span class="keyword">char</span>* className,</span></span></span><br><span class="line"><span class="function"><span class="params">                                    <span class="keyword">const</span> JNINativeMethod* gMethods, <span class="keyword">int</span> numMethods)</span> </span>&#123;</span><br><span class="line">    jclass clazz;</span><br><span class="line">    clazz = (env)-&gt;FindClass( className);</span><br><span class="line">    <span class="keyword">if</span> (clazz == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> ((env)-&gt;RegisterNatives(clazz, gMethods, numMethods) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        result = <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    (env)-&gt;DeleteLocalRef(clazz);</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//JNI_OnLoad回调</span></span><br><span class="line"><span class="function">JNIEXPORT jint JNICALL <span class="title">JNI_OnLoad</span><span class="params">(JavaVM* vm, <span class="keyword">void</span>* reserved)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    JNIEnv* env = <span class="literal">NULL</span>;</span><br><span class="line">    jint result = <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (vm-&gt;GetEnv((<span class="keyword">void</span>**) &amp;env, JNI_VERSION_1_6) != JNI_OK) &#123;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    jniRegisterNativeMethods(env, className, gJniMethods, <span class="keyword">sizeof</span>(gJniMethods) / <span class="keyword">sizeof</span>(JNINativeMethod));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> JNI_VERSION_1_6;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __cplusplus</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
-<h4 id="编写Java文件"><a href="#编写Java文件" class="headerlink" title="编写Java文件"></a>编写Java文件</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JniManager</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span>&#123;</span><br><span class="line">        System.loadLibrary(<span class="string">"sample"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">native</span> String <span class="title">sayHello</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">native</span> String <span class="title">stringFromJNI</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><blockquote>
-<p> Build -&gt; Make Project</p>
-</blockquote>
-<p>编译完成,如果成功则 build -&gt; intermediates -&gt; cmake  下就有 .so文件</p>
-<p>如图所示:</p>
-<p><img src="/images/jni_so_file.png" alt="so"></p>
-<p>我们可以看到,生成了 armeabi-v7a,  x86两种类型的.so文件,如果不在build.gradle中声明:</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ndk &#123;</span><br><span class="line">    <span class="comment">// 设置支持的SO库架构</span></span><br><span class="line">    abiFilters <span class="string">'armeabi-v7a'</span>, <span class="string">'x86'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="调用"><a href="#调用" class="headerlink" title="调用"></a>调用</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> : <span class="type">AppCompatActivity</span></span>() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">(savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line">        setContentView(R.layout.activity_main)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onResume</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.onResume()</span><br><span class="line">        Log.e(<span class="string">"JNI"</span>,JniManager.sayHello())</span><br><span class="line">        Log.e(<span class="string">"JNI"</span>,JniManager.stringFromJNI())</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>结果:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">07-26 17:42:41.420 6685-6685/com.wangzhumo.playground E/JNI_LOG: Say Hello and value</span><br><span class="line">07-26 17:42:41.420 6685-6685/com.wangzhumo.playground E/JNI: Say Hello from C++</span><br><span class="line">07-26 17:42:41.420 6685-6685/com.wangzhumo.playground E/JNI: Hello from C++</span><br></pre></td></tr></table></figure>
-<p>其中<code>JNI_LOG</code>是由 cpp 中的方法打印到Android的控制台的</p>
-<p><code>JNI</code>是我们在MainActivity中调用的</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Log.e(<span class="string">"JNI"</span>,JniManager.sayHello())</span><br><span class="line">Log.e(<span class="string">"JNI"</span>,JniManager.stringFromJNI())</span><br></pre></td></tr></table></figure>
-<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>以上说明我的JNI算是初步完成了调用</p>
-<blockquote>
-<p><a href="http://zhixinliu.com/2015/07/01/2015-07-01-jni-register/" target="_blank" rel="noopener">http://zhixinliu.com/2015/07/01/2015-07-01-jni-register/</a></p>
-<p><a href="https://developer.android.com/ndk/guides/" target="_blank" rel="noopener">https://developer.android.com/ndk/guides/</a></p>
-</blockquote>
-<p>前言中的Flag真是立的好,C++不是很会,所以只能往简单了写,真是可怜的我</p>
-
+<p>下面,我们把它改造一下(下图是改造完成的目录结构):</p></p>
+            <p class="article-more-link">
+                <a href="/2018/07/25/Android-Studio中使用CMake进行JNI开发/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -273,7 +248,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/25/Android-Studio中使用CMake进行JNI开发/" data-id="cjk2dl0l1000ef4stzyecidj6" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/25/Android-Studio中使用CMake进行JNI开发/" data-id="cjk2dtaks000jiostl5o6s9q9" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -391,12 +366,12 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <h3 id="Firefly-RK3399"><a href="#Firefly-RK3399" class="headerlink" title="Firefly-RK3399"></a>Firefly-RK3399</h3><p><img src="../images/rk3399_info.png" alt="rk-3399"></p>
+            <p><h3 id="Firefly-RK3399"><a href="#Firefly-RK3399" class="headerlink" title="Firefly-RK3399"></a>Firefly-RK3399</h3><p><img src="../images/rk3399_info.png" alt="rk-3399"></p>
 <p>Firefly-RK3399 是 Firefly 团队精心打造的高性能开源主板,采用瑞芯微 RK3399 6 核芯片方案,主频 2.0GHz。具备 3G,4G 数据通信接口,USB3.0,PCIE 高性能设备接口,支持常用外接设备,接口丰富,性能稳定.</p>
-<p>支持 Android\Linux\Ubuntu 系统，软件支持完善，开放源代码适合企业二次开发带高清显示的商显广 告机、自助售货机、教育终端等，可降低研发门槛，缩短产品研发周期.</p>
-<p>以上是厂家的介绍,总的来说,这玩意的性能还是可以的,特别擅长的是对视屏功能的支持,最高可以流程的解析4k的视屏,可以接受双摄像头.那么对于我来说,就是非常适合的一个开发板,因为我的目的就是想在这个开发板上连接一个海康的摄像头,然后做人脸识别.</p>
-
+<p>支持 Android\Linux\Ubuntu 系统，软件支持完善，开放源代码适合企业二次开发带高清显示的商显广 告机、自助售货机、教育终端等，可降低研发门槛，缩短产品研发周期.</p></p>
+            <p class="article-more-link">
+                <a href="/2018/07/24/开发板Firefly-RK3399初探/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -406,7 +381,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/24/开发板Firefly-RK3399初探/" data-id="cjk2dl0nx005gf4st0ke9nzkl" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/24/开发板Firefly-RK3399初探/" data-id="cjk2dtao1005wiostdpzqff2p" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -544,149 +519,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/22/数据结构-下笔记/" data-id="cjk2dl0o1005vf4sts7txcnan" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="drafts-Vultr购买到使用详情" class="article article-type-drafts" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/07/20/Vultr购买到使用详情/">Vultr购买到使用详情</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/07/20/Vultr购买到使用详情/">
-            <time datetime="2018-07-20T03:30:01.000Z" itemprop="datePublished">2018-07-20</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Server/">Server</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Server/">Server</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>注册账号,购买VPS</p>
-<p>我选择的是 洛杉矶 Centos7 的机子.</p>
-<h3 id="开始使用"><a href="#开始使用" class="headerlink" title="开始使用"></a>开始使用</h3><h4 id="先Ping一下"><a href="#先Ping一下" class="headerlink" title="先Ping一下"></a>先Ping一下</h4><p>看到上图的 <strong>IP Address </strong> 了么? 复制那个地址</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> ping 149.28.86.54</span><br><span class="line">PING 149.28.86.54 (149.28.86.54): 56 data bytes</span><br><span class="line">64 bytes from 149.28.86.54: icmp_seq=0 ttl=43 time=329.703 ms</span><br><span class="line">64 bytes from 149.28.86.54: icmp_seq=1 ttl=43 time=352.446 ms</span><br><span class="line">64 bytes from 149.28.86.54: icmp_seq=2 ttl=43 time=372.199 ms</span><br><span class="line">64 bytes from 149.28.86.54: icmp_seq=3 ttl=43 time=290.125 ms</span><br></pre></td></tr></table></figure>
-<p>有速度就行,等你装好东西了,直接快照然后换机子就OK</p>
-<h4 id="登录服务器"><a href="#登录服务器" class="headerlink" title="登录服务器"></a>登录服务器</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> phyooos @ wangzhumo in ~/develop/hexo/source on git:master x [11:37:19]</span><br><span class="line"><span class="meta">$</span> ssh root@149.28.xx.xx</span><br></pre></td></tr></table></figure>
-<p>ssh 用户名@IP地址  <strong>回车</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">The authenticity of host '149.28.xx.xx (149.28.xx.xx)' can't be established.</span><br><span class="line">ECDSA key fingerprint is SHA256:lMfGSYiwCJfoaRHJUUx7QedxZsv//cBY2xx9ctiAFfA.</span><br><span class="line">Are you sure you want to continue connecting (yes/no)? yes</span><br></pre></td></tr></table></figure>
-<p>这个输入yes即可  <strong>回车</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@149.28.xx.xx's password:</span><br></pre></td></tr></table></figure>
-<p>注意你输入密码,光标是没有变化的,继续输就行,输完了  <strong>回车</strong></p>
-<p>如果成功登录是这样的</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Last login: Fri Jul 20 03:32:58 2018 from 118.192.166.xxx</span><br><span class="line">[root@xxx ~]#</span><br></pre></td></tr></table></figure>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.wangzhumo.com/2018/07/20/Vultr购买到使用详情/" data-id="cjk2dl0nq0052f4stoal5hxjb" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/22/数据结构-下笔记/" data-id="cjk2dtao3005ziostyuhd9ee8" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -817,7 +650,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/15/递归调用创建单链表/" data-id="cjk2dl0o8006ef4st775zxsad" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/15/递归调用创建单链表/" data-id="cjk2dtaoa006iiost9ad8f74i" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -954,7 +787,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/14/设计模式-装饰者设计模式/" data-id="cjk2dl0o60067f4st46i0xqgi" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/14/设计模式-装饰者设计模式/" data-id="cjk2dtao7006biosto6jc8yzg" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1086,7 +919,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/14/设计模式-状态模式的使用/" data-id="cjk2dl0o3005zf4stbtr6evnn" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/14/设计模式-状态模式的使用/" data-id="cjk2dtao60067iostqjrumv6n" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1218,7 +1051,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" data-id="cjk2dl0na0041f4st6awpy5lg" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" data-id="cjk2dtan80045iostqvh11o4i" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1352,7 +1185,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/12/ConstraintLayout使用指南-基础的约束/" data-id="cjk2dl0mj0029f4stanbpes8d" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/12/ConstraintLayout使用指南-基础的约束/" data-id="cjk2dtamh002giostlbxwbrb3" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1486,7 +1319,145 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/11/JVM的垃圾回收Garbage-Collection/" data-id="cjk2dl0mw002zf4stxd93o7i5" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/11/JVM的垃圾回收Garbage-Collection/" data-id="cjk2dtamv0039iost9duga3tc" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-Android中的贝塞尔曲线" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/07/05/Android中的贝塞尔曲线/">Android中的贝塞尔曲线</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/07/05/Android中的贝塞尔曲线/">
+            <time datetime="2018-07-05T08:05:12.000Z" itemprop="datePublished">2018-07-05</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Android/">Android</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Android/">Android</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>贝塞尔曲线(Bézier curve)</p>
+<p>我们在很多App种都能发现它的影子,比如说</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">QQ的小红点</span><br><span class="line">下拉刷新的粘连效果</span><br><span class="line">个人动态等页面的波浪效果</span><br><span class="line">阅读软件的翻页效果</span><br></pre></td></tr></table></figure>
+<p>贝塞尔曲线是用一系列点来控制曲线状态，主要就是：数据点、控制点。我们可以通过调整控制点，来使得贝塞尔曲线形状变化</p>
+<ul>
+<li>数据点   指定了起始位置</li>
+<li>控制点   一或多个,决定了曲线的轨迹</li>
+</ul></p>
+            <p class="article-more-link">
+                <a href="/2018/07/05/Android中的贝塞尔曲线/#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wangzhumo.com/2018/07/05/Android中的贝塞尔曲线/" data-id="cjk2dtal4000xiostswzdo98w" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1574,7 +1545,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">24</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Studio/">Android Studio</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Bug/">Bug</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programme/">Programme</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Source-Code/">Source Code</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/View/">View</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">24</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Studio/">Android Studio</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Bug/">Bug</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programme/">Programme</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Source-Code/">Source Code</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/View/">View</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -1583,7 +1554,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 15px;">Android Studio</a> <a href="/tags/Android单元测试/" style="font-size: 10px;">Android单元测试</a> <a href="/tags/Binder/" style="font-size: 10px;">Binder</a> <a href="/tags/Bug/" style="font-size: 16.67px;">Bug</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Google/" style="font-size: 11.67px;">Google</a> <a href="/tags/Gradle/" style="font-size: 11.67px;">Gradle</a> <a href="/tags/Handler/" style="font-size: 10px;">Handler</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/Java/" style="font-size: 18.33px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/Okhttp/" style="font-size: 11.67px;">Okhttp</a> <a href="/tags/Programme/" style="font-size: 10px;">Programme</a> <a href="/tags/RK3399/" style="font-size: 10px;">RK3399</a> <a href="/tags/Room/" style="font-size: 13.33px;">Room</a> <a href="/tags/Rxjava/" style="font-size: 13.33px;">Rxjava</a> <a href="/tags/Server/" style="font-size: 15px;">Server</a> <a href="/tags/Source-Code/" style="font-size: 11.67px;">Source Code</a> <a href="/tags/Video/" style="font-size: 10px;">Video</a> <a href="/tags/View/" style="font-size: 11.67px;">View</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/组件化/" style="font-size: 10px;">组件化</a> <a href="/tags/蓝牙/" style="font-size: 10px;">蓝牙</a> <a href="/tags/设计模式/" style="font-size: 13.33px;">设计模式</a>
+            <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 15.71px;">Android Studio</a> <a href="/tags/Android单元测试/" style="font-size: 10px;">Android单元测试</a> <a href="/tags/Binder/" style="font-size: 10px;">Binder</a> <a href="/tags/Bug/" style="font-size: 17.14px;">Bug</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Google/" style="font-size: 11.43px;">Google</a> <a href="/tags/Gradle/" style="font-size: 11.43px;">Gradle</a> <a href="/tags/Handler/" style="font-size: 10px;">Handler</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/Java/" style="font-size: 18.57px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Linux/" style="font-size: 12.86px;">Linux</a> <a href="/tags/Okhttp/" style="font-size: 11.43px;">Okhttp</a> <a href="/tags/Programme/" style="font-size: 10px;">Programme</a> <a href="/tags/RK3399/" style="font-size: 10px;">RK3399</a> <a href="/tags/Room/" style="font-size: 12.86px;">Room</a> <a href="/tags/Rxjava/" style="font-size: 12.86px;">Rxjava</a> <a href="/tags/Server/" style="font-size: 14.29px;">Server</a> <a href="/tags/Source-Code/" style="font-size: 11.43px;">Source Code</a> <a href="/tags/Video/" style="font-size: 10px;">Video</a> <a href="/tags/View/" style="font-size: 11.43px;">View</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/组件化/" style="font-size: 10px;">组件化</a> <a href="/tags/蓝牙/" style="font-size: 10px;">蓝牙</a> <a href="/tags/设计模式/" style="font-size: 12.86px;">设计模式</a>
         </div>
     </div>
 
@@ -1654,25 +1625,6 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/07/20/Vultr购买到使用详情/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Server/">Server</a></p>
-                            <p class="item-title"><a href="/2018/07/20/Vultr购买到使用详情/" class="title">Vultr购买到使用详情</a></p>
-                            <p class="item-date"><time datetime="2018-07-20T03:30:01.000Z" itemprop="datePublished">2018-07-20</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
                             <a href="/2018/07/15/递归调用创建单链表/" class="thumbnail">
     
     
@@ -1689,6 +1641,25 @@
                         </div>
                     </li>
                 
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/14/设计模式-装饰者设计模式/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://www.wangzhumo.com/images/coding.png)" alt="设计模式-装饰者设计模式" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Java/">Java</a></p>
+                            <p class="item-title"><a href="/2018/07/14/设计模式-装饰者设计模式/" class="title">设计模式-装饰者设计模式</a></p>
+                            <p class="item-date"><time datetime="2018-07-14T11:05:28.000Z" itemprop="datePublished">2018-07-14</time></p>
+                        </div>
+                    </li>
+                
             </ul>
         </div>
     </div>
@@ -1698,7 +1669,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">25</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">25</span></li></ul>
         </div>
     </div>
 
@@ -1707,7 +1678,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">42</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android单元测试/">Android单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bug/">Bug</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Handler/">Handler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Okhttp/">Okhttp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Programme/">Programme</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RK3399/">RK3399</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Room/">Room</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Server/">Server</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Source-Code/">Source Code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video/">Video</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">3</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">42</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android单元测试/">Android单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bug/">Bug</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Handler/">Handler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Okhttp/">Okhttp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Programme/">Programme</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RK3399/">RK3399</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Room/">Room</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Server/">Server</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Source-Code/">Source Code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video/">Video</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">3</span></li></ul>
         </div>
     </div>
 
