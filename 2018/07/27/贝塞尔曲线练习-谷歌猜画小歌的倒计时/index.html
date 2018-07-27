@@ -5,20 +5,20 @@
     
     <title>贝塞尔曲线练习-谷歌猜画小歌的倒计时 | 王诛魔</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="总的来说一共有四段二阶贝塞尔曲线，其实我们是可以只用一次高阶贝塞尔曲线来搞定的，但是那样不是很划算，所以我用四段二阶曲线拼接为一个循环。 示意图：  图中大框表示手机屏幕，我们只要每次都移动S点的位置就可以做到模拟波浪。 那么需要确定  宽度（D点位置） 波浪高度 （C 点，控制点的高度，它的宽度是不做变化的） 起始点的位置  当我们开始移动时，只需要移动S点位置即可，其他点都调用quadTo ，">
+    <meta name="description" content="总的来说一共有四段二阶贝塞尔曲线，其实我们是可以只用一次高阶贝塞尔曲线来搞定的，但是那样不是很划算，所以我用四段二阶曲线拼接为一个循环。 示意图：  图中大框表示手机屏幕，我们只要每次都移动S点的位置就可以做到模拟波浪。  那么需要确定  宽度（D点位置） 波浪高度 （C 点，控制点的高度，它的宽度是不做变化的） 起始点的位置  当我们开始移动时，只需要移动S点位置即可，其他点都调用quadTo">
 <meta name="keywords" content="Android,View">
 <meta property="og:type" content="article">
 <meta property="og:title" content="贝塞尔曲线练习-谷歌猜画小歌的倒计时">
 <meta property="og:url" content="http://www.wangzhumo.com/2018/07/27/贝塞尔曲线练习-谷歌猜画小歌的倒计时/index.html">
 <meta property="og:site_name" content="王诛魔">
-<meta property="og:description" content="总的来说一共有四段二阶贝塞尔曲线，其实我们是可以只用一次高阶贝塞尔曲线来搞定的，但是那样不是很划算，所以我用四段二阶曲线拼接为一个循环。 示意图：  图中大框表示手机屏幕，我们只要每次都移动S点的位置就可以做到模拟波浪。 那么需要确定  宽度（D点位置） 波浪高度 （C 点，控制点的高度，它的宽度是不做变化的） 起始点的位置  当我们开始移动时，只需要移动S点位置即可，其他点都调用quadTo ，">
+<meta property="og:description" content="总的来说一共有四段二阶贝塞尔曲线，其实我们是可以只用一次高阶贝塞尔曲线来搞定的，但是那样不是很划算，所以我用四段二阶曲线拼接为一个循环。 示意图：  图中大框表示手机屏幕，我们只要每次都移动S点的位置就可以做到模拟波浪。  那么需要确定  宽度（D点位置） 波浪高度 （C 点，控制点的高度，它的宽度是不做变化的） 起始点的位置  当我们开始移动时，只需要移动S点位置即可，其他点都调用quadTo">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.wangzhumo.com/2018/07/27/images/wave_show.png">
 <meta property="og:image" content="http://www.wangzhumo.com/2018/07/27/images/wave_image.gif">
-<meta property="og:updated_time" content="2018-07-27T09:30:02.887Z">
+<meta property="og:updated_time" content="2018-07-27T09:32:29.803Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="贝塞尔曲线练习-谷歌猜画小歌的倒计时">
-<meta name="twitter:description" content="总的来说一共有四段二阶贝塞尔曲线，其实我们是可以只用一次高阶贝塞尔曲线来搞定的，但是那样不是很划算，所以我用四段二阶曲线拼接为一个循环。 示意图：  图中大框表示手机屏幕，我们只要每次都移动S点的位置就可以做到模拟波浪。 那么需要确定  宽度（D点位置） 波浪高度 （C 点，控制点的高度，它的宽度是不做变化的） 起始点的位置  当我们开始移动时，只需要移动S点位置即可，其他点都调用quadTo ，">
+<meta name="twitter:description" content="总的来说一共有四段二阶贝塞尔曲线，其实我们是可以只用一次高阶贝塞尔曲线来搞定的，但是那样不是很划算，所以我用四段二阶曲线拼接为一个循环。 示意图：  图中大框表示手机屏幕，我们只要每次都移动S点的位置就可以做到模拟波浪。  那么需要确定  宽度（D点位置） 波浪高度 （C 点，控制点的高度，它的宽度是不做变化的） 起始点的位置  当我们开始移动时，只需要移动S点位置即可，其他点都调用quadTo">
 <meta name="twitter:image" content="http://www.wangzhumo.com/2018/07/27/images/wave_show.png">
     
 
@@ -239,6 +239,7 @@
 <p>示意图：</p>
 <p><img src="../images/wave_show.png" alt="示意图"></p>
 <p>图中大框表示手机屏幕，我们只要每次都移动S点的位置就可以做到模拟波浪。</p>
+<!-- mroe -->
 <p>那么需要确定</p>
 <ol>
 <li>宽度（D点位置）</li>
@@ -285,7 +286,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/27/贝塞尔曲线练习-谷歌猜画小歌的倒计时/" data-id="cjk3sfozl005rrtstt0kcuoth" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/27/贝塞尔曲线练习-谷歌猜画小歌的倒计时/" data-id="cjk3sgodr006it3stzg0fnwqc" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
