@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[贝塞尔曲线练习-谷歌猜画小歌的倒计时]]></title>
+    <url>%2F2018%2F07%2F27%2F%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF%E7%BB%83%E4%B9%A0-%E8%B0%B7%E6%AD%8C%E7%8C%9C%E7%94%BB%E5%B0%8F%E6%AD%8C%E7%9A%84%E5%80%92%E8%AE%A1%E6%97%B6%2F</url>
+    <content type="text"><![CDATA[总的来说一共有四段二阶贝塞尔曲线，其实我们是可以只用一次高阶贝塞尔曲线来搞定的，但是那样不是很划算，所以我用四段二阶曲线拼接为一个循环。 示意图： 图中大框表示手机屏幕，我们只要每次都移动S点的位置就可以做到模拟波浪。 那么需要确定 宽度（D点位置） 波浪高度 （C 点，控制点的高度，它的宽度是不做变化的） 起始点的位置 当我们开始移动时，只需要移动S点位置即可，其他点都调用quadTo ，lineTo 的API就可以直接相对位置的位移 实现效果图: 好了，既然道理已经明白了，那就开始代码把 实现选择继承View实现，我们没有其他的控件需要协调，只要管好自己就OK,直接上View即可 本来构思的是做一个可以画多条波浪的View,但是试了一下,多条很难看…..而且我是为了练手,所以半途改了设计 WaveView.java WaveView主要负责初始化Wave.java实例,以及计算水面的高度其他都是具体交给了Wave.java做的 onDraw的主要逻辑: 1234567891011121314151617@Overrideprotected void onDraw(Canvas canvas) &#123; //这一步是画了一个圆角矩形,达到整个控件的圆角效果 //在super之前调用,除了背景,可以挡着所有的绘制 canvas.clipPath(radiusPath); super.onDraw(canvas); //为了实现最后时刻的抖动效果 matrix.setRotate(postRotate, 0.5F, 0.5F);//忽略,未实现 canvas.save();//忽略,未实现 canvas.concat(matrix);//忽略,未实现 //draw wave,这一步就是把两条波浪都画了出来,for循环所有的波浪,其实就2条 for (int i = waveList.length-1; i &gt;= 0; i--) &#123; waveList[i].drawWave(canvas); &#125; canvas.restore();//忽略,未实现&#125; 水面高度动画:(其实这里没有设置动画的时长,因为这个是留给使用者来设置的) 123456789101112131415161718/** * 设置水升起的动画 * @return ValueAnimator */private ValueAnimator getWaterRaiseAnim() &#123; //初始化动画 if (waterAnimator == null) &#123; //可以看到,我们的变化范围是 0F - mHeight waterAnimator = ValueAnimator.ofFloat(0F, mHeight); waterAnimator.setInterpolator(new AccelerateInterpolator()); waterAnimator.addUpdateListener(animation -&gt; &#123; for (Wave wave : waveList) &#123; //循环调用wave,告诉每一个实例,高度变化了 wave.updateHeight((float) animation.getAnimatedValue()); &#125; &#125;); &#125; return waterAnimator;&#125; 两个startAnim,目的是用户不传递时间时,我们使用默认的20 * 1000毫秒 123456789101112131415161718192021222324252627282930//开始动画public void startAnim() &#123; startAnim(DEFAULT_TIME);&#125;/** * 开始动画 * @param time 时间单位 秒 */public void startAnim(long time) &#123; if (animatorSet != null) &#123; if (animatorSet.isRunning()) &#123; animatorSet.cancel(); &#125; animatorSet.start(); &#125;else&#123; initAnim(time); animatorSet.start(); &#125;&#125;//这里本来还添加了晃动的动画,注释掉的就是private void initAnim(long time) &#123; animatorSet = new AnimatorSet(); waterAnimator = getWaterRaiseAnim(); waterAnimator.setDuration(time); animatorSet.play(waterAnimator); //rotateAnim = getRotateAnim(); //animatorSet.play(rotateAnim).after(time / 5 * 4)&#125; Wave.java 主要负责绘制波浪,并自己调用动画达到波浪起伏效果 绘制的方法: 12345678910111213141516171819202122232425262728293031 /** * 当前这一条波浪的绘制 * * @param canvas 画布 */ public void drawWave(Canvas canvas) &#123; //如果不是第一层,则不需要要画波浪下面的部分 drawWave(isTop()); canvas.drawPath(mPath, mPaint); &#125; /** * @param isNeed 是否需要绘制下面部分 */ private void drawWave(boolean isNeed) &#123; mPath.reset(); mPath.moveTo(mLeftTop.x, mLeftTop.y); mPath.quadTo(mControlFirst.x, mControlFirst.y, mLeftMid.x, mLeftMid.y); mPath.quadTo(mControlSecond.x, mControlSecond.y, mMid.x, mMid.y); mPath.quadTo(mControlThree.x, mControlThree.y, mRightMid.x, mRightMid.y); mPath.quadTo(mControlFour.x, mControlFour.y, mRightTop.x, mRightTop.y); if (isNeed) &#123; mPath.lineTo(mRightBottom.x, mRightBottom.y); mPath.lineTo(mLeftBottom.x, mLeftBottom.y); mPath.lineTo(mLeftTop.x, mLeftTop.y); &#125; else &#123; mPath.lineTo(mRightTop.x, mRightTop.y + mWaveTrough); mPath.lineTo(mLeftTop.x, mLeftTop.y + mWaveTrough); mPath.lineTo(mLeftTop.x, mLeftTop.y); &#125; &#125; 动画 123456789101112131415161718192021222324/** * 初始化一个动画,并开启动画 */public void startAnim() &#123; ValueAnimator valueAnimator; if ((layerNum &amp; 1) == 0) &#123; //达到位移是从左向右的效果 valueAnimator = ValueAnimator.ofFloat(mLeftTop.x, 0); &#125; else &#123; //位移从右向左的移动 valueAnimator = ValueAnimator.ofFloat(mRightTop.x, mWidth); &#125; valueAnimator.setInterpolator(new LinearInterpolator()); valueAnimator.setDuration(1000); //无限的动画,一直播放,达成一个循环 valueAnimator.setRepeatCount(Animation.INFINITE); valueAnimator.addUpdateListener(animation -&gt; &#123; float value = (float) animation.getAnimatedValue(); //交给next方法,具体的算出每一个点的下一个位置 next(value); &#125;); valueAnimator.start();&#125; next(float value) 12345678910111213141516171819202122232425262728293031323334 /** * 变化后的数值 * @param value x方向的位移 */ private void next(float value) &#123; if ((layerNum &amp; 1) == 0) &#123; //这是向右移动 mLeftTop.set(value, mHeight - mWaterHeight); mLeftMid.set(mLeftTop.x + mWidth / 2f, mHeight - mWaterHeight); mMid.set(mLeftMid.x + mWidth / 2f, mHeight - mWaterHeight); mRightMid.set(mMid.x + mWidth / 2f, mHeight - mWaterHeight); mRightTop.set(mRightMid.x + mWidth / 2f, mHeight - mWaterHeight); mControlFirst.set(mLeftTop.x + mWidth / 4f, mLeftTop.y + mWaveTrough); mControlSecond.set(mLeftMid.x + mWidth / 4f, mLeftMid.y - mWavePeak); mControlThree.set(mMid.x + mWidth / 4f, mMid.y + mWaveTrough); mControlFour.set(mRightMid.x + mWidth / 4f, mRightMid.y - mWaveTrough); &#125; else &#123; //向左移动 mLeftTop.set(value, mHeight - mWaterHeight); mLeftMid.set(mLeftTop.x - mWidth / 2f, mHeight - mWaterHeight); mMid.set(mLeftMid.x - mWidth / 2f, mHeight - mWaterHeight); mRightMid.set(mMid.x - mWidth / 2f, mHeight - mWaterHeight); mRightTop.set(mRightMid.x - mWidth / 2f, mHeight - mWaterHeight); mControlFirst.set(mLeftTop.x - mWidth / 4f, mLeftTop.y + mWaveTrough); mControlSecond.set(mLeftMid.x - mWidth / 4f, mLeftMid.y - mWavePeak); mControlThree.set(mMid.x - mWidth / 4f, mMid.y + mWaveTrough); mControlFour.set(mRightMid.x - mWidth / 4f, mRightMid.y - mWaveTrough); &#125;//这里我们只对第一个波浪设置了回调,所以必须要判断,不是空才能通知WaveView重绘 if (onRequestDraw != null) &#123; onRequestDraw.onDraw(); &#125; &#125; 总结定义一定要清楚,要不然会把自己混进去. 具体代码请到 GIthub : https://github.com/wangzhumo/module_views]]></content>
+      <categories>
+        <category>View</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+        <tag>View</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Android Studio中使用CMake进行JNI开发]]></title>
     <url>%2F2018%2F07%2F25%2FAndroid-Studio%E4%B8%AD%E4%BD%BF%E7%94%A8CMake%E8%BF%9B%E8%A1%8CJNI%E5%BC%80%E5%8F%91%2F</url>
     <content type="text"><![CDATA[前言定一个小目标,替代RenderScript来做一个图片的高斯模糊,因为这是一个比较考验性能的操作,所以我打算用C来做这个操作(主要原因是我自己不会写C++,刚好看到有这个开源算法…) 创建项目 new -&gt; new Module -&gt; Android Library 当项目创建好之后,这只是一个单纯的Library,并不能使用JNI开发 下面,我们把它改造一下(下图是改造完成的目录结构): 添加CMakeLists.txt 选中lib_blur - new File - CMakeLists.txt 1234567891011121314151617181920212223242526272829cmake_minimum_required(VERSION 3.4.1)#设置生成的so动态库最后输出的路径#set(CMAKE_LIBRARY_OUTPUT_DIRECTORY $&#123;PROJECT_SOURCE_DIR&#125;/src/main/jniLibs/$&#123;ANDROID_ABI&#125;)add_library( # 库名 sample # 该库生成动态函数 SHARED # 依赖的文件 src/main/cpp/samplelib.cpp)find_library( # 设置Path变量的名称 log-lib # 指定要查询的库名字 # 在ndk中查找 liblog.so 函数库 log )target_link_libraries( # 目标库 sample # 要链接的库 android # Links the target library to the log library # included in the NDK. $&#123;log-lib&#125; ) 修改build.grade1234567891011121314151617181920212223android &#123; defaultConfig &#123; //... ndk &#123; // 设置支持的SO库架构 abiFilters 'armeabi-v7a', 'x86' &#125; externalNativeBuild &#123; cmake &#123; cppFlags "-std=c++14", "-frtti", "-fexceptions" &#125; &#125; &#125; //... externalNativeBuild &#123; cmake &#123; path "CMakeLists.txt" &#125; &#125;&#125; 编写C++文件我们的C文件都在src/main/cpp文件夹下,每一个C文件都需要在CMakeLists.txt文件中指定 12# 依赖的文件src/main/cpp/samplelib.cpp samplelib.cpp 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273#include &lt;jni.h&gt;#include &lt;stdlib.h&gt;#include &lt;string&gt;#include &lt;android/log.h&gt;#define TAG "JNI_LOG"#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR,TAG ,__VA_ARGS__)using namespace std;#ifdef __cplusplusextern "C" &#123;#endif//定义我Java文件的位置,注意是'/'分开static const char *className = "com/wangzhumo/app/commonlib/jni/JniManager";//返回一个stringjstring stringFromJNI(JNIEnv *env,jclass clz) &#123; std::string hello = "Hello from C++"; return env-&gt;NewStringUTF(hello.c_str());&#125;//返回一个string 并把这句话打印到logcat中去jstring sayHello(JNIEnv* env,jclass clz) &#123; std::string hello = "Say Hello from C++"; LOGE("Say Hello and value"); return env-&gt;NewStringUTF(hello.c_str());&#125;//获取所有方法名static JNINativeMethod gJniMethods[] = &#123; &#123;"sayHello", "()Ljava/lang/String;", (void*)sayHello&#125;, &#123;"stringFromJNI", "()Ljava/lang/String;", (void*)stringFromJNI&#125;,&#125;;//其中&#123;"MethodName","(入参)返回值",()Method&#125; //动态注册本地方法static int jniRegisterNativeMethods(JNIEnv* env, const char* className, const JNINativeMethod* gMethods, int numMethods) &#123; jclass clazz; clazz = (env)-&gt;FindClass( className); if (clazz == NULL) &#123; return -1; &#125; int result = 0; if ((env)-&gt;RegisterNatives(clazz, gMethods, numMethods) &lt; 0) &#123; result = -1; &#125; (env)-&gt;DeleteLocalRef(clazz); return result;&#125;//JNI_OnLoad回调JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved)&#123; JNIEnv* env = NULL; jint result = -1; if (vm-&gt;GetEnv((void**) &amp;env, JNI_VERSION_1_6) != JNI_OK) &#123; return result; &#125; jniRegisterNativeMethods(env, className, gJniMethods, sizeof(gJniMethods) / sizeof(JNINativeMethod)); return JNI_VERSION_1_6;&#125;#ifdef __cplusplus&#125;#endif 编写Java文件123456789public class JniManager &#123; static&#123; System.loadLibrary("sample"); &#125; public static native String sayHello(); public static native String stringFromJNI();&#125; 编译 Build -&gt; Make Project 编译完成,如果成功则 build -&gt; intermediates -&gt; cmake 下就有 .so文件 如图所示: 我们可以看到,生成了 armeabi-v7a, x86两种类型的.so文件,如果不在build.gradle中声明: 1234ndk &#123; // 设置支持的SO库架构 abiFilters 'armeabi-v7a', 'x86'&#125; 调用12345678910111213class MainActivity : AppCompatActivity() &#123; override fun onCreate(savedInstanceState: Bundle?) &#123; super.onCreate(savedInstanceState) setContentView(R.layout.activity_main) &#125; override fun onResume() &#123; super.onResume() Log.e("JNI",JniManager.sayHello()) Log.e("JNI",JniManager.stringFromJNI()) &#125;&#125; 结果: 12307-26 17:42:41.420 6685-6685/com.wangzhumo.playground E/JNI_LOG: Say Hello and value07-26 17:42:41.420 6685-6685/com.wangzhumo.playground E/JNI: Say Hello from C++07-26 17:42:41.420 6685-6685/com.wangzhumo.playground E/JNI: Hello from C++ 其中JNI_LOG是由 cpp 中的方法打印到Android的控制台的 JNI是我们在MainActivity中调用的 12Log.e("JNI",JniManager.sayHello())Log.e("JNI",JniManager.stringFromJNI()) 结语以上说明我的JNI算是初步完成了调用 http://zhixinliu.com/2015/07/01/2015-07-01-jni-register/ https://developer.android.com/ndk/guides/ 前言中的Flag真是立的好,C++不是很会,所以只能往简单了写,真是可怜的我]]></content>
@@ -341,8 +353,8 @@
         <category>Android Studio</category>
       </categories>
       <tags>
-        <tag>Android</tag>
         <tag>Android Studio</tag>
+        <tag>Android</tag>
       </tags>
   </entry>
   <entry>
@@ -476,8 +488,8 @@
         <category>Bug</category>
       </categories>
       <tags>
-        <tag>Android</tag>
         <tag>Android Studio</tag>
+        <tag>Android</tag>
         <tag>Bug</tag>
       </tags>
   </entry>
@@ -537,8 +549,8 @@
       </categories>
       <tags>
         <tag>Android</tag>
-        <tag>Okhttp</tag>
         <tag>Rxjava</tag>
+        <tag>Okhttp</tag>
       </tags>
   </entry>
   <entry>
@@ -550,8 +562,8 @@
       </categories>
       <tags>
         <tag>Android</tag>
-        <tag>Okhttp</tag>
         <tag>Rxjava</tag>
+        <tag>Okhttp</tag>
       </tags>
   </entry>
   <entry>
@@ -651,8 +663,8 @@
         <category>Android Studio</category>
       </categories>
       <tags>
-        <tag>Android</tag>
         <tag>Android Studio</tag>
+        <tag>Android</tag>
       </tags>
   </entry>
   <entry>
@@ -685,8 +697,8 @@
         <category>Android Studio</category>
       </categories>
       <tags>
-        <tag>Android</tag>
         <tag>Android Studio</tag>
+        <tag>Android</tag>
       </tags>
   </entry>
   <entry>
