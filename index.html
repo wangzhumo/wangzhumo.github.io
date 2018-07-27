@@ -230,49 +230,13 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <p>总的来说一共有四段二阶贝塞尔曲线，其实我们是可以只用一次高阶贝塞尔曲线来搞定的，但是那样不是很划算，所以我用四段二阶曲线拼接为一个循环。</p>
+            <p><p>总的来说一共有四段二阶贝塞尔曲线，其实我们是可以只用一次高阶贝塞尔曲线来搞定的，但是那样不是很划算，所以我用四段二阶曲线拼接为一个循环。</p>
 <p>示意图：</p>
 <p><img src="../images/wave_show.png" alt="示意图"></p>
-<p>图中大框表示手机屏幕，我们只要每次都移动S点的位置就可以做到模拟波浪。</p>
-<!-- mroe -->
-<p>那么需要确定</p>
-<ol>
-<li>宽度（D点位置）</li>
-<li>波浪高度 （C 点，控制点的高度，它的宽度是不做变化的）</li>
-<li>起始点的位置</li>
-</ol>
-<p>当我们开始移动时，只需要移动S点位置即可，其他点都调用quadTo ，lineTo 的API就可以直接相对位置的位移</p>
-<p>实现效果图:</p>
-<p><img src="../images/wave_image.gif" alt=""></p>
-<p>好了，既然道理已经明白了，那就开始代码把</p>
-<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>选择继承View实现，我们没有其他的控件需要协调，只要管好自己就OK,直接上View即可</p>
-<p>本来构思的是做一个可以画多条波浪的View,但是试了一下,多条很难看…..而且我是为了练手,所以半途改了设计</p>
-<h4 id="WaveView-java"><a href="#WaveView-java" class="headerlink" title="WaveView.java"></a>WaveView.java</h4><blockquote>
-<p>WaveView主要负责初始化Wave.java实例,以及计算水面的高度其他都是具体交给了Wave.java做的</p>
-</blockquote>
-<p>onDraw的主要逻辑:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//这一步是画了一个圆角矩形,达到整个控件的圆角效果</span></span><br><span class="line">    <span class="comment">//在super之前调用,除了背景,可以挡着所有的绘制</span></span><br><span class="line">    canvas.clipPath(radiusPath); </span><br><span class="line">    <span class="keyword">super</span>.onDraw(canvas);</span><br><span class="line">    <span class="comment">//为了实现最后时刻的抖动效果</span></span><br><span class="line">    matrix.setRotate(postRotate, <span class="number">0.5F</span>, <span class="number">0.5F</span>);<span class="comment">//忽略,未实现</span></span><br><span class="line">    canvas.save();<span class="comment">//忽略,未实现</span></span><br><span class="line">    canvas.concat(matrix);<span class="comment">//忽略,未实现</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//draw wave,这一步就是把两条波浪都画了出来,for循环所有的波浪,其实就2条</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = waveList.length-<span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        waveList[i].drawWave(canvas);</span><br><span class="line">    &#125;</span><br><span class="line">    canvas.restore();<span class="comment">//忽略,未实现</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>水面高度动画:(其实这里没有设置动画的时长,因为这个是留给使用者来设置的)</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 设置水升起的动画</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> ValueAnimator</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> ValueAnimator <span class="title">getWaterRaiseAnim</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">//初始化动画</span></span><br><span class="line">    <span class="keyword">if</span> (waterAnimator == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="comment">//可以看到,我们的变化范围是 0F -  mHeight</span></span><br><span class="line">        waterAnimator = ValueAnimator.ofFloat(<span class="number">0F</span>, mHeight);</span><br><span class="line">        waterAnimator.setInterpolator(<span class="keyword">new</span> AccelerateInterpolator());</span><br><span class="line">        waterAnimator.addUpdateListener(animation -&gt; &#123;</span><br><span class="line">            <span class="keyword">for</span> (Wave wave : waveList) &#123; <span class="comment">//循环调用wave,告诉每一个实例,高度变化了</span></span><br><span class="line">                wave.updateHeight((<span class="keyword">float</span>) animation.getAnimatedValue());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> waterAnimator;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>两个startAnim,目的是用户不传递时间时,我们使用默认的20 * 1000毫秒</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//开始动画</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">startAnim</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    startAnim(DEFAULT_TIME);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 开始动画</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> time 时间单位 秒</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">startAnim</span><span class="params">(<span class="keyword">long</span> time)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (animatorSet != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (animatorSet.isRunning()) &#123;</span><br><span class="line">            animatorSet.cancel();</span><br><span class="line">        &#125;</span><br><span class="line">        animatorSet.start();</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        initAnim(time);</span><br><span class="line">        animatorSet.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//这里本来还添加了晃动的动画,注释掉的就是</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initAnim</span><span class="params">(<span class="keyword">long</span> time)</span> </span>&#123;</span><br><span class="line">    animatorSet = <span class="keyword">new</span> AnimatorSet();</span><br><span class="line">    waterAnimator = getWaterRaiseAnim();</span><br><span class="line">    waterAnimator.setDuration(time);</span><br><span class="line">    animatorSet.play(waterAnimator);</span><br><span class="line">    <span class="comment">//rotateAnim = getRotateAnim();</span></span><br><span class="line">    <span class="comment">//animatorSet.play(rotateAnim).after(time / 5 * 4)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Wave.java</p>
-<blockquote>
-<p>主要负责绘制波浪,并自己调用动画达到波浪起伏效果</p>
-</blockquote>
-<p>绘制的方法:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 当前这一条波浪的绘制</span></span><br><span class="line"><span class="comment">    *</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> canvas 画布</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">drawWave</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">       <span class="comment">//如果不是第一层,则不需要要画波浪下面的部分</span></span><br><span class="line">       drawWave(isTop());</span><br><span class="line">       canvas.drawPath(mPath, mPaint);</span><br><span class="line">   &#125;	</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> isNeed 是否需要绘制下面部分</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">drawWave</span><span class="params">(<span class="keyword">boolean</span> isNeed)</span> </span>&#123;</span><br><span class="line">       mPath.reset();</span><br><span class="line">       mPath.moveTo(mLeftTop.x, mLeftTop.y);</span><br><span class="line">       mPath.quadTo(mControlFirst.x, mControlFirst.y, mLeftMid.x, mLeftMid.y);</span><br><span class="line">       mPath.quadTo(mControlSecond.x, mControlSecond.y, mMid.x, mMid.y);</span><br><span class="line">       mPath.quadTo(mControlThree.x, mControlThree.y, mRightMid.x, mRightMid.y);</span><br><span class="line">       mPath.quadTo(mControlFour.x, mControlFour.y, mRightTop.x, mRightTop.y);</span><br><span class="line">       <span class="keyword">if</span> (isNeed) &#123;</span><br><span class="line">           mPath.lineTo(mRightBottom.x, mRightBottom.y);</span><br><span class="line">           mPath.lineTo(mLeftBottom.x, mLeftBottom.y);</span><br><span class="line">           mPath.lineTo(mLeftTop.x, mLeftTop.y);</span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">           mPath.lineTo(mRightTop.x, mRightTop.y + mWaveTrough);</span><br><span class="line">           mPath.lineTo(mLeftTop.x, mLeftTop.y + mWaveTrough);</span><br><span class="line">           mPath.lineTo(mLeftTop.x, mLeftTop.y);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-<p>动画</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 初始化一个动画,并开启动画</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">startAnim</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ValueAnimator valueAnimator;</span><br><span class="line">    <span class="keyword">if</span> ((layerNum &amp; <span class="number">1</span>) == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">//达到位移是从左向右的效果</span></span><br><span class="line">        valueAnimator = ValueAnimator.ofFloat(mLeftTop.x, <span class="number">0</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">//位移从右向左的移动</span></span><br><span class="line">        valueAnimator = ValueAnimator.ofFloat(mRightTop.x, mWidth);</span><br><span class="line">    &#125;</span><br><span class="line">    valueAnimator.setInterpolator(<span class="keyword">new</span> LinearInterpolator());</span><br><span class="line">    valueAnimator.setDuration(<span class="number">1000</span>);</span><br><span class="line">    <span class="comment">//无限的动画,一直播放,达成一个循环</span></span><br><span class="line">    valueAnimator.setRepeatCount(Animation.INFINITE);</span><br><span class="line">    valueAnimator.addUpdateListener(animation -&gt; &#123;</span><br><span class="line">        <span class="keyword">float</span> value = (<span class="keyword">float</span>) animation.getAnimatedValue();</span><br><span class="line">        <span class="comment">//交给next方法,具体的算出每一个点的下一个位置</span></span><br><span class="line">        next(value);</span><br><span class="line">    &#125;);</span><br><span class="line">    valueAnimator.start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>next(float value)</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 变化后的数值</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> value x方向的位移</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">next</span><span class="params">(<span class="keyword">float</span> value)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> ((layerNum &amp; <span class="number">1</span>) == <span class="number">0</span>) &#123;</span><br><span class="line">          <span class="comment">//这是向右移动</span></span><br><span class="line">          mLeftTop.set(value, mHeight - mWaterHeight);</span><br><span class="line">          mLeftMid.set(mLeftTop.x + mWidth / <span class="number">2f</span>, mHeight - mWaterHeight);</span><br><span class="line">          mMid.set(mLeftMid.x + mWidth / <span class="number">2f</span>, mHeight - mWaterHeight);</span><br><span class="line">          mRightMid.set(mMid.x + mWidth / <span class="number">2f</span>, mHeight - mWaterHeight);</span><br><span class="line">          mRightTop.set(mRightMid.x + mWidth / <span class="number">2f</span>, mHeight - mWaterHeight);</span><br><span class="line">          mControlFirst.set(mLeftTop.x + mWidth / <span class="number">4f</span>, mLeftTop.y + mWaveTrough);</span><br><span class="line">          mControlSecond.set(mLeftMid.x + mWidth / <span class="number">4f</span>, mLeftMid.y - mWavePeak);</span><br><span class="line">          mControlThree.set(mMid.x + mWidth / <span class="number">4f</span>, mMid.y + mWaveTrough);</span><br><span class="line">          mControlFour.set(mRightMid.x + mWidth / <span class="number">4f</span>, mRightMid.y - mWaveTrough);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="comment">//向左移动</span></span><br><span class="line">          mLeftTop.set(value, mHeight - mWaterHeight);</span><br><span class="line">          mLeftMid.set(mLeftTop.x - mWidth / <span class="number">2f</span>, mHeight - mWaterHeight);</span><br><span class="line">          mMid.set(mLeftMid.x - mWidth / <span class="number">2f</span>, mHeight - mWaterHeight);</span><br><span class="line">          mRightMid.set(mMid.x - mWidth / <span class="number">2f</span>, mHeight - mWaterHeight);</span><br><span class="line">          mRightTop.set(mRightMid.x - mWidth / <span class="number">2f</span>, mHeight - mWaterHeight);</span><br><span class="line">          mControlFirst.set(mLeftTop.x - mWidth / <span class="number">4f</span>, mLeftTop.y + mWaveTrough);</span><br><span class="line">          mControlSecond.set(mLeftMid.x - mWidth / <span class="number">4f</span>, mLeftMid.y - mWavePeak);</span><br><span class="line">          mControlThree.set(mMid.x - mWidth / <span class="number">4f</span>, mMid.y + mWaveTrough);</span><br><span class="line">          mControlFour.set(mRightMid.x - mWidth / <span class="number">4f</span>, mRightMid.y - mWaveTrough);</span><br><span class="line">      &#125;</span><br><span class="line"><span class="comment">//这里我们只对第一个波浪设置了回调,所以必须要判断,不是空才能通知WaveView重绘</span></span><br><span class="line">      <span class="keyword">if</span> (onRequestDraw != <span class="keyword">null</span>) &#123;</span><br><span class="line">          onRequestDraw.onDraw();</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>定义一定要清楚,要不然会把自己混进去.</p>
-<p>具体代码请到</p>
-<blockquote>
-<p> GIthub  :  <a href="https://github.com/wangzhumo/module_views" target="_blank" rel="noopener">https://github.com/wangzhumo/module_views</a></p>
-</blockquote>
-
+<p>图中大框表示手机屏幕，我们只要每次都移动S点的位置就可以做到模拟波浪。</p></p>
+            <p class="article-more-link">
+                <a href="/2018/07/27/贝塞尔曲线练习-谷歌猜画小歌的倒计时/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -282,7 +246,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/27/贝塞尔曲线练习-谷歌猜画小歌的倒计时/" data-id="cjk3sgodr006it3stzg0fnwqc" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/27/贝塞尔曲线练习-谷歌猜画小歌的倒计时/" data-id="cjk3sjgnw0062txst3lpi4r8m" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -418,7 +382,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/25/Android-Studio中使用CMake进行JNI开发/" data-id="cjk3sgoa9000mt3st7d4n1s9n" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/25/Android-Studio中使用CMake进行JNI开发/" data-id="cjk3sjgky000ltxst9olaxhoc" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -551,7 +515,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/24/开发板Firefly-RK3399初探/" data-id="cjk3sgodh005st3stx9kvi9kn" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/24/开发板Firefly-RK3399初探/" data-id="cjk3sjgnq005qtxst49xfuh4m" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -689,7 +653,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/22/数据结构-下笔记/" data-id="cjk3sgodj005vt3sty2gn4e2x" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/22/数据结构-下笔记/" data-id="cjk3sjgnr005utxstl3nlant8" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -820,7 +784,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/15/递归调用创建单链表/" data-id="cjk3sgodq006ft3st9r8dybr8" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/15/递归调用创建单链表/" data-id="cjk3sjgny006atxst0d9cn9tt" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -957,7 +921,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/14/设计模式-装饰者设计模式/" data-id="cjk3sgodo0067t3stue3om8ij" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/14/设计模式-装饰者设计模式/" data-id="cjk3sjgo0006htxstrki8z5hj" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1089,7 +1053,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/14/设计模式-状态模式的使用/" data-id="cjk3sgodn0063t3stwn4av6jx" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/14/设计模式-状态模式的使用/" data-id="cjk3sjgnz006dtxstt5u240zz" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1221,7 +1185,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" data-id="cjk3sgocq0044t3stsdyb2uhz" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/13/RecyclerView中notifyItemRangeChanged无效的BUG/" data-id="cjk3sjgn8004ftxstcvugafks" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1355,7 +1319,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/12/ConstraintLayout使用指南-基础的约束/" data-id="cjk3sgoc2002ht3stf6roow98" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/12/ConstraintLayout使用指南-基础的约束/" data-id="cjk3sjgmc002etxst8d7tqk4n" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1489,7 +1453,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/11/JVM的垃圾回收Garbage-Collection/" data-id="cjk3sgocc0037t3stwnpnmu0g" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/11/JVM的垃圾回收Garbage-Collection/" data-id="cjk3sjgmr003ctxstwkqhrqlm" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
