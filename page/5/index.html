@@ -159,7 +159,7 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                65
+                68
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -188,6 +188,559 @@
 
             
             <section id="main">
+    <article id="post-OkHttp中添加https支持" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/01/10/OkHttp中添加https支持/">OkHttp中添加https支持</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/01/10/OkHttp中添加https支持/">
+            <time datetime="2018-01-10T08:43:57.000Z" itemprop="datePublished">2018-01-10</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Android/">Android</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><strong>基础知识</strong></p>
+<p>感觉就是一堆有信誉的机构,说: 我们这些机构的公钥是可信的,我们下面的小弟当然也是可以信任的啦</p>
+<p>然后大家就去当人家小弟,就是可信的了….</p>
+<p>当然这里面有的大佬不高兴,就自己搞一套证书,比如12306</p>
+<p>Https中,值得注意的密钥有:</p>
+<ul>
+<li>服务器端的<code>公钥</code>和<code>私钥</code></li>
+</ul>
+<ul>
+<li>客户端的<code>随机密钥</code></li>
+</ul>
+<p>值得注意的是一个HTTPS请求实际上就是两次HTTP传输.</p>
+<p>1.客户端向服务器发起HTTPS请求，连接到服务器的443端口。</p>
+<p>2.服务端收到请求,向客户端发送自己的<code>公钥</code></p>
+<p>3.客户端收到服务器公钥,开始验证证书的合法性,我们知道系统内置了一些证书,应该是叫顶级证书吧</p>
+<p>我们的证书并不是啥大机构发的,肯定不在里面,那么就没法验证合法.</p>
+<p>​     合法 &gt; 继续</p>
+<p>​     不合法 &gt; 此次Https请求终止</p>
+<p>4.客户端验证公钥合格后(也就是给你发消息的服务器是正经服务器)，那么客户端会生成一个 随机密码,客户端会拿着这个随机密码和刚才收到的服务器密钥做非对称加密 &gt;&gt; 得到密文的密码</p>
+<p>——–以上第一次http请求结束了——–</p>
+<p>5.客户端会发起HTTPS中的第二个HTTP请求,发送客户端密钥(密文)给服务器。</p>
+<p>6.服务器收到密文，会用自己的私钥对其进行非对称解密,得到客户端刚才生成的客户端随机密码.</p>
+<p>此时服务器使用客户端随机密码,对数据进行对称加密</p>
+<p>7.把对称加密后的数据返回给客户端,客户端对称解密,OK    此次Https完美结束</p>
+<p>——–整个https请求结束了——–</p>
+<p>其中 , <code>对称加密</code>和<code>非对称加密</code>,  各司其职,共同完成整个请求.</p>
+<p>  对称加密: 最快速,最简单</p>
+<p>  非对称加密:速度慢,很安全,不需要把秘钥分发,客户端利用公钥加密的数据,只能是拥有秘钥的服务器解密</p>
+<p>利用非对称加密的特性传递  客户端生成的随机密钥 ,达到只有服务器和客户端互相知道的密钥,从而使用密钥进行(高速简单的)对称加密数据.</p>
+<p><strong>第一部分:信任所有</strong></p>
+<p>这就是,我不管是谁传递的消息,不是你家服务器传递的消息,你也会信</p>
+<p><strong>Api.java</strong> (提供okhttp实例,并创建Retroit服务)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">OkHttpClient okHttpClient = new OkHttpClient.Builder()</span><br><span class="line">               .hostnameVerifier(new HostnameVerifier() &#123;</span><br><span class="line">                   @Override</span><br><span class="line">                   public boolean verify(String hostname, SSLSession session) &#123;</span><br><span class="line">                       return true;</span><br><span class="line">                   &#125;</span><br><span class="line">               &#125;)</span><br><span class="line">               .sslSocketFactory(createSSLSocketFactory())</span><br><span class="line">               .build();</span><br><span class="line">               </span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">//这里是创建一个SSLSocketFactory,提供给上面的 .sslSocketFactory()</span><br><span class="line">private  SSLSocketFactory createSSLSocketFactory() &#123;</span><br><span class="line">       SSLSocketFactory ssfFactory = null;</span><br><span class="line">       try &#123;</span><br><span class="line">           SSLContext sc = SSLContext.getInstance(&quot;TLS&quot;);</span><br><span class="line">           sc.init(null, new TrustManager[]&#123;new TrustAllCerts()&#125;, new SecureRandom());</span><br><span class="line">           ssfFactory = sc.getSocketFactory();</span><br><span class="line">       &#125; catch (Exception e) &#123;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       return ssfFactory;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>其中涉及到<strong>TrustAllCerts.java</strong>,可以看到只是实现X509TrustManager,所有方法都是默认实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * If you have any questions, you can contact by email &#123; wangzhumoo@gmail.com&#125;</span><br><span class="line"> * @author 王诛魔 2018/1/8 下午2:25</span><br><span class="line"> */</span><br><span class="line">public class TrustAllCerts implements X509TrustManager &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException &#123;&#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException &#123;&#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public X509Certificate[] getAcceptedIssuers() &#123;</span><br><span class="line">        return new X509Certificate[0];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里就以及可以了,信任所有的连接</p>
+<hr>
+<p><strong>第二部分:(强验证)</strong></p>
+<p>我只信任证书合法的服务器传递的数据.</p>
+<ul>
+<li>查看Https的证书</li>
+</ul>
+<p><img src="images/https_zhengshu.png" alt="https证书"></p>
+<p>在浏览器上看到这个,这个已经是我把证书添加为信任了,所以他是一个 <code>安全</code> 的标志</p>
+<ul>
+<li>分析</li>
+</ul>
+<p><img src="images/https_root.png" alt="https证书"></p>
+<p>这里是我查看当前网站证书的结构</p>
+<p>最顶—是根证书,到期时间是2028年</p>
+<p>最底—是我司证书,到期时间是2018.12.9日</p>
+<p>这里我们可以发现,我们网站的证书是有时间限制的,那么就会有一个问题,到了2018.12.9这一天怎么办.</p>
+<blockquote>
+<p>我也不知道会怎么样,应该是续签吧!那么万一这个证书变化了怎么办?</p>
+</blockquote>
+<p>所以,我们应该把根证书置为信任.</p>
+<ul>
+<li>下载保存</li>
+</ul>
+<p><img src="images/https_save.png" alt="https证书"></p>
+<p>Mac的在  钥匙串访问  中</p>
+<p>Windows 没法放图,在chrome上查看证书的时候应该就能保存.</p>
+<p><strong>HttpsUtils.java </strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * If you have any questions, you can contact by email &#123; wangzhumoo@gmail.com&#125;</span><br><span class="line"> * @author 王诛魔 2018/1/10 下午5:07</span><br><span class="line"> * 支持https的工具类</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">public class HttpsUtils &#123;</span><br><span class="line">    private static final String TAG = &quot;OkHttp&quot;;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 创建一个空白的KeyStore</span><br><span class="line">     * @return KeyStore</span><br><span class="line">     * @throws GeneralSecurityException</span><br><span class="line">     */</span><br><span class="line">    private static KeyStore createEmptyKeyStore() throws GeneralSecurityException &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());</span><br><span class="line">            //此处密码随意,不会产生问题</span><br><span class="line">            keystore.load(null, &quot;password&quot;.toCharArray());</span><br><span class="line">            return keystore;</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * TrustManager  生成</span><br><span class="line">     * @return</span><br><span class="line">     * @throws GeneralSecurityException</span><br><span class="line">     */</span><br><span class="line">    private static TrustManager[] generateTrustManager() throws GeneralSecurityException &#123;</span><br><span class="line"></span><br><span class="line">        //创建一个X.509格式的CertificateFactory</span><br><span class="line">        CertificateFactory certificateFactory = CertificateFactory.getInstance(&quot;X.509&quot;);</span><br><span class="line"></span><br><span class="line">        Certificate ca;</span><br><span class="line">        //证书工厂根据证书文件的流生成证书Certificate</span><br><span class="line">        InputStream assets = App.getContext().getResources().openRawResource(R.raw.rootca);</span><br><span class="line">        ca = certificateFactory.generateCertificate(assets);</span><br><span class="line">        Log.e(TAG, &quot;trustManager: ca = &quot; + ((X509Certificate) ca).getSubjectDN() );</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        //创建KeyStore，用来存储信任证书</span><br><span class="line">        KeyStore keyStor = createEmptyKeyStore();</span><br><span class="line">        keyStor.setCertificateEntry(&quot;ca&quot;,ca);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        //创建一个默认类型的TrustManagerFactory</span><br><span class="line">        String defaultAlgorithm = TrustManagerFactory.getDefaultAlgorithm();</span><br><span class="line">        TrustManagerFactory tmf = TrustManagerFactory.getInstance(defaultAlgorithm);</span><br><span class="line"></span><br><span class="line">        //用keyStore实例初始化TrustManagerFactory,此时TrustManagerFactory会信任我们保存的证书</span><br><span class="line">        tmf.init(keyStor);</span><br><span class="line"></span><br><span class="line">        //通过tmf获取TrustManager数组，TrustManager也会信任keyStor中的证书</span><br><span class="line"></span><br><span class="line">        return tmf.getTrustManagers();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 提供一个一个SSLSocketFactory</span><br><span class="line">     * @return SSLSocketFactory实例</span><br><span class="line">     */</span><br><span class="line">    public static SSLSocketFactory generateSSLSocketFactory()  &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            SSLContext sc = SSLContext.getInstance(&quot;TLS&quot;);</span><br><span class="line">            sc.init(null, generateTrustManager(), new SecureRandom());</span><br><span class="line">            Log.e(TAG, &quot;generateSSLSocketFactory &quot;);</span><br><span class="line">            return sc.getSocketFactory();</span><br><span class="line">        &#125; catch (GeneralSecurityException e) &#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注释很清楚了.</p>
+<p><strong>关键:</strong></p>
+<p>1.拿到帧数的流</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">InputStream assets = App.getContext().getResources().openRawResource(R.raw.rootca);</span><br></pre></td></tr></table></figure>
+<p>2.保存到keystore</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">KeyStore keyStor = createEmptyKeyStore();</span><br><span class="line">keyStor.setCertificateEntry(&quot;ca&quot;,ca);</span><br></pre></td></tr></table></figure>
+<p>3.初始化并拿到TrustManager[]</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tmf.init(keyStor);</span><br><span class="line">tmf.getTrustManagers()</span><br></pre></td></tr></table></figure>
+<p><strong>使用即可:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//这样就Ok</span><br><span class="line">OkHttpClient okHttpClient = new OkHttpClient.Builder()</span><br><span class="line">                .hostnameVerifier((hostname, session) -&gt; true)</span><br><span class="line">                .sslSocketFactory(HttpsUtils.generateSSLSocketFactory())</span><br><span class="line">                .build();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>超好的两篇</p>
+<p><a href="http://blog.csdn.net/lmj623565791/article/details/48129405" target="_blank" rel="noopener">http://blog.csdn.net/lmj623565791/article/details/48129405</a></p>
+<p><a href="http://blog.csdn.net/iispring/article/details/51615631" target="_blank" rel="noopener">http://blog.csdn.net/iispring/article/details/51615631</a></p>
+</blockquote>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wangzhumo.com/2018/01/10/OkHttp中添加https支持/" data-id="cjk80c1w6004dv4stl2nnelrx" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-WebView播放H5视屏没有画面-只有声音" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/01/04/WebView播放H5视屏没有画面-只有声音/">WebView播放H5视屏没有画面,只有声音</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/01/04/WebView播放H5视屏没有画面-只有声音/">
+            <time datetime="2018-01-04T03:03:45.000Z" itemprop="datePublished">2018-01-04</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Bug/">Bug</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/Bug/">Bug</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><strong>描述:点击播放按钮后,只能听到声音,而画面是白的….一直白…想到应该是硬件加速的问题</strong></p>
+<p><strong>1.确认硬件加速(非此因素)</strong></p>
+<p>在WebViewActivity.java中发现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);</span><br></pre></td></tr></table></figure>
+<p><strong>2.确认AndroidManifest.xml(非此因素)</strong></p>
+<p>application节点下并没有发现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:hardwareAccelerated=&quot;true&quot;</span><br></pre></td></tr></table></figure>
+<p>在WebViewActivity中,也无该配置</p>
+<ul>
+<li>尝试: WebViewActivity.java中,注释</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);</span><br></pre></td></tr></table></figure>
+<p>在AndroidManifest.xml节点下加入<code>android:hardwareAccelerated=&quot;true&quot;</code></p>
+<ul>
+<li>结果……没用</li>
+</ul>
+<p><strong>3.检查activity_web_view.xml</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">WebView</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/webView"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:scrollbars</span>=<span class="string">"none"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:visibility</span>=<span class="string">"@&#123;showError?View.GONE:View.VISIBLE&#125;"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>没问题.</p>
+<p>BUT….</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">LinearLayout</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layerType</span>=<span class="string">"software"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">include</span> <span class="attr">layout</span>=<span class="string">"@layout/layout_toolbar"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">ProgressBar</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/web_load_progress"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">style</span>=<span class="string">"?android:attr/progressBarStyleHorizontal"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"2dp"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:indeterminateOnly</span>=<span class="string">"false"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:max</span>=<span class="string">"100"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:progress</span>=<span class="string">"@&#123;progress&#125;"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:progressDrawable</span>=<span class="string">"@drawable/progress_bar_states"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:visibility</span>=<span class="string">"gone"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">WebView</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/webView"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:scrollbars</span>=<span class="string">"none"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:visibility</span>=<span class="string">"@&#123;showError?View.GONE:View.VISIBLE&#125;"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>####父布局竟然<code>android:layerType=&quot;software&quot;</code></p>
+<ul>
+<li>解决,删掉该属性即可</li>
+</ul>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wangzhumo.com/2018/01/04/WebView播放H5视屏没有画面-只有声音/" data-id="cjk80c1x00056v4stnz944927" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-Room中List-使用详解" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/01/03/Room中List-使用详解/">Room中List&lt;&gt;使用详解</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/01/03/Room中List-使用详解/">
+            <time datetime="2018-01-03T07:03:38.000Z" itemprop="datePublished">2018-01-03</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Android/">Android</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/Room/">Room</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <blockquote>
+<p>手摸手教你在Room中使用List<object>.</object></p>
+</blockquote>
+<p>实际项目有很多这样的结构:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;id&quot;: &quot;001&quot;,</span><br><span class="line">  &quot;name&quot;: &quot;王诛魔&quot;,</span><br><span class="line">  &quot;age&quot;: 2018,</span><br><span class="line">  &quot;books&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;bookId&quot;: 10081,</span><br><span class="line">      &quot;userId&quot;: 1,</span><br><span class="line">      &quot;book&quot;: &quot;断罪小学&quot;,</span><br><span class="line">      &quot;desc&quot;: &quot;漫画讲述了李杀神、王诛魔和刘斩仙三位少年，为了十万小学生的未来、为了改变被诅咒的命运，相聚在狼牙区飞虎路私立断罪小学，誓死打败四年级的魔神赵日天的故事。&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;bookId&quot;: 10088,</span><br><span class="line">      &quot;userId&quot;: 1,</span><br><span class="line">      &quot;book&quot;: &quot;狂霸天下之断罪学园&quot;,</span><br><span class="line">      &quot;desc&quot;: &quot;《狂霸天下之断罪学园》，后来因为名字太长，而且“学园”和“学院”容易混淆的原因而改名。&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也就是,类似books这样的,List<object>作为一个元素存在.</object></p>
+<blockquote>
+<p>下面就以上面的结构为例,做一个简单的演示,按照最简答的方法实现.</p>
+</blockquote>
+<p><strong>1.添加依赖</strong></p>
+<p><a href="https://developer.android.google.cn/topic/libraries/architecture/adding-components.html" target="_blank" rel="noopener">https://developer.android.google.cn/topic/libraries/architecture/adding-components.html</a></p>
+<p>值得注意的是,如果你在kotlin中使用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: <span class="string">'kotlin-kapt'</span></span><br><span class="line">...</span><br><span class="line">dependencies&#123;</span><br><span class="line">  </span><br><span class="line">  ...</span><br><span class="line">  	<span class="comment">//这个无法生成代码,要用下面的那一条,不要疏忽忘掉了.</span></span><br><span class="line">    <span class="comment">//annotationProcessor "android.arch.persistence.room:compiler:1.0.0"</span></span><br><span class="line">    </span><br><span class="line">    kapt <span class="string">"android.arch.persistence.room:compiler:1.0.0"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一定记得使用kapt,要不然就会遇到这个BUG.</p>
+<p><strong>2.创建表</strong></p>
+<ul>
+<li><p>User.java表</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * If you have any questions, you can contact by email &#123; wangzhumoo@gmail.com&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> 王诛魔 2018/1/3 下午1:31</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Entity</span>(tableName = <span class="string">"users"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="meta">@PrimaryKey</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> id;</span><br><span class="line">    <span class="keyword">public</span> String name;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>@Entity 中指定了表名</p>
+<p>@PrimaryKey 主键</p>
+<p>这张表users 用于保存用户数据</p>
+</li>
+</ul>
+<ul>
+<li><p>Book.java表</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * If you have any questions, you can contact by email &#123; wangzhumoo@gmail.com&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> 王诛魔 2018/1/3 下午1:30</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Entity</span>(foreignKeys = &#123;</span><br><span class="line">        <span class="meta">@ForeignKey</span>(</span><br><span class="line">                entity = User.class,</span><br><span class="line">                parentColumns =&#123;<span class="string">"id"</span>&#125;,</span><br><span class="line">                childColumns = &#123;<span class="string">"userId"</span>&#125;)</span><br><span class="line">&#125;,tableName = <span class="string">"books"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Book</span> </span>&#123;</span><br><span class="line">    <span class="meta">@PrimaryKey</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> bookId;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> userId;<span class="comment">//同User.java中的id</span></span><br><span class="line">    <span class="keyword">public</span> String book;</span><br><span class="line">    <span class="keyword">public</span> String desc;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>@Entity 中</p>
+<ul>
+<li>foreignKeys = {} 中外键,可以是多个,这里只关联了User表</li>
+<li>tableName = “books” 指定了表名</li>
+</ul>
+<p>@PrimaryKey 该表主键</p>
+<p>​</p>
+<p>​</p>
+</li>
+<li><p>UserAndBook.java表 —-UserAndBook只是辅助,不作为一张表存在.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * If you have any questions, you can contact by email &#123; wangzhumoo@gmail.com&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> 王诛魔 2018/1/3 下午1:43</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserAndBook</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Embedded</span>   <span class="comment">//请看之前的文章,这是指把User中所有元素带入到这里作为元素存在</span></span><br><span class="line">    <span class="keyword">public</span> User userEntity;</span><br><span class="line"></span><br><span class="line">  	<span class="comment">//@Relation</span></span><br><span class="line">    <span class="meta">@Relation</span>(parentColumn = <span class="string">"id"</span>,entityColumn = <span class="string">"userId"</span>,entity = Book.class)</span><br><span class="line">    <span class="keyword">public</span> List&lt;Book&gt; books;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>@Embedded   请看另一篇,有解释</p>
+<p>​</p>
+<p>@Relation <a href="https://developer.android.google.cn/reference/android/arch/persistence/room/Relation.html" target="_blank" rel="noopener"> 点这里去看官方文档  </a></p>
+<blockquote>
+<p>A convenience annotation which can be used in a Pojo to automatically fetch relation entities. When the Pojo is returned from a query, all of its relations are also fetched by Room.</p>
+</blockquote>
+<p>个人以为就是一注解,指明关系,可以把实体关联起来,然后自动组装起来.   </p>
+<p>​</p>
+<p>并且在文档中还展示了一种高端的功能,用上面做例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//@Relation</span></span><br><span class="line">    <span class="meta">@Relation</span>(parentColumn = <span class="string">"id"</span>,entityColumn = <span class="string">"userId"</span>,</span><br><span class="line">              entity = Book.class ,projection = &#123;<span class="string">"book"</span>&#125;)</span><br><span class="line">    <span class="keyword">public</span> List&lt;String&gt; bookNames;</span><br></pre></td></tr></table></figure>
+<p>解释一下,projection指定了要取出的值,当前指明要在 books表中寻找符合条件parentColumn = “id”,entityColumn = “userId”   的项,找到之后会拿到book这个值并返回.</p>
+</li>
+</ul>
+<p><strong>3.Dao实现</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * If you have any questions, you can contact by email &#123; wangzhumoo@gmail.com&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> 王诛魔 2018/1/3 下午4:20</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Dao</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">UserAndBookDao</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Insert</span>(onConflict = OnConflictStrategy.REPLACE)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(User user)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Insert</span>(onConflict = OnConflictStrategy.REPLACE)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(List&lt;Book&gt; books)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Transaction</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(UserAndBook userAndBook)</span></span>&#123;</span><br><span class="line">        insert(userAndBook.userEntity);</span><br><span class="line">        insert(userAndBook.books);</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="meta">@Query</span>(<span class="string">"SELECT * FROM users"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> List&lt;UserAndBook&gt; <span class="title">getAll</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>insert(User user);</code>  ,<code>insert(List&lt;Book&gt; books);</code></p>
+<p>两个方法,也可以私有化,只对外提供<code>insert(UserAndBook userAndBook)</code></p>
+<p>最近换公司项目的数据库,用sql,真的有意思,可以很方便的实现很多功能</p>
+<p><strong>4.建立数据库</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * If you have any questions, you can contact by email &#123; wangzhumoo@gmail.com&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> 王诛魔 2017/10/24 上午10:13</span></span><br><span class="line"><span class="comment"> * 数据库</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Database</span>(entities = &#123;Book.class, User.class&#125;, </span><br><span class="line">          version = <span class="number">1</span>, exportSchema = <span class="keyword">false</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AppDB</span> <span class="keyword">extends</span> <span class="title">RoomDatabase</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"AppDB"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 数据库实例</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> AppDB sInstance;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String DATABASE_NAME = <span class="string">"developer.db"</span>;</span><br><span class="line">    <span class="keyword">private</span> ObservableBoolean mIsDatabaseCreated = <span class="keyword">new</span> ObservableBoolean(<span class="keyword">false</span>);</span><br><span class="line"></span><br><span class="line">  	</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> UserAndBookDao <span class="title">userbook</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 单例</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> context</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> AppDB <span class="title">getInstance</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (sInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (AppDB.class) &#123;</span><br><span class="line">                <span class="keyword">if</span> (sInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    sInstance = buildDatabase(context);</span><br><span class="line">                    sInstance.updateDatabaseCreated(context);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sInstance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Build the database.</span></span><br><span class="line"><span class="comment">     * creates a new instance of the database.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> AppDB <span class="title">buildDatabase</span><span class="params">(Context appContext)</span> </span>&#123;</span><br><span class="line">         AppDB appDB = Room.databaseBuilder(appContext, AppDB.class, DATABASE_NAME)</span><br><span class="line">                .addCallback(<span class="keyword">new</span> Callback() &#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@NonNull SupportSQLiteDatabase db)</span> </span>&#123;</span><br><span class="line">                        <span class="keyword">super</span>.onCreate(db);</span><br><span class="line">                        AppDB database = AppDB.getInstance(appContext);</span><br><span class="line">                        database.setDatabaseCreated();</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onOpen</span><span class="params">(@NonNull SupportSQLiteDatabase db)</span> </span>&#123;</span><br><span class="line">                        <span class="keyword">super</span>.onOpen(db);</span><br><span class="line">                        Log.e(TAG, <span class="string">"onOpen: "</span> + db.getPath());</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;).build();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> appDB;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Check whether the database already exists and expose it via </span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">updateDatabaseCreated</span><span class="params">(<span class="keyword">final</span> Context context)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (context.getDatabasePath(DATABASE_NAME).exists()) &#123;</span><br><span class="line">            setDatabaseCreated();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setDatabaseCreated</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        mIsDatabaseCreated.set(<span class="keyword">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ObservableBoolean <span class="title">getDatabaseCreated</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mIsDatabaseCreated;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>为了方便使用,在Application中添加了</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> AppDB <span class="title">getDatabase</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> AppDB.getInstance(context);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>5.使用</strong></p>
+<p>这里的使用方式,不建议使用,太粗暴了.</p>
+<p>可以学学Demo,Google出的<a href="https://github.com/googlesamples/android-architecture-components" target="_blank" rel="noopener">googlesamples/android-architecture-components</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">class RoomActivity : BindingActivity&lt;ActivityRoomBinding, RoomViewModel&gt;() &#123;</span><br><span class="line">    val gson = Gson()</span><br><span class="line"></span><br><span class="line">    <span class="function">override fun <span class="title">getBundle</span><span class="params">(extras: Bundle)</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">override fun <span class="title">layoutID</span><span class="params">()</span>: Int </span>= R.layout.activity_room</span><br><span class="line"></span><br><span class="line">    <span class="function">override fun <span class="title">initViews</span><span class="params">(savedInstanceState: Bundle?)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//点击事件  ADD按钮,添加数据到数据库</span></span><br><span class="line">        mBindingView.button.setOnClickListener(&#123;</span><br><span class="line">            val userBook = UserAndBook()</span><br><span class="line">            val jsonStr = FileUtils.getJson(<span class="keyword">this</span>, <span class="string">"data.txt"</span>)</span><br><span class="line">            val objectJson = JsonParser().parse(jsonStr).asJsonObject</span><br><span class="line"></span><br><span class="line">            <span class="comment">//获取用户</span></span><br><span class="line">            val user = objectJson.get(<span class="string">"user"</span>)</span><br><span class="line">            userBook.userEntity = gson.fromJson&lt;User&gt;(user, User::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>)</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">            //保存用户</span></span><br><span class="line"><span class="class">            <span class="title">Observable</span></span></span><br><span class="line"><span class="class">            	.<span class="title">empty</span>&lt;<span class="title">Any</span>&gt;()</span></span><br><span class="line"><span class="class">            	.<span class="title">observeOn</span>(<span class="title">Schedulers</span>.<span class="title">io</span>())</span></span><br><span class="line">            	.subscribe(object : EmptyObserver&lt;Any?&gt;() &#123;</span><br><span class="line">                	<span class="function">override fun <span class="title">onComplete</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                    	App.getDatabase().userbook().insert(userBook.userEntity)</span><br><span class="line">                	&#125;</span><br><span class="line">            	&#125;)</span><br><span class="line"></span><br><span class="line">            <span class="comment">//获取书籍</span></span><br><span class="line">            val books = objectJson.get(<span class="string">"books"</span>)</span><br><span class="line">            userBook.books = gson.fromJson&lt;ArrayList&lt;Book&gt;&gt;</span><br><span class="line">            					(books, object : TypeToken&lt;List&lt;Book&gt;&gt;() &#123;&#125;.type)</span><br><span class="line">            <span class="comment">//保存书籍</span></span><br><span class="line">            Observable</span><br><span class="line">            	.empty&lt;Any&gt;()</span><br><span class="line">            	.observeOn(Schedulers.io())</span><br><span class="line">            	.subscribe(object : EmptyObserver&lt;Any?&gt;() &#123;</span><br><span class="line">               		 <span class="function">override fun <span class="title">onComplete</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                    	App.getDatabase().userbook().insert(userBook.books)</span><br><span class="line">                	&#125;</span><br><span class="line">            	&#125;)</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="comment">//点击事件,按钮QUERY   查询数据</span></span><br><span class="line">        mBindingView.button2.setOnClickListener &#123;</span><br><span class="line">            Flowable.create(FlowableOnSubscribe&lt;List&lt;UserAndBook&gt;&gt; &#123; e -&gt;</span><br><span class="line">                val userBook = App.getDatabase().userbook().all</span><br><span class="line">                e.onNext(userBook)</span><br><span class="line">                e.onComplete()</span><br><span class="line">            &#125;, BackpressureStrategy.DROP)</span><br><span class="line">                    .compose(DatabaseTransformer())</span><br><span class="line">                    .subscribe(object : DatabaseSubscriber&lt;List&lt;UserAndBook&gt;&gt;() &#123;</span><br><span class="line">                        <span class="function">override fun <span class="title">onNext</span><span class="params">(userAndBooks: List&lt;UserAndBook&gt;)</span> </span>&#123;</span><br><span class="line">                            mBindingView.data = userAndBooks[<span class="number">0</span>]</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">layout</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">data</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">import</span> <span class="attr">type</span>=<span class="string">"com.wangzhumo.app.data.UserAndBook"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">import</span> <span class="attr">type</span>=<span class="string">"com.wangzhumo.app.data.User"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">import</span> <span class="attr">type</span>=<span class="string">"com.wangzhumo.app.data.Book"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">variable</span></span></span><br><span class="line"><span class="tag">            <span class="attr">name</span>=<span class="string">"data"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">type</span>=<span class="string">"com.wangzhumo.app.data.UserAndBook"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">data</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">RelativeLayout</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">Button</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">"@+id/button"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_alignParentLeft</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_alignParentStart</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_alignParentTop</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_marginLeft</span>=<span class="string">"57dp"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_marginStart</span>=<span class="string">"57dp"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_marginTop</span>=<span class="string">"125dp"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:text</span>=<span class="string">"Add"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">Button</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">"@+id/button2"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_alignBaseline</span>=<span class="string">"@+id/button"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_alignBottom</span>=<span class="string">"@+id/button"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_alignParentEnd</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_alignParentRight</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_marginEnd</span>=<span class="string">"56dp"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_marginRight</span>=<span class="string">"56dp"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:text</span>=<span class="string">"Query"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">RelativeLayout</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_alignParentLeft</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_alignParentStart</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_below</span>=<span class="string">"@+id/button"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_marginTop</span>=<span class="string">"68dp"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">TextView</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:id</span>=<span class="string">"@+id/textView"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_alignParentLeft</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_alignParentStart</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_alignParentTop</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_marginLeft</span>=<span class="string">"36dp"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_marginStart</span>=<span class="string">"36dp"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_marginTop</span>=<span class="string">"32dp"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:text</span>=<span class="string">"@&#123;data.userEntity.name&#125;"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">TextView</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:id</span>=<span class="string">"@+id/textView2"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_alignLeft</span>=<span class="string">"@+id/textView"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_alignStart</span>=<span class="string">"@+id/textView"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_below</span>=<span class="string">"@+id/textView"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_marginTop</span>=<span class="string">"41dp"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:text</span>=<span class="string">"@&#123;data.books.get(0).book&#125;"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">TextView</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:id</span>=<span class="string">"@+id/textView3"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_alignLeft</span>=<span class="string">"@+id/textView2"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_alignStart</span>=<span class="string">"@+id/textView2"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_centerVertical</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:text</span>=<span class="string">"@&#123;data.books.get(0).desc&#125;"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">layout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="images/room_shot.png" alt="如图"></p>
+<p>​    </p>
+<p>​     </p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wangzhumo.com/2018/01/03/Room中List-使用详解/" data-id="cjk80c1wy0052v4stt04un8xv" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-Android字体不跟随系统变化" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -247,7 +800,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/28/Android字体不跟随系统变化/" data-id="cjk7rdewz001a06sttp95h2ts" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/28/Android字体不跟随系统变化/" data-id="cjk80c1s5000yv4st2822vf6g" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -383,7 +936,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/28/Apk-Install-的各种问题/" data-id="cjk7rdexf001u06stzniupvat" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/28/Apk-Install-的各种问题/" data-id="cjk80c1td001wv4st4ku7h45h" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -514,7 +1067,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/26/Android-Studio报错Error-Running-app-cannot-debug-application/" data-id="cjk7rdewi000o06stm6l4tfjk" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/26/Android-Studio报错Error-Running-app-cannot-debug-application/" data-id="cjk80c1rp000jv4stivwxmihh" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -661,7 +1214,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/25/Centos 创建用户并实现免密码登录/" data-id="cjk7rdexp002806stn8kgyqjv" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/25/Centos 创建用户并实现免密码登录/" data-id="cjk80c1ug002cv4stqtvi59bp" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -793,7 +1346,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/25/Android项目中使用RxBus进行通讯/" data-id="cjk7rdexb001n06st61rcmq03" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/25/Android项目中使用RxBus进行通讯/" data-id="cjk80c1ti0021v4st01so2i3e" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -964,7 +1517,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/25/Nginx安装及其简单配置/" data-id="cjk7rdeyo004006stp27366nc" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/25/Nginx安装及其简单配置/" data-id="cjk80c1w10048v4st5qemoeld" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1176,467 +1729,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/25/Room数据库使用指北List<>的问题/" data-id="cjk7rdeyy004i06stfakiiuxm" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Retrofit2-Okhttp3-Rxjava2-网络请求封装-下" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2017/12/25/Retrofit2-Okhttp3-Rxjava2-网络请求封装-下/">Retrofit2 + Okhttp3 + Rxjava2 网络请求封装(下)</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2017/12/25/Retrofit2-Okhttp3-Rxjava2-网络请求封装-下/">
-            <time datetime="2017-12-25T04:51:47.000Z" itemprop="datePublished">2017-12-25</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/Okhttp/">Okhttp</a>, <a class="tag-link" href="/tags/Rxjava/">Rxjava</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">//请求:</span><br><span class="line"></span><br><span class="line">RetrofitApis.getNetworkApis().getFriendsCircle(userBean.token, String.valueOf(45),null,lastId)</span><br><span class="line">	.compose(new DefaultTransformer&lt;&gt;())</span><br><span class="line">	.subscribe(new Defaultubscriber&lt;List&lt;FriendItem&gt;&gt;() &#123;</span><br><span class="line">		@Override</span><br><span class="line">		protected void onError(ApiException ex) &#123;</span><br><span class="line">                //请求错误,ex中可以拿到code 和 msg  便于展示给用户</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		@Override</span><br><span class="line">		public void onNext(List&lt;FriendItem&gt; friends) &#123;</span><br><span class="line">		    //请求成功,friends就是数据</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		@Override</span><br><span class="line">		public void onComplete() &#123;</span><br><span class="line">                    //没有错误的话,最后会走着</span><br><span class="line">		&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>compose()  转化<br>subscribe() 订阅</p>
-<p>DefaultTransformer.java</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * If you have any questions, you can contact by email &#123;wangzhumoo@gmail.com&#125;</span><br><span class="line"> * @author 王诛魔 2017/11/3 下午5:06</span><br><span class="line"> *</span><br><span class="line"> * 默认的切换线程,并返回实体类</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">public class DefaultTransformer&lt;T extends ResultResponse&lt;RP&gt;, RP&gt; implements FlowableTransformer&lt;T, RP&gt; &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Publisher&lt;RP&gt; apply(Flowable&lt;T&gt; upstream) &#123;</span><br><span class="line">        return upstream</span><br><span class="line">                .map(t -&gt; t.getResult())</span><br><span class="line">                .subscribeOn(Schedulers.io())</span><br><span class="line">                .observeOn(AndroidSchedulers.mainThread());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>1.map 将返回的ResultResponse&lt;&gt;  转化,直接取ResultResponse的泛型实体<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&#123;&quot;result&quot;:&#123;&#125;</span><br><span class="line">&quot;code&quot;:&quot;&quot;,</span><br><span class="line">&quot;msg&quot;:&quot;&quot;&#125;</span><br></pre></td></tr></table></figure></p>
-<p>中的result</p>
-<p>2.subscribeOn(Schedulers.io())  网络请求的耗时操作,放在方便io操作的线程里面<br>3.observeOn(AndroidSchedulers.mainThread())  后面的操作,都在主线程进行</p>
-<p>Defaultubscriber.java</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * If you have any questions, you can contact by email &#123;wangzhumoo@gmail.com&#125;</span><br><span class="line"> * @author 王诛魔 2017/10/24 上午10:36</span><br><span class="line"> *</span><br><span class="line"> * 用于没有网络时停止网络请求</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">public abstract class Defaultubscriber&lt;T&gt; extends DisposableSubscriber&lt;T&gt; &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @CallSuper</span><br><span class="line">    @Override</span><br><span class="line">    public void onError(Throwable e) &#123;</span><br><span class="line">        if (e instanceof ApiException) &#123;</span><br><span class="line">            onError((ApiException) e);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            onError(new ApiException(&quot;&quot;,&quot;&quot;));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void onStart() &#123;</span><br><span class="line">        if (!SystemUtils.isNetworkConnected()) &#123;</span><br><span class="line">            onError(new ApiException(Utils.getString(R.string.net_error_title),&quot;999&quot;));</span><br><span class="line">            cancel();</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        super.onStart();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 错误回调</span><br><span class="line">     *</span><br><span class="line">     * @param ex 异常信息</span><br><span class="line">     */</span><br><span class="line">    protected abstract void onError(ApiException ex);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>1.extends DisposableSubscriber  便于通过CompositeDisposable管理请求,此处没有展示,不用管<br>2.onStart()  中,判断是否有网络</p>
-<ul>
-<li><p>没有网络<br>onError(new ApiException(Utils.getString(R.string.net_error), false));<br>抛出没有网络的错误,由各个页面自行处理</p>
-<p>cancel(); 取消</p>
-<ul>
-<li>有网络则继续</li>
-</ul>
-</li>
-</ul>
-<p>3.重写的 onError()中.<br>    是ApiException实例的,是自己抛出的异常,已经处理过了,直接onError给各个页面处理<br>    不是的再处理一次,在分发给各个页面处理</p>
-<p>####未完待续…</p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.wangzhumo.com/2017/12/25/Retrofit2-Okhttp3-Rxjava2-网络请求封装-下/" data-id="cjk7rdeyt004806sthu4pkg9z" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Retrofit2-Okhttp3-Rxjava2-网络请求封装(上)" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2017/12/25/Retrofit2-Okhttp3-Rxjava2-网络请求封装(上)/">Retrofit2 + Okhttp3 + Rxjava2 网络请求封装(上)</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2017/12/25/Retrofit2-Okhttp3-Rxjava2-网络请求封装(上)/">
-            <time datetime="2017-12-25T04:14:04.000Z" itemprop="datePublished">2017-12-25</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/Okhttp/">Okhttp</a>, <a class="tag-link" href="/tags/Rxjava/">Rxjava</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>最终结构</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">net</span><br><span class="line">├── RequestBuilder.java</span><br><span class="line">├── RetrofitApis.java</span><br><span class="line">├── base</span><br><span class="line">│   ├── ApiException.java</span><br><span class="line">│   ├── CustomGsonConverter.java</span><br><span class="line">│   ├── DefaultSubscriber.java</span><br><span class="line">│   └── DefaultTransformer.java</span><br><span class="line">└── response</span><br><span class="line">    ├── BaseResponse.java</span><br><span class="line">    └── ResultResponse.java</span><br><span class="line"></span><br><span class="line">NetworkApis.java</span><br></pre></td></tr></table></figure>
-<p><strong>1.添加依赖</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">implementation &quot;io.reactivex.rxjava2:rxjava:2.1.7&quot;</span><br><span class="line">implementation &quot;io.reactivex.rxjava2:rxandroid:2.0.1&quot;</span><br><span class="line">implementation &quot;com.squareup.okhttp3:okhttp:3.9.0&quot;</span><br><span class="line">implementation &quot;com.squareup.okhttp3:logging-interceptor:3.9.0&quot;</span><br><span class="line">implementation &quot;com.squareup.retrofit2:retrofit:2.3.0&quot;</span><br><span class="line">implementation &quot;com.squareup.retrofit2:converter-gson:2.3.0&quot;</span><br><span class="line">implementation &quot;com.squareup.retrofit2:adapter-rxjava2:2.3.0&quot;</span><br></pre></td></tr></table></figure>
-<p><strong>2.请求服务构建</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * If you have any questions, you can contact by email &#123;wangzhumoo@gmail.com&#125;</span><br><span class="line"> * @author 王诛魔 2017/11/1 下午11:13</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public class RetrofitApis &#123;</span><br><span class="line">    private static OkHttpClient okHttpClient = null;</span><br><span class="line">    private static NetworkApis networkApis = null;</span><br><span class="line">    private static Gson gson = new Gson();</span><br><span class="line">    private static final String TAG = &quot;RetrofitApis&quot;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 为HOST创建一个请求客户端</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    public static NetworkApis getNetworkApis() &#123;</span><br><span class="line">        initOkhttp();</span><br><span class="line">        if (networkApis == null) &#123;</span><br><span class="line">            Retrofit retrofit = new Retrofit.Builder()</span><br><span class="line">                    .client(okHttpClient)</span><br><span class="line">                    .baseUrl(Constants.HOST)</span><br><span class="line">                    .addConverterFactory(CustomGsonConverter.create(gson))</span><br><span class="line">                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())</span><br><span class="line">                    .build();</span><br><span class="line">            networkApis = retrofit.create(NetworkApis.class);</span><br><span class="line">        &#125;</span><br><span class="line">        return networkApis;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 初始化一个OkHttpClient</span><br><span class="line">     */</span><br><span class="line">    private static void initOkhttp()&#123;</span><br><span class="line">        //没有创建就实例一个</span><br><span class="line">        if(okHttpClient == null)&#123;</span><br><span class="line">            final OkHttpClient.Builder builder = new OkHttpClient.Builder();</span><br><span class="line">            //设置log等级</span><br><span class="line">            if(BuildConfig.DEBUG)&#123;</span><br><span class="line">                HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();</span><br><span class="line"></span><br><span class="line">                //BODY  包含请求url 参数  response ,会打印在logcat</span><br><span class="line">                interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);</span><br><span class="line">                builder.addInterceptor(interceptor);</span><br><span class="line">            &#125;</span><br><span class="line">            //打开一个File用于缓存</span><br><span class="line">            File cacheFile = new File(Constants.PATH_CACHE);</span><br><span class="line">            Cache cache = new Cache(cacheFile,1024*1024*50);</span><br><span class="line">            //一个拦截器</span><br><span class="line">                Interceptor cacheInterceptor = new Interceptor() &#123;</span><br><span class="line">                @Override</span><br><span class="line">                public Response intercept(Chain chain) throws IOException &#123;</span><br><span class="line">                    Request.Builder builder = chain.request().newBuilder();</span><br><span class="line"></span><br><span class="line">                    if(SystemUtils.isNetworkConnected())&#123;</span><br><span class="line">                        int maxAge = 0 ;</span><br><span class="line">                        //有网络,不缓存,最长保存时间为0</span><br><span class="line">                        builder.removeHeader(&quot;Pragma&quot;)</span><br><span class="line">                                .header(&quot;Cache-Control&quot;, &quot;public, max-age=&quot; + maxAge)</span><br><span class="line">                                .build();</span><br><span class="line">                    &#125; else &#123;</span><br><span class="line">                        // 无网络时，设置超时为2周</span><br><span class="line">                        int maxStale = 60 * 60 * 24 * 14;</span><br><span class="line">                        builder.removeHeader(&quot;Pragma&quot;)</span><br><span class="line">                                .header(&quot;Cache-Control&quot;, &quot;public, only-if-cached, max-stale=&quot; + maxStale)</span><br><span class="line">                                .build();</span><br><span class="line">                      throw new ApiException(false);</span><br><span class="line">                    &#125;</span><br><span class="line">                    return chain.proceed(builder.build());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;;</span><br><span class="line">            //设置缓存拦截器</span><br><span class="line">            builder.addInterceptor(cacheInterceptor);</span><br><span class="line">            builder.addNetworkInterceptor(cacheInterceptor);</span><br><span class="line"></span><br><span class="line">            //这里通过Interceptor 可以实现添加公共参数,不详细说明了</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            //stetho,如果使用则需要添加</span><br><span class="line">            //builder.addNetworkInterceptor(new StethoInterceptor());</span><br><span class="line"></span><br><span class="line">            builder.cache(cache);</span><br><span class="line">            //错误重连</span><br><span class="line">            builder.retryOnConnectionFailure(true);</span><br><span class="line">            //设置超时</span><br><span class="line">            builder.connectTimeout(15, TimeUnit.SECONDS);</span><br><span class="line">            builder.readTimeout(15, TimeUnit.SECONDS);</span><br><span class="line">            builder.writeTimeout(15, TimeUnit.SECONDS);</span><br><span class="line">            okHttpClient = builder.build();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>以上;</p>
-<p>使用 <code>CustomGsonConverter.java / NetworkApis.java</code><br>通过getNetworkApis()方法,向外提供了一个请求服务.<br>其中 .addConverterFactory(CustomGsonConverter.create(gson))<br>是使用自定义的Converter替代了默认提供的</p>
-<p>CustomGsonConverter.java</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * If you have any questions, you can contact by email &#123;wangzhumoo@gmail.com&#125;</span><br><span class="line"> * @author 王诛魔 2017/10/24 上午10:31</span><br><span class="line"> *</span><br><span class="line"> * GsonConverter 用于在不解析返回正文的前提下获取请求成功失败和 返回信息</span><br><span class="line"> */</span><br><span class="line">public class CustomGsonConverter extends Converter.Factory &#123;</span><br><span class="line"></span><br><span class="line">    private final Gson gson;</span><br><span class="line"></span><br><span class="line">    private CustomGsonConverter(Gson gson) &#123;</span><br><span class="line">        if (gson == null) &#123;</span><br><span class="line">            throw new NullPointerException(&quot;gson == null&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        this.gson = gson;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static CustomGsonConverter create() &#123;</span><br><span class="line">        return create(new Gson());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static CustomGsonConverter create(Gson gson) &#123;</span><br><span class="line">        return new CustomGsonConverter(gson);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Converter&lt;ResponseBody, ?&gt; responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) &#123;</span><br><span class="line">        TypeAdapter&lt;?&gt; adapter = gson.getAdapter(TypeToken.get(type));</span><br><span class="line">        return new CustomGsonResponseBodyConverter&lt;&gt;(gson, adapter);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    private class CustomGsonResponseBodyConverter&lt;T&gt; implements Converter&lt;ResponseBody, T&gt; &#123;</span><br><span class="line">        private final Gson gson;</span><br><span class="line">        private final TypeAdapter&lt;T&gt; adapter;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        public CustomGsonResponseBodyConverter(Gson gson, TypeAdapter&lt;T&gt; adapter) &#123;</span><br><span class="line">            this.gson = gson;</span><br><span class="line">            this.adapter = adapter;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public T convert(ResponseBody value) throws IOException &#123;</span><br><span class="line">            String response = value.string();</span><br><span class="line">            BaseResponse baseResponse = gson.fromJson(response,BaseResponse.class);</span><br><span class="line">            if (!baseResponse.isCodeSuccess()) &#123;</span><br><span class="line">                value.close();</span><br><span class="line">                throw new ApiException(baseResponse.error);</span><br><span class="line">            &#125;</span><br><span class="line">            MediaType contentType = value.contentType();</span><br><span class="line">            Charset charset = contentType != null ? contentType.charset(UTF_8) : UTF_8;</span><br><span class="line">            InputStream inputStream = new ByteArrayInputStream(response.getBytes());</span><br><span class="line">            Reader reader = new InputStreamReader(inputStream, charset);</span><br><span class="line">            JsonReader jsonReader = gson.newJsonReader(reader);</span><br><span class="line"></span><br><span class="line">            try &#123;</span><br><span class="line">                return adapter.read(jsonReader);</span><br><span class="line">            &#125; finally &#123;</span><br><span class="line">                value.close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Nullable</span><br><span class="line">    @Override</span><br><span class="line">    public Converter&lt;?, RequestBody&gt; requestBodyConverter(Type type, Annotation[] parameterAnnotations, Annotation[] methodAnnotations, Retrofit retrofit) &#123;</span><br><span class="line">        return super.requestBodyConverter(type,parameterAnnotations,methodAnnotations,retrofit);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>requestBodyConverter没有重写,后面发现了一个bug,上传文件+文字参数时,可能会造成 Length出错.<br>responseBodyConverter 重写,先把response解析,如果有问题则<br><code>throw new ApiException(baseResponse.error);</code><br>会主动走RxJava的 onError()</p>
-<p>如果没有问题,则继续,好像有点多余……</p>
-<p>ApiException.java  就是用于封装异常</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * If you have any questions, you can contact by email &#123;wangzhumoo@gmail.com&#125;</span><br><span class="line"> * @author 王诛魔 2017/10/24 上午10:29</span><br><span class="line"> *</span><br><span class="line"> * 此类作为网络请求异常的基</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">public class ApiException extends IOException &#123;</span><br><span class="line"></span><br><span class="line">    String code;</span><br><span class="line">    String msg;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public ApiException(String code)&#123;</span><br><span class="line">        this.code = code;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public ApiException(String msg, String code)&#123;</span><br><span class="line">        super(msg);</span><br><span class="line">        this.msg = msg;</span><br><span class="line">        this.code = code;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    public boolean getCode() &#123;</span><br><span class="line">        return code;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String getMessage() &#123;</span><br><span class="line">        return msg;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>3.Response返回数据的封装</strong></p>
-<blockquote>
-<p>这里根据后台返回数据结构</p>
-</blockquote>
-<p>我们的返回是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;result&quot;:&#123;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;msg&quot;:&quot;请求成功&quot;,</span><br><span class="line">    &quot;code&quot;:&quot;0000&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>BaseResponse.java</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * If you have any questions, you can contact by email &#123;wangzhumoo@gmail.com&#125;</span><br><span class="line"> * @author 王诛魔 2017/10/19 下午5:41</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">public class BaseResponse&#123;</span><br><span class="line"></span><br><span class="line">    public String code;</span><br><span class="line">    public String msg;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * API是否请求失败</span><br><span class="line">     *</span><br><span class="line">     * @return 失败返回true, 成功返回false</span><br><span class="line">     */</span><br><span class="line">    public boolean isCodeSuccess() &#123;</span><br><span class="line">        return &quot;0000&quot;.equals(code);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>所有的返回数据类,都要继承它,便于CustomGsonConverter 中判断返回数据的正确性</p>
-<p>ResultResponse.java</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * If you have any questions, you can contact by email &#123;wangzhumoo@gmail.com&#125;</span><br><span class="line"> * @author 王诛魔 2017/10/19 下午5:37</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">public class ResultResponse&lt;T&gt; extends BaseResponse &#123;</span><br><span class="line"></span><br><span class="line">    private T result;</span><br><span class="line"></span><br><span class="line">    public T getResult() &#123;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>通过T泛型,指定返回result的结构,让gson解析成实体对象</p>
-<p>T 可能是 实体对象  可能是 List&lt;实体对象&gt;  ….</p>
-<p><strong>4.请求数据</strong></p>
-<p>NetworkApis.java</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * If you have any questions, you can contact by email &#123;wangzhumoo@gmail.com&#125;</span><br><span class="line"> * @author 王诛魔 2017/10/19 下午5:40</span><br><span class="line"> *</span><br><span class="line"> * 所有网络请求</span><br><span class="line"> */</span><br><span class="line">public interface NetworkApis &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 获取朋友圈列表</span><br><span class="line">     * @param token</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    @POST(&quot;QCRL/qcrl?command=getFriendsCircle&quot;)</span><br><span class="line">    @FormUrlEncoded</span><br><span class="line">    Flowable&lt;ResultResponse&lt;List&lt;FriendItem&gt;&gt;&gt; getFriendsCircle(</span><br><span class="line">            @Field(&quot;token&quot;) String token,</span><br><span class="line">            @Field(&quot;number&quot;) String number,</span><br><span class="line">            @Field(&quot;userId&quot;) String userId,</span><br><span class="line">            @Field(&quot;lastDate&quot;) String lastId);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 删除</span><br><span class="line">     * @param token</span><br><span class="line">     * @param circleId</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    @POST(&quot;QCRL/qcrl?command=updateFriendsCircle&quot;)</span><br><span class="line">    @FormUrlEncoded</span><br><span class="line">    Flowable&lt;ResultResponse&lt;String&gt;&gt; updateFriendsCircle(</span><br><span class="line">            @Field(&quot;token&quot;) String token,</span><br><span class="line">            @Field(&quot;circleId&quot;) String circleId);</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 赞</span><br><span class="line">     * @param token</span><br><span class="line">     * @param circleId</span><br><span class="line">     * @param userId</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    @POST(&quot;QCRL/qcrl?command=addFavor&quot;)</span><br><span class="line">    @FormUrlEncoded</span><br><span class="line">    Flowable&lt;ResultResponse&lt;Object&gt;&gt; addFavor(</span><br><span class="line">            @Field(&quot;token&quot;) String token,</span><br><span class="line">            @Field(&quot;circleId&quot;) String circleId,</span><br><span class="line">            @Field(&quot;toId&quot;) String userId);</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>根据自己的接口编写即可<br>@POST() 指请求方式为 POST  </p>
-<blockquote>
-<p>注意,括号中的网址,开头不可以使用/QCRL/…<br>否则会直接拼到HOST后面,url可能会错误 </p>
-</blockquote>
-<p>@FormUrlEncoded  表示form表单提交,会Encoded编码参数</p>
-<p>@Field 每一个参数</p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.wangzhumo.com/2017/12/25/Retrofit2-Okhttp3-Rxjava2-网络请求封装(上)/" data-id="cjk7rdeyv004b06stwn1p1opw" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Android项目的build-gradle通用设置" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2017/12/25/Android项目的build-gradle通用设置/">Android项目的build.gradle通用设置</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2017/12/25/Android项目的build-gradle通用设置/">
-            <time datetime="2017-12-25T03:57:59.000Z" itemprop="datePublished">2017-12-25</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/Gradle/">Gradle</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: &apos;com.android.application&apos;</span><br><span class="line"></span><br><span class="line">android &#123;</span><br><span class="line"></span><br><span class="line">    //开启dataBinding</span><br><span class="line">    dataBinding&#123;</span><br><span class="line">        enabled = true</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        //开启multiDex</span><br><span class="line">        multiDexEnabled true</span><br><span class="line"></span><br><span class="line">        //使用jni</span><br><span class="line">        ndk &#123;</span><br><span class="line">            //设置支持的SO库架构,这里的意思是只支持&apos;armeabi&apos;, &apos;armeabi-v7a&apos;, &apos;x86&apos;</span><br><span class="line">            //这三种架构</span><br><span class="line">            abiFilters &apos;armeabi&apos;, &apos;armeabi-v7a&apos;, &apos;x86&apos;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    //设置一个编译的配置</span><br><span class="line">    signingConfigs &#123;</span><br><span class="line">        //名为release的配置项</span><br><span class="line">        release &#123;</span><br><span class="line">            //签名文件的位置,当前位置是根目录</span><br><span class="line">            storeFile file(&quot;/keyfile.jks&quot;)</span><br><span class="line">            //storePassword</span><br><span class="line">            storePassword &quot;xxxxxxxx&quot;</span><br><span class="line">            //keyAlias</span><br><span class="line">            keyAlias &quot;wangzhumo&quot;</span><br><span class="line">            //keyPassword</span><br><span class="line">            keyPassword &quot;xxxxxxxx&quot;</span><br><span class="line">            //是否使用v2Signing</span><br><span class="line">            v2SigningEnabled false</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    //编译的版本</span><br><span class="line">    buildTypes &#123;</span><br><span class="line">        //debug时的配置</span><br><span class="line">        debug &#123;</span><br><span class="line">            minifyEnabled false</span><br><span class="line">            //这里使用上面配置的签名,可以做到debug时,也使用的是正式签名,而不是debug的 keystore</span><br><span class="line">            signingConfig signingConfigs.release</span><br><span class="line">            //buildConfig 的一个参数,是否开启log</span><br><span class="line">            buildConfigField &quot;boolean&quot;, &quot;LOG_DEBUG&quot;, &quot;true&quot;</span><br><span class="line">            proguardFiles getDefaultProguardFile(&apos;proguard-android.txt&apos;), &apos;proguard-rules.pro&apos;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        release &#123;</span><br><span class="line">            // 显示Log</span><br><span class="line">            minifyEnabled false</span><br><span class="line">            signingConfig signingConfigs.release</span><br><span class="line">            buildConfigField &quot;boolean&quot;, &quot;LOG_DEBUG&quot;, &quot;false&quot;</span><br><span class="line">            proguardFiles getDefaultProguardFile(&apos;proguard-android.txt&apos;), &apos;proguard-rules.pro&apos;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //adb的配置项</span><br><span class="line">    adbOptions &#123;</span><br><span class="line">        //超时时间</span><br><span class="line">        timeOutInMs = 5 * 1000</span><br><span class="line">        //adb install -r /path..apk</span><br><span class="line">        installOptions &apos;-r&apos;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    flavorDimensions &apos;env&apos;</span><br><span class="line"></span><br><span class="line">    productFlavors &#123;</span><br><span class="line">        //正式版本</span><br><span class="line">        envydemo&#123;</span><br><span class="line">            dimension &apos;env&apos;</span><br><span class="line">            //此处是versionName</span><br><span class="line">            versionName &quot;V1.1&quot;</span><br><span class="line">            //manifestPlaceholders</span><br><span class="line">            //是manifest已经定义的参数,这里给该参数赋值</span><br><span class="line">            manifestPlaceholders = [UMENG_CHANNEL_VALUE: &quot;wangzhumoo&quot;]</span><br><span class="line">            //buildConfig 的参数,App当前的HOST地址</span><br><span class="line">            buildConfigField &quot;String&quot;,&quot;SERVER_HOST&quot;,&apos;&quot;http://app....com/&quot;&apos;</span><br><span class="line">        &#125;</span><br><span class="line">        envtest &#123;</span><br><span class="line">            dimension &apos;env&apos;</span><br><span class="line">            versionName &quot;Test&quot;</span><br><span class="line">            manifestPlaceholders = [UMENG_CHANNEL_VALUE: &quot;wangzhumoo&quot;]</span><br><span class="line">            buildConfigField &quot;String&quot;,&quot;SERVER_HOST&quot;,&apos;&quot;http://app.test....com/&quot;&apos;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    //自定义apk名字</span><br><span class="line">    android.applicationVariants.all &#123; variant -&gt;</span><br><span class="line">        variant.outputs.all &#123;</span><br><span class="line">            //apk的名字</span><br><span class="line">            outputFileName = &quot;App_$&#123;variant.versionName&#125;.apk&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    android &#123;</span><br><span class="line">         //排除</span><br><span class="line">        configurations.all &#123;</span><br><span class="line">            resolutionStrategy.force &apos;com.google.code.findbugs:jsr305:1.3.9&apos;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //使用java8 </span><br><span class="line">    compileOptions &#123;</span><br><span class="line">        sourceCompatibility JavaVersion.VERSION_1_8</span><br><span class="line">        targetCompatibility JavaVersion.VERSION_1_8</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>以上代码,删除了常见的部分.</p>
-<ul>
-<li>buildConfigField</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 常量类</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">public class Constants &#123;</span><br><span class="line">    //取到在productFlavors.envyhcs配置的参数</span><br><span class="line">    //buildConfigField &quot;String&quot;,&quot;SERVER_HOST&quot;,&apos;&quot;http://app....com/&quot;&apos;</span><br><span class="line">    public static final String BASE_URL = BuildConfig.SERVER_HOST;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>manifestPlaceholders</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;manifest&gt;</span><br><span class="line">    &lt;application&gt;</span><br><span class="line">        //取到在productFlavors.envyhcs配置的参数</span><br><span class="line">        //manifestPlaceholders = [UMENG_CHANNEL_VALUE: &quot;wangzhumo&quot;]</span><br><span class="line">        &lt;meta-data</span><br><span class="line">            android:name=&quot;UMENG_CHANNEL&quot;</span><br><span class="line">            android:value=&quot;$&#123;UMENG_CHANNEL_VALUE&#125;&quot; /&gt;</span><br><span class="line">    &lt;/application&gt;</span><br><span class="line">&lt;/manifest&gt;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Build Variants<br>在build.gradle中配置了productFlavors{  envdemo{} , envtest{}}</li>
-</ul>
-<p>其中dimension一个维度<br>其中buildTypes一个维度</p>
-<p>debug + evndemo<br>debug + evntest<br>release + evndeme<br>release + evntest</p>
-<p>共4种,其他的并没有使用到,所以不做说明</p>
-<p><img src="/images/build_var.png" alt="Build Variants"></p>
-<p>可以选择debug默认的版本…</p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.wangzhumo.com/2017/12/25/Android项目的build-gradle通用设置/" data-id="cjk7rdexl002506stxi7k0pfj" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/25/Room数据库使用指北List<>的问题/" data-id="cjk80c1x10059v4st2p2v0jq2" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1724,7 +1817,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">24</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Studio/">Android Studio</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Bug/">Bug</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programme/">Programme</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Source-Code/">Source Code</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/View/">View</a><span class="category-list-count">2</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">27</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Studio/">Android Studio</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Bug/">Bug</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programme/">Programme</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Source-Code/">Source Code</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/View/">View</a><span class="category-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -1743,6 +1836,63 @@
         <h3 class="widget-title">最新文章</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/30/ConstraintLayout使用指南-进阶使用/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="ConstraintLayout使用指南-进阶使用" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a></p>
+                            <p class="item-title"><a href="/2018/07/30/ConstraintLayout使用指南-进阶使用/" class="title">ConstraintLayout使用指南-进阶使用</a></p>
+                            <p class="item-date"><time datetime="2018-07-30T06:54:45.000Z" itemprop="datePublished">2018-07-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/30/今日头条的屏幕适配方案/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="今日头条的屏幕适配方案" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a></p>
+                            <p class="item-title"><a href="/2018/07/30/今日头条的屏幕适配方案/" class="title">今日头条的屏幕适配方案</a></p>
+                            <p class="item-date"><time datetime="2018-07-30T06:16:26.000Z" itemprop="datePublished">2018-07-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/30/Android事件分发机制/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="Android事件分发机制" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a></p>
+                            <p class="item-title"><a href="/2018/07/30/Android事件分发机制/" class="title">Android事件分发机制</a></p>
+                            <p class="item-date"><time datetime="2018-07-30T04:20:02.000Z" itemprop="datePublished">2018-07-30</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -1782,63 +1932,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/07/24/开发板Firefly-RK3399初探/" class="thumbnail">
-    
-    
-        <span style="background-image:url(http://www.wangzhumo.com/images/rk3399_info.png)" alt="开发板Firefly-RK3399初探" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Other/">Other</a></p>
-                            <p class="item-title"><a href="/2018/07/24/开发板Firefly-RK3399初探/" class="title">开发板Firefly-RK3399初探</a></p>
-                            <p class="item-date"><time datetime="2018-07-24T08:47:17.000Z" itemprop="datePublished">2018-07-24</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/07/22/数据结构-下笔记/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Programme/">Programme</a></p>
-                            <p class="item-title"><a href="/2018/07/22/数据结构-下笔记/" class="title">数据结构-下笔记</a></p>
-                            <p class="item-date"><time datetime="2018-07-22T01:50:38.000Z" itemprop="datePublished">2018-07-22</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/07/15/递归调用创建单链表/" class="thumbnail">
-    
-    
-        <span style="background-image:url(http://www.wangzhumo.com/images/coding.png)" alt="递归调用创建单链表" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Java/">Java</a></p>
-                            <p class="item-title"><a href="/2018/07/15/递归调用创建单链表/" class="title">递归调用创建单链表</a></p>
-                            <p class="item-date"><time datetime="2018-07-15T03:05:09.000Z" itemprop="datePublished">2018-07-15</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -1848,7 +1941,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">25</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">25</span></li></ul>
         </div>
     </div>
 
@@ -1857,7 +1950,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">43</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android单元测试/">Android单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bug/">Bug</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Handler/">Handler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Okhttp/">Okhttp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Programme/">Programme</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RK3399/">RK3399</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Room/">Room</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Server/">Server</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Source-Code/">Source Code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video/">Video</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">3</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">46</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android单元测试/">Android单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bug/">Bug</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Handler/">Handler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Okhttp/">Okhttp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Programme/">Programme</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RK3399/">RK3399</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Room/">Room</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Server/">Server</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Source-Code/">Source Code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video/">Video</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">3</span></li></ul>
         </div>
     </div>
 
