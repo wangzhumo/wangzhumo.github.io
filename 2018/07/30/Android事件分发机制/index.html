@@ -5,19 +5,19 @@
     
     <title>Android事件分发机制 | 王诛魔</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="总览什么是事件分发就是将系统传递过来的MotionEvent传递到某个具体的View,并处理这个MotionEvent的整个过程 我们先要明白  责任链模式 ViewGroup和View的树形结构 一次完整的MotionEvent事件(ACTION_DOWN , ACTION_MOVE , ACTION_UP)">
+    <meta name="description" content="总览什么是事件分发就是将系统传递过来的MotionEvent分发到某个具体的View,并处理这个MotionEvent的整个过程 我们先要明白  责任链模式 ViewGroup和View的树形结构 一次完整的MotionEvent事件(ACTION_DOWN , ACTION_MOVE , ACTION_UP)">
 <meta name="keywords" content="Android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android事件分发机制">
 <meta property="og:url" content="http://www.wangzhumo.com/2018/07/30/Android事件分发机制/index.html">
 <meta property="og:site_name" content="王诛魔">
-<meta property="og:description" content="总览什么是事件分发就是将系统传递过来的MotionEvent传递到某个具体的View,并处理这个MotionEvent的整个过程 我们先要明白  责任链模式 ViewGroup和View的树形结构 一次完整的MotionEvent事件(ACTION_DOWN , ACTION_MOVE , ACTION_UP)">
+<meta property="og:description" content="总览什么是事件分发就是将系统传递过来的MotionEvent分发到某个具体的View,并处理这个MotionEvent的整个过程 我们先要明白  责任链模式 ViewGroup和View的树形结构 一次完整的MotionEvent事件(ACTION_DOWN , ACTION_MOVE , ACTION_UP)">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.wangzhumo.com/images/android.jpg">
-<meta property="og:updated_time" content="2018-07-30T08:22:38.900Z">
+<meta property="og:updated_time" content="2018-07-30T08:39:31.705Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android事件分发机制">
-<meta name="twitter:description" content="总览什么是事件分发就是将系统传递过来的MotionEvent传递到某个具体的View,并处理这个MotionEvent的整个过程 我们先要明白  责任链模式 ViewGroup和View的树形结构 一次完整的MotionEvent事件(ACTION_DOWN , ACTION_MOVE , ACTION_UP)">
+<meta name="twitter:description" content="总览什么是事件分发就是将系统传递过来的MotionEvent分发到某个具体的View,并处理这个MotionEvent的整个过程 我们先要明白  责任链模式 ViewGroup和View的树形结构 一次完整的MotionEvent事件(ACTION_DOWN , ACTION_MOVE , ACTION_UP)">
 <meta name="twitter:image" content="http://www.wangzhumo.com/images/android.jpg">
     
 
@@ -234,7 +234,7 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <h3 id="总览"><a href="#总览" class="headerlink" title="总览"></a>总览</h3><h4 id="什么是事件分发"><a href="#什么是事件分发" class="headerlink" title="什么是事件分发"></a>什么是事件分发</h4><p>就是将系统传递过来的MotionEvent传递到某个具体的View,并处理这个MotionEvent的整个过程</p>
+            <h3 id="总览"><a href="#总览" class="headerlink" title="总览"></a>总览</h3><h4 id="什么是事件分发"><a href="#什么是事件分发" class="headerlink" title="什么是事件分发"></a>什么是事件分发</h4><p>就是将系统传递过来的MotionEvent分发到某个具体的View,并处理这个MotionEvent的整个过程</p>
 <p>我们先要明白</p>
 <ul>
 <li>责任链模式</li>
@@ -243,20 +243,29 @@
 </ul>
 <a id="more"></a>
 <h4 id="主要方法"><a href="#主要方法" class="headerlink" title="主要方法"></a>主要方法</h4><ol>
-<li>boolean dispatchTouchEvent(MotionEvent ev)</li>
-<li>boolean onInterceptTouchEvent(MotionEvent ev)</li>
-<li>boolean onTouchEvent(MotionEvent event) </li>
+<li><p>boolean dispatchTouchEvent(MotionEvent ev)</p>
+<p>这个方法是分发点击事件的方法,只要这个点击事件能传递到当前的控件,就会调用这个方法</p>
+</li>
+<li><p>boolean onInterceptTouchEvent(MotionEvent ev)</p>
+<p>是否要拦截这个事件?要明白的是,View是没有这个方法的,因为View是最下层的,没有资格去拦截.</p>
+<p>它要么消费事件,要么不消费返回它的父控件,而不是自己拦截掉事件.</p>
+</li>
+<li><p>boolean onTouchEvent(MotionEvent event) </p>
+<p>处理点击事件,ViewGroup的dispatchTouchEvent方法会调用这个方法.</p>
+</li>
 </ol>
 <h4 id="主要参与成员"><a href="#主要参与成员" class="headerlink" title="主要参与成员"></a>主要参与成员</h4><ol>
 <li><p>Activity</p>
-<p>我们要明白,一个事件在物理硬件层产生后,是由系统的输入系统处理,然后经过其传递通道(如果深入了解,我们可以知道,其底层是由一个双向的Socket来做到的),传递到UI线程,而这之后才是我要了解的部分.</p>
+<p>我们要明白,一个事件在物理硬件层产生后,是由系统的输入系统处理,然后经过其传递通道(如果深入了解,我们可以知道,其底层是由一个双向的Socket来做到的),传递到UI线程,Activity是第一个拿到这个事件的,但是它并不能处理这个事件,所以Activity必须把这个事件分发下去,而不会自己处理.</p>
 </li>
 <li><p>ViewGroup</p>
+<p>它与View最大的不同在于,虽然它也是View的子类,但是它可能还管理着其他ViewGroup &amp; View,所以它是有所有的三个方法的.</p>
 </li>
 <li><p>View</p>
+<p>既是所有控件的父类,也是我们说的最基本的控件,它只能选择处理或不处理事件,没有其他操作了.</p>
 </li>
 </ol>
-
+<h3 id="阅读源码"><a href="#阅读源码" class="headerlink" title="阅读源码"></a>阅读源码</h3>
         
         </div>
         <footer class="article-footer">
@@ -266,7 +275,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/30/Android事件分发机制/" data-id="cjk80c1s3000xv4stl2cfphok" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/30/Android事件分发机制/" data-id="cjk82run00007eostrmgip0ry" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

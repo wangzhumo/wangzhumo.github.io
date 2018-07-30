@@ -25,7 +25,7 @@
   <entry>
     <title><![CDATA[Android事件分发机制]]></title>
     <url>%2F2018%2F07%2F30%2FAndroid%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E6%9C%BA%E5%88%B6%2F</url>
-    <content type="text"><![CDATA[总览什么是事件分发就是将系统传递过来的MotionEvent传递到某个具体的View,并处理这个MotionEvent的整个过程 我们先要明白 责任链模式 ViewGroup和View的树形结构 一次完整的MotionEvent事件(ACTION_DOWN , ACTION_MOVE , ACTION_UP) 主要方法 boolean dispatchTouchEvent(MotionEvent ev) boolean onInterceptTouchEvent(MotionEvent ev) boolean onTouchEvent(MotionEvent event) 主要参与成员 Activity 我们要明白,一个事件在物理硬件层产生后,是由系统的输入系统处理,然后经过其传递通道(如果深入了解,我们可以知道,其底层是由一个双向的Socket来做到的),传递到UI线程,而这之后才是我要了解的部分. ViewGroup View]]></content>
+    <content type="text"><![CDATA[总览什么是事件分发就是将系统传递过来的MotionEvent分发到某个具体的View,并处理这个MotionEvent的整个过程 我们先要明白 责任链模式 ViewGroup和View的树形结构 一次完整的MotionEvent事件(ACTION_DOWN , ACTION_MOVE , ACTION_UP) 主要方法 boolean dispatchTouchEvent(MotionEvent ev) 这个方法是分发点击事件的方法,只要这个点击事件能传递到当前的控件,就会调用这个方法 boolean onInterceptTouchEvent(MotionEvent ev) 是否要拦截这个事件?要明白的是,View是没有这个方法的,因为View是最下层的,没有资格去拦截. 它要么消费事件,要么不消费返回它的父控件,而不是自己拦截掉事件. boolean onTouchEvent(MotionEvent event) 处理点击事件,ViewGroup的dispatchTouchEvent方法会调用这个方法. 主要参与成员 Activity 我们要明白,一个事件在物理硬件层产生后,是由系统的输入系统处理,然后经过其传递通道(如果深入了解,我们可以知道,其底层是由一个双向的Socket来做到的),传递到UI线程,Activity是第一个拿到这个事件的,但是它并不能处理这个事件,所以Activity必须把这个事件分发下去,而不会自己处理. ViewGroup 它与View最大的不同在于,虽然它也是View的子类,但是它可能还管理着其他ViewGroup &amp; View,所以它是有所有的三个方法的. View 既是所有控件的父类,也是我们说的最基本的控件,它只能选择处理或不处理事件,没有其他操作了. 阅读源码]]></content>
       <categories>
         <category>Android</category>
       </categories>
@@ -582,8 +582,8 @@
       </categories>
       <tags>
         <tag>Android</tag>
-        <tag>Okhttp</tag>
         <tag>Rxjava</tag>
+        <tag>Okhttp</tag>
       </tags>
   </entry>
   <entry>
@@ -595,8 +595,8 @@
       </categories>
       <tags>
         <tag>Android</tag>
-        <tag>Okhttp</tag>
         <tag>Rxjava</tag>
+        <tag>Okhttp</tag>
       </tags>
   </entry>
   <entry>
