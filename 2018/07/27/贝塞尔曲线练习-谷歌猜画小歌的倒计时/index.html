@@ -13,13 +13,13 @@
 <meta property="og:site_name" content="王诛魔">
 <meta property="og:description" content="总的来说一共有四段二阶贝塞尔曲线，其实我们是可以只用一次高阶贝塞尔曲线来搞定的，但是那样不是很划算，所以我用四段二阶曲线拼接为一个循环。 示意图：  图中大框表示手机屏幕，我们只要每次都移动S点的位置就可以做到模拟波浪。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://www.wangzhumo.com/2018/07/27/images/wave_show.png">
-<meta property="og:image" content="http://www.wangzhumo.com/2018/07/27/images/wave_image.gif">
-<meta property="og:updated_time" content="2018-07-27T09:34:00.897Z">
+<meta property="og:image" content="http://www.wangzhumo.com/images/wave_show.png">
+<meta property="og:image" content="http://www.wangzhumo.com/images/wave_image.gif">
+<meta property="og:updated_time" content="2018-07-30T04:13:03.498Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="贝塞尔曲线练习-谷歌猜画小歌的倒计时">
 <meta name="twitter:description" content="总的来说一共有四段二阶贝塞尔曲线，其实我们是可以只用一次高阶贝塞尔曲线来搞定的，但是那样不是很划算，所以我用四段二阶曲线拼接为一个循环。 示意图：  图中大框表示手机屏幕，我们只要每次都移动S点的位置就可以做到模拟波浪。">
-<meta name="twitter:image" content="http://www.wangzhumo.com/2018/07/27/images/wave_show.png">
+<meta name="twitter:image" content="http://www.wangzhumo.com/images/wave_show.png">
     
 
     
@@ -237,7 +237,7 @@
             
             <p>总的来说一共有四段二阶贝塞尔曲线，其实我们是可以只用一次高阶贝塞尔曲线来搞定的，但是那样不是很划算，所以我用四段二阶曲线拼接为一个循环。</p>
 <p>示意图：</p>
-<p><img src="../images/wave_show.png" alt="示意图"></p>
+<p><img src="/images/wave_show.png" alt="示意图"></p>
 <p>图中大框表示手机屏幕，我们只要每次都移动S点的位置就可以做到模拟波浪。</p>
 <a id="more"></a>
 <p>那么需要确定</p>
@@ -248,7 +248,7 @@
 </ol>
 <p>当我们开始移动时，只需要移动S点位置即可，其他点都调用quadTo ，lineTo 的API就可以直接相对位置的位移</p>
 <p>实现效果图:</p>
-<p><img src="../images/wave_image.gif" alt=""></p>
+<p><img src="/images/wave_image.gif" alt=""></p>
 <p>好了，既然道理已经明白了，那就开始代码把</p>
 <h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>选择继承View实现，我们没有其他的控件需要协调，只要管好自己就OK,直接上View即可</p>
 <p>本来构思的是做一个可以画多条波浪的View,但是试了一下,多条很难看…..而且我是为了练手,所以半途改了设计</p>
@@ -286,7 +286,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/27/贝塞尔曲线练习-谷歌猜画小歌的倒计时/" data-id="cjk3sjgnw0062txst3lpi4r8m" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/27/贝塞尔曲线练习-谷歌猜画小歌的倒计时/" data-id="cjk7rdezn006506st3n33i1hm" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
