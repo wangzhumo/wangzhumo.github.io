@@ -159,7 +159,7 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                71
+                72
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -188,7 +188,7 @@
 
             
             <section id="main">
-    <article id="post-RelativeLayout中Button覆盖其他View" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Handler-analyze" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -196,7 +196,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/03/07/RelativeLayout中Button覆盖其他View/">RelativeLayout中Button覆盖其他View</a>
+            <a class="article-title" href="/2018/03/07/Handler-analyze/">Android通讯机制分析-Handler</a>
         </h1>
     
 
@@ -205,7 +205,140 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/03/07/RelativeLayout中Button覆盖其他View/">
+        <a href="/2018/03/07/Handler-analyze/">
+            <time datetime="2018-03-07T06:13:47.000Z" itemprop="datePublished">2018-03-07</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Source-Code/">Source Code</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/Handler/">Handler</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>Handler在Android世界中的地位不言而喻.这篇笔记算是简单的记录一下我对于Handler的理解.</p>
+<p>当时第一次对Handler产生兴趣是我在知乎上看到一个问题:</p>
+<p><strong>Android中为什么主线程不会因为Looper.loop()里的死循环卡死</strong></p></p>
+            <p class="article-more-link">
+                <a href="/2018/03/07/Handler-analyze/#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wangzhumo.com/2018/03/07/Handler-analyze/" data-id="cjkaxwfml0049srstwv29ldkm" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-RelativeLayout-Button-over" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/03/07/RelativeLayout-Button-over/">RelativeLayout中Button覆盖其他View</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/03/07/RelativeLayout-Button-over/">
             <time datetime="2018-03-07T03:53:36.000Z" itemprop="datePublished">2018-03-07</time>
         </a>
     </div>
@@ -261,7 +394,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/03/07/RelativeLayout中Button覆盖其他View/" data-id="cjk9j7x5b004nnostwemq9ce8" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/03/07/RelativeLayout-Button-over/" data-id="cjkaxwfn8005isrstnbz10bz8" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -337,7 +470,7 @@
 
 
 
-    <article id="post-ConfigChanges的属性值" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-ConfigChanges" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -345,7 +478,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/03/05/ConfigChanges的属性值/">ConfigChanges的属性值</a>
+            <a class="article-title" href="/2018/03/05/ConfigChanges/">ConfigChanges的属性值</a>
         </h1>
     
 
@@ -354,7 +487,7 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/03/05/ConfigChanges的属性值/">
+        <a href="/2018/03/05/ConfigChanges/">
             <time datetime="2018-03-05T09:51:12.000Z" itemprop="datePublished">2018-03-05</time>
         </a>
     </div>
@@ -395,7 +528,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/03/05/ConfigChanges的属性值/" data-id="cjk9j7x49002hnostxnhziqez" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/03/05/ConfigChanges/" data-id="cjkaxwfly002xsrstovo3sjdp" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -471,7 +604,7 @@
 
 
 
-    <article id="post-Activity与Fragment的生命周期" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Activity-Fragment-life" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -479,7 +612,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/03/05/Activity与Fragment的生命周期/">Activity与Fragment的生命周期</a>
+            <a class="article-title" href="/2018/03/05/Activity-Fragment-life/">Activity与Fragment的生命周期</a>
         </h1>
     
 
@@ -488,7 +621,7 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/03/05/Activity与Fragment的生命周期/">
+        <a href="/2018/03/05/Activity-Fragment-life/">
             <time datetime="2018-03-05T06:02:42.000Z" itemprop="datePublished">2018-03-05</time>
         </a>
     </div>
@@ -517,7 +650,7 @@
 <h4 id="Activity生命周期"><a href="#Activity生命周期" class="headerlink" title="Activity生命周期"></a>Activity生命周期</h4><p>必不可少的一张图,来自Google Android developer 的文档上</p>
 <p><img src="/images/activity_lifecycle.png" alt="activity_liferycle"></p></p>
             <p class="article-more-link">
-                <a href="/2018/03/05/Activity与Fragment的生命周期/#more">查看更多</a>
+                <a href="/2018/03/05/Activity-Fragment-life/#more">查看更多</a>
             </p>
         
         </div>
@@ -528,7 +661,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/03/05/Activity与Fragment的生命周期/" data-id="cjk9j7x2f0007nost6252y6kr" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/03/05/Activity-Fragment-life/" data-id="cjkaxwfiz0001srst0h2oh3sr" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -604,7 +737,7 @@
 
 
 
-    <article id="post-Flutter安装指南MAC版" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Flutter-Install-MAC" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -612,7 +745,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/02/28/Flutter安装指南MAC版/">Flutter安装指南MAC版</a>
+            <a class="article-title" href="/2018/02/28/Flutter-Install-MAC/">Flutter安装指南MAC版</a>
         </h1>
     
 
@@ -621,7 +754,7 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/02/28/Flutter安装指南MAC版/">
+        <a href="/2018/02/28/Flutter-Install-MAC/">
             <time datetime="2018-02-28T15:56:58.000Z" itemprop="datePublished">2018-02-28</time>
         </a>
     </div>
@@ -675,7 +808,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/02/28/Flutter安装指南MAC版/" data-id="cjk9j7x4n0035noste1k0i875" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/02/28/Flutter-Install-MAC/" data-id="cjkaxwfm9003msrstbpe9kxwa" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -751,7 +884,7 @@
 
 
 
-    <article id="post-Android-单元测试-一" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Android-unit-test" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -759,7 +892,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/02/26/Android-单元测试-一/">Android 单元测试(一)</a>
+            <a class="article-title" href="/2018/02/26/Android-unit-test/">Android 单元测试(一)</a>
         </h1>
     
 
@@ -768,7 +901,7 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/02/26/Android-单元测试-一/">
+        <a href="/2018/02/26/Android-unit-test/">
             <time datetime="2018-02-26T06:25:49.000Z" itemprop="datePublished">2018-02-26</time>
         </a>
     </div>
@@ -798,7 +931,7 @@
 <p>(平时太懒了,就没正经的了解过Android这边的单元测试,没有一个确切的概念)</p>
 <p>那么,我学习单元测试的原因竟然是 <strong>因为我懒</strong></p></p>
             <p class="article-more-link">
-                <a href="/2018/02/26/Android-单元测试-一/#more">查看更多</a>
+                <a href="/2018/02/26/Android-unit-test/#more">查看更多</a>
             </p>
         
         </div>
@@ -809,7 +942,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/02/26/Android-单元测试-一/" data-id="cjk9j7x3g0010nostv31aykgs" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/02/26/Android-unit-test/" data-id="cjkaxwfku001nsrst8vjih029" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -885,7 +1018,7 @@
 
 
 
-    <article id="post-Android-Studio-中使用tools-sample" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Android-Studio-tools-sample" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -893,7 +1026,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/02/26/Android-Studio-中使用tools-sample/">Android Studio 中使用tools:sample</a>
+            <a class="article-title" href="/2018/02/26/Android-Studio-tools-sample/">Android Studio 中使用tools:sample</a>
         </h1>
     
 
@@ -902,7 +1035,7 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/02/26/Android-Studio-中使用tools-sample/">
+        <a href="/2018/02/26/Android-Studio-tools-sample/">
             <time datetime="2018-02-26T02:31:28.000Z" itemprop="datePublished">2018-02-26</time>
         </a>
     </div>
@@ -933,7 +1066,7 @@
 </blockquote>
 <p>他所能达到的效果就是,提供给你一些数据,并直接在 Preview 或者 Design面板中查看样式</p></p>
             <p class="article-more-link">
-                <a href="/2018/02/26/Android-Studio-中使用tools-sample/#more">查看更多</a>
+                <a href="/2018/02/26/Android-Studio-tools-sample/#more">查看更多</a>
             </p>
         
         </div>
@@ -944,7 +1077,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/02/26/Android-Studio-中使用tools-sample/" data-id="cjk9j7x2k000bnostnq4uvx4l" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/02/26/Android-Studio-tools-sample/" data-id="cjkaxwfkc0014srstp2hoxi3z" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1020,7 +1153,7 @@
 
 
 
-    <article id="post-Android项目中使用Timber-Logger日志输出" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Android-Timber-Logger" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -1028,7 +1161,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/02/07/Android项目中使用Timber-Logger日志输出/">Android项目中使用Timber + Logger日志输出</a>
+            <a class="article-title" href="/2018/02/07/Android-Timber-Logger/">Android项目中使用Timber + Logger日志输出</a>
         </h1>
     
 
@@ -1037,7 +1170,7 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/02/07/Android项目中使用Timber-Logger日志输出/">
+        <a href="/2018/02/07/Android-Timber-Logger/">
             <time datetime="2018-02-07T09:48:58.000Z" itemprop="datePublished">2018-02-07</time>
         </a>
     </div>
@@ -1069,7 +1202,7 @@
 </blockquote>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//logger</span></span><br><span class="line">implementation <span class="string">'com.orhanobut:logger:2.1.1'</span></span><br><span class="line"><span class="comment">//timber</span></span><br><span class="line">implementation <span class="string">'com.jakewharton.timber:timber:4.6.0'</span></span><br></pre></td></tr></table></figure></p>
             <p class="article-more-link">
-                <a href="/2018/02/07/Android项目中使用Timber-Logger日志输出/#more">查看更多</a>
+                <a href="/2018/02/07/Android-Timber-Logger/#more">查看更多</a>
             </p>
         
         </div>
@@ -1080,7 +1213,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/02/07/Android项目中使用Timber-Logger日志输出/" data-id="cjk9j7x46002anostgrez0qbg" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/02/07/Android-Timber-Logger/" data-id="cjkaxwfkf0017srst5thcl1jj" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1156,7 +1289,7 @@
 
 
 
-    <article id="post-Jenkins搭建Android自动打包" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Jenkins-Android" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -1164,7 +1297,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/02/05/Jenkins搭建Android自动打包/">Jenkins搭建Android自动打包</a>
+            <a class="article-title" href="/2018/02/05/Jenkins-Android/">Jenkins搭建Android自动打包</a>
         </h1>
     
 
@@ -1173,7 +1306,7 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/02/05/Jenkins搭建Android自动打包/">
+        <a href="/2018/02/05/Jenkins-Android/">
             <time datetime="2018-02-05T01:55:44.000Z" itemprop="datePublished">2018-02-05</time>
         </a>
     </div>
@@ -1303,7 +1436,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/02/05/Jenkins搭建Android自动打包/" data-id="cjk9j7x4y0040nostsfykspef" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/02/05/Jenkins-Android/" data-id="cjkaxwfmz004wsrstlstuhkiy" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1379,7 +1512,7 @@
 
 
 
-    <article id="post-Java中String-format-的使用指北" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Java-String-format" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -1387,7 +1520,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/02/04/Java中String-format-的使用指北/">Java中String.format()的使用指北</a>
+            <a class="article-title" href="/2018/02/04/Java-String-format/">Java中String.format()的使用指北</a>
         </h1>
     
 
@@ -1396,7 +1529,7 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/02/04/Java中String-format-的使用指北/">
+        <a href="/2018/02/04/Java-String-format/">
             <time datetime="2018-02-04T10:16:12.000Z" itemprop="datePublished">2018-02-04</time>
         </a>
     </div>
@@ -1739,179 +1872,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/02/04/Java中String-format-的使用指北/" data-id="cjk9j7x500044nostt3cjxhhs" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Room-AppDatabase-Impl-does-not-exist的异常解决" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/01/17/Room-AppDatabase-Impl-does-not-exist的异常解决/">Room --AppDatabase_Impl does not exist的异常解决</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/01/17/Room-AppDatabase-Impl-does-not-exist的异常解决/">
-            <time datetime="2018-01-17T09:08:28.000Z" itemprop="datePublished">2018-01-17</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Bug/">Bug</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/Bug/">Bug</a>, <a class="tag-link" href="/tags/Room/">Room</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>Bug如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Caused by: java.lang.RuntimeException: cannot find implementation for com.wangzhumo.app.datasource.database.AppDB. AppDB_Impl does not exist</span><br></pre></td></tr></table></figure></p>
-<h4 id="寻找原因"><a href="#寻找原因" class="headerlink" title="寻找原因"></a>寻找原因</h4><p>debug依次发现:</p>
-<ul>
-<li><p>getInstance()为空</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> AppDB <span class="title">getInstance</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (sInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">          <span class="keyword">synchronized</span> (AppDB.class) &#123;</span><br><span class="line">              <span class="keyword">if</span> (sInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">              </span><br><span class="line">              	<span class="comment">//此处返回为空</span></span><br><span class="line">                  sInstance = buildDatabase(context);</span><br><span class="line">                  sInstance.updateDatabaseCreated(context);</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> sInstance;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>buildDatabase(context) 返回为空</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Build the database.</span></span><br><span class="line"><span class="comment"> * creates a new instance of the database.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> AppDB <span class="title">buildDatabase</span><span class="params">(<span class="keyword">final</span> Context appContext)</span> </span>&#123;</span><br><span class="line">     AppDB appDB = Room.databaseBuilder(appContext, AppDB.class, DATABASE_NAME)</span><br><span class="line">            .addCallback(<span class="keyword">new</span> Callback() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@NonNull SupportSQLiteDatabase db)</span> </span>&#123;</span><br><span class="line">                    <span class="keyword">super</span>.onCreate(db);</span><br><span class="line">                    AppDB database = AppDB.getInstance(appContext);</span><br><span class="line">                    database.setDatabaseCreated();</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onOpen</span><span class="params">(@NonNull SupportSQLiteDatabase db)</span> </span>&#123;</span><br><span class="line">                    <span class="keyword">super</span>.onOpen(db);</span><br><span class="line">                    Log.e(TAG, <span class="string">"onOpen: "</span> + db.getPath());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;).build();</span><br><span class="line">    <span class="keyword">return</span> appDB;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>databaseBuilder是创建数据库的方法,但是它构建失败了,那么剩下的就是源码了</p>
-</li>
-</ul>
-<h4 id="Debug源码"><a href="#Debug源码" class="headerlink" title="Debug源码"></a>Debug源码</h4><ul>
-<li>databaseBuilder 方法</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SuppressWarnings</span>(<span class="string">"WeakerAccess"</span>)</span><br><span class="line">    <span class="meta">@NonNull</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T extends RoomDatabase&gt; RoomDatabase.<span class="function">Builder&lt;T&gt; <span class="title">databaseBuilder</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">            @NonNull Context context, @NonNull Class&lt;T&gt; klass, @NonNull String name)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//noinspection ConstantConditions</span></span><br><span class="line">        <span class="keyword">if</span> (name == <span class="keyword">null</span> || name.trim().length() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException</span><br><span class="line">              (<span class="string">"Cannot build a database with null or empty name."</span></span><br><span class="line">                    + <span class="string">" If you are trying to create an in memory database, use Room"</span></span><br><span class="line">                    + <span class="string">".inMemoryDatabaseBuilder"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> RoomDatabase.Builder&lt;&gt;(context, klass, name);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>我们可以明显的看出,此处抛出的异常不是AppDB_Impl does not exist 的提示,可以肯定并不是此处的问题</p>
-<p>应该是正常返回的 return new RoomDatabase.Builder&lt;&gt;(context, klass, name);</p>
-<p><code>RoomDatabase.Builder</code></p>
-<p>那么出问题的就可以肯定是</p>
-<ul>
-<li><p>build()方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">@NonNull</span><br><span class="line">        public T build() &#123;</span><br><span class="line">            //noinspection ConstantConditions</span><br><span class="line">            if (mContext == null) &#123;</span><br><span class="line">                throw new IllegalArgumentException</span><br><span class="line">                (&quot;Cannot provide null context for the database.&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            //noinspection ConstantConditions</span><br><span class="line">            if (mDatabaseClass == null) &#123;</span><br><span class="line">                throw new IllegalArgumentException</span><br><span class="line">                (&quot;Must provide an abstract class that&quot;</span><br><span class="line">                        + &quot; extends RoomDatabase&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            if (mFactory == null) &#123;</span><br><span class="line">                mFactory = new FrameworkSQLiteOpenHelperFactory();</span><br><span class="line">            &#125;</span><br><span class="line">            DatabaseConfiguration configuration =</span><br><span class="line">                    new DatabaseConfiguration(mContext, mName, mFactory, mMigrationContainer,</span><br><span class="line">                            mCallbacks, mAllowMainThreadQueries, mRequireMigration);</span><br><span class="line">            T db = Room.getGeneratedImplementation(mDatabaseClass, DB_IMPL_SUFFIX);</span><br><span class="line">            db.init(configuration);</span><br><span class="line">            return db;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-<p>此处,debug发现,是到</p>
-<p><code>T db = Room.getGeneratedImplementation(mDatabaseClass, DB_IMPL_SUFFIX);</code></p>
-<p>抛出异常的.</p>
-</li>
-</ul>
-<h4 id="锁定问题"><a href="#锁定问题" class="headerlink" title="锁定问题"></a>锁定问题</h4><p><code>getGeneratedImplementation</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@NonNull</span></span><br><span class="line">    <span class="keyword">static</span> &lt;T, C&gt; <span class="function">T <span class="title">getGeneratedImplementation</span><span class="params">(Class&lt;C&gt; klass, String suffix)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> String fullPackage = klass.getPackage().getName();</span><br><span class="line">        String name = klass.getCanonicalName();</span><br><span class="line">        <span class="keyword">final</span> String postPackageName = fullPackage.isEmpty()</span><br><span class="line">                ? name</span><br><span class="line">                : (name.substring(fullPackage.length() + <span class="number">1</span>));</span><br><span class="line">        <span class="keyword">final</span> String implName = postPackageName.replace(<span class="string">'.'</span>, <span class="string">'_'</span>) + suffix;</span><br><span class="line">        <span class="comment">//noinspection TryWithIdenticalCatches</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">            <span class="keyword">final</span> Class&lt;T&gt; aClass = (Class&lt;T&gt;) Class.forName(</span><br><span class="line">                    fullPackage.isEmpty() ? implName : fullPackage + <span class="string">"."</span> + implName);</span><br><span class="line">            <span class="keyword">return</span> aClass.newInstance();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">        </span><br><span class="line">        	</span><br><span class="line">        	<span class="comment">//**很明显,就是这个地方了**</span></span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"cannot find implementation for "</span></span><br><span class="line">                    + klass.getCanonicalName() + <span class="string">". "</span> + implName + <span class="string">" does not exist"</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Cannot access the constructor"</span></span><br><span class="line">                    + klass.getCanonicalName());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InstantiationException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Failed to create an instance of "</span></span><br><span class="line">                    + klass.getCanonicalName());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>其实就是,生成类失败了</p>
-<p>其他参数都正常,偏偏生成失败,所以就怀疑到 </p>
-<p> Java  -&gt;     <code>apt</code> 的问题</p>
-<p>Kotlin -&gt;  <code>kapt</code>的问题</p>
-<p>这两个就是用来生成代码的,这里的生成失败,有很大概率是这个问题</p>
-<h4 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h4><p>查看项目的依赖  <code>lib_opensource  -&gt; build.gradle</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//arch</span><br><span class="line">api deps.archLibs.archExtensions</span><br><span class="line">api deps.archLibs.archLifecycleCommon</span><br><span class="line">api deps.archLibs.archRoomRuntime</span><br><span class="line">kapt deps.archLibs.archRoomCompiler</span><br></pre></td></tr></table></figure>
-<p>查看发现,我已经添加了,那么什么鬼问题呢?</p>
-<p><strong>怀疑是library的问题,打开我使用Room的library</strong>    ,查看 <code>lib_datasource -&gt; build.gradle</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: &apos;com.android.library&apos;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">    implementation fileTree(dir: &apos;libs&apos;, include: [&apos;*.jar&apos;])</span><br><span class="line">    api project(&apos;:lib_opensource&apos;)</span><br><span class="line"></span><br><span class="line">//    kapt deps.archLibs.archRoomCompiler</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>果然忘了加</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: &apos;com.android.library&apos;</span><br><span class="line">apply plugin: &apos;kotlin-android&apos;</span><br><span class="line">apply plugin: &apos;kotlin-kapt&apos;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">    implementation fileTree(dir: &apos;libs&apos;, include: [&apos;*.jar&apos;])</span><br><span class="line">    api project(&apos;:lib_opensource&apos;)</span><br><span class="line"></span><br><span class="line">//    kapt deps.archLibs.archRoomCompiler</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>就Ok了,我又可以愉快的玩耍了</p>
-<h4 id="记得-kapt"><a href="#记得-kapt" class="headerlink" title="记得:  kapt"></a>记得:  kapt</h4>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.wangzhumo.com/2018/01/17/Room-AppDatabase-Impl-does-not-exist的异常解决/" data-id="cjk9j7x5f004znostb8qxky7m" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/02/04/Java-String-format/" data-id="cjkaxwfmu004osrstbm9bnh6h" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1999,7 +1960,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">26</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Studio/">Android Studio</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Bug/">Bug</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programme/">Programme</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Source-Code/">Source Code</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/View/">View</a><span class="category-list-count">4</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">26</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Studio/">Android Studio</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Bug/">Bug</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programme/">Programme</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Source-Code/">Source Code</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/View/">View</a><span class="category-list-count">4</span></li></ul>
         </div>
     </div>
 
@@ -2008,7 +1969,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 15.71px;">Android Studio</a> <a href="/tags/Android单元测试/" style="font-size: 10px;">Android单元测试</a> <a href="/tags/Binder/" style="font-size: 10px;">Binder</a> <a href="/tags/Bug/" style="font-size: 17.14px;">Bug</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Google/" style="font-size: 11.43px;">Google</a> <a href="/tags/Gradle/" style="font-size: 11.43px;">Gradle</a> <a href="/tags/Handler/" style="font-size: 10px;">Handler</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/Java/" style="font-size: 18.57px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Linux/" style="font-size: 12.86px;">Linux</a> <a href="/tags/Okhttp/" style="font-size: 11.43px;">Okhttp</a> <a href="/tags/Programme/" style="font-size: 11.43px;">Programme</a> <a href="/tags/RK3399/" style="font-size: 10px;">RK3399</a> <a href="/tags/Regular/" style="font-size: 10px;">Regular</a> <a href="/tags/Room/" style="font-size: 12.86px;">Room</a> <a href="/tags/Rxjava/" style="font-size: 12.86px;">Rxjava</a> <a href="/tags/Server/" style="font-size: 14.29px;">Server</a> <a href="/tags/Source-Code/" style="font-size: 11.43px;">Source Code</a> <a href="/tags/Video/" style="font-size: 10px;">Video</a> <a href="/tags/View/" style="font-size: 15.71px;">View</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/组件化/" style="font-size: 10px;">组件化</a> <a href="/tags/蓝牙/" style="font-size: 10px;">蓝牙</a> <a href="/tags/设计模式/" style="font-size: 12.86px;">设计模式</a>
+            <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 15.71px;">Android Studio</a> <a href="/tags/Android单元测试/" style="font-size: 10px;">Android单元测试</a> <a href="/tags/Binder/" style="font-size: 10px;">Binder</a> <a href="/tags/Bug/" style="font-size: 17.14px;">Bug</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Google/" style="font-size: 11.43px;">Google</a> <a href="/tags/Gradle/" style="font-size: 11.43px;">Gradle</a> <a href="/tags/Handler/" style="font-size: 10px;">Handler</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/Java/" style="font-size: 18.57px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Linux/" style="font-size: 12.86px;">Linux</a> <a href="/tags/Okhttp/" style="font-size: 11.43px;">Okhttp</a> <a href="/tags/Programme/" style="font-size: 12.86px;">Programme</a> <a href="/tags/RK3399/" style="font-size: 10px;">RK3399</a> <a href="/tags/Regular/" style="font-size: 10px;">Regular</a> <a href="/tags/Room/" style="font-size: 12.86px;">Room</a> <a href="/tags/Rxjava/" style="font-size: 12.86px;">Rxjava</a> <a href="/tags/Server/" style="font-size: 14.29px;">Server</a> <a href="/tags/Source-Code/" style="font-size: 11.43px;">Source Code</a> <a href="/tags/Video/" style="font-size: 10px;">Video</a> <a href="/tags/View/" style="font-size: 15.71px;">View</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/组件化/" style="font-size: 10px;">组件化</a> <a href="/tags/蓝牙/" style="font-size: 10px;">蓝牙</a> <a href="/tags/设计模式/" style="font-size: 12.86px;">设计模式</a>
         </div>
     </div>
 
@@ -2022,7 +1983,7 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/07/31/算法复习笔记-归并排序/" class="thumbnail">
+                            <a href="/2018/07/31/Arithmetic-quick-sort/" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -2033,7 +1994,26 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/Programme/">Programme</a></p>
-                            <p class="item-title"><a href="/2018/07/31/算法复习笔记-归并排序/" class="title">算法复习笔记-归并排序</a></p>
+                            <p class="item-title"><a href="/2018/07/31/Arithmetic-quick-sort/" class="title">算法复习笔记-快速排序</a></p>
+                            <p class="item-date"><time datetime="2018-07-31T10:04:11.000Z" itemprop="datePublished">2018-07-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/31/Arithmetic-merge-sort/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Programme/">Programme</a></p>
+                            <p class="item-title"><a href="/2018/07/31/Arithmetic-merge-sort/" class="title">算法复习笔记-归并排序</a></p>
                             <p class="item-date"><time datetime="2018-07-31T08:24:50.000Z" itemprop="datePublished">2018-07-31</time></p>
                         </div>
                     </li>
@@ -2041,7 +2021,7 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/07/30/ConstraintLayout使用指南-进阶使用/" class="thumbnail">
+                            <a href="/2018/07/30/ConstraintLayout-Advance/" class="thumbnail">
     
     
         <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="ConstraintLayout使用指南-进阶使用" class="thumbnail-image"></span>
@@ -2052,7 +2032,7 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a></p>
-                            <p class="item-title"><a href="/2018/07/30/ConstraintLayout使用指南-进阶使用/" class="title">ConstraintLayout使用指南-进阶使用</a></p>
+                            <p class="item-title"><a href="/2018/07/30/ConstraintLayout-Advance/" class="title">ConstraintLayout使用指南-进阶使用</a></p>
                             <p class="item-date"><time datetime="2018-07-30T06:54:45.000Z" itemprop="datePublished">2018-07-30</time></p>
                         </div>
                     </li>
@@ -2060,7 +2040,7 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/07/30/今日头条的屏幕适配方案/" class="thumbnail">
+                            <a href="/2018/07/30/Screen-toutiao-resize/" class="thumbnail">
     
     
         <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="今日头条的屏幕适配方案" class="thumbnail-image"></span>
@@ -2071,7 +2051,7 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a></p>
-                            <p class="item-title"><a href="/2018/07/30/今日头条的屏幕适配方案/" class="title">今日头条的屏幕适配方案</a></p>
+                            <p class="item-title"><a href="/2018/07/30/Screen-toutiao-resize/" class="title">今日头条的屏幕适配方案</a></p>
                             <p class="item-date"><time datetime="2018-07-30T06:16:26.000Z" itemprop="datePublished">2018-07-30</time></p>
                         </div>
                     </li>
@@ -2079,7 +2059,7 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/07/30/Android事件分发机制-ViewGroup/" class="thumbnail">
+                            <a href="/2018/07/30/Android-MotionEvent-ViewGroup/" class="thumbnail">
     
     
         <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="Android事件分发机制-ViewGroup" class="thumbnail-image"></span>
@@ -2090,27 +2070,8 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/View/">View</a></p>
-                            <p class="item-title"><a href="/2018/07/30/Android事件分发机制-ViewGroup/" class="title">Android事件分发机制-ViewGroup</a></p>
+                            <p class="item-title"><a href="/2018/07/30/Android-MotionEvent-ViewGroup/" class="title">Android事件分发机制-ViewGroup</a></p>
                             <p class="item-date"><time datetime="2018-07-30T04:20:02.000Z" itemprop="datePublished">2018-07-30</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/07/27/贝塞尔曲线练习-谷歌猜画小歌的倒计时/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/View/">View</a></p>
-                            <p class="item-title"><a href="/2018/07/27/贝塞尔曲线练习-谷歌猜画小歌的倒计时/" class="title">贝塞尔曲线练习-谷歌猜画小歌的倒计时</a></p>
-                            <p class="item-date"><time datetime="2018-07-27T08:42:41.000Z" itemprop="datePublished">2018-07-27</time></p>
                         </div>
                     </li>
                 
@@ -2123,7 +2084,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -2132,7 +2093,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">47</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android单元测试/">Android单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bug/">Bug</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Handler/">Handler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Okhttp/">Okhttp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Programme/">Programme</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RK3399/">RK3399</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regular/">Regular</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Room/">Room</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Server/">Server</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Source-Code/">Source Code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video/">Video</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">3</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">47</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android单元测试/">Android单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bug/">Bug</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Handler/">Handler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Okhttp/">Okhttp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Programme/">Programme</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RK3399/">RK3399</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regular/">Regular</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Room/">Room</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Server/">Server</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Source-Code/">Source Code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video/">Video</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">3</span></li></ul>
         </div>
     </div>
 

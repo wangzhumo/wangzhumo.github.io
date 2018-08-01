@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Android的启动流程 | 王诛魔</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="系统结构 应用层 即为开发出来的一些app,当然还包括了一些系统App  应用框架层(Java API Framework) 这一层由java编写,提供给我们平时开发使用的API,主要的一些组件:  Manager Activity Manager , Window Manager , Package Manager ,Location Manager  Notification Manager,">
+<meta name="keywords" content="Android,Source Code">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android的启动流程">
+<meta property="og:url" content="http://www.wangzhumo.com/2018/05/09/Android-App-Launch/index.html">
+<meta property="og:site_name" content="王诛魔">
+<meta property="og:description" content="系统结构 应用层 即为开发出来的一些app,当然还包括了一些系统App  应用框架层(Java API Framework) 这一层由java编写,提供给我们平时开发使用的API,主要的一些组件:  Manager Activity Manager , Window Manager , Package Manager ,Location Manager  Notification Manager,">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.wangzhumo.com/images/android_boot_process.png">
+<meta property="og:updated_time" content="2018-07-14T03:38:31.239Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android的启动流程">
+<meta name="twitter:description" content="系统结构 应用层 即为开发出来的一些app,当然还包括了一些系统App  应用框架层(Java API Framework) 这一层由java编写,提供给我们平时开发使用的API,主要的一些组件:  Manager Activity Manager , Window Manager , Package Manager ,Location Manager  Notification Manager,">
+<meta name="twitter:image" content="http://www.wangzhumo.com/images/android_boot_process.png">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon-32x32-next.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">王诛魔</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.png" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="profile-fixed">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.png" />
+            <h2 id="name">王诛魔</h2>
+            <h3 id="title">Android Developer</h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>Beijing, China</span>
+            <a id="follow" target="_blank" href="mailto:wangzhumoo@gmail.com">联系我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                72
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                31
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/wangzhumo" target="_blank" title="github" >
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-Android-App-Launch" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Android的启动流程
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/05/09/Android-App-Launch/">
+            <time datetime="2018-05-09T07:00:12.000Z" itemprop="datePublished">2018-05-09</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Source-Code/">Source Code</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/Source-Code/">Source Code</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h5 id="系统结构"><a href="#系统结构" class="headerlink" title="系统结构"></a>系统结构</h5><ul>
+<li><p>应用层</p>
+<p>即为开发出来的一些app,当然还包括了一些系统App</p>
+</li>
+<li><p>应用框架层(Java API Framework)</p>
+<p>这一层由java编写,提供给我们平时开发使用的API,主要的一些组件:</p>
+<ul>
+<li><p>Manager</p>
+<p>Activity Manager , Window Manager , Package Manager ,Location Manager </p>
+<p>Notification Manager,Resource Manager,Telephony Manager</p>
+</li>
+<li><p>Content Providers</p>
+</li>
+<li><p>View System</p>
+</li>
+</ul>
+</li>
+<li><p>系统运行库层</p>
+<p>C/C++程序库和Android运行时库</p>
+</li>
+<li><p>硬件抽象层(<strong>HAL</strong>)</p>
+</li>
+<li><p>Linux内核层</p>
+</li>
+</ul>
+<p><img src="/images/android_boot_process.png" alt="boot"></p>
+<a id="more"></a>
+<h5 id="Android的启动主要过程"><a href="#Android的启动主要过程" class="headerlink" title="Android的启动主要过程"></a>Android的启动主要过程</h5><ol>
+<li><p><strong>init进程</strong></p>
+<p>init进程是由内核启动的,是用户空间的第一个进程,可以说是一个root进程</p>
+<ul>
+<li>当init进程启动后会创建挂载系统目录,设备节点,</li>
+<li>解析init.rc 和 init.hardware.rc,启动属性服务，以及一系列的服务和进程</li>
+</ul>
+</li>
+</ol>
+<ol>
+<li><p><strong>本地守护进程</strong></p>
+<p>启动</p>
+<blockquote>
+<p>servicemanager  管理binder的通讯</p>
+<p>surfaceflinger  UI</p>
+<p>mediaserver  音视频,相机</p>
+<p>netd  蓝牙、wifi、usb等</p>
+<p>adbd</p>
+<p>rild</p>
+<p>installd </p>
+</blockquote>
+<p>需要注意的是这些都是一个独立的Linux进程</p>
+</li>
+<li><p><strong>Native系统服务</strong></p>
+<p>运行在本地守护进程中,所属进程初始化的时候会将Native系统服务注册到ServiceManager中,方便我们通过Binder机制调用Native系统服务</p>
+</li>
+<li><p><strong>Java服务</strong></p>
+<p>再创建本地服务的同时,init进程还会创建Zygote进程</p>
+<p>Zygote也是Android中相当重要的一个进程了,Zygote进程会建立一个Dalvik VM并且启动</p>
+<p>System Server系统服务</p>
+<p>System Server将启动Android Service</p>
+<blockquote>
+<p>AccessibilityManagerService 截获用户输入，并根据输入给用户一些额外的反馈，起到辅助效果的服务<br>AccountManagerService 管理设备中所有账号的服务，包括账号、密码、授权管理功能<br>ActivityManagerService 管理所有组件的服务，安卓系统的核心服务 AlarmManagerService 管理闹钟的服务<br>AppWidgetService 管理APP widgets的工作，包括加载、删除、布局等<br>AssetAtlasService 将一些系统图片资源合并成一个纹理图传给GPU达到硬件加速的效果的服务<br>AudioService 管理音频的服务<br>BackupManagerService 管理备份和应用数据的服务<br>BatteryService 管理电池的服务<br>BluetoothManagerService 管理系统蓝牙的服务<br>CertBlacklister 更新系统SSL证书的公共秘钥和序列号黑名单的服务<br>ClipboardService 管理系统剪贴板的服务<br>CommonTimeManagementService 管理公共时间配置的服务<br>ConnectivityService 管理网络连接的服务<br>ContentService 管理系统数据更新通知的服务，和ContentProvider密切相关<br>CountryDetectorService 检测当前系统所属国家的服务<br>DevicePolicyManagerService 管理系统设备配置的服务<br>DeviceStorageMonitorService 管理系统存储空间的服务，当存储空间小于某个阈值时，会发出警告广播<br>DiskStateService 管理系统存储空间统计的服务<br>DisplayManagerService 管理显示设备的服务<br>DreamManagerService 管理屏幕保护的服务<br>DropBoxManagerService 生成和管理系统运行中日志文件的服务<br>EntropyMixer 加载和保存随机信息的服务<br>IdleMaintenanceService 管理系统在空闲时执行维护任务的服务<br>InputManagerService 管理触屏输入的服务<br>InputMethodManagerService 管理系统输入法的服务<br>LightsService 管理光传感器的服务<br>LocationManagerService 管理定位和位置的服务<br>LockSettingsService 管理系统锁屏设置的服务<br>MountService 管理系统存储设备挂载和卸载的服务<br>NetWorkManagementService 管理系统网络的服务<br>NetWorkPolicyManagerService 管理网络连接策略的服务<br>NetWorkStatsService 管理网络连接状态的服务<br>NetWorkTimeUpdateService 根据网络时间更新本地时间的服务<br>NotificationManagerService 管理系统通知的服务<br>PackageManagerService 管理应用包的服务<br>PowerManagerService 管理系统电源的服务<br>PrintManagerService 管理打印的服务<br>RecognitionManagerService 管理身份识别的服务<br>SamplingProfilerService 记录和分析系统启动性能的服务<br>SchedulingPolicyService 管理系统调度策略的服务<br>SearchManagerServcie 管理系统搜索功能的服务<br>SerialServie 管理系统串口设备的服务<br>StatusBarManagerService 管理系统状态栏的服务<br>TelephonyRegistry 监听和管理通话事件和状态的服务<br>TextServicesManagerService 文本拼写检查的服务<br>UiModeManagerService 设置和管理系统UI模式的服务<br>UsbService 管理USB连接的服务<br>UserManagerService 管理系统用户身份信息的服务<br>VibratorService 管理系统振动器的服务<br>ＷallpaperManagerService 管理系统桌面背景墙纸的服务<br>WifiP2pService 管理Wifi点对点连接的服务<br>WifiService 管理系统Wifi设备的服务<br>WindowManagerService 管理窗口的服务，安卓系统的核心服务</p>
+</blockquote>
+<p>这些服务都会注册到Service Manager中去,完成ServcieManager对服务的管理</p>
+<p>需要注意的是,由System Server创建的这些服务,都是存在于System Server进程中的线程</p>
+<p>举例说明一下</p>
+<blockquote>
+<p>servicemanager是init的子进程</p>
+<p>Zygote是init的子进程，fork出来所有的虚拟机</p>
+<p>system server是Zygote的子进程</p>
+</blockquote>
+</li>
+</ol>
+<ol>
+<li><p><strong>Home启动</strong></p>
+<p>当所有的任务启动后,会通过ActivityManager启动Home界面</p>
+<p>同时发送ACTION_BOOT_COMPLETED广播</p>
+</li>
+</ol>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wangzhumo.com/2018/05/09/Android-App-Launch/" data-id="cjkaxwfj50003srstmv4h522q" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/05/09/Java-memory-module/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    Java中的内存模型
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2018/03/11/JVM-class-loader/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">JVM虚拟机中的类加载器</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">26</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Studio/">Android Studio</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Bug/">Bug</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programme/">Programme</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Source-Code/">Source Code</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/View/">View</a><span class="category-list-count">4</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 15.71px;">Android Studio</a> <a href="/tags/Android单元测试/" style="font-size: 10px;">Android单元测试</a> <a href="/tags/Binder/" style="font-size: 10px;">Binder</a> <a href="/tags/Bug/" style="font-size: 17.14px;">Bug</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Google/" style="font-size: 11.43px;">Google</a> <a href="/tags/Gradle/" style="font-size: 11.43px;">Gradle</a> <a href="/tags/Handler/" style="font-size: 10px;">Handler</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/Java/" style="font-size: 18.57px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Linux/" style="font-size: 12.86px;">Linux</a> <a href="/tags/Okhttp/" style="font-size: 11.43px;">Okhttp</a> <a href="/tags/Programme/" style="font-size: 12.86px;">Programme</a> <a href="/tags/RK3399/" style="font-size: 10px;">RK3399</a> <a href="/tags/Regular/" style="font-size: 10px;">Regular</a> <a href="/tags/Room/" style="font-size: 12.86px;">Room</a> <a href="/tags/Rxjava/" style="font-size: 12.86px;">Rxjava</a> <a href="/tags/Server/" style="font-size: 14.29px;">Server</a> <a href="/tags/Source-Code/" style="font-size: 11.43px;">Source Code</a> <a href="/tags/Video/" style="font-size: 10px;">Video</a> <a href="/tags/View/" style="font-size: 15.71px;">View</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/组件化/" style="font-size: 10px;">组件化</a> <a href="/tags/蓝牙/" style="font-size: 10px;">蓝牙</a> <a href="/tags/设计模式/" style="font-size: 12.86px;">设计模式</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/31/Arithmetic-quick-sort/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Programme/">Programme</a></p>
+                            <p class="item-title"><a href="/2018/07/31/Arithmetic-quick-sort/" class="title">算法复习笔记-快速排序</a></p>
+                            <p class="item-date"><time datetime="2018-07-31T10:04:11.000Z" itemprop="datePublished">2018-07-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/31/Arithmetic-merge-sort/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Programme/">Programme</a></p>
+                            <p class="item-title"><a href="/2018/07/31/Arithmetic-merge-sort/" class="title">算法复习笔记-归并排序</a></p>
+                            <p class="item-date"><time datetime="2018-07-31T08:24:50.000Z" itemprop="datePublished">2018-07-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/30/ConstraintLayout-Advance/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="ConstraintLayout使用指南-进阶使用" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a></p>
+                            <p class="item-title"><a href="/2018/07/30/ConstraintLayout-Advance/" class="title">ConstraintLayout使用指南-进阶使用</a></p>
+                            <p class="item-date"><time datetime="2018-07-30T06:54:45.000Z" itemprop="datePublished">2018-07-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/30/Screen-toutiao-resize/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="今日头条的屏幕适配方案" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a></p>
+                            <p class="item-title"><a href="/2018/07/30/Screen-toutiao-resize/" class="title">今日头条的屏幕适配方案</a></p>
+                            <p class="item-date"><time datetime="2018-07-30T06:16:26.000Z" itemprop="datePublished">2018-07-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/30/Android-MotionEvent-ViewGroup/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="Android事件分发机制-ViewGroup" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/View/">View</a></p>
+                            <p class="item-title"><a href="/2018/07/30/Android-MotionEvent-ViewGroup/" class="title">Android事件分发机制-ViewGroup</a></p>
+                            <p class="item-date"><time datetime="2018-07-30T04:20:02.000Z" itemprop="datePublished">2018-07-30</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">47</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android单元测试/">Android单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bug/">Bug</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Handler/">Handler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Okhttp/">Okhttp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Programme/">Programme</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RK3399/">RK3399</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regular/">Regular</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Room/">Room</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Server/">Server</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Source-Code/">Source Code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video/">Video</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="mailto:wangzhumoo@gmail.com">E-mail</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 wangzhumo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

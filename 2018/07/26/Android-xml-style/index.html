@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Android开发xml中的样式 | 王诛魔</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言我们在App中,很多时候需要一个统一的风格,样式.如TextView,EditText,Button,ProgressBar,CheckBox等等,都需要背景,阴影等.我们可以用UI设计师提供的切图,但是如果我们能使用Android提供的shape、selector、layer-list、level-list、style、theme等实现会更好. 下面做一个基本使用的笔记.">
+<meta name="keywords" content="Android,View">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android开发xml中的样式">
+<meta property="og:url" content="http://www.wangzhumo.com/2018/07/26/Android-xml-style/index.html">
+<meta property="og:site_name" content="王诛魔">
+<meta property="og:description" content="前言我们在App中,很多时候需要一个统一的风格,样式.如TextView,EditText,Button,ProgressBar,CheckBox等等,都需要背景,阴影等.我们可以用UI设计师提供的切图,但是如果我们能使用Android提供的shape、selector、layer-list、level-list、style、theme等实现会更好. 下面做一个基本使用的笔记.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.wangzhumo.com/images/shape_ring.png">
+<meta property="og:image" content="http://www.wangzhumo.com/images/layer_list.png">
+<meta property="og:updated_time" content="2018-07-31T07:58:32.282Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android开发xml中的样式">
+<meta name="twitter:description" content="前言我们在App中,很多时候需要一个统一的风格,样式.如TextView,EditText,Button,ProgressBar,CheckBox等等,都需要背景,阴影等.我们可以用UI设计师提供的切图,但是如果我们能使用Android提供的shape、selector、layer-list、level-list、style、theme等实现会更好. 下面做一个基本使用的笔记.">
+<meta name="twitter:image" content="http://www.wangzhumo.com/images/shape_ring.png">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon-32x32-next.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">王诛魔</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.png" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="profile-fixed">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.png" />
+            <h2 id="name">王诛魔</h2>
+            <h3 id="title">Android Developer</h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>Beijing, China</span>
+            <a id="follow" target="_blank" href="mailto:wangzhumoo@gmail.com">联系我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                72
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                31
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/wangzhumo" target="_blank" title="github" >
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-Android-xml-style" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Android开发xml中的样式
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/07/26/Android-xml-style/">
+            <time datetime="2018-07-26T05:23:26.000Z" itemprop="datePublished">2018-07-26</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/View/">View</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/View/">View</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>我们在App中,很多时候需要一个统一的风格,样式.如TextView,EditText,Button,ProgressBar,CheckBox等等,都需要背景,阴影等.我们可以用UI设计师提供的切图,但是如果我们能使用Android提供的<code>shape、selector、layer-list、level-list、style、theme</code>等实现会更好.</p>
+<p>下面做一个基本使用的笔记.</p>
+<a id="more"></a>
+<h3 id="Shape"><a href="#Shape" class="headerlink" title="Shape"></a>Shape</h3><p>shape定义的xml文件我们都是存放在drawable目录下，如果你的项目没有则新建一个.</p>
+<p>使用shape可以通过android:shape属性指定下面四种类型的形状</p>
+<ul>
+<li><strong>rectangle</strong>: 矩形</li>
+<li><strong>oval</strong>: 椭圆形</li>
+<li><strong>line</strong>: 线形</li>
+<li><strong>ring</strong>: 环形</li>
+</ul>
+<h4 id="基本属性"><a href="#基本属性" class="headerlink" title="基本属性"></a>基本属性</h4><ul>
+<li><p><strong>corners</strong> 设置圆角,rectangle矩形的时候用</p>
+<p>可以<code>radius</code>使用所有的圆角,也可以单独设置每一个圆角</p>
+<ul>
+<li>android:radius   四个圆角都会使用这个值</li>
+<li><em>android:topLeftRadius</em> 左上角的半径</li>
+<li><em>android:topRightRadius</em> 右上角的半径</li>
+<li><em>android:bottomLeftRadius</em> 左下角的半径</li>
+<li><em>android:bottomRightRadius</em> 右下角的半径</li>
+</ul>
+</li>
+<li><p><strong>soid</strong>  设置填充色</p>
+<ul>
+<li>android:color  填充色</li>
+</ul>
+</li>
+<li><p><strong>stroke</strong>  设置描边线条</p>
+<ul>
+<li><em>android:color</em> 描边线条颜色</li>
+<li><em>android:width</em> 描边线条宽度</li>
+<li><em>android:dashWidth</em> 设置线条为虚线时的横线长度</li>
+<li><em>android:dashGap</em> 设置线条为虚线时的横线之间的间隔</li>
+</ul>
+</li>
+<li><p><strong>padding</strong>  内容与边界的内间距</p>
+<ul>
+<li><em>android:left</em> 左内间距</li>
+<li><em>android:right</em> 右内间距</li>
+<li><em>android:top</em> 上内间距</li>
+<li><em>android:bottom</em> 下内间距</li>
+</ul>
+</li>
+<li><p><strong>gradient</strong>  这个属性可以给你的图形设置渐变</p>
+<ul>
+<li><p>android:type 渐变的类型   </p>
+<ul>
+<li>(第一次用方形,哈哈)  linear 线性渐变</li>
+<li>sweep 扫描渐变</li>
+<li>radial 放射渐变</li>
+</ul>
+</li>
+<li><p>android:startColor 渐变开始的颜色</p>
+</li>
+<li><p>android:centerColor  渐变的中间色</p>
+</li>
+<li><p>android:endColor  渐变结束的颜色</p>
+</li>
+<li><p>android:angle 渐变的角度,当你设置线性渐变可用</p>
+</li>
+<li><p>android:centerX  渐变中心的X坐标,当你设置放射渐变有效</p>
+</li>
+<li><p>android:centerY   渐变中心的Y坐标 ,当你设置放射渐变有效</p>
+</li>
+<li><p>android:gradientRadius  渐变的半径,针对放射渐变</p>
+</li>
+</ul>
+<p>​    </p>
+</li>
+</ul>
+<h5 id="rectangle"><a href="#rectangle" class="headerlink" title="rectangle"></a>rectangle</h5><p>同基本属性</p>
+<h5 id="line"><a href="#line" class="headerlink" title="line"></a>line</h5><p>stroke &amp; size 组合实现,常用来做EditText的光标</p>
+<h5 id="oval"><a href="#oval" class="headerlink" title="oval"></a>oval</h5><ul>
+<li><strong>size</strong>   可以设置图形的宽,高<ul>
+<li>android:width  宽度</li>
+<li>android:height  高度</li>
+</ul>
+</li>
+</ul>
+<p>其他同基本属性</p>
+<h5 id="ring"><a href="#ring" class="headerlink" title="ring"></a>ring</h5><ul>
+<li><strong>android:innerRadius</strong>  里面圆的半径</li>
+<li><strong>android:innerRadiusRatio</strong>  默认3,便是内圆半径是宽度/3 </li>
+<li><strong>android:thickness</strong>   环的宽度</li>
+<li><strong>android:thicknessRatio</strong>  默认是9,表示环的宽度是宽度/9</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;shape xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    android:innerRadiusRatio=&quot;3&quot;</span><br><span class="line">    android:shape=&quot;ring&quot;</span><br><span class="line">    android:thicknessRatio=&quot;9&quot;</span><br><span class="line">    android:useLevel=&quot;false&quot;&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &lt;gradient</span><br><span class="line">        android:endColor=&quot;@color/colorAccent&quot;</span><br><span class="line">        android:startColor=&quot;#FFFFFF&quot;</span><br><span class="line">        android:type=&quot;sweep&quot; /&gt;</span><br><span class="line"></span><br><span class="line">&lt;/shape&gt;</span><br></pre></td></tr></table></figure>
+<p>图示:</p>
+<p><img src="/images/shape_ring.png" alt="ring"></p>
+<h3 id="Selector"><a href="#Selector" class="headerlink" title="Selector"></a>Selector</h3><p>selector可以添加多个Item,表示不同的状态的不同资源.drawable &amp; color</p>
+<p>要注意的:</p>
+<ul>
+<li><p>drawable的资源放在 drawable目录,并且指定的是 android:drawable</p>
+</li>
+<li><p>color 的放在color目录,并且指定 android:color </p>
+</li>
+</ul>
+<p>那么下面我列举出所有的可以设置的状态</p>
+<ul>
+<li><strong>android:state_enabled</strong>: 设置触摸或点击事件是否可用状态</li>
+<li><strong>android:state_pressed</strong>: 是否按压状态</li>
+<li><strong>android:state_selected</strong>: 是否选中状态，true表示已选中，false表示未选中</li>
+<li><strong>android:state_checked</strong>: 是否勾选状态</li>
+<li><strong>android:state_checkable</strong>: 勾选是否可用状态</li>
+<li><strong>android:state_focused</strong>: 是否获得焦点状态</li>
+<li><strong>android:state_window_focused</strong>: 当前窗口是否获得焦点状态</li>
+<li><strong>android:state_activated</strong>: 是否被激活状态</li>
+<li><strong>android:state_hovered</strong>: 是在上面滑动的状态</li>
+<li><strong>android:enterFadeDuration</strong>  状态改变时的淡入时间</li>
+<li><strong>android:exitFadeDuration</strong> 状态改变时旧状态消失的淡出</li>
+</ul>
+<h3 id="layout-list"><a href="#layout-list" class="headerlink" title="layout-list"></a>layout-list</h3><p>layer-list的作用是把多个drawable按照顺序层叠在一起显示.</p>
+<p>它既可以是根节点,也可以作为selector的Item存在.</p>
+<p>我们可以使用layer-list的特性来做阴影效果.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;layer-list xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;</span><br><span class="line">    &lt;item</span><br><span class="line">        android:left=&quot;4dp&quot;</span><br><span class="line">        android:top=&quot;4dp&quot;&gt;</span><br><span class="line">        &lt;shape&gt;</span><br><span class="line">            &lt;solid android:color=&quot;@android:color/darker_gray&quot; /&gt;</span><br><span class="line">            &lt;corners android:radius=&quot;10dp&quot; /&gt;</span><br><span class="line">        &lt;/shape&gt;</span><br><span class="line">    &lt;/item&gt;</span><br><span class="line">    &lt;item</span><br><span class="line">        android:bottom=&quot;4dp&quot;</span><br><span class="line">        android:right=&quot;4dp&quot;&gt;</span><br><span class="line">        &lt;shape&gt;</span><br><span class="line">            &lt;solid android:color=&quot;@android:color/white&quot; /&gt;</span><br><span class="line">            &lt;corners android:radius=&quot;10dp&quot; /&gt;</span><br><span class="line">        &lt;/shape&gt;</span><br><span class="line">    &lt;/item&gt;</span><br><span class="line">&lt;/layer-list&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/layer_list.png" alt="layer"></p>
+<p>layer-list的item可以通过以下四个属性来设置偏移量：</p>
+<ul>
+<li>android:top 顶部偏移量</li>
+<li>android:bottom 底部偏移量</li>
+<li>android:left 左边偏移量</li>
+<li>android:right 右边偏移量</li>
+</ul>
+<h3 id="level-list"><a href="#level-list" class="headerlink" title="level-list"></a>level-list</h3><p>level-list可以存放多张drawable,每一张drawable对应一定的level范围,使用时通过level值展示对应的drawable</p>
+<p><strong>android:drawable</strong> 指定drawable资源</p>
+<p><strong>android:minLevel</strong> 该Drawable的最小level值</p>
+<p><strong>android:maxLevel</strong> 该Drawable的最大level值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;level-list xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;</span><br><span class="line">    &lt;item</span><br><span class="line">        android:drawable=&quot;@drawable/draw1&quot;</span><br><span class="line">        android:maxLevel=&quot;50&quot;</span><br><span class="line">        android:minLevel=&quot;0&quot; /&gt;</span><br><span class="line">    &lt;item</span><br><span class="line">        android:drawable=&quot;@drawable/draw2&quot;</span><br><span class="line">        android:maxLevel=&quot;100&quot;</span><br><span class="line">        android:minLevel=&quot;50&quot; /&gt;</span><br><span class="line">&lt;/level-list&gt;</span><br></pre></td></tr></table></figure>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wangzhumo.com/2018/07/26/Android-xml-style/" data-id="cjkaxwfld0022srstjvyveyw2" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/07/27/Bezier-Google-caihuaxiaoge/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    贝塞尔曲线练习-谷歌猜画小歌的倒计时
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2018/07/25/Android-Studio-CMake-JNI/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Android Studio中使用CMake进行JNI开发</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">26</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Studio/">Android Studio</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Bug/">Bug</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programme/">Programme</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Source-Code/">Source Code</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/View/">View</a><span class="category-list-count">4</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 15.71px;">Android Studio</a> <a href="/tags/Android单元测试/" style="font-size: 10px;">Android单元测试</a> <a href="/tags/Binder/" style="font-size: 10px;">Binder</a> <a href="/tags/Bug/" style="font-size: 17.14px;">Bug</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Google/" style="font-size: 11.43px;">Google</a> <a href="/tags/Gradle/" style="font-size: 11.43px;">Gradle</a> <a href="/tags/Handler/" style="font-size: 10px;">Handler</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/Java/" style="font-size: 18.57px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Linux/" style="font-size: 12.86px;">Linux</a> <a href="/tags/Okhttp/" style="font-size: 11.43px;">Okhttp</a> <a href="/tags/Programme/" style="font-size: 12.86px;">Programme</a> <a href="/tags/RK3399/" style="font-size: 10px;">RK3399</a> <a href="/tags/Regular/" style="font-size: 10px;">Regular</a> <a href="/tags/Room/" style="font-size: 12.86px;">Room</a> <a href="/tags/Rxjava/" style="font-size: 12.86px;">Rxjava</a> <a href="/tags/Server/" style="font-size: 14.29px;">Server</a> <a href="/tags/Source-Code/" style="font-size: 11.43px;">Source Code</a> <a href="/tags/Video/" style="font-size: 10px;">Video</a> <a href="/tags/View/" style="font-size: 15.71px;">View</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/组件化/" style="font-size: 10px;">组件化</a> <a href="/tags/蓝牙/" style="font-size: 10px;">蓝牙</a> <a href="/tags/设计模式/" style="font-size: 12.86px;">设计模式</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/31/Arithmetic-quick-sort/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Programme/">Programme</a></p>
+                            <p class="item-title"><a href="/2018/07/31/Arithmetic-quick-sort/" class="title">算法复习笔记-快速排序</a></p>
+                            <p class="item-date"><time datetime="2018-07-31T10:04:11.000Z" itemprop="datePublished">2018-07-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/31/Arithmetic-merge-sort/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Programme/">Programme</a></p>
+                            <p class="item-title"><a href="/2018/07/31/Arithmetic-merge-sort/" class="title">算法复习笔记-归并排序</a></p>
+                            <p class="item-date"><time datetime="2018-07-31T08:24:50.000Z" itemprop="datePublished">2018-07-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/30/ConstraintLayout-Advance/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="ConstraintLayout使用指南-进阶使用" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a></p>
+                            <p class="item-title"><a href="/2018/07/30/ConstraintLayout-Advance/" class="title">ConstraintLayout使用指南-进阶使用</a></p>
+                            <p class="item-date"><time datetime="2018-07-30T06:54:45.000Z" itemprop="datePublished">2018-07-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/30/Screen-toutiao-resize/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="今日头条的屏幕适配方案" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a></p>
+                            <p class="item-title"><a href="/2018/07/30/Screen-toutiao-resize/" class="title">今日头条的屏幕适配方案</a></p>
+                            <p class="item-date"><time datetime="2018-07-30T06:16:26.000Z" itemprop="datePublished">2018-07-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/30/Android-MotionEvent-ViewGroup/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="Android事件分发机制-ViewGroup" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/View/">View</a></p>
+                            <p class="item-title"><a href="/2018/07/30/Android-MotionEvent-ViewGroup/" class="title">Android事件分发机制-ViewGroup</a></p>
+                            <p class="item-date"><time datetime="2018-07-30T04:20:02.000Z" itemprop="datePublished">2018-07-30</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">47</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android单元测试/">Android单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bug/">Bug</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Handler/">Handler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Okhttp/">Okhttp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Programme/">Programme</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RK3399/">RK3399</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regular/">Regular</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Room/">Room</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Server/">Server</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Source-Code/">Source Code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video/">Video</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="mailto:wangzhumoo@gmail.com">E-mail</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 wangzhumo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

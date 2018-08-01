@@ -159,7 +159,7 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                71
+                72
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -188,7 +188,7 @@
 
             
             <section id="main">
-    <article id="post-ServiceLoader-与-责任链设计模式" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Git-Submodule" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -196,7 +196,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/06/26/ServiceLoader-与-责任链设计模式/">ServiceLoader 与 责任链设计模式</a>
+            <a class="article-title" href="/2018/07/02/Git-Submodule/">Git Submodule 子模块的使用</a>
         </h1>
     
 
@@ -205,8 +205,8 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/06/26/ServiceLoader-与-责任链设计模式/">
-            <time datetime="2018-06-26T10:22:46.000Z" itemprop="datePublished">2018-06-26</time>
+        <a href="/2018/07/02/Git-Submodule/">
+            <time datetime="2018-07-02T08:41:23.000Z" itemprop="datePublished">2018-07-02</time>
         </a>
     </div>
 
@@ -214,13 +214,13 @@
                         
     <div class="article-category">
     	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Java/">Java</a>
+        <a class="article-category-link" href="/categories/Tools/">Tools</a>
     </div>
 
                         
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Java/">Java</a>, <a class="tag-link" href="/tags/设计模式/">设计模式</a>
+        <a class="tag-link" href="/tags/Git/">Git</a>
     </div>
 
                     </div>
@@ -230,11 +230,11 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            <p><h3 id="前因"><a href="#前因" class="headerlink" title="前因"></a>前因</h3><p>最近在做人脸识别的一些东西</p>
-<p>主要是使用百度的SDK来完成采集, 识别.</p>
-<p>这个功能是使用百度云的Api来对人脸进行分析,拿到年龄 颜值 等等信息</p></p>
+            <p><h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p><em>Git</em>是一个开源的分布式版本控制系统,大家公司可能都是使用的Git来进行版本控制.</p>
+<p>对于我个人,本地项目也喜欢使用git,万一哪天想回退一下,没有git可就真费劲了.</p>
+<p>对于git的常规操作不用多说,今天贴一个submodule的真实使用过程</p></p>
             <p class="article-more-link">
-                <a href="/2018/06/26/ServiceLoader-与-责任链设计模式/#more">查看更多</a>
+                <a href="/2018/07/02/Git-Submodule/#more">查看更多</a>
             </p>
         
         </div>
@@ -245,7 +245,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/06/26/ServiceLoader-与-责任链设计模式/" data-id="cjk9j7x5j005anostn8gs8qu4" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/07/02/Git-Submodule/" data-id="cjkaxwfme003ysrst8wf3wvje" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -321,7 +321,7 @@
 
 
 
-    <article id="post-Android自己封装一个VideoPlayer" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-serviceloader-zerenlian" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -329,7 +329,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/05/23/Android自己封装一个VideoPlayer/">Android自己封装一个VideoPlayer</a>
+            <a class="article-title" href="/2018/06/26/serviceloader-zerenlian/">ServiceLoader 与 责任链设计模式</a>
         </h1>
     
 
@@ -338,7 +338,140 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/05/23/Android自己封装一个VideoPlayer/">
+        <a href="/2018/06/26/serviceloader-zerenlian/">
+            <time datetime="2018-06-26T10:22:46.000Z" itemprop="datePublished">2018-06-26</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Java/">Java</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Java/">Java</a>, <a class="tag-link" href="/tags/设计模式/">设计模式</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><h3 id="前因"><a href="#前因" class="headerlink" title="前因"></a>前因</h3><p>最近在做人脸识别的一些东西</p>
+<p>主要是使用百度的SDK来完成采集, 识别.</p>
+<p>这个功能是使用百度云的Api来对人脸进行分析,拿到年龄 颜值 等等信息</p></p>
+            <p class="article-more-link">
+                <a href="/2018/06/26/serviceloader-zerenlian/#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wangzhumo.com/2018/06/26/serviceloader-zerenlian/" data-id="cjkaxwfnn006gsrst34bcclri" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-Android-VideoPlayer" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/05/23/Android-VideoPlayer/">Android自己封装一个VideoPlayer</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/05/23/Android-VideoPlayer/">
             <time datetime="2018-05-23T08:00:32.000Z" itemprop="datePublished">2018-05-23</time>
         </a>
     </div>
@@ -409,7 +542,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/05/23/Android自己封装一个VideoPlayer/" data-id="cjk9j7x3u001mnostxbqlsce9" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/05/23/Android-VideoPlayer/" data-id="cjkaxwfkk001esrst6607ni1y" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -485,7 +618,7 @@
 
 
 
-    <article id="post-Android自定义一个遮罩引导层" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Android-Shade" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -493,7 +626,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/05/21/Android自定义一个遮罩引导层/">Android自定义一个遮罩引导层</a>
+            <a class="article-title" href="/2018/05/21/Android-Shade/">Android自定义一个遮罩引导层</a>
         </h1>
     
 
@@ -502,7 +635,7 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/05/21/Android自定义一个遮罩引导层/">
+        <a href="/2018/05/21/Android-Shade/">
             <time datetime="2018-05-21T08:53:08.000Z" itemprop="datePublished">2018-05-21</time>
         </a>
     </div>
@@ -590,7 +723,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/05/21/Android自定义一个遮罩引导层/" data-id="cjk9j7x3w001qnostpzi7cpyu" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/05/21/Android-Shade/" data-id="cjkaxwfjl000dsrst5lzogexs" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -666,7 +799,7 @@
 
 
 
-    <article id="post-Android-Binder机制-一" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Android-Binder-1" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -674,7 +807,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/05/11/Android-Binder机制-一/">Android Binder机制(一)</a>
+            <a class="article-title" href="/2018/05/11/Android-Binder-1/">Android Binder机制(一)</a>
         </h1>
     
 
@@ -683,7 +816,7 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/05/11/Android-Binder机制-一/">
+        <a href="/2018/05/11/Android-Binder-1/">
             <time datetime="2018-05-11T05:56:25.000Z" itemprop="datePublished">2018-05-11</time>
         </a>
     </div>
@@ -717,7 +850,7 @@
 <p>ServiceManager是有权限控制的，只有具有相应权限的进程才能注册,查询服务</p>
 <p><a href="http://gityuan.com/2015/11/08/binder-get-sm/" target="_blank" rel="noopener">http://gityuan.com/2015/11/08/binder-get-sm/</a></p></p>
             <p class="article-more-link">
-                <a href="/2018/05/11/Android-Binder机制-一/#more">查看更多</a>
+                <a href="/2018/05/11/Android-Binder-1/#more">查看更多</a>
             </p>
         
         </div>
@@ -728,7 +861,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/05/11/Android-Binder机制-一/" data-id="cjk9j7x2i0009nosthvic1v67" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/05/11/Android-Binder-1/" data-id="cjkaxwfjh0009srst2i3t54o4" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -804,7 +937,7 @@
 
 
 
-    <article id="post-线程与进程的异同以及Android中的IPC机制" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Thread-Process-IPC" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -812,7 +945,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/05/10/线程与进程的异同以及Android中的IPC机制/">线程与进程的异同以及Android中的IPC机制</a>
+            <a class="article-title" href="/2018/05/10/Thread-Process-IPC/">线程与进程的异同以及Android中的IPC机制</a>
         </h1>
     
 
@@ -821,7 +954,7 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/05/10/线程与进程的异同以及Android中的IPC机制/">
+        <a href="/2018/05/10/Thread-Process-IPC/">
             <time datetime="2018-05-10T09:16:06.000Z" itemprop="datePublished">2018-05-10</time>
         </a>
     </div>
@@ -864,7 +997,7 @@
 </li>
 </ul></p>
             <p class="article-more-link">
-                <a href="/2018/05/10/线程与进程的异同以及Android中的IPC机制/#more">查看更多</a>
+                <a href="/2018/05/10/Thread-Process-IPC/#more">查看更多</a>
             </p>
         
         </div>
@@ -875,7 +1008,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/05/10/线程与进程的异同以及Android中的IPC机制/" data-id="cjk9j7x62006onost1ruqq2cu" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/05/10/Thread-Process-IPC/" data-id="cjkaxwfnk0069srstmkk5f48c" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -951,7 +1084,7 @@
 
 
 
-    <article id="post-Java中的内存模型" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Java-memory-module" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -959,7 +1092,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/05/09/Java中的内存模型/">Java中的内存模型</a>
+            <a class="article-title" href="/2018/05/09/Java-memory-module/">Java中的内存模型</a>
         </h1>
     
 
@@ -968,7 +1101,7 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/05/09/Java中的内存模型/">
+        <a href="/2018/05/09/Java-memory-module/">
             <time datetime="2018-05-09T14:26:54.000Z" itemprop="datePublished">2018-05-09</time>
         </a>
     </div>
@@ -1031,7 +1164,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/05/09/Java中的内存模型/" data-id="cjk9j7x4w003wnostldlpge36" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/05/09/Java-memory-module/" data-id="cjkaxwfmx004ssrstkzza47kr" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1107,7 +1240,7 @@
 
 
 
-    <article id="post-Android的启动流程" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Android-App-Launch" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -1115,7 +1248,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/05/09/Android的启动流程/">Android的启动流程</a>
+            <a class="article-title" href="/2018/05/09/Android-App-Launch/">Android的启动流程</a>
         </h1>
     
 
@@ -1124,7 +1257,7 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/05/09/Android的启动流程/">
+        <a href="/2018/05/09/Android-App-Launch/">
             <time datetime="2018-05-09T07:00:12.000Z" itemprop="datePublished">2018-05-09</time>
         </a>
     </div>
@@ -1176,7 +1309,7 @@
 </ul>
 <p><img src="/images/android_boot_process.png" alt="boot"></p></p>
             <p class="article-more-link">
-                <a href="/2018/05/09/Android的启动流程/#more">查看更多</a>
+                <a href="/2018/05/09/Android-App-Launch/#more">查看更多</a>
             </p>
         
         </div>
@@ -1187,7 +1320,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/05/09/Android的启动流程/" data-id="cjk9j7x3r001inostc8ar74dr" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/05/09/Android-App-Launch/" data-id="cjkaxwfj50003srstmv4h522q" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1263,7 +1396,7 @@
 
 
 
-    <article id="post-JVM虚拟机中的类加载器" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-JVM-class-loader" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -1271,7 +1404,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/03/11/JVM虚拟机中的类加载器/">JVM虚拟机中的类加载器</a>
+            <a class="article-title" href="/2018/03/11/JVM-class-loader/">JVM虚拟机中的类加载器</a>
         </h1>
     
 
@@ -1280,7 +1413,7 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/03/11/JVM虚拟机中的类加载器/">
+        <a href="/2018/03/11/JVM-class-loader/">
             <time datetime="2018-03-11T02:35:47.000Z" itemprop="datePublished">2018-03-11</time>
         </a>
     </div>
@@ -1322,7 +1455,7 @@
 <li>类加载器的应用</li>
 </ol></p>
             <p class="article-more-link">
-                <a href="/2018/03/11/JVM虚拟机中的类加载器/#more">查看更多</a>
+                <a href="/2018/03/11/JVM-class-loader/#more">查看更多</a>
             </p>
         
         </div>
@@ -1333,7 +1466,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/03/11/JVM虚拟机中的类加载器/" data-id="cjk9j7x4t003onost9prgj15a" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/03/11/JVM-class-loader/" data-id="cjkaxwfmq004gsrstg0jz7zi3" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1409,7 +1542,7 @@
 
 
 
-    <article id="post-JVM虚拟机的类加载机制" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-JVM-load-class" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -1417,7 +1550,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/03/10/JVM虚拟机的类加载机制/">JVM虚拟机的类加载机制</a>
+            <a class="article-title" href="/2018/03/10/JVM-load-class/">JVM虚拟机的类加载机制</a>
         </h1>
     
 
@@ -1426,7 +1559,7 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/03/10/JVM虚拟机的类加载机制/">
+        <a href="/2018/03/10/JVM-load-class/">
             <time datetime="2018-03-10T03:20:10.000Z" itemprop="datePublished">2018-03-10</time>
         </a>
     </div>
@@ -1457,7 +1590,7 @@
 <li>类加载的流程</li>
 </ol></p>
             <p class="article-more-link">
-                <a href="/2018/03/10/JVM虚拟机的类加载机制/#more">查看更多</a>
+                <a href="/2018/03/10/JVM-load-class/#more">查看更多</a>
             </p>
         
         </div>
@@ -1468,140 +1601,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/03/10/JVM虚拟机的类加载机制/" data-id="cjk9j7x4v003tnosthd5ihgs9" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Handler通讯机制分析" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/03/07/Handler通讯机制分析/">Android通讯机制分析-Handler</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/03/07/Handler通讯机制分析/">
-            <time datetime="2018-03-07T06:13:47.000Z" itemprop="datePublished">2018-03-07</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Source-Code/">Source Code</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/Handler/">Handler</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p>Handler在Android世界中的地位不言而喻.这篇笔记算是简单的记录一下我对于Handler的理解.</p>
-<p>当时第一次对Handler产生兴趣是我在知乎上看到一个问题:</p>
-<p><strong>Android中为什么主线程不会因为Looper.loop()里的死循环卡死</strong></p></p>
-            <p class="article-more-link">
-                <a href="/2018/03/07/Handler通讯机制分析/#more">查看更多</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.wangzhumo.com/2018/03/07/Handler通讯机制分析/" data-id="cjk9j7x4p003dnostw2q5l449" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/03/10/JVM-load-class/" data-id="cjkaxwfms004lsrstgdsv4vgs" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1689,7 +1689,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">26</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Studio/">Android Studio</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Bug/">Bug</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programme/">Programme</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Source-Code/">Source Code</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/View/">View</a><span class="category-list-count">4</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">26</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Studio/">Android Studio</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Bug/">Bug</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programme/">Programme</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Source-Code/">Source Code</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/View/">View</a><span class="category-list-count">4</span></li></ul>
         </div>
     </div>
 
@@ -1698,7 +1698,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 15.71px;">Android Studio</a> <a href="/tags/Android单元测试/" style="font-size: 10px;">Android单元测试</a> <a href="/tags/Binder/" style="font-size: 10px;">Binder</a> <a href="/tags/Bug/" style="font-size: 17.14px;">Bug</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Google/" style="font-size: 11.43px;">Google</a> <a href="/tags/Gradle/" style="font-size: 11.43px;">Gradle</a> <a href="/tags/Handler/" style="font-size: 10px;">Handler</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/Java/" style="font-size: 18.57px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Linux/" style="font-size: 12.86px;">Linux</a> <a href="/tags/Okhttp/" style="font-size: 11.43px;">Okhttp</a> <a href="/tags/Programme/" style="font-size: 11.43px;">Programme</a> <a href="/tags/RK3399/" style="font-size: 10px;">RK3399</a> <a href="/tags/Regular/" style="font-size: 10px;">Regular</a> <a href="/tags/Room/" style="font-size: 12.86px;">Room</a> <a href="/tags/Rxjava/" style="font-size: 12.86px;">Rxjava</a> <a href="/tags/Server/" style="font-size: 14.29px;">Server</a> <a href="/tags/Source-Code/" style="font-size: 11.43px;">Source Code</a> <a href="/tags/Video/" style="font-size: 10px;">Video</a> <a href="/tags/View/" style="font-size: 15.71px;">View</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/组件化/" style="font-size: 10px;">组件化</a> <a href="/tags/蓝牙/" style="font-size: 10px;">蓝牙</a> <a href="/tags/设计模式/" style="font-size: 12.86px;">设计模式</a>
+            <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 15.71px;">Android Studio</a> <a href="/tags/Android单元测试/" style="font-size: 10px;">Android单元测试</a> <a href="/tags/Binder/" style="font-size: 10px;">Binder</a> <a href="/tags/Bug/" style="font-size: 17.14px;">Bug</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Google/" style="font-size: 11.43px;">Google</a> <a href="/tags/Gradle/" style="font-size: 11.43px;">Gradle</a> <a href="/tags/Handler/" style="font-size: 10px;">Handler</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/Java/" style="font-size: 18.57px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Linux/" style="font-size: 12.86px;">Linux</a> <a href="/tags/Okhttp/" style="font-size: 11.43px;">Okhttp</a> <a href="/tags/Programme/" style="font-size: 12.86px;">Programme</a> <a href="/tags/RK3399/" style="font-size: 10px;">RK3399</a> <a href="/tags/Regular/" style="font-size: 10px;">Regular</a> <a href="/tags/Room/" style="font-size: 12.86px;">Room</a> <a href="/tags/Rxjava/" style="font-size: 12.86px;">Rxjava</a> <a href="/tags/Server/" style="font-size: 14.29px;">Server</a> <a href="/tags/Source-Code/" style="font-size: 11.43px;">Source Code</a> <a href="/tags/Video/" style="font-size: 10px;">Video</a> <a href="/tags/View/" style="font-size: 15.71px;">View</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/组件化/" style="font-size: 10px;">组件化</a> <a href="/tags/蓝牙/" style="font-size: 10px;">蓝牙</a> <a href="/tags/设计模式/" style="font-size: 12.86px;">设计模式</a>
         </div>
     </div>
 
@@ -1712,7 +1712,7 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/07/31/算法复习笔记-归并排序/" class="thumbnail">
+                            <a href="/2018/07/31/Arithmetic-quick-sort/" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -1723,7 +1723,26 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/Programme/">Programme</a></p>
-                            <p class="item-title"><a href="/2018/07/31/算法复习笔记-归并排序/" class="title">算法复习笔记-归并排序</a></p>
+                            <p class="item-title"><a href="/2018/07/31/Arithmetic-quick-sort/" class="title">算法复习笔记-快速排序</a></p>
+                            <p class="item-date"><time datetime="2018-07-31T10:04:11.000Z" itemprop="datePublished">2018-07-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/31/Arithmetic-merge-sort/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Programme/">Programme</a></p>
+                            <p class="item-title"><a href="/2018/07/31/Arithmetic-merge-sort/" class="title">算法复习笔记-归并排序</a></p>
                             <p class="item-date"><time datetime="2018-07-31T08:24:50.000Z" itemprop="datePublished">2018-07-31</time></p>
                         </div>
                     </li>
@@ -1731,7 +1750,7 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/07/30/ConstraintLayout使用指南-进阶使用/" class="thumbnail">
+                            <a href="/2018/07/30/ConstraintLayout-Advance/" class="thumbnail">
     
     
         <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="ConstraintLayout使用指南-进阶使用" class="thumbnail-image"></span>
@@ -1742,7 +1761,7 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a></p>
-                            <p class="item-title"><a href="/2018/07/30/ConstraintLayout使用指南-进阶使用/" class="title">ConstraintLayout使用指南-进阶使用</a></p>
+                            <p class="item-title"><a href="/2018/07/30/ConstraintLayout-Advance/" class="title">ConstraintLayout使用指南-进阶使用</a></p>
                             <p class="item-date"><time datetime="2018-07-30T06:54:45.000Z" itemprop="datePublished">2018-07-30</time></p>
                         </div>
                     </li>
@@ -1750,7 +1769,7 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/07/30/今日头条的屏幕适配方案/" class="thumbnail">
+                            <a href="/2018/07/30/Screen-toutiao-resize/" class="thumbnail">
     
     
         <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="今日头条的屏幕适配方案" class="thumbnail-image"></span>
@@ -1761,7 +1780,7 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a></p>
-                            <p class="item-title"><a href="/2018/07/30/今日头条的屏幕适配方案/" class="title">今日头条的屏幕适配方案</a></p>
+                            <p class="item-title"><a href="/2018/07/30/Screen-toutiao-resize/" class="title">今日头条的屏幕适配方案</a></p>
                             <p class="item-date"><time datetime="2018-07-30T06:16:26.000Z" itemprop="datePublished">2018-07-30</time></p>
                         </div>
                     </li>
@@ -1769,7 +1788,7 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/07/30/Android事件分发机制-ViewGroup/" class="thumbnail">
+                            <a href="/2018/07/30/Android-MotionEvent-ViewGroup/" class="thumbnail">
     
     
         <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="Android事件分发机制-ViewGroup" class="thumbnail-image"></span>
@@ -1780,27 +1799,8 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/View/">View</a></p>
-                            <p class="item-title"><a href="/2018/07/30/Android事件分发机制-ViewGroup/" class="title">Android事件分发机制-ViewGroup</a></p>
+                            <p class="item-title"><a href="/2018/07/30/Android-MotionEvent-ViewGroup/" class="title">Android事件分发机制-ViewGroup</a></p>
                             <p class="item-date"><time datetime="2018-07-30T04:20:02.000Z" itemprop="datePublished">2018-07-30</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/07/27/贝塞尔曲线练习-谷歌猜画小歌的倒计时/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/View/">View</a></p>
-                            <p class="item-title"><a href="/2018/07/27/贝塞尔曲线练习-谷歌猜画小歌的倒计时/" class="title">贝塞尔曲线练习-谷歌猜画小歌的倒计时</a></p>
-                            <p class="item-date"><time datetime="2018-07-27T08:42:41.000Z" itemprop="datePublished">2018-07-27</time></p>
                         </div>
                     </li>
                 
@@ -1813,7 +1813,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -1822,7 +1822,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">47</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android单元测试/">Android单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bug/">Bug</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Handler/">Handler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Okhttp/">Okhttp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Programme/">Programme</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RK3399/">RK3399</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regular/">Regular</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Room/">Room</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Server/">Server</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Source-Code/">Source Code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video/">Video</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">3</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">47</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android单元测试/">Android单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bug/">Bug</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Handler/">Handler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Okhttp/">Okhttp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Programme/">Programme</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RK3399/">RK3399</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regular/">Regular</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Room/">Room</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Server/">Server</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Source-Code/">Source Code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video/">Video</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">3</span></li></ul>
         </div>
     </div>
 

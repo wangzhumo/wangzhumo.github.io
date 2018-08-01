@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Linux 学习笔记 | 王诛魔</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="netstat -an  1查看所有网络连接  more命令  123456789101112131415选项-num    指定屏幕的行数（以整数表示）+num    从行号num开始显示-d    让more给用户显示信息[Press space to continue, &amp;apos;q&amp;apos; to quit.]-f    使more计数逻辑行，而不是屏幕行（长行不会断到下一行）-s">
+<meta name="keywords" content="Server,Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux 学习笔记">
+<meta property="og:url" content="http://www.wangzhumo.com/2017/12/24/Linux-learn/index.html">
+<meta property="og:site_name" content="王诛魔">
+<meta property="og:description" content="netstat -an  1查看所有网络连接  more命令  123456789101112131415选项-num    指定屏幕的行数（以整数表示）+num    从行号num开始显示-d    让more给用户显示信息[Press space to continue, &amp;apos;q&amp;apos; to quit.]-f    使more计数逻辑行，而不是屏幕行（长行不会断到下一行）-s">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-12-25T05:40:28.004Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux 学习笔记">
+<meta name="twitter:description" content="netstat -an  1查看所有网络连接  more命令  123456789101112131415选项-num    指定屏幕的行数（以整数表示）+num    从行号num开始显示-d    让more给用户显示信息[Press space to continue, &amp;apos;q&amp;apos; to quit.]-f    使more计数逻辑行，而不是屏幕行（长行不会断到下一行）-s">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon-32x32-next.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">王诛魔</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.png" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="profile-fixed">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.png" />
+            <h2 id="name">王诛魔</h2>
+            <h3 id="title">Android Developer</h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>Beijing, China</span>
+            <a id="follow" target="_blank" href="mailto:wangzhumoo@gmail.com">联系我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                72
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                31
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/wangzhumo" target="_blank" title="github" >
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-Linux-learn" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Linux 学习笔记
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2017/12/24/Linux-learn/">
+            <time datetime="2017-12-24T15:50:59.000Z" itemprop="datePublished">2017-12-24</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Server/">Server</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Linux/">Linux</a>, <a class="tag-link" href="/tags/Server/">Server</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <ul>
+<li>netstat -an</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">查看所有网络连接</span><br></pre></td></tr></table></figure>
+<ul>
+<li>more命令</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">选项</span><br><span class="line"></span><br><span class="line">-num    指定屏幕的行数（以整数表示）</span><br><span class="line"></span><br><span class="line">+num    从行号num开始显示</span><br><span class="line"></span><br><span class="line">-d    让more给用户显示信息[Press space to continue, &apos;q&apos; to quit.]</span><br><span class="line"></span><br><span class="line">-f    使more计数逻辑行，而不是屏幕行（长行不会断到下一行）</span><br><span class="line"></span><br><span class="line">-s   把重复的空行压缩成一个空行</span><br><span class="line"></span><br><span class="line">-u    防止下划线</span><br><span class="line"></span><br><span class="line">交互基于VIM</span><br></pre></td></tr></table></figure>
+<ul>
+<li>字符界面</li>
+</ul>
+<p>1.字符界面占用资源少</p>
+<p>2.减少了出错,别攻击的可能</p>
+<ul>
+<li>一切皆文件</li>
+</ul>
+<p>用户  硬件 文件….</p>
+<ul>
+<li>分区</li>
+<li>swap 内存的两倍</li>
+</ul>
+<p>/ 根分区</p>
+<p>/boot    boot分区  200m即可  (作为启动盘使用,启动需要空间)</p>
+<p>/home  </p>
+<p>/etc</p>
+<p>…</p>
+<ul>
+<li>安装日志</li>
+</ul>
+<p>/root/install.log     记录了安装在系统中的软件包和版本信息</p>
+<p>/root/install.log.syslog    安装过程的记录</p>
+<p>/root/anaconda-ks.cfg    记录安装过程中的配置信息(用于网络批量安装)</p>
+<ul>
+<li>linux起始符</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop ~]#</span><br><span class="line">root 用户名</span><br><span class="line">hadoop  当前用户的主机名</span><br><span class="line">"~" 当前的目录, "~"表示家目录</span><br><span class="line">"#" 超级用户的提示符</span><br><span class="line">"$" 普通用户的提示符</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>-rw-r–r–</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">drwxr-xr-x. 2 wzm wzm 4096 6月  21 16:19 Desktop</span><br><span class="line"><span class="meta">#</span>一共10位  drwxr-xr-x</span><br><span class="line"><span class="meta">#</span>d</span><br><span class="line">第一位 文件类型( -文件  d目录 |软链接文件   c  b )</span><br><span class="line"><span class="meta">#</span>rwx r-x r-x</span><br><span class="line">后面的每三位是一组</span><br><span class="line">第一个三位   所属者u</span><br><span class="line">第二个三位   所属组g</span><br><span class="line">第三个三位   其他人o</span><br><span class="line"><span class="meta">#</span>acf权限</span><br><span class="line">r读</span><br><span class="line">w写</span><br><span class="line">x执行</span><br></pre></td></tr></table></figure>
+<ul>
+<li>目录</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/        根目录</span><br><span class="line">/etc     配置文件目录</span><br><span class="line">/bin     系统命令的目录 (普通用户即可读取)</span><br><span class="line">/sbin    系统命令的目录 (超级用户即可读取)</span><br><span class="line">/usr/bin 系统命令的目录 (普通用户即可读取)</span><br><span class="line">/usr/sbin系统命令的目录 (超级用户即可读取)</span><br><span class="line">/home    普通用户的家目录</span><br><span class="line">/root    超级用户的家目录</span><br><span class="line">/usr     系统软件资源目录</span><br><span class="line">/boot    启动目录</span><br><span class="line">/var     系统相关文档</span><br><span class="line">/sys	 直接写入内存</span><br><span class="line">/proc    直接写入内存</span><br><span class="line">/dev     设备文件目录</span><br><span class="line">/lib     系统库 保存目录</span><br><span class="line">/mnt     系统挂载目录</span><br><span class="line">/media   挂载目录</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>linux 常用命令     control + L  清屏</p>
+</li>
+<li><p>文件命令</p>
+<ul>
+<li>基本命令格式</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">命令 [选项] [参数]</span><br><span class="line"><span class="meta">#</span>ls</span><br><span class="line">ls </span><br><span class="line">   -a  显示所有文件</span><br><span class="line">   -l  显示详细信息,目录下所有内容</span><br><span class="line">   -d  查看目录属性,目录本身</span><br><span class="line">   -h  人性化显示文件大小</span><br><span class="line">   -i  显示inode  文件的id号</span><br><span class="line">ll ll -l</span><br><span class="line"><span class="meta">#</span></span><br></pre></td></tr></table></figure>
+<p>​</p>
+<ul>
+<li>目录文件处理</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>mkdir  创建目录</span><br><span class="line">mkdir </span><br><span class="line">  -p  递归创建,创建多级目录</span><br><span class="line">  </span><br><span class="line"><span class="meta">#</span>cd  切换目录</span><br><span class="line">cd </span><br><span class="line">  ~  当前用户的家目录</span><br><span class="line">  -  进入上次进入的目录</span><br><span class="line">  .. 进入上级目录</span><br><span class="line">  .  进入当前目录</span><br><span class="line">  </span><br><span class="line"><span class="meta">#</span>pwd</span><br><span class="line">pwd  显示当前目录全路径</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>rm -rf [文件或目录]</span><br><span class="line">rm </span><br><span class="line"> -f 强制删除</span><br><span class="line"> -r 删除目录</span><br><span class="line"> </span><br><span class="line"><span class="meta">#</span>cp</span><br><span class="line">cp</span><br><span class="line"> -r 复制目录</span><br><span class="line"> -p 连带文件的属性一起复制</span><br><span class="line"> -d 如果文件为链接文件,则复制链接属性</span><br><span class="line"> -a 相当于-pdr</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>mv</span><br><span class="line">mv [源地址] [目标地址]</span><br></pre></td></tr></table></figure>
+<p>​</p>
+<ul>
+<li>软链接命令(源文件一定写巨绝对路径)</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>ln [源] [目标]</span><br><span class="line">ln</span><br><span class="line">不能跨分区,不能是一个目录</span><br><span class="line">相当于一个文件   文件id号相同</span><br><span class="line"></span><br><span class="line"> -s    软链接   类似windows里面的快捷方式</span><br><span class="line"> 有自己的id号   </span><br><span class="line"> 其实是去查看自己的存储点,</span><br><span class="line"> 存储点里面是源文件的id号,</span><br><span class="line"> 然后又用源文件id号去找源文件的存储点</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+<li><p>搜索命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">locate 文件搜索命令</span><br><span class="line">whereis 与 which</span><br><span class="line">find 文件搜索命令</span><br><span class="line">grep 字符串搜索命令</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>locate </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>locate</span><br><span class="line">locate [文件名]</span><br><span class="line"></span><br><span class="line">在后台数据库中按文件名搜索</span><br><span class="line">位置在:</span><br><span class="line">/var/lib/mlocate</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>updatedb</span><br><span class="line">updatedb 更新数据库</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>whereis </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>whereis</span><br><span class="line">whereis [命令名]</span><br><span class="line"> -b 之查找可执行文件</span><br><span class="line"> -m 只查找帮助文件</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>which</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">查看</span><br><span class="line"><span class="meta">#</span>which</span><br><span class="line">which [文件名]</span><br><span class="line">搜索命令所在目录路径已经别名</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>find</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>find</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>避大范围搜索,会非常消耗系统资源</span><br><span class="line"><span class="meta">#</span>如果不用通配符,则会搜索与文件名完全一致的文件</span><br><span class="line"></span><br><span class="line">find [搜素范围] [搜索条件]</span><br><span class="line"></span><br><span class="line">find [搜素范围] </span><br><span class="line">  -name [名字]</span><br><span class="line">  </span><br><span class="line">  -iname [名字]  不区分大小写</span><br><span class="line">  </span><br><span class="line">  -user [所有者]  按所有者搜索</span><br><span class="line">  </span><br><span class="line">  -nouser   查找没有所有者的文件 </span><br><span class="line">  </span><br><span class="line">  -mtime  [] 修改文件内容的时间 </span><br><span class="line">  -atime  [] 文件访问时间</span><br><span class="line">  -ctime  [] 改变文件属性的时间</span><br><span class="line">    [-10 10 +10  10天内  10天当天  +10天前]</span><br><span class="line">  </span><br><span class="line">  -size [大小]  当前目录下查找大小是 25k的文件</span><br><span class="line">    [-25k 25k +25k]</span><br><span class="line">    [-2M 2M +2M]</span><br><span class="line">  </span><br><span class="line">  -inum [id号]  </span><br><span class="line">  </span><br><span class="line">  -a   and 逻辑与,同时满足两个条件</span><br><span class="line">   eg find /etc -size +25k -a -size -50k</span><br><span class="line"></span><br><span class="line">  -o   or  逻辑或,两个条件满足一个条件即可</span><br><span class="line">  </span><br><span class="line">  -exec [一个命令] &#123;&#125; \;   搜索出来的结果再执行一次命令</span><br><span class="line">   eg find /etc -size +25k -a -size -50k -exec ls -lh &#123;&#125; \;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>通配符</span><br><span class="line">*    匹配任何内容</span><br><span class="line">?    匹配任意一个字符</span><br><span class="line">[]   匹配任意一个中口号内的字符    </span><br><span class="line">     eg:  abc  abd</span><br><span class="line">     find /home -name ab[cd]</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+<li><p>grep</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>grep</span><br><span class="line">grep "size" system.log</span><br><span class="line"></span><br><span class="line">grep是包含匹配   在  system.log  中查找"size"</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>​</p>
+</li>
+<li><p>帮助命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">man [命令]</span><br><span class="line"></span><br><span class="line">whatis [命令] </span><br><span class="line"></span><br><span class="line">man -f [命令]   命令的帮助级别</span><br><span class="line"></span><br><span class="line">man -k [命令]   模糊匹配</span><br><span class="line"> </span><br><span class="line">apropos [命令]   模糊匹配</span><br><span class="line"></span><br><span class="line">[命令] --help</span><br><span class="line"></span><br><span class="line">内核的命令查看帮助</span><br><span class="line"></span><br><span class="line">help [命令]</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+<li><p>压缩与解压缩</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">常用压缩格式   .zip  .gz  .bz2   .tar.gz   .tar.bz2</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>zip</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">zip [压缩文件名字] [源文件]</span><br><span class="line"></span><br><span class="line">zip -r [压缩文件名字] [源目录]</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>解压缩</span><br><span class="line">unzip [zip文件]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>gz</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">gzip [源文件]   </span><br><span class="line"><span class="meta">#</span>压缩为.gz格式的压缩文件,源文件会消失</span><br><span class="line"></span><br><span class="line">gzip -c [源文件] &gt; 压缩文件</span><br><span class="line"><span class="meta">#</span>压缩为.gz格式 ,源文件保留</span><br><span class="line"></span><br><span class="line">gzip -r [源目录] </span><br><span class="line"><span class="meta">#</span>压缩目录下所有的子文件,但是不能压缩目录</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>解压缩</span><br><span class="line">gzip -d [压缩文件]</span><br><span class="line"></span><br><span class="line">gunzip [压缩文件]</span><br><span class="line"></span><br><span class="line">gzp -d -r [目录]   解压目录下所有的文件</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>tar </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#tar</span><br><span class="line">tar -cvf [打包文件名] [源文件]</span><br><span class="line">  -c 打包</span><br><span class="line">  -v 显示过程</span><br><span class="line">  -f 指定打包后的文件名</span><br><span class="line">     eg tar -cvf jp.tar jp</span><br><span class="line"></span><br><span class="line">#解压缩</span><br><span class="line">tar -xvf [压缩文件]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>- .tar.gz
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tar -zcvf [压缩文件名] [源文件]</span><br><span class="line"></span><br><span class="line">#解压缩</span><br><span class="line">tar -zxvf [压缩包名.tar.gz]</span><br></pre></td></tr></table></figure>
+</code></pre><ul>
+<li>关机和重启</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">shutdown [选项] 时间</span><br><span class="line"> -c   取消前一个关机命令</span><br><span class="line"> -h   关机</span><br><span class="line"> -r   重启</span><br><span class="line"> </span><br><span class="line">logout 退出登录</span><br></pre></td></tr></table></figure>
+<ul>
+<li>其他的命令</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">w  显示所有的登录用户</span><br><span class="line">last  所有登录信息</span><br><span class="line">lastlog   所有用户登录信息</span><br></pre></td></tr></table></figure>
+<ul>
+<li>其他快捷键</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">control + c   强制终止当前命令</span><br><span class="line">control + l   清屏</span><br><span class="line">control + a   光标移动到行首</span><br><span class="line">control + e   光标移动到行尾</span><br><span class="line">control + u   从光标位置删除到行首</span><br><span class="line">control + z   把命令放入到后台</span><br><span class="line">control + r   在历史记录中搜索</span><br></pre></td></tr></table></figure>
+<ul>
+<li>输出重定向</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#标准的输出重定向</span><br><span class="line">命令 &gt; 文件    覆盖的方式写入</span><br><span class="line"></span><br><span class="line">命令 &gt;&gt; 文件   追加的方式写入</span><br><span class="line"></span><br><span class="line">#错误输出重定向</span><br><span class="line"></span><br><span class="line">错误命令 2&gt; 文件  覆盖的方式写入错误提示</span><br><span class="line">错误命令 2&gt;&gt; 文件  追加的方式写入错误提示</span><br><span class="line"></span><br><span class="line">#正确和错误的同时输出</span><br><span class="line">命令  &gt;&gt; 文件 2&gt;&amp;1</span><br><span class="line"></span><br><span class="line">命令  &amp;&gt;&gt; 文件</span><br><span class="line"></span><br><span class="line">#正确错误分开输出</span><br><span class="line">命令 &gt;&gt; 文件 2&gt;&gt; 文件</span><br></pre></td></tr></table></figure>
+<p>-输入重定向</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">wc [选项] [文件名]</span><br><span class="line">    -c 统计字节数</span><br><span class="line">    -w 统计单词数</span><br><span class="line">    -l 统计行数</span><br><span class="line"> </span><br><span class="line">wc</span><br><span class="line">在终端输入文字    </span><br><span class="line">control + D 统计结果</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">wc [文件名]</span><br><span class="line">   文件内容输入到终端</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>管道符</p>
+<ul>
+<li><p>多命令执行(前一条命令的结果不会传入)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[命令1] ; [命令2]    顺序执行</span><br><span class="line"></span><br><span class="line">[命令1] &amp;&amp; [命令2]    </span><br><span class="line">    命令1执行正确   命令2执行</span><br><span class="line">    命令1执行错误   命令2不会执行</span><br><span class="line"></span><br><span class="line">[命令1] || [命令2]  </span><br><span class="line">    当命令1执行不正确   命令2执行</span><br><span class="line">    命令1执行正确   命令2就不会执行</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>- 管道符(前一条命令的结果传入下一个命令)
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> # |</span><br><span class="line">[命令1] | [命令2]</span><br><span class="line">   命令2会去操作命令1执行的结果</span><br></pre></td></tr></table></figure>
+</code></pre><ul>
+<li>通配符</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">?       任意一个字符</span><br><span class="line">*       任意内容</span><br><span class="line">[]      匹配括号中的某一个字符</span><br><span class="line">[-]     匹配括号中的任意一个字符 - 代表一个范围 [a-z] [1-3]</span><br><span class="line">[^]     表示匹配不是括号中的字符 比如[^0-9] 指匹配不是数字的字符</span><br><span class="line"></span><br><span class="line">&apos;&apos;      单引号   在单引号中所有字符都没有特殊含义</span><br><span class="line">&quot;&quot;      双引号 除了&quot;$&quot; 和 &quot;`&quot; &quot;\&quot; 其他字符都没有特殊意义</span><br><span class="line"></span><br><span class="line">``      反引号 是系统命令内容</span><br><span class="line">$()     用来引用系统命令</span><br><span class="line">#       shell中表示注释</span><br><span class="line">$       调用变量的值</span><br><span class="line">\       转义符</span><br></pre></td></tr></table></figure>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wangzhumo.com/2017/12/24/Linux-learn/" data-id="cjkaxwfn10050srsthrb4nej6" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/12/25/Android-Studio-Vitamio/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    Android Studio 导入 Vitamio及横竖屏切换
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2017/12/24/Facebook-Stetho/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Facebook/Stetho——Android开发调试神器</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">26</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Studio/">Android Studio</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Bug/">Bug</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programme/">Programme</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Source-Code/">Source Code</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/View/">View</a><span class="category-list-count">4</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 15.71px;">Android Studio</a> <a href="/tags/Android单元测试/" style="font-size: 10px;">Android单元测试</a> <a href="/tags/Binder/" style="font-size: 10px;">Binder</a> <a href="/tags/Bug/" style="font-size: 17.14px;">Bug</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Google/" style="font-size: 11.43px;">Google</a> <a href="/tags/Gradle/" style="font-size: 11.43px;">Gradle</a> <a href="/tags/Handler/" style="font-size: 10px;">Handler</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/Java/" style="font-size: 18.57px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Linux/" style="font-size: 12.86px;">Linux</a> <a href="/tags/Okhttp/" style="font-size: 11.43px;">Okhttp</a> <a href="/tags/Programme/" style="font-size: 12.86px;">Programme</a> <a href="/tags/RK3399/" style="font-size: 10px;">RK3399</a> <a href="/tags/Regular/" style="font-size: 10px;">Regular</a> <a href="/tags/Room/" style="font-size: 12.86px;">Room</a> <a href="/tags/Rxjava/" style="font-size: 12.86px;">Rxjava</a> <a href="/tags/Server/" style="font-size: 14.29px;">Server</a> <a href="/tags/Source-Code/" style="font-size: 11.43px;">Source Code</a> <a href="/tags/Video/" style="font-size: 10px;">Video</a> <a href="/tags/View/" style="font-size: 15.71px;">View</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/组件化/" style="font-size: 10px;">组件化</a> <a href="/tags/蓝牙/" style="font-size: 10px;">蓝牙</a> <a href="/tags/设计模式/" style="font-size: 12.86px;">设计模式</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/31/Arithmetic-quick-sort/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Programme/">Programme</a></p>
+                            <p class="item-title"><a href="/2018/07/31/Arithmetic-quick-sort/" class="title">算法复习笔记-快速排序</a></p>
+                            <p class="item-date"><time datetime="2018-07-31T10:04:11.000Z" itemprop="datePublished">2018-07-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/31/Arithmetic-merge-sort/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Programme/">Programme</a></p>
+                            <p class="item-title"><a href="/2018/07/31/Arithmetic-merge-sort/" class="title">算法复习笔记-归并排序</a></p>
+                            <p class="item-date"><time datetime="2018-07-31T08:24:50.000Z" itemprop="datePublished">2018-07-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/30/ConstraintLayout-Advance/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="ConstraintLayout使用指南-进阶使用" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a></p>
+                            <p class="item-title"><a href="/2018/07/30/ConstraintLayout-Advance/" class="title">ConstraintLayout使用指南-进阶使用</a></p>
+                            <p class="item-date"><time datetime="2018-07-30T06:54:45.000Z" itemprop="datePublished">2018-07-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/30/Screen-toutiao-resize/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="今日头条的屏幕适配方案" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a></p>
+                            <p class="item-title"><a href="/2018/07/30/Screen-toutiao-resize/" class="title">今日头条的屏幕适配方案</a></p>
+                            <p class="item-date"><time datetime="2018-07-30T06:16:26.000Z" itemprop="datePublished">2018-07-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/30/Android-MotionEvent-ViewGroup/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="Android事件分发机制-ViewGroup" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/View/">View</a></p>
+                            <p class="item-title"><a href="/2018/07/30/Android-MotionEvent-ViewGroup/" class="title">Android事件分发机制-ViewGroup</a></p>
+                            <p class="item-date"><time datetime="2018-07-30T04:20:02.000Z" itemprop="datePublished">2018-07-30</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">47</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android单元测试/">Android单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bug/">Bug</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Handler/">Handler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Okhttp/">Okhttp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Programme/">Programme</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RK3399/">RK3399</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regular/">Regular</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Room/">Room</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Server/">Server</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Source-Code/">Source Code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video/">Video</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="mailto:wangzhumoo@gmail.com">E-mail</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 wangzhumo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
