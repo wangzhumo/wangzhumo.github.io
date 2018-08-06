@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.wangzhumo.com/2018/07/30/ConstraintLayout-Advance/</loc>
+    
+    <lastmod>2018-08-06T06:04:34.369Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.wangzhumo.com/2018/07/31/Arithmetic-quick-sort/</loc>
     
     <lastmod>2018-08-01T01:25:20.678Z</lastmod>
@@ -40,13 +47,6 @@
     <loc>http://www.wangzhumo.com/2018/07/30/Screen-toutiao-resize/</loc>
     
     <lastmod>2018-07-30T08:24:02.361Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.wangzhumo.com/2018/07/30/ConstraintLayout-Advance/</loc>
-    
-    <lastmod>2018-07-30T08:22:31.022Z</lastmod>
     
   </url>
   
@@ -303,14 +303,14 @@
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/tags/index.html</loc>
+    <loc>http://www.wangzhumo.com/categories/index.html</loc>
     
     <lastmod>2018-07-11T08:10:48.780Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/categories/index.html</loc>
+    <loc>http://www.wangzhumo.com/tags/index.html</loc>
     
     <lastmod>2018-07-11T08:10:48.780Z</lastmod>
     

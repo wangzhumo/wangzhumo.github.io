@@ -444,8 +444,8 @@
         <category>Android</category>
       </categories>
       <tags>
-        <tag>Android</tag>
         <tag>Server</tag>
+        <tag>Android</tag>
         <tag>Jenkins</tag>
       </tags>
   </entry>
@@ -617,8 +617,8 @@
       </categories>
       <tags>
         <tag>Android</tag>
-        <tag>Rxjava</tag>
         <tag>Okhttp</tag>
+        <tag>Rxjava</tag>
       </tags>
   </entry>
   <entry>
@@ -630,8 +630,8 @@
       </categories>
       <tags>
         <tag>Android</tag>
-        <tag>Rxjava</tag>
         <tag>Okhttp</tag>
+        <tag>Rxjava</tag>
       </tags>
   </entry>
   <entry>
