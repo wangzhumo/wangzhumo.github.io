@@ -3,22 +3,18 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Android通讯机制分析-Handler | 王诛魔</title>
+    <title>归档: 2018/8 | 王诛魔</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="Handler在Android世界中的地位不言而喻.这篇笔记算是简单的记录一下我对于Handler的理解. 当时第一次对Handler产生兴趣是我在知乎上看到一个问题: Android中为什么主线程不会因为Looper.loop()里的死循环卡死">
-<meta name="keywords" content="Android,Handler">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Android通讯机制分析-Handler">
-<meta property="og:url" content="http://www.wangzhumo.com/2018/03/07/Handler-analyze/index.html">
+    <meta name="description" content="王诛魔">
+<meta property="og:type" content="website">
+<meta property="og:title" content="王诛魔">
+<meta property="og:url" content="http://www.wangzhumo.com/archives/2018/08/index.html">
 <meta property="og:site_name" content="王诛魔">
-<meta property="og:description" content="Handler在Android世界中的地位不言而喻.这篇笔记算是简单的记录一下我对于Handler的理解. 当时第一次对Handler产生兴趣是我在知乎上看到一个问题: Android中为什么主线程不会因为Looper.loop()里的死循环卡死">
+<meta property="og:description" content="王诛魔">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://www.wangzhumo.com/images/handler_class.png">
-<meta property="og:updated_time" content="2018-07-14T03:40:10.390Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android通讯机制分析-Handler">
-<meta name="twitter:description" content="Handler在Android世界中的地位不言而喻.这篇笔记算是简单的记录一下我对于Handler的理解. 当时第一次对Handler产生兴趣是我在知乎上看到一个问题: Android中为什么主线程不会因为Looper.loop()里的死循环卡死">
-<meta name="twitter:image" content="http://www.wangzhumo.com/images/handler_class.png">
+<meta name="twitter:title" content="王诛魔">
+<meta name="twitter:description" content="王诛魔">
     
 
     
@@ -191,208 +187,50 @@
 </aside>
 
             
-            <section id="main"><article id="post-Handler-analyze" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
+            <section id="main"><div class="timeline timeline-wrap">
+    
+            <div class="timeline-row timeline-row-major">
+                <span class="node"><i class="fas fa-calendar-alt"></i></span>
+                <h1 class="title">2018</h1>
+            </div>
         
-        
-            <header class="article-header">
+        <div class="timeline-row">
+            <span class="node"></span>
+            <div class="content">
                 
     
-        <h1 class="article-title" itemprop="name">
-            Android通讯机制分析-Handler
+        <h1 itemprop="name">
+            <a class="timeline-article-title" href="/2018/08/06/roman-to-integer/">LeetCode-罗马数字转整数</a>
         </h1>
     
 
-                
-                    <div class="article-meta">
-                        
+                <div class="article-meta">
+                    
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/03/07/Handler-analyze/">
-            <time datetime="2018-03-07T06:13:47.000Z" itemprop="datePublished">2018-03-07</time>
+        <a href="/2018/08/06/roman-to-integer/">
+            <time datetime="2018-08-06T08:36:46.000Z" itemprop="datePublished">2018-08-06</time>
         </a>
     </div>
 
 
-                        
+                    
     <div class="article-category">
     	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Source-Code/">Source Code</a>
+        <a class="article-category-link" href="/categories/Programme/">Programme</a>
     </div>
 
-                        
+                    
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/Handler/">Handler</a>
+        <a class="tag-link" href="/tags/Programme/">Programme</a>
     </div>
 
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>Handler在Android世界中的地位不言而喻.这篇笔记算是简单的记录一下我对于Handler的理解.</p>
-<p>当时第一次对Handler产生兴趣是我在知乎上看到一个问题:</p>
-<p><strong>Android中为什么主线程不会因为Looper.loop()里的死循环卡死</strong></p>
-<a id="more"></a>
-<h4 id="Handler消息机制的构成"><a href="#Handler消息机制的构成" class="headerlink" title="Handler消息机制的构成"></a>Handler消息机制的构成</h4><ul>
-<li><p>Handler</p>
-<p>主要就是发送各种消息<code>sendMessage</code>等,以及处理消息<code>handleMessage</code></p>
-</li>
-<li><p>Message</p>
-<p>即是传递消息的载体,有时候也会承载硬件发出的消息.</p>
-</li>
-<li><p>Looper</p>
-<p>这是一个循环<code>Looper.loop</code>,并负责将消息发送给目标.</p>
-</li>
-<li><p>MessageQueue</p>
-<p>消息队负责将消息发送都消息池以及在消息池中拿走消息</p>
-<p>​</p>
-</li>
-</ul>
-<p><img src="/images/handler_class.png" alt="handler"></p>
-<h4 id="Message类分析"><a href="#Message类分析" class="headerlink" title="Message类分析"></a>Message类分析</h4><p>首先我们要看到</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">private static Message sPool;</span><br><span class="line"></span><br><span class="line">// sometimes we store linked lists of these things</span><br><span class="line">/*package*/ Message next;</span><br></pre></td></tr></table></figure>
-<p><code>sPool</code>声明为static 也就是说所有的Message实例共享</p>
-<p><code>next</code>则为每一个实例都有的</p>
-<p>Message类中,一系列的obtain,如下:</p>
-<p>obtain(Handler h)</p>
-<p>obtain(Handler h, int what)</p>
-<p>obtain(Handler h, Runnable callback)</p>
-<p>…</p>
-<p>obtain()</p>
-<ul>
-<li><p>复用机制</p>
-<p>我们查看源码可知,他们最后都调用obtain()获得一个Message实体</p>
-</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">android.os.Message#obtain()</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * Return a new Message instance from the global pool. Allows us to</span></span><br><span class="line"><span class="comment">    * avoid allocating new objects in many cases.</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Message <span class="title">obtain</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="keyword">synchronized</span> (sPoolSync) &#123;</span><br><span class="line">           <span class="keyword">if</span> (sPool != <span class="keyword">null</span>) &#123;</span><br><span class="line">               Message m = sPool;</span><br><span class="line">               sPool = m.next;</span><br><span class="line">               m.next = <span class="keyword">null</span>;</span><br><span class="line">               m.flags = <span class="number">0</span>; <span class="comment">// clear in-use flag</span></span><br><span class="line">               sPoolSize--;</span><br><span class="line">               <span class="keyword">return</span> m;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">new</span> Message();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-<p>可以看到,当<code>sPool</code>为<code>null</code>时才会<code>new Message();</code></p>
-<p>如果不为<code>null</code>则把当前的<code>sPool</code>赋值给<code>Message m</code>  而后把<code>sPool</code>赋值为<code>m.next()</code>(也就是sPool没有赋值前它的下一个Message对象)</p>
-<p>查看源码分析可知,有一个Message的消息池,采用的是单链表头插法,next永远指向的是下一个可复用的实例地址</p>
-<p>所以,如果我们在代码中要使用Message实例,就尽量使用<code>obtain()</code>这一系列方法,而不要直接New</p>
-<ul>
-<li><p>加入消息池</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">android.os.Message#recycleUnchecked</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * Recycles a Message that may be in-use.</span></span><br><span class="line"><span class="comment">    * Used internally by the MessageQueue and Looper when disposing of queued Messages.</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">recycleUnchecked</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="comment">// Mark the message as in use while it remains in the recycled object pool.</span></span><br><span class="line">       <span class="comment">// Clear out all other details.</span></span><br><span class="line">       flags = FLAG_IN_USE;</span><br><span class="line">       what = <span class="number">0</span>;</span><br><span class="line">       arg1 = <span class="number">0</span>;</span><br><span class="line">       arg2 = <span class="number">0</span>;</span><br><span class="line">       obj = <span class="keyword">null</span>;</span><br><span class="line">       replyTo = <span class="keyword">null</span>;</span><br><span class="line">       sendingUid = -<span class="number">1</span>;</span><br><span class="line">       when = <span class="number">0</span>;</span><br><span class="line">       target = <span class="keyword">null</span>;</span><br><span class="line">       callback = <span class="keyword">null</span>;</span><br><span class="line">       data = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">synchronized</span> (sPoolSync) &#123;</span><br><span class="line">           <span class="keyword">if</span> (sPoolSize &lt; MAX_POOL_SIZE) &#123;</span><br><span class="line">               next = sPool;</span><br><span class="line">               sPool = <span class="keyword">this</span>;</span><br><span class="line">               sPoolSize++;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-<p>这里其实就是把无用的Message实例,加入消息池的地方.</p>
-<p><code>sPoolSize &lt; MAX_POOL_SIZE</code>只要当前消息池没有到极限,就<code>next = sPool;</code>且<code>sPool = this;</code></p>
-<p>可以简单理解为把之前的<code>sPool</code>可复用对象向后移动一位,把当前这个要回收的Message置为第一个可复用对象</p>
-</li>
-</ul>
-<p><strong>所以,Message主要就是装载数据,并且实现了Message的复用机制</strong></p>
-<h4 id="MessageQueue类分析"><a href="#MessageQueue类分析" class="headerlink" title="MessageQueue类分析"></a>MessageQueue类分析</h4>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.wangzhumo.com/2018/03/07/Handler-analyze/" data-id="cjkkil5zv004hw5stskov1dwt" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-        
-<nav id="article-nav">
-    
-        <a href="/2018/03/10/JVM-load-class/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    JVM虚拟机的类加载机制
-                
+                </div>
             </div>
-        </a>
+        </div>
     
-    
-        <a href="/2018/03/07/RelativeLayout-Button-over/" id="article-nav-older" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">RelativeLayout中Button覆盖其他View</div>
-        </a>
-    
-</nav>
-
-
-    
-</article>
-
-
-    
-    
-
+</div>
 </section>
             
                 

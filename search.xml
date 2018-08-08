@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[LeetCode-罗马数字转整数]]></title>
+    <url>%2F2018%2F08%2F06%2Froman-to-integer%2F</url>
+    <content type="text"><![CDATA[给定一个罗马数字，将其转换成整数。输入确保在 1 到 3999 的范围内。 示例 1: 12输入: &quot;III&quot;输出: 3 前言这一题其实不在于算法有多难,而是在于你对于这个罗马数字与整形之间的关系要搞清楚 基本字符 I V X L C D M 相应的阿拉伯数字表示为 1 5 10 50 100 500 1000 上面是他们之间的对应关系,但是这还不够(以下来自百度百科) 相同的数字连写，所表示的数等于这些数字相加得到的数,如:Ⅲ = 3 小的数字在大的数字的右边，所表示的数等于这些数字相加得到的数, 如:Ⅷ = 8; Ⅻ = 12 小的数字,(限于Ⅰ、X 和C)在大的数字的左边，所表示的数等于大数减小数得到的数,如:Ⅳ= 4; Ⅸ= 9 正常使用时,连写的数字重复不得超过三次 在一个数的上面画一条横线,表示这个数扩大1000倍 思路 需要一个键值对来保存罗马数字与整形的关系 遍历,并比较前一个罗马字符与当前罗马字符的大小 当前罗马字符更大,则+= 当前小,则-= 输出结果 代码实现12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849/** * If you have any questions, you can contact by email &#123;wangzhumoo@gmail.com&#125; * * @author 王诛魔 2018/8/7 下午5:41 * 给定一个罗马数字，将其转换成整数。输入确保在 1 到 3999 的范围内。 * * 示例 1: * * 输入: "III" * 输出: 3 * */public class RomanToIntClass &#123; private static HashMap&lt;Character, Integer&gt; contrastMap; static &#123; contrastMap = new HashMap&lt;&gt;(); contrastMap.put('I', 1); contrastMap.put('V', 5); contrastMap.put('X', 10); contrastMap.put('L', 50); contrastMap.put('C', 100); contrastMap.put('D', 500); contrastMap.put('M', 1000); &#125; /** * 罗马转整形 * @param romanStr 罗马字符串 * @return 整数 */ public static int romanToInt(String romanStr)&#123; char[] romanCharArray = romanStr.toCharArray(); int result = 0; for (int i = 0; i &lt; romanCharArray.length; i++) &#123; //遍历这个罗马数组 if (i == romanCharArray.length -1 || contrastMap.get(romanCharArray[i+1]) &lt;= contrastMap.get(romanCharArray[i]))&#123; //如果满足,说明当前的这个罗马字符是大于后一个罗马数字的,则应该加上当前的罗马字符 result += contrastMap.get(romanCharArray[i]); &#125;else&#123; //则是前面小,后面大,应该减去当前的这个罗马字符 result -= contrastMap.get(romanCharArray[i]); &#125; &#125; return result; &#125;&#125; 结果12345输入: MCMXCIV输出: 1994Process finished with exit code 0]]></content>
+      <categories>
+        <category>Programme</category>
+      </categories>
+      <tags>
+        <tag>Programme</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[算法复习笔记-快速排序]]></title>
     <url>%2F2018%2F07%2F31%2FArithmetic-quick-sort%2F</url>
     <content type="text"><![CDATA[前言通过一趟排序将要排序的数据分割成独立的两部分,其中一部分的所有数据都比另外一部分的所有数据都要小,然后再按此方法对这两部分数据分别进行快速排序,整个排序过程可以递归进行,以此达到整个数据变成有序序列。 快速排序由 C. A. R. Hoare（东尼霍尔，Charles Antony Richard Hoare）在1960年提出 .而后经过很多人,很长时间的优化,才得到现在的版本.快速排序可以说是一个至关重要的算法了,现在的很多语言基础库中的排序,就是使用的快速排序算法来完成的. 思考这里我打算使用前后指针的方法来完成快速排序.定义两个指针,一个curr指向数组的第一个元素,而pre指向的是curr-1的位置. 定义curr以及pre两个指针 当array[curr] &lt; key 则curr与pre指针同时向后移动 当array[curr] &gt; key 则curr向后移动一位,pre保持不动(当前这个位置的值是小于key的) 当array[curr] &lt; key 则需要交换array[curr]以及array[pre] 可以这么说,每次找到array[curr] 这个位置的元素比key要小,说明它不应该在当前的这个位置,需要和pre的位置元素交换,应为pre一直是指向了最后一个小于key的元素位置 看上图所示,序号5的这一排,我用框分出了三个部分. 绿色区域[0,pre] 都是小于key的 红色区域[pre+1,curr)都是大于key的 而橙色的区域[curr,right]都是没有经过比较的区域 那么很容易就可以看出,其实我们就是想让这个数组,以pre为分界点,左面的都小于key,而右面的都大于 那么,只要发现array[curr] &lt; key 直接和array[pre+1]交换位置,还是满足上面的要求的. 代码实现12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273/** * If you have any questions, you can contact by email &#123;wangzhumoo@gmail.com&#125; * @author 王诛魔 2018/7/31 下午5:54 * 快速排序[left,right) */public class QuickClass&#123; //为了给分割数组的方法使用,用于选出一个key private static Random mRandom = new Random(System.currentTimeMillis()); /** * 快速排序入口-前后指针 * * @param array 要排序的数组 * @param left 左边界 * @param right 右边界 */ public static void quickSort(int[] array, int left, int right) &#123; //如果left &gt;= right了,说明这个数组已经不能再继续分了 if (left &gt;= right) return; //此处找到这个p,分割点,需要经过一轮的快速排序 int p = partition(array, left, right); //递归调用 quickSort(array, left, p); quickSort(array, p + 1, right); &#125; /** * 分割数组 * 排序array[left , right] 的顺序 * 使得返回一个p ,在 array[left,p] 都小于k 在array[p+1 , right)都大于k * * @param array 要排序的数组 * @param left 左边边界 * @param right 右边边界 * @return p 分割了两个数组的位置 */ private static int partition(int[] array, int left, int right) &#123; //随机替换一个元素到key的位置,这是为了避免如果排列一个近乎有序的数组时, //造成一侧的子数组特多,而另一侧则很少,使得效率降低 swap(array,left,mRandom.nextInt(right - left + 1) + left); //拿出key int key = array[left]; //定义一个pre等于curr-1 //为什么直接赋值为left那?因为left是我key的位置, //可以直接不用比较,curr = pre+1即是第一个要比较的元素 int pre = left; for(int curr = pre+1;curr &lt;= right;curr++)&#123; //此时判断 array[curr] 与 key的关系即可 if(array[curr] &lt; key)&#123; swap(array,curr, ++pre); &#125; &#125; //完成后需要把key元素移动到pre的位置去 swap(array,left,pre); return pre; &#125; /** * 交换位置 * * @param arr 数组 * @param a * @param b */ private static void swap(int[] arr, int a, int b) &#123; int temp = arr[a]; arr[a] = arr[b]; arr[b] = temp; &#125; &#125; 总结这还只是快速排序的最简单方法,还有更为复杂一些的三路快排等,后面继续学习 测试打印: 11 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21]]></content>
@@ -444,8 +455,8 @@
         <category>Android</category>
       </categories>
       <tags>
-        <tag>Server</tag>
         <tag>Android</tag>
+        <tag>Server</tag>
         <tag>Jenkins</tag>
       </tags>
   </entry>

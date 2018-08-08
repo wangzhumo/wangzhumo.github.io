@@ -3,23 +3,20 @@
 <head>
     <meta charset="utf-8">
     
-    <title>JVM虚拟机中的类加载器 | 王诛魔</title>
+    <title>LeetCode-罗马数字转整数 | 王诛魔</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="前言前一篇梳理了一下类加载机制的大概流程,其中就涉及到一个很重要的东西类加载器,在加载阶段”通过一个类的全限定名获取描述此类的二进制字节流”  我们知道二级制字节流不只是我们编写的代码  可以从一些jar,war包等压缩文件中获取 已经凉了的Applet,也就是可以从网络中获取 运行时生成,如动态代理,retrofit中使用的技术之一 其他…   那么下面我要知道的是:  类加载器的含义和作用 类">
-<meta name="keywords" content="Java">
+    <meta name="description" content="给定一个罗马数字，将其转换成整数。输入确保在 1 到 3999 的范围内。 示例 1: 12输入: &amp;quot;III&amp;quot;输出: 3 前言这一题其实不在于算法有多难,而是在于你对于这个罗马数字与整形之间的关系要搞清楚    基本字符 I V X L C D M     相应的阿拉伯数字表示为 1 5 10 50 100 500 1000    上面是他们之间的对应关系,但是这还不够(以下来">
+<meta name="keywords" content="Programme">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JVM虚拟机中的类加载器">
-<meta property="og:url" content="http://www.wangzhumo.com/2018/03/11/JVM-class-loader/index.html">
+<meta property="og:title" content="LeetCode-罗马数字转整数">
+<meta property="og:url" content="http://www.wangzhumo.com/2018/08/06/roman-to-integer/index.html">
 <meta property="og:site_name" content="王诛魔">
-<meta property="og:description" content="前言前一篇梳理了一下类加载机制的大概流程,其中就涉及到一个很重要的东西类加载器,在加载阶段”通过一个类的全限定名获取描述此类的二进制字节流”  我们知道二级制字节流不只是我们编写的代码  可以从一些jar,war包等压缩文件中获取 已经凉了的Applet,也就是可以从网络中获取 运行时生成,如动态代理,retrofit中使用的技术之一 其他…   那么下面我要知道的是:  类加载器的含义和作用 类">
+<meta property="og:description" content="给定一个罗马数字，将其转换成整数。输入确保在 1 到 3999 的范围内。 示例 1: 12输入: &amp;quot;III&amp;quot;输出: 3 前言这一题其实不在于算法有多难,而是在于你对于这个罗马数字与整形之间的关系要搞清楚    基本字符 I V X L C D M     相应的阿拉伯数字表示为 1 5 10 50 100 500 1000    上面是他们之间的对应关系,但是这还不够(以下来">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://www.wangzhumo.com/images/class_loader.png">
-<meta property="og:image" content="http://www.wangzhumo.com/images/class_process.png">
-<meta property="og:updated_time" content="2018-07-19T09:16:38.712Z">
+<meta property="og:updated_time" content="2018-08-08T02:28:10.665Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JVM虚拟机中的类加载器">
-<meta name="twitter:description" content="前言前一篇梳理了一下类加载机制的大概流程,其中就涉及到一个很重要的东西类加载器,在加载阶段”通过一个类的全限定名获取描述此类的二进制字节流”  我们知道二级制字节流不只是我们编写的代码  可以从一些jar,war包等压缩文件中获取 已经凉了的Applet,也就是可以从网络中获取 运行时生成,如动态代理,retrofit中使用的技术之一 其他…   那么下面我要知道的是:  类加载器的含义和作用 类">
-<meta name="twitter:image" content="http://www.wangzhumo.com/images/class_loader.png">
+<meta name="twitter:title" content="LeetCode-罗马数字转整数">
+<meta name="twitter:description" content="给定一个罗马数字，将其转换成整数。输入确保在 1 到 3999 的范围内。 示例 1: 12输入: &amp;quot;III&amp;quot;输出: 3 前言这一题其实不在于算法有多难,而是在于你对于这个罗马数字与整形之间的关系要搞清楚    基本字符 I V X L C D M     相应的阿拉伯数字表示为 1 5 10 50 100 500 1000    上面是他们之间的对应关系,但是这还不够(以下来">
     
 
     
@@ -192,7 +189,7 @@
 </aside>
 
             
-            <section id="main"><article id="post-JVM-class-loader" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-roman-to-integer" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -200,7 +197,7 @@
                 
     
         <h1 class="article-title" itemprop="name">
-            JVM虚拟机中的类加载器
+            LeetCode-罗马数字转整数
         </h1>
     
 
@@ -209,8 +206,8 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/03/11/JVM-class-loader/">
-            <time datetime="2018-03-11T02:35:47.000Z" itemprop="datePublished">2018-03-11</time>
+        <a href="/2018/08/06/roman-to-integer/">
+            <time datetime="2018-08-06T08:36:46.000Z" itemprop="datePublished">2018-08-06</time>
         </a>
     </div>
 
@@ -218,13 +215,13 @@
                         
     <div class="article-category">
     	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Java/">Java</a>
+        <a class="article-category-link" href="/categories/Programme/">Programme</a>
     </div>
 
                         
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Java/">Java</a>
+        <a class="tag-link" href="/tags/Programme/">Programme</a>
     </div>
 
                     </div>
@@ -235,95 +232,56 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>前一篇梳理了一下类加载机制的大概流程,其中就涉及到一个很重要的东西<strong>类加载器</strong>,在加载阶段”通过一个类的全限定名获取描述此类的二进制字节流”</p>
-<blockquote>
-<p>我们知道二级制字节流不只是我们编写的代码</p>
-<ol>
-<li>可以从一些jar,war包等压缩文件中获取</li>
-<li>已经凉了的Applet,也就是可以从网络中获取</li>
-<li>运行时生成,如动态代理,retrofit中使用的技术之一</li>
-<li>其他…</li>
-</ol>
-</blockquote>
-<p>那么下面我要知道的是:</p>
-<ol>
-<li>类加载器的含义和作用</li>
-<li>类加载器的类型</li>
-<li>类加载器的应用</li>
-</ol>
+            <p>给定一个罗马数字，将其转换成整数。输入确保在 1 到 3999 的范围内。</p>
+<p><strong>示例 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: &quot;III&quot;</span><br><span class="line">输出: 3</span><br></pre></td></tr></table></figure>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这一题其实不在于算法有多难,而是在于你对于这个罗马数字与整形之间的关系要搞清楚</p>
+<table>
+<thead>
+<tr>
+<th>基本字符</th>
+<th>I</th>
+<th>V</th>
+<th>X</th>
+<th>L</th>
+<th>C</th>
+<th>D</th>
+<th>M</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>相应的阿拉伯数字表示为</td>
+<td>1</td>
+<td>5</td>
+<td>10</td>
+<td>50</td>
+<td>100</td>
+<td>500</td>
+<td>1000</td>
+</tr>
+</tbody>
+</table>
+<p>上面是他们之间的对应关系,但是这还不够(以下来自百度百科)</p>
 <a id="more"></a>
-<h3 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h3><p>类加载器最初是为了Java Applet的需求而研发的,为了方便应用程序自己决定如何去获取所需要的类,而把这个操作放到了JAVA虚拟机外部去实现.</p>
-<p>实现这个动作的代码模块被称为<code>类加载器</code></p>
-<p>有一点需要注意的是,在JVM中,任意一个类都需要由类加载器和它本省共同确立其在JVM中的唯一性</p>
-<p>每一个类加载器都拥有一个独立的类命名空间.</p>
-<p>变现为:</p>
-<blockquote>
-<p> 如果同一个类,被不同的两个类加载器加载,那么它们就必然不相等.</p>
-</blockquote>
-<h3 id="类加载器的类型"><a href="#类加载器的类型" class="headerlink" title="类加载器的类型"></a>类加载器的类型</h3><ul>
-<li>启动类加载器 Bootstrap ClassLoader ,是由C++实现的,作为虚拟机的一部分</li>
-<li>其他类加载器,这些加载器都是由JAVA语言实现的,独立于JVM之外并且都是java.lang.ClassLoader的子类</li>
+<ol>
+<li>相同的数字连写，所表示的数等于这些数字相加得到的数,如:Ⅲ = 3</li>
+<li>小的数字在大的数字的右边，所表示的数等于这些数字相加得到的数, 如:Ⅷ = 8; Ⅻ = 12</li>
+<li>小的数字,(限于Ⅰ、X 和C)在大的数字的左边，所表示的数等于大数减小数得到的数,如:Ⅳ= 4; Ⅸ= 9</li>
+<li>正常使用时,连写的数字重复不得超过三次</li>
+<li>在一个数的上面画一条横线,表示这个数扩大1000倍</li>
+</ol>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ul>
+<li>需要一个键值对来保存罗马数字与整形的关系</li>
+<li>遍历,并比较前一个罗马字符与当前罗马字符的大小<ul>
+<li>当前罗马字符更大,则+=</li>
+<li>当前小,则-=</li>
 </ul>
-<p>上面的分类是对于JVM而言的分类,在我们编码的过程中,对类加载器分为;</p>
-<ol>
-<li><p>启动类加载器 Bootstrap ClassLoader,</p>
-<p>负责将<java_home>/lib 目录中的文件加载到虚拟机内存中</java_home></p>
 </li>
-<li><p>扩展类加载器 Extension ClassLoader</p>
-<p>负责加载<java_home>/lib/ext 目录中的文件,或者被 java.ext.dirs系统变量指定的路径中文件</java_home></p>
-<p>我们可以直接使用扩展类加载器</p>
-</li>
-<li><p>应用程序类加载器 Application ClassLoader </p>
-<p>ClassLoader.getSystemClassLoader()方法可以返回,一般称为系统类加载器</p>
-<p>负责加载用户路径中的类库,如果程序中没有使用自定义的类加载器,则默认是使用该类加载器的</p>
-</li>
-</ol>
-<h4 id="双亲委派模型"><a href="#双亲委派模型" class="headerlink" title="双亲委派模型"></a>双亲委派模型</h4><p>#####模型结构</p>
-<p><img src="/images/class_loader.png" alt="classLoader"></p>
-<p>//我们看看代码中是怎么组织的</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> Class&lt;?&gt; loadClass(String name, <span class="keyword">boolean</span> resolve)</span><br><span class="line">        <span class="keyword">throws</span> ClassNotFoundException</span><br><span class="line">    &#123;</span><br><span class="line">            <span class="comment">// First, check if the class has already been loaded</span></span><br><span class="line">            Class&lt;?&gt; c = findLoadedClass(name);</span><br><span class="line">            <span class="keyword">if</span> (c == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="keyword">if</span> (parent != <span class="keyword">null</span>) &#123;</span><br><span class="line">                        c = parent.loadClass(name, <span class="keyword">false</span>);</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        c = findBootstrapClassOrNull(name);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">                    <span class="comment">// ClassNotFoundException thrown if class not found</span></span><br><span class="line">                    <span class="comment">// from the non-null parent class loader</span></span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (c == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="comment">// If still not found, then invoke findClass in order</span></span><br><span class="line">                    <span class="comment">// to find the class.</span></span><br><span class="line">                    c = findClass(name);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> c;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>上面的代码,总的来说有</p>
-<ol>
-<li><p><code>findLoadedClass(name)</code></p>
-<p>查找是否已经加载过这个class了,如果不为空就直接返回了这个class</p>
-</li>
-<li><p>在看下一步</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">     <span class="keyword">if</span> (parent != <span class="keyword">null</span>) &#123;</span><br><span class="line">         c = parent.loadClass(name, <span class="keyword">false</span>);</span><br><span class="line">     &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">         c = findBootstrapClassOrNull(name);</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果父加载器 <code>parent</code>不为空,则加载工作交给父加载器去执行,</p>
-<p>而这个父加载器也会有它的父加载器</p>
-</li>
-<li><p>最后如果这个class还没有加载</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (c == <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="comment">// If still not found, then invoke findClass in order</span></span><br><span class="line">    <span class="comment">// to find the class.</span></span><br><span class="line">    c = findClass(name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>才轮到自己去加载</p>
-</li>
-</ol>
-<p><img src="/images/class_process.png" alt="加载过程"></p>
-<blockquote>
-<p> 要注意的是,这些类加载器的父子关系,不是由继承来实现的,而是使用组合</p>
-</blockquote>
-<h5 id="模型加载流程"><a href="#模型加载流程" class="headerlink" title="模型加载流程"></a>模型加载流程</h5><p>类加载器收到了一个类加载的请求,但是不会立马去自己加载,而是委派给父加载器去尝试加载,然后层层委派直到顶层的启动类加载器中.如果没有成功加载,子加载器才会自己去加载.</p>
-<p>这样做是有明显的好处的:</p>
-<ol>
-<li>这些类加载器都具有了优先级关系</li>
-<li>保证了某些类的一致性,如Object,通过委派,最终都是由最顶层的启动类加载器完成加载的.</li>
-</ol>
-<h3 id="类加载器的应用"><a href="#类加载器的应用" class="headerlink" title="类加载器的应用"></a>类加载器的应用</h3><p>先来看一个例子,加深一下理解</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//一个类,需要放在项目目录外,避免被系统类加载器加载</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestClassLoader</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">createBy</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"I'm Batman , Come from "</span> + 				 getClass().getClassLoader().getClass());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>自定义的类加载器</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.FileInputStream;</span><br><span class="line"></span><br><span class="line"><span class="comment">//自定义的类加载器</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MarvelStudios</span> <span class="keyword">extends</span> <span class="title">ClassLoader</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//存放的是TestClassLoader.class的位置,记得先编译成class再使用</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> String CLASS_FILE_PATH =</span><br><span class="line">            <span class="string">"/Users/phyooos/workspace/java_workspace/kotlind/soucre/TestClassLoader.class"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">byte</span>[] loadByte(String name) <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        FileInputStream fis = <span class="keyword">new</span> FileInputStream(CLASS_FILE_PATH);</span><br><span class="line">        <span class="keyword">int</span> len = fis.available();</span><br><span class="line">        <span class="keyword">byte</span>[] data = <span class="keyword">new</span> <span class="keyword">byte</span>[len];</span><br><span class="line">        fis.read(data);</span><br><span class="line">        fis.close();</span><br><span class="line">        <span class="keyword">return</span> data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> Class&lt;?&gt; findClass(String name) <span class="keyword">throws</span> ClassNotFoundException &#123;</span><br><span class="line">        <span class="comment">//这里获取文件</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">byte</span>[] data = loadByte(name);</span><br><span class="line">            <span class="keyword">return</span> defineClass(name, data, <span class="number">0</span>, data.length);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ClassNotFoundException();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>测试一下</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainClass</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        MarvelStudios classLoader = <span class="keyword">new</span> MarvelStudios();</span><br><span class="line">        Class clazz = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            clazz = classLoader.loadClass(<span class="string">"TestClassLoader"</span>);</span><br><span class="line">            Object obj = clazz.newInstance();</span><br><span class="line">            Method createMethod = clazz.getDeclaredMethod(<span class="string">"createBy"</span>,<span class="keyword">null</span>);</span><br><span class="line">            createMethod.invoke(obj, <span class="keyword">null</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行结果为</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">I<span class="string">'m Batman , Come from class MarvelStudios</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Process finished with exit code 0</span></span><br></pre></td></tr></table></figure>
-<p>这里显而易见,使用了自定义的类加载器,从硬盘上加载了一个class文件,如果你想加载一个java文件,也只需要调用</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//defineClass方法可以把二进制流字节组成的文件转换为一个java.lang.Class</span></span><br><span class="line">Class&lt;?&gt; c = <span class="keyword">this</span>.defineClass(name, bytes, <span class="number">0</span>, bytes.length);</span><br></pre></td></tr></table></figure>
-<p>这只是一个简单的自定义类加载器使用,可以从硬盘上加载java代码.</p>
-<p>其他如:</p>
-<ul>
-<li>代码加密</li>
-<li>热部署</li>
-<li>热修复</li>
+<li>输出结果</li>
 </ul>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * If you have any questions, you can contact by email &#123;wangzhumoo@gmail.com&#125;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> 王诛魔 2018/8/7 下午5:41</span></span><br><span class="line"><span class="comment"> * 给定一个罗马数字，将其转换成整数。输入确保在 1 到 3999 的范围内。</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 示例 1:</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 输入: "III"</span></span><br><span class="line"><span class="comment"> * 输出: 3</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RomanToIntClass</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> HashMap&lt;Character, Integer&gt; contrastMap;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        contrastMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        contrastMap.put(<span class="string">'I'</span>, <span class="number">1</span>);</span><br><span class="line">        contrastMap.put(<span class="string">'V'</span>, <span class="number">5</span>);</span><br><span class="line">        contrastMap.put(<span class="string">'X'</span>, <span class="number">10</span>);</span><br><span class="line">        contrastMap.put(<span class="string">'L'</span>, <span class="number">50</span>);</span><br><span class="line">        contrastMap.put(<span class="string">'C'</span>, <span class="number">100</span>);</span><br><span class="line">        contrastMap.put(<span class="string">'D'</span>, <span class="number">500</span>);</span><br><span class="line">        contrastMap.put(<span class="string">'M'</span>, <span class="number">1000</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 罗马转整形</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> romanStr 罗马字符串</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 整数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">romanToInt</span><span class="params">(String romanStr)</span></span>&#123;</span><br><span class="line">        <span class="keyword">char</span>[] romanCharArray = romanStr.toCharArray();</span><br><span class="line">        <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; romanCharArray.length; i++) &#123;</span><br><span class="line">            <span class="comment">//遍历这个罗马数组</span></span><br><span class="line">            <span class="keyword">if</span> (i == romanCharArray.length -<span class="number">1</span> || contrastMap.get(romanCharArray[i+<span class="number">1</span>]) &lt;= contrastMap.get(romanCharArray[i]))&#123;</span><br><span class="line">                <span class="comment">//如果满足,说明当前的这个罗马字符是大于后一个罗马数字的,则应该加上当前的罗马字符</span></span><br><span class="line">                result += contrastMap.get(romanCharArray[i]);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="comment">//则是前面小,后面大,应该减去当前的这个罗马字符</span></span><br><span class="line">                result -= contrastMap.get(romanCharArray[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入:  MCMXCIV</span><br><span class="line"></span><br><span class="line">输出: 1994</span><br><span class="line"></span><br><span class="line">Process finished with exit code 0</span><br></pre></td></tr></table></figure>
 
         
         </div>
@@ -334,7 +292,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/03/11/JVM-class-loader/" data-id="cjkkil5zy004pw5stbzusfzdi" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/08/06/roman-to-integer/" data-id="cjkkil60p006mw5st0n78cu3b" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -409,19 +367,10 @@
         
 <nav id="article-nav">
     
-        <a href="/2018/05/09/Android-App-Launch/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    Android的启动流程
-                
-            </div>
-        </a>
     
-    
-        <a href="/2018/03/10/JVM-load-class/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/07/31/Arithmetic-quick-sort/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">JVM虚拟机的类加载机制</div>
+            <div class="article-nav-title">算法复习笔记-快速排序</div>
         </a>
     
 </nav>
