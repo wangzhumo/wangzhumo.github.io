@@ -159,7 +159,7 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                74
+                75
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -188,6 +188,162 @@
 
             
             <section id="main">
+    <article id="post-Android-App-Launch" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/05/09/Android-App-Launch/">Android的启动流程</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/05/09/Android-App-Launch/">
+            <time datetime="2018-05-09T07:00:12.000Z" itemprop="datePublished">2018-05-09</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Source-Code/">Source Code</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/Source-Code/">Source Code</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><h5 id="系统结构"><a href="#系统结构" class="headerlink" title="系统结构"></a>系统结构</h5><ul>
+<li><p>应用层</p>
+<p>即为开发出来的一些app,当然还包括了一些系统App</p>
+</li>
+<li><p>应用框架层(Java API Framework)</p>
+<p>这一层由java编写,提供给我们平时开发使用的API,主要的一些组件:</p>
+<ul>
+<li><p>Manager</p>
+<p>Activity Manager , Window Manager , Package Manager ,Location Manager </p>
+<p>Notification Manager,Resource Manager,Telephony Manager</p>
+</li>
+<li><p>Content Providers</p>
+</li>
+<li><p>View System</p>
+</li>
+</ul>
+</li>
+<li><p>系统运行库层</p>
+<p>C/C++程序库和Android运行时库</p>
+</li>
+<li><p>硬件抽象层(<strong>HAL</strong>)</p>
+</li>
+<li><p>Linux内核层</p>
+</li>
+</ul>
+<p><img src="/images/android_boot_process.png" alt="boot"></p></p>
+            <p class="article-more-link">
+                <a href="/2018/05/09/Android-App-Launch/#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wangzhumo.com/2018/05/09/Android-App-Launch/" data-id="cjkmcypjh0009h0stol5t4mzc" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-JVM-class-loader" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -258,7 +414,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/03/11/JVM-class-loader/" data-id="cjkm5zwdf004mp9stu1yrj96d" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/03/11/JVM-class-loader/" data-id="cjkmcypoa004gh0stoy40ru1f" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -393,7 +549,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/03/10/JVM-load-class/" data-id="cjkm5zwdh004up9sthk6k3f9v" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/03/10/JVM-load-class/" data-id="cjkmcypod004oh0sta7s97dki" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -526,7 +682,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/03/07/Handler-analyze/" data-id="cjkm5zwde004ip9stfm8907jx" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/03/07/Handler-analyze/" data-id="cjkmcypo9004dh0sthgc3kk36" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -675,7 +831,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/03/07/RelativeLayout-Button-over/" data-id="cjkm5zwdu005yp9stmlojn7px" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/03/07/RelativeLayout-Button-over/" data-id="cjkmcypor005rh0stqdytaanf" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -809,7 +965,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/03/05/ConfigChanges/" data-id="cjkm5zwcp0031p9stckjzcbzr" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/03/05/ConfigChanges/" data-id="cjkmcypn2002zh0sttodwflus" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -942,7 +1098,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/03/05/Activity-Fragment-life/" data-id="cjkm5zwag0007p9stua082pbi" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/03/05/Activity-Fragment-life/" data-id="cjkmcypj80007h0stcfzo86j7" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1089,7 +1245,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/02/28/Flutter-Install-MAC/" data-id="cjkm5zwd5003zp9stop0zybgp" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/02/28/Flutter-Install-MAC/" data-id="cjkmcypo10041h0stng57jmm3" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1223,7 +1379,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/02/26/Android-unit-test/" data-id="cjkm5zwby001wp9stlccog6uu" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/02/26/Android-unit-test/" data-id="cjkmcyply001uh0st407n4igc" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1358,143 +1514,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/02/26/Android-Studio-tools-sample/" data-id="cjkm5zwbn001cp9sto42ekyec" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Android-Timber-Logger" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/02/07/Android-Timber-Logger/">Android项目中使用Timber + Logger日志输出</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/02/07/Android-Timber-Logger/">
-            <time datetime="2018-02-07T09:48:58.000Z" itemprop="datePublished">2018-02-07</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android/">Android</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p>不啰嗦了,直接开始.</p>
-<h4 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h4><blockquote>
-<p>Logger   <a href="https://github.com/orhanobut/logger" target="_blank" rel="noopener">orhanobut/Logger</a></p>
-<p>Timber  <a href="https://github.com/JakeWharton/timber" target="_blank" rel="noopener">JakeWharton/timber</a></p>
-</blockquote>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//logger</span></span><br><span class="line">implementation <span class="string">'com.orhanobut:logger:2.1.1'</span></span><br><span class="line"><span class="comment">//timber</span></span><br><span class="line">implementation <span class="string">'com.jakewharton.timber:timber:4.6.0'</span></span><br></pre></td></tr></table></figure></p>
-            <p class="article-more-link">
-                <a href="/2018/02/07/Android-Timber-Logger/#more">查看更多</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.wangzhumo.com/2018/02/07/Android-Timber-Logger/" data-id="cjkm5zwbp001fp9stlkvv05oi" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/02/26/Android-Studio-tools-sample/" data-id="cjkmcypkt0016h0stu9gsr5sw" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1582,7 +1602,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">26</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Studio/">Android Studio</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Bug/">Bug</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programme/">Programme</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Source-Code/">Source Code</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/View/">View</a><span class="category-list-count">4</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">27</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Studio/">Android Studio</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Bug/">Bug</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programme/">Programme</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Source-Code/">Source Code</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/View/">View</a><span class="category-list-count">4</span></li></ul>
         </div>
     </div>
 
@@ -1601,6 +1621,25 @@
         <h3 class="widget-title">最新文章</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/09/glide-4-note/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a></p>
+                            <p class="item-title"><a href="/2018/08/09/glide-4-note/" class="title">Glide4.X版本的基本使用</a></p>
+                            <p class="item-date"><time datetime="2018-08-09T06:32:53.000Z" itemprop="datePublished">2018-08-09</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -1678,25 +1717,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/07/30/ConstraintLayout-Advance/" class="thumbnail">
-    
-    
-        <span style="background-image:url(http://www.wangzhumo.com/images/android.jpg)" alt="ConstraintLayout使用指南-进阶使用" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a></p>
-                            <p class="item-title"><a href="/2018/07/30/ConstraintLayout-Advance/" class="title">ConstraintLayout使用指南-进阶使用</a></p>
-                            <p class="item-date"><time datetime="2018-07-30T06:54:45.000Z" itemprop="datePublished">2018-07-30</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -1706,7 +1726,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -1715,7 +1735,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">47</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android单元测试/">Android单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bug/">Bug</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Handler/">Handler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Okhttp/">Okhttp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Programme/">Programme</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RK3399/">RK3399</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regular/">Regular</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Room/">Room</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Server/">Server</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Source-Code/">Source Code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video/">Video</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">3</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">48</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android单元测试/">Android单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bug/">Bug</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Handler/">Handler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Okhttp/">Okhttp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Programme/">Programme</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RK3399/">RK3399</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regular/">Regular</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Room/">Room</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Server/">Server</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Source-Code/">Source Code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video/">Video</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">3</span></li></ul>
         </div>
     </div>
 
