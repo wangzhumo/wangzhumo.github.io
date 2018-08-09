@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.wangzhumo.com/2018/08/09/annotation-simple-note/</loc>
+    
+    <lastmod>2018-08-09T06:11:14.867Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.wangzhumo.com/2018/08/06/roman-to-integer/</loc>
     
     <lastmod>2018-08-08T02:28:10.665Z</lastmod>
@@ -310,14 +317,14 @@
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/categories/index.html</loc>
+    <loc>http://www.wangzhumo.com/tags/index.html</loc>
     
     <lastmod>2018-07-11T08:10:48.780Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/tags/index.html</loc>
+    <loc>http://www.wangzhumo.com/categories/index.html</loc>
     
     <lastmod>2018-07-11T08:10:48.780Z</lastmod>
     

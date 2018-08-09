@@ -3,22 +3,22 @@
 <head>
     <meta charset="utf-8">
     
-    <title>算法复习笔记-归并排序 | 王诛魔</title>
+    <title>Android中使用注解笔记 | 王诛魔</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="前言归并排序可以说是一个经典的使用分治思维的排序算法了. 先把问题分为一些小的问题然后递归求解,而使用治的思想把分阶段求得的答案合并在一起. 首先我得来一张图说明这个事:">
-<meta name="keywords" content="Programme">
+    <meta name="description" content="前言@Override 就是一个很常见的注解.  检查是否正确的复写父类方法 标志是重写方法  元注解 元注解是,额,嗯 注解的注解  @Retention：注解生命周期 @Target：作用范围 @Inherited：标明所修饰的注解类型是被继承的,子类会继承这个注解 @Documented：javadoc  这些都是由Java语言本身提供的最基础的注解,他们负责注解其他的注解,具体的作用见上文">
+<meta name="keywords" content="Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="算法复习笔记-归并排序">
-<meta property="og:url" content="http://www.wangzhumo.com/2018/07/31/Arithmetic-merge-sort/index.html">
+<meta property="og:title" content="Android中使用注解笔记">
+<meta property="og:url" content="http://www.wangzhumo.com/2018/08/09/annotation-simple-note/index.html">
 <meta property="og:site_name" content="王诛魔">
-<meta property="og:description" content="前言归并排序可以说是一个经典的使用分治思维的排序算法了. 先把问题分为一些小的问题然后递归求解,而使用治的思想把分阶段求得的答案合并在一起. 首先我得来一张图说明这个事:">
+<meta property="og:description" content="前言@Override 就是一个很常见的注解.  检查是否正确的复写父类方法 标志是重写方法  元注解 元注解是,额,嗯 注解的注解  @Retention：注解生命周期 @Target：作用范围 @Inherited：标明所修饰的注解类型是被继承的,子类会继承这个注解 @Documented：javadoc  这些都是由Java语言本身提供的最基础的注解,他们负责注解其他的注解,具体的作用见上文">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://www.wangzhumo.com/images/merge_sort.png">
-<meta property="og:updated_time" content="2018-08-01T01:24:59.680Z">
+<meta property="og:image" content="http://www.wangzhumo.com/images/annotation_image_error.png">
+<meta property="og:updated_time" content="2018-08-09T06:11:14.867Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="算法复习笔记-归并排序">
-<meta name="twitter:description" content="前言归并排序可以说是一个经典的使用分治思维的排序算法了. 先把问题分为一些小的问题然后递归求解,而使用治的思想把分阶段求得的答案合并在一起. 首先我得来一张图说明这个事:">
-<meta name="twitter:image" content="http://www.wangzhumo.com/images/merge_sort.png">
+<meta name="twitter:title" content="Android中使用注解笔记">
+<meta name="twitter:description" content="前言@Override 就是一个很常见的注解.  检查是否正确的复写父类方法 标志是重写方法  元注解 元注解是,额,嗯 注解的注解  @Retention：注解生命周期 @Target：作用范围 @Inherited：标明所修饰的注解类型是被继承的,子类会继承这个注解 @Documented：javadoc  这些都是由Java语言本身提供的最基础的注解,他们负责注解其他的注解,具体的作用见上文">
+<meta name="twitter:image" content="http://www.wangzhumo.com/images/annotation_image_error.png">
     
 
     
@@ -191,7 +191,7 @@
 </aside>
 
             
-            <section id="main"><article id="post-Arithmetic-merge-sort" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-annotation-simple-note" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -199,7 +199,7 @@
                 
     
         <h1 class="article-title" itemprop="name">
-            算法复习笔记-归并排序
+            Android中使用注解笔记
         </h1>
     
 
@@ -208,8 +208,8 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/07/31/Arithmetic-merge-sort/">
-            <time datetime="2018-07-31T08:24:50.000Z" itemprop="datePublished">2018-07-31</time>
+        <a href="/2018/08/09/annotation-simple-note/">
+            <time datetime="2018-08-09T02:26:42.000Z" itemprop="datePublished">2018-08-09</time>
         </a>
     </div>
 
@@ -217,13 +217,13 @@
                         
     <div class="article-category">
     	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Programme/">Programme</a>
+        <a class="article-category-link" href="/categories/Java/">Java</a>
     </div>
 
                         
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Programme/">Programme</a>
+        <a class="tag-link" href="/tags/Java/">Java</a>
     </div>
 
                     </div>
@@ -234,47 +234,45 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>归并排序可以说是一个经典的使用分治思维的排序算法了.</p>
-<p>先把问题<strong>分</strong>为一些小的问题然后递归求解,而使用<strong>治</strong>的思想把分阶段求得的答案合并在一起.</p>
-<p>首先我得来一张图说明这个事:</p>
-<p><img src="/images/merge_sort.png" alt="merge"></p>
-<a id="more"></a>
-<p>上图显示了一个输入数组被分解的过程,下面只要我们能给他合并起来就可以完成这是输入数组的排序了</p>
-<h3 id="合并思路"><a href="#合并思路" class="headerlink" title="合并思路"></a>合并思路</h3><p>合并的时候我们需要一个临时数组的帮助,这个临时数组的大小应该是与输入数组的大小一致的.</p>
-<p><code>int[] array,int left,int mid,int right,int [] tempArray</code></p>
-<p>需要传入  需要排序的数组,左数组的左边界, 左数组的右边界  ,右数组右边界,临时数组</p>
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>@Override 就是一个很常见的注解.</p>
 <ol>
-<li><p>遍历左右数组,直至两个数组至少有一个数组全部遍历一次</p>
-<p>=&gt;   左数组当前index &lt;= mid  &amp;&amp;  右数组当前index  &lt;= right</p>
-</li>
-<li><p>比较左右两个数组中元素的大小.</p>
-<p>分为两种情况:</p>
+<li>检查是否正确的复写父类方法</li>
+<li>标志是重写方法</li>
+</ol>
+<p><strong>元注解</strong></p>
+<p>元注解是,额,嗯 注解的注解</p>
 <ul>
-<li>左数组当前元素 &lt;= 右边数组当前元素<ul>
-<li>交换tempArray当前位置 与 左数组当前元素</li>
-<li>tempArray 的index ++ ,因为这一个位置已经确定了,应该确定下一个元素了 </li>
-<li>左边当前元素index ++ ,这个元素已经比较过了,应该移动到下一个位置与右数组元素比较</li>
+<li>@Retention：注解生命周期</li>
+<li>@Target：作用范围</li>
+<li>@Inherited：标明所修饰的注解类型是被继承的,子类会继承这个注解</li>
+<li>@Documented：javadoc</li>
 </ul>
+<p>这些都是由Java语言本身提供的最基础的注解,他们负责注解其他的注解,具体的作用见上文</p>
+<a id="more"></a>
+<h3 id="自定义注解"><a href="#自定义注解" class="headerlink" title="自定义注解"></a>自定义注解</h3><h4 id="运行时注解-RUNTIME"><a href="#运行时注解-RUNTIME" class="headerlink" title="运行时注解(RUNTIME)"></a>运行时注解(RUNTIME)</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * If you have any questions, you can contact by email &#123;wangzhumoo@gmail.com&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> 王诛魔 2018/8/9 上午10:50</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * 标记字段为imageUrl,图片地址</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.FIELD)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> ImageUrl &#123;</span><br><span class="line">	<span class="function">String <span class="title">error</span><span class="params">()</span> <span class="keyword">default</span> "http:<span class="comment">//wangzhumo.com/css/images/avatar.png";</span></span></span><br><span class="line"><span class="function">&#125;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="comment">/**</span></span></span><br><span class="line"><span class="function"><span class="comment"> * If you have any questions, you can contact by email &#123;wangzhumoo@gmail.com&#125;</span></span></span><br><span class="line"><span class="function"><span class="comment"> * @author 王诛魔 2018/8/9 上午10:48</span></span></span><br><span class="line"><span class="function"><span class="comment"> * </span></span></span><br><span class="line"><span class="function"><span class="comment"> * 标记字段为Content,内容</span></span></span><br><span class="line"><span class="function"><span class="comment"> */</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">@<span class="title">Retention</span><span class="params">(RetentionPolicy.RUNTIME)</span></span></span><br><span class="line"><span class="function">@<span class="title">Target</span><span class="params">(ElementType.FIELD)</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> @interface Content </span>&#123;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>@ImageUrl  与 @Content  中都没有什么方法,这里只是使用标记的功能</p>
+<p>为了体现标记的作用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * If you have any questions, you can contact by email &#123;wangzhumoo@gmail.com&#125;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> 王诛魔 2018/8/9 上午10:47</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Whatever</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String haha;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//瞎写的字段名,标记为正文</span></span><br><span class="line">    <span class="meta">@Content</span></span><br><span class="line">    <span class="keyword">public</span> String aaaa;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//瞎写的字段名,标记为图片地址</span></span><br><span class="line">    <span class="meta">@ImageUrl</span>(error = <span class="string">"http://wangzhumo.com/images/java_heap_stack.png"</span>)</span><br><span class="line">    <span class="keyword">public</span> String bajkfhajks;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String waht;</span><br><span class="line"></span><br><span class="line">     <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 自动生产</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> List</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Whatever&gt; <span class="title">create</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        List&lt;Whatever&gt; whatever = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)&#123;</span><br><span class="line">            <span class="comment">//开始建立</span></span><br><span class="line">            <span class="keyword">if</span> (i==<span class="number">3</span>)&#123;</span><br><span class="line">                whatever.add(<span class="keyword">new</span> Whatever(String.format(Locale.CHINA,<span class="string">"第%d个项目"</span>,i),<span class="string">""</span>));</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                whatever.add(<span class="keyword">new</span> Whatever(String.format(Locale.CHINA,<span class="string">"第%d个项目"</span>,i),<span class="string">"http://wangzhumo.com/css/images/avatar.png"</span>));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> whatever;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在RecyclerView中使用</p>
+<p>com.wangzhumo.playground.SimpleAdapter#onBindViewHolder</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBindViewHolder</span><span class="params">(@NonNull ViewHolder holder, <span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (Field field : getItem(position).getClass().getDeclaredFields()) &#123;</span><br><span class="line">            field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">            <span class="keyword">if</span> (field.isAnnotationPresent(Content.class)) &#123;</span><br><span class="line">                holder.bindView.setContext((String) field.get(getItem(position)));</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (field.isAnnotationPresent(ImageUrl.class)) &#123;</span><br><span class="line">                String imageUrl = (String) field.get(getItem(position));</span><br><span class="line">                <span class="keyword">if</span> (TextUtils.isEmpty(imageUrl)) &#123;</span><br><span class="line">                    ImageUrl url = field.getAnnotation(ImageUrl.class);</span><br><span class="line">                    holder.bindView.setImageUrl(url.error());</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    holder.bindView.setImageUrl(imageUrl);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>TextUtils.isEmpty(imageUrl)</code>简单的判断,是否设置了值,如果它没有值,那就直接使用 url.error() 中设置的值</p>
+<p><img src="/images/annotation_image_error.png" alt="image_error"></p>
+<p>在生成数据时,我给第4个位置的图片设置了<code>&quot;&quot;</code>空值,则这里直接显示了我 @ImageUrl( error = “xxxxx”)中设置的图片</p>
+<p>如果我改造一下,设置GlideApp.with(imageUrl  ).error(@ImageUrl.error()) 可以成为一个很实用的方法</p>
+<h4 id="编译时注解-CLASS"><a href="#编译时注解-CLASS" class="headerlink" title="编译时注解(CLASS)"></a>编译时注解(CLASS)</h4><p>对于我个人来说,基本上没有这样的需要,但是如<code>Dagger2</code> 使用编译时注解 + APT 实现依赖注入</p>
+<p>其他如<code>ARouter</code>,<code>BufferKnike</code>,<code>Glide</code>也会使用这样的技术.</p>
+<p>如Glide</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.bumptech.glide.annotation.compiler;  <span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">GlideAnnotationProcessor</span> <span class="keyword">extends</span> <span class="title">AbstractProcessor</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">  	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(ProcessingEnvironment processingEnvironment)</span> </span>&#123;</span><br><span class="line"> 		<span class="keyword">super</span>.init(processingEnvironment);</span><br><span class="line">    	<span class="comment">//...</span></span><br><span class="line">      	<span class="comment">//主要是初始化一些工具类啊什么的</span></span><br><span class="line">  	&#125;</span><br><span class="line"></span><br><span class="line">  	<span class="meta">@Override</span></span><br><span class="line">  	<span class="function"><span class="keyword">public</span> Set&lt;String&gt; <span class="title">getSupportedAnnotationTypes</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    	<span class="comment">//...</span></span><br><span class="line">    	<span class="comment">//该方法中返回所有注解的类  </span></span><br><span class="line">  	&#125;</span><br><span class="line"></span><br><span class="line"> 	 <span class="meta">@Override</span></span><br><span class="line">  	<span class="function"><span class="keyword">public</span> SourceVersion <span class="title">getSupportedSourceVersion</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> SourceVersion.latestSupported();</span><br><span class="line">  	&#125;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">  	<span class="meta">@Override</span></span><br><span class="line">  	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">process</span><span class="params">(Set&lt;? extends TypeElement&gt; set, RoundEnvironment env)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//...</span></span><br><span class="line">    	<span class="comment">//这里是重要的部分,通过注释我们就能知道它大概做什么了</span></span><br><span class="line">  	&#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>遍历得到需要解析的元素列表</p>
 </li>
-<li>右边当前元素更大<ul>
-<li>交换tempArray当前位置 与 右数组当前元素</li>
-<li>tempArray 的index ++ </li>
-<li>右边当前元素index ++ </li>
-</ul>
+<li><p>判断符合要求的元素</p>
 </li>
-</ul>
-</li>
-<li><p>当上面的循环完成后,还有一种可能是,右边或左边的数组中还有元素没有参与比较</p>
-<p>=&gt;   因为这些剩下的元素都比另一个数组中元素大,而这个数组本身也是有序的则</p>
-<p>=&gt;   把这些剩下的元素全部追加到tempArray</p>
-</li>
-<li><p>最后我们发现,tempArray已经是一个有序的数组了,但是我们要排序的是array</p>
-<p>=&gt;   把tempArray中元素全部复制给array</p>
+<li><p>修改,整理输出参数,或者借助APT生产代码等</p>
 </li>
 </ol>
-<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * If you have any questions, you can contact by email &#123;wangzhumoo@gmail.com&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> 王诛魔 2018/7/31 下午4:26</span></span><br><span class="line"><span class="comment"> * 归并排序</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MergeClass</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 归并排序</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> array   需要排序的数组</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> left  左边界</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> right  右边界</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> tempArray 临时数组,避免频繁创建数组</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">MergeSort</span><span class="params">(<span class="keyword">int</span>[] array,<span class="keyword">int</span> left,<span class="keyword">int</span> right,<span class="keyword">int</span> [] tempArray)</span></span>&#123;</span><br><span class="line">        mergeSort(array, left, right, tempArray);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">mergeSort</span><span class="params">(<span class="keyword">int</span>[] array,<span class="keyword">int</span> left,<span class="keyword">int</span> right,<span class="keyword">int</span> [] tempArray)</span></span>&#123;</span><br><span class="line">        <span class="comment">//通过观察上图,我们可以知道,如果 left &gt;= right </span></span><br><span class="line">        <span class="comment">//就是最小的数组了,所以要停止递归,开始返回</span></span><br><span class="line">        <span class="keyword">if</span>(left &gt;= right)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//计算当前传入数组的中点,用来把数组分成两个部分,这里注意避免int越界</span></span><br><span class="line">        <span class="keyword">int</span> mid = left + (right - left) / <span class="number">2</span> ;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//递归调用左右数组</span></span><br><span class="line">        <span class="comment">//左边数组 [left , mid]</span></span><br><span class="line">        mergeSort(array, left, mid, tempArray);</span><br><span class="line">        <span class="comment">//右边数组 (mid,right]</span></span><br><span class="line">        mergeSort(array, mid + <span class="number">1</span> , right , tempArray);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//合并这个数组,需要原始数组,临时数组,左右边界以及mid(这是为了计算右边数组的开始index)</span></span><br><span class="line">        merge(array,left,mid,right,tempArray);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 合并数组</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> array</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> left</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> mid</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> right</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> tempArray</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span>[] array,<span class="keyword">int</span> left,<span class="keyword">int</span> mid,<span class="keyword">int</span> right,<span class="keyword">int</span> [] tempArray)</span></span>&#123;</span><br><span class="line">        <span class="comment">//为了后面的操作,先定义好几个边界值</span></span><br><span class="line">        <span class="keyword">int</span> i = left;   <span class="comment">//左数组index开始位置</span></span><br><span class="line">        <span class="keyword">int</span> j = mid + <span class="number">1</span>;   <span class="comment">//右数组idnex开始位置</span></span><br><span class="line">        <span class="keyword">int</span> temp = <span class="number">0</span>;  <span class="comment">//临时数组index的开始位置</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">//1.循环</span></span><br><span class="line">        <span class="keyword">while</span>(i &lt;= mid &amp;&amp; j &lt;= right)&#123;</span><br><span class="line">            <span class="comment">//2.比较大小</span></span><br><span class="line">            <span class="keyword">if</span>(array[i] &lt;= array[j])&#123;</span><br><span class="line">                <span class="comment">//合并赋值与index ++ </span></span><br><span class="line">                tempArray[temp++] = array[i++];</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                tempArray[temp++] = array[j++];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//3.剩余元素</span></span><br><span class="line">        <span class="keyword">while</span>(i &lt;= mid)&#123;</span><br><span class="line">            tempArray[temp++] = array[i++];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span>(j &lt;= right)&#123;</span><br><span class="line">            tempArray[temp++] = array[j++];</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        <span class="comment">//4.复制回array</span></span><br><span class="line">        temp = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(left &lt;= right)&#123;</span><br><span class="line">            array[left++] = tempArray[temp++];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>最后测试了一下,没问题</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">13 21 23 26 45 67 123 213 456 563</span><br></pre></td></tr></table></figure>
+<p>如果你对这部分感兴趣,不妨选一个库看看</p>
 
         
         </div>
@@ -285,7 +283,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/31/Arithmetic-merge-sort/" data-id="cjkm5zwc9002bp9stilrtsp6h" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/08/09/annotation-simple-note/" data-id="cjkm5zwe0006cp9stbdovp5ax" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -360,19 +358,10 @@
         
 <nav id="article-nav">
     
-        <a href="/2018/07/31/Arithmetic-quick-sort/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    算法复习笔记-快速排序
-                
-            </div>
-        </a>
     
-    
-        <a href="/2018/07/30/ConstraintLayout-Advance/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/08/06/roman-to-integer/" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">ConstraintLayout使用指南-进阶使用</div>
+            <div class="article-nav-title">LeetCode-罗马数字转整数</div>
         </a>
     
 </nav>
