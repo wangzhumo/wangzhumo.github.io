@@ -4,6 +4,50 @@
 
     
   <url>
+    <loc>http://www.wangzhumo.com/2018/08/10/kotlin-learn-note-basic/</loc>
+    <lastmod>2018-08-13T07:41:33.425Z</lastmod>
+    <data>
+        <display>
+        <title>Kotlin学习笔记-基础</title>
+        <pubTime>2018-08-10T07:47:59.000Z</pubTime>
+        
+        <tag>Java</tag>
+         
+        <tag>Kotlin</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://www.wangzhumo.com/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/08/13/kotlin-learn-advance-fun/</loc>
+    <lastmod>2018-08-13T07:40:51.235Z</lastmod>
+    <data>
+        <display>
+        <title>Kotlin学习笔记-高级函数</title>
+        <pubTime>2018-08-13T03:28:04.000Z</pubTime>
+        
+        <tag>Java</tag>
+         
+        <tag>Kotlin</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://www.wangzhumo.com/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.wangzhumo.com/2018/08/09/glide-okhttp-progress/</loc>
     <lastmod>2018-08-10T07:23:06.304Z</lastmod>
     <data>
@@ -721,9 +765,9 @@
         
         <tag>Android</tag>
          
-        <tag>Android Studio</tag>
-         
         <tag>Bug</tag>
+         
+        <tag>Android Studio</tag>
          
          
            

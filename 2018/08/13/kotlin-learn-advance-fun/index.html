@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Kotlin学习笔记-高级函数 | 王诛魔</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="常用高级函数map 一般方式 1234567891011fun main(args: Array&amp;lt;String&amp;gt;) &amp;#123;    val list = listOf(1,2,3,4,5,6,7)    //函数引用的方式int转为double    list.map(Int::toDouble)	    val newList = list.map&amp;#123;        //">
+<meta name="keywords" content="Java,Kotlin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kotlin学习笔记-高级函数">
+<meta property="og:url" content="http://www.wangzhumo.com/2018/08/13/kotlin-learn-advance-fun/index.html">
+<meta property="og:site_name" content="王诛魔">
+<meta property="og:description" content="常用高级函数map 一般方式 1234567891011fun main(args: Array&amp;lt;String&amp;gt;) &amp;#123;    val list = listOf(1,2,3,4,5,6,7)    //函数引用的方式int转为double    list.map(Int::toDouble)	    val newList = list.map&amp;#123;        //">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-08-13T07:40:51.235Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kotlin学习笔记-高级函数">
+<meta name="twitter:description" content="常用高级函数map 一般方式 1234567891011fun main(args: Array&amp;lt;String&amp;gt;) &amp;#123;    val list = listOf(1,2,3,4,5,6,7)    //函数引用的方式int转为double    list.map(Int::toDouble)	    val newList = list.map&amp;#123;        //">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon-32x32-next.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">王诛魔</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.png" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="profile-fixed">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.png" />
+            <h2 id="name">王诛魔</h2>
+            <h3 id="title">Android Developer</h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>Beijing, China</span>
+            <a id="follow" target="_blank" href="mailto:wangzhumoo@gmail.com">联系我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                78
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                33
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/wangzhumo" target="_blank" title="github" >
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-kotlin-learn-advance-fun" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Kotlin学习笔记-高级函数
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/08/13/kotlin-learn-advance-fun/">
+            <time datetime="2018-08-13T03:28:04.000Z" itemprop="datePublished">2018-08-13</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Java/">Java</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Java/">Java</a>, <a class="tag-link" href="/tags/Kotlin/">Kotlin</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h3 id="常用高级函数"><a href="#常用高级函数" class="headerlink" title="常用高级函数"></a>常用高级函数</h3><h4 id="map"><a href="#map" class="headerlink" title="map"></a>map</h4><ul>
+<li><p>一般方式</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> list = listOf(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">//函数引用的方式int转为double</span></span><br><span class="line">    list.map(<span class="built_in">Int</span>::toDouble)</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">val</span> newList = list.map&#123;</span><br><span class="line">        <span class="comment">//it 就是当前元素</span></span><br><span class="line">        it *<span class="number">2</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+</li>
+<li><p>引用函数的map</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> list = listOf(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">//函数引用的方式int转为double</span></span><br><span class="line">    list.map(<span class="built_in">Int</span>::toDouble)</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//源码 map</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">inline</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;T, R&gt;</span> Iterable<span class="type">&lt;T&gt;</span>.<span class="title">map</span><span class="params">(transform: (<span class="type">T</span>)</span></span> -&gt; R): List&lt;R&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> mapTo(ArrayList&lt;R&gt;(collectionSizeOrDefault(<span class="number">10</span>)), transform)</span><br><span class="line">    <span class="comment">//ArrayList&lt;R&gt;(collectionSizeOrDefault(10))   初始化一个和原来一样长的list</span></span><br><span class="line">    <span class="comment">//transform 就是我们传进去的函数</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//源码 mapTo</span></span><br><span class="line"><span class="comment">//destination  就是上面初始化好的List</span></span><br><span class="line"><span class="comment">//transform 也是上面传进来的函数,负责转换</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">inline</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;T, R, C : MutableCollection&lt;in R&gt;</span>&gt; Iterable<span class="type">&lt;T&gt;</span>.<span class="title">mapTo</span><span class="params">(destination: <span class="type">C</span>, transform: (<span class="type">T</span>)</span></span> -&gt; R): C &#123;</span><br><span class="line">    <span class="comment">//一个for循环,遍历所有元素,并转换后添加到新List</span></span><br><span class="line">    <span class="keyword">for</span> (item <span class="keyword">in</span> <span class="keyword">this</span>)</span><br><span class="line">        destination.add(transform(item))</span><br><span class="line">    <span class="keyword">return</span> destination  <span class="comment">//返回List</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="flatMap"><a href="#flatMap" class="headerlink" title="flatMap"></a>flatMap</h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</span><br><span class="line">    <span class="comment">//以上是一个元素为数组的List</span></span><br><span class="line">    <span class="keyword">val</span> list = listOf(<span class="number">1.</span><span class="number">.8</span>,<span class="number">9.</span><span class="number">.12</span>,<span class="number">13.</span><span class="number">.27</span> step <span class="number">2</span>,<span class="number">28.</span><span class="number">.32</span>)</span><br><span class="line"></span><br><span class="line">	<span class="comment">//展开List,并把List中的每一个元素中的每一个元素 + 1</span></span><br><span class="line">    <span class="keyword">val</span> newList = list.flatMap &#123; intRange -&gt;</span><br><span class="line">        intRange.map &#123; item -&gt;</span><br><span class="line">            item + <span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">//同上 </span></span><br><span class="line">    <span class="keyword">val</span> newList2 = list.flatMap &#123; it -&gt;</span><br><span class="line">        it.map &#123;</span><br><span class="line">            it + <span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 只是展开了List,其他什么也没做</span></span><br><span class="line">    <span class="keyword">val</span> newList3 = list.flatMap &#123; it -&gt;</span><br><span class="line">        it</span><br><span class="line">    &#125;</span><br><span class="line">   </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//源码</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Returns a single list of all elements yielded from results of [transform] function being invoked on each element of original collection.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">inline</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;T, R&gt;</span> Iterable<span class="type">&lt;T&gt;</span>.<span class="title">flatMap</span><span class="params">(transform: (<span class="type">T</span>)</span></span> -&gt; Iterable&lt;R&gt;): List&lt;R&gt; &#123;</span><br><span class="line">    		<span class="comment">//创建List  , 传入针对原List中元素的转换方法</span></span><br><span class="line">    <span class="keyword">return</span> flatMapTo(ArrayList&lt;R&gt;(), transform)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Appends all elements yielded from results of [transform] function being invoked on each element of original collection, to the given [destination].</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">inline</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;T, R, C : MutableCollection&lt;in R&gt;</span>&gt; Iterable<span class="type">&lt;T&gt;</span>.<span class="title">flatMapTo</span><span class="params">(destination: <span class="type">C</span>, transform: (<span class="type">T</span>)</span></span> -&gt; Iterable&lt;R&gt;): C &#123;</span><br><span class="line">    <span class="comment">//遍历原来List</span></span><br><span class="line">    <span class="keyword">for</span> (element <span class="keyword">in</span> <span class="keyword">this</span>) &#123;</span><br><span class="line">        <span class="comment">//此处的transform,转换原List中的每一个元素</span></span><br><span class="line">        <span class="keyword">val</span> list = transform(element)</span><br><span class="line">        destination.addAll(list)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//返回了新List</span></span><br><span class="line">    <span class="keyword">return</span> destination</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="reduce"><a href="#reduce" class="headerlink" title="reduce"></a>reduce</h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//实际就计算了所有元素的和</span></span><br><span class="line">newList.reduce &#123; acc, i -&gt;</span><br><span class="line">        <span class="comment">//acc 是上一次计算的结果</span></span><br><span class="line">        <span class="comment">//i 是当前的元素        </span></span><br><span class="line">        acc + i   <span class="comment">// 这个是操作的函数</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//源码</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Accumulates value starting with the first element and applying [operation] from left to right to current accumulator value and each element.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">inline</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;S, T: S&gt;</span> Iterable<span class="type">&lt;T&gt;</span>.<span class="title">reduce</span><span class="params">(operation: (<span class="type">acc</span>: <span class="type">S</span>, T)</span></span> -&gt; S): S &#123;</span><br><span class="line">    <span class="comment">//获取了我们的迭代对象</span></span><br><span class="line">    <span class="keyword">val</span> iterator = <span class="keyword">this</span>.iterator()</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//如果不是空List就继续执行</span></span><br><span class="line">    <span class="keyword">if</span> (!iterator.hasNext()) <span class="keyword">throw</span> UnsupportedOperationException(<span class="string">"Empty collection can't be reduced."</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//取到List的第一个元素</span></span><br><span class="line">    <span class="keyword">var</span> accumulator: S = iterator.next()</span><br><span class="line">    <span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">        <span class="comment">//这一步就是把上面一个进入操作的结果和下一个元素做了 operation 的操作,</span></span><br><span class="line">        <span class="comment">//而这个 operation 就是你传进来的函数</span></span><br><span class="line">        <span class="comment">//计算完毕之后,又把计算结果赋给了 accumulator </span></span><br><span class="line">        accumulator = operation(accumulator, iterator.next())</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//最后返回结果</span></span><br><span class="line">    <span class="keyword">return</span> accumulator</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">eg:</span><br><span class="line"><span class="keyword">val</span> list = listOf(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> accumulator = list[<span class="number">0</span>] = <span class="number">1</span></span><br><span class="line"><span class="keyword">while</span> ( -- )&#123;</span><br><span class="line"><span class="comment">//第一次    1 = 1 + 2 = 3</span></span><br><span class="line"><span class="comment">//第二次    3 = 3 + 3 = 6</span></span><br><span class="line"><span class="comment">//第三次    6 = 6 + 6 = 10</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="number">10</span></span><br></pre></td></tr></table></figure>
+<h4 id="flod"><a href="#flod" class="headerlink" title="flod"></a>flod</h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//源码表示,只是初始值是你指定的那个值,其他和reduce差不多一致的思路</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Accumulates value starting with [initial] value and applying [operation] from left to right to current accumulator value and each element.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">inline</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;T, R&gt;</span> Iterable<span class="type">&lt;T&gt;</span>.<span class="title">fold</span><span class="params">(initial: <span class="type">R</span>, operation: (<span class="type">acc</span>: <span class="type">R</span>, T)</span></span> -&gt; R): R &#123;</span><br><span class="line">    <span class="keyword">var</span> accumulator = initial</span><br><span class="line">    <span class="comment">//operation 操作上次结构</span></span><br><span class="line">    <span class="keyword">for</span> (element <span class="keyword">in</span> <span class="keyword">this</span>) accumulator = operation(accumulator, element)</span><br><span class="line">    <span class="keyword">return</span> accumulator</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//字符串拼接</span></span><br><span class="line">newList.fold(StringBuffer())&#123; acc, i -&gt;</span><br><span class="line">        acc.append(i).append(<span class="string">","</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">输出:</span><br><span class="line"><span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">13</span>,<span class="number">14</span>,<span class="number">16</span>,<span class="number">18</span>,<span class="number">20</span>,<span class="number">22</span>,<span class="number">24</span>,<span class="number">26</span>,<span class="number">28</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">31</span>,<span class="number">32</span>,<span class="number">33</span>,</span><br></pre></td></tr></table></figure>
+<h4 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h4><p>过滤掉不符合条件的</p>
+<h4 id="takeWhile"><a href="#takeWhile" class="headerlink" title="takeWhile"></a>takeWhile</h4><p>取第一个不符合条件元素之前的所有元素.</p>
+<p>#### </p>
+<h4 id="let"><a href="#let" class="headerlink" title="let"></a>let</h4><p>最常用的场景就是使用let函数处理需要针对一个可null的对象统一做判空处理</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</span><br><span class="line">    <span class="comment">//以上是一个元素为数组的List</span></span><br><span class="line">    <span class="keyword">val</span> list = listOf(<span class="number">1.</span><span class="number">.8</span>,<span class="number">9.</span><span class="number">.12</span>,<span class="number">13.</span><span class="number">.27</span> step <span class="number">2</span>,<span class="number">28.</span><span class="number">.32</span>)</span><br><span class="line">    <span class="keyword">val</span> kc = KotlinClassA()</span><br><span class="line">    <span class="keyword">val</span> per : DataClass? = DataClass(<span class="number">12</span>,<span class="string">"脑壳痛"</span>)</span><br><span class="line"></span><br><span class="line">    per?.copy()</span><br><span class="line">    per?.addWhat1(kc)</span><br><span class="line">    per?.addWhat2(kc)</span><br><span class="line">    per?.addWhat3(kc)</span><br><span class="line">	</span><br><span class="line">    <span class="comment">//let</span></span><br><span class="line">    per?.let &#123;</span><br><span class="line">        it.copy()</span><br><span class="line">        it.addWhat1(kc)</span><br><span class="line">        it.addWhat2(kc)</span><br><span class="line">        it.addWhat3(kc)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//源码</span></span><br><span class="line"><span class="meta">@kotlin</span>.<span class="keyword">internal</span>.InlineOnly</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">inline</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;T, R&gt;</span> T.<span class="title">let</span><span class="params">(block: (<span class="type">T</span>)</span></span> -&gt; R): R &#123;</span><br><span class="line">    contract &#123;</span><br><span class="line">        callsInPlace(block, InvocationKind.EXACTLY_ONCE)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//把接收的参数,传入了我们提供的函数中</span></span><br><span class="line">    <span class="keyword">return</span> block(<span class="keyword">this</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="with"><a href="#with" class="headerlink" title="with"></a>with</h4><p>适用于调用同一个类的多个方法时，可以省去类名重复，直接调用类的方法即可，如Android中onBinderViewHolder中，数据model的属性映射到UI上</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@kotlin</span>.<span class="keyword">internal</span>.InlineOnly</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">inline</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;T, R&gt;</span> <span class="title">with</span><span class="params">(receiver: <span class="type">T</span>, block: <span class="type">T</span>.()</span></span> -&gt; R): R &#123;</span><br><span class="line">    contract &#123;</span><br><span class="line">        callsInPlace(block, InvocationKind.EXACTLY_ONCE)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> receiver.block()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//用收到的实例去调用 block方法,返回值自己定义</span></span><br></pre></td></tr></table></figure>
+<h4 id="run"><a href="#run" class="headerlink" title="run"></a>run</h4><p>let + with 的结合体</p>
+<p>既可以直接访问实例的公有属性和方法</p>
+<p>又弥补了with函数传入对象判空问题</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@kotlin</span>.<span class="keyword">internal</span>.InlineOnly</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">inline</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;T, R&gt;</span> T.<span class="title">run</span><span class="params">(block: <span class="type">T</span>.()</span></span> -&gt; R): R &#123;</span><br><span class="line">    contract &#123;</span><br><span class="line">        callsInPlace(block, InvocationKind.EXACTLY_ONCE)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> block()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="apply"><a href="#apply" class="headerlink" title="apply"></a>apply</h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@kotlin</span>.<span class="keyword">internal</span>.InlineOnly</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">inline</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;T&gt;</span> T.<span class="title">apply</span><span class="params">(block: <span class="type">T</span>.()</span></span> -&gt; <span class="built_in">Unit</span>): T &#123;</span><br><span class="line">    contract &#123;</span><br><span class="line">        callsInPlace(block, InvocationKind.EXACTLY_ONCE)</span><br><span class="line">    &#125;</span><br><span class="line">    block()</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//注意它返回的是this</span></span><br></pre></td></tr></table></figure>
+<h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h3><ul>
+<li>就是函数的运行环境</li>
+<li>持有函数的运行状态</li>
+<li>函数内部可以定义函数</li>
+<li>函数内部也可以定义类</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">fibonacci</span><span class="params">()</span></span>: () -&gt; <span class="built_in">Long</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> first = <span class="number">0</span>L</span><br><span class="line">    <span class="keyword">var</span> second = <span class="number">1</span>L</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="title">fun</span><span class="params">()</span></span> : <span class="built_in">Long</span>&#123;</span><br><span class="line">        <span class="keyword">val</span> result = second</span><br><span class="line">        second += first</span><br><span class="line">        first = second - first</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> f = fibonacci()</span><br><span class="line">    println(f())</span><br><span class="line">    println(f())</span><br><span class="line">    println(f())</span><br><span class="line">    println(f())</span><br><span class="line">    println(f())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">输出:</span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">5</span></span><br></pre></td></tr></table></figure>
+<p>我们发现<code>var first = 0L</code>,<code>var second = 1L</code> 这两个的值被保存住了</p>
+<p>每次f() 后,first和 second都能记住他们当前被赋予的值</p>
+<h3 id="复合函数"><a href="#复合函数" class="headerlink" title="复合函数"></a>复合函数</h3><p>这简直太秀了</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">add</span><span class="params">(int: <span class="type">Int</span>)</span></span> =  int + <span class="number">1</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">multiply</span><span class="params">(int: <span class="type">Int</span>)</span></span>  =  int * <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="type">&lt;A, B, C&gt;</span> <span class="title">compose</span><span class="params">(f: (<span class="type">B</span>)</span></span> -&gt; C, g: (A) -&gt; B) : (A) -&gt; C &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123; x -&gt; f(g(x)) &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> addAndMultiply = compose(::add, ::multiply)</span><br><span class="line">    println(addAndMultiply(<span class="number">9</span>))  <span class="comment">//输出  19</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>### </p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wangzhumo.com/2018/08/13/kotlin-learn-advance-fun/" data-id="cjkryznj7006v7cstwuirrwjx" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/08/10/kotlin-learn-note-basic/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Kotlin学习笔记-基础</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">28</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Studio/">Android Studio</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Bug/">Bug</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programme/">Programme</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Source-Code/">Source Code</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/View/">View</a><span class="category-list-count">4</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 15.71px;">Android Studio</a> <a href="/tags/Android单元测试/" style="font-size: 10px;">Android单元测试</a> <a href="/tags/Binder/" style="font-size: 10px;">Binder</a> <a href="/tags/Bug/" style="font-size: 17.14px;">Bug</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Glide/" style="font-size: 10px;">Glide</a> <a href="/tags/Google/" style="font-size: 11.43px;">Google</a> <a href="/tags/Gradle/" style="font-size: 11.43px;">Gradle</a> <a href="/tags/Handler/" style="font-size: 10px;">Handler</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/Java/" style="font-size: 18.57px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Kotlin/" style="font-size: 11.43px;">Kotlin</a> <a href="/tags/Linux/" style="font-size: 12.86px;">Linux</a> <a href="/tags/Okhttp/" style="font-size: 11.43px;">Okhttp</a> <a href="/tags/Programme/" style="font-size: 14.29px;">Programme</a> <a href="/tags/RK3399/" style="font-size: 10px;">RK3399</a> <a href="/tags/Regular/" style="font-size: 10px;">Regular</a> <a href="/tags/Room/" style="font-size: 12.86px;">Room</a> <a href="/tags/Rxjava/" style="font-size: 12.86px;">Rxjava</a> <a href="/tags/Server/" style="font-size: 14.29px;">Server</a> <a href="/tags/Source-Code/" style="font-size: 11.43px;">Source Code</a> <a href="/tags/Video/" style="font-size: 10px;">Video</a> <a href="/tags/View/" style="font-size: 17.14px;">View</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/组件化/" style="font-size: 10px;">组件化</a> <a href="/tags/蓝牙/" style="font-size: 10px;">蓝牙</a> <a href="/tags/设计模式/" style="font-size: 12.86px;">设计模式</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/13/kotlin-learn-advance-fun/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Java/">Java</a></p>
+                            <p class="item-title"><a href="/2018/08/13/kotlin-learn-advance-fun/" class="title">Kotlin学习笔记-高级函数</a></p>
+                            <p class="item-date"><time datetime="2018-08-13T03:28:04.000Z" itemprop="datePublished">2018-08-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/10/kotlin-learn-note-basic/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Java/">Java</a></p>
+                            <p class="item-title"><a href="/2018/08/10/kotlin-learn-note-basic/" class="title">Kotlin学习笔记-基础</a></p>
+                            <p class="item-date"><time datetime="2018-08-10T07:47:59.000Z" itemprop="datePublished">2018-08-10</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/09/glide-okhttp-progress/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a></p>
+                            <p class="item-title"><a href="/2018/08/09/glide-okhttp-progress/" class="title">Glide4.X版本图片加载显示进度</a></p>
+                            <p class="item-date"><time datetime="2018-08-09T09:40:04.000Z" itemprop="datePublished">2018-08-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/09/glide-4-note/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a></p>
+                            <p class="item-title"><a href="/2018/08/09/glide-4-note/" class="title">Glide4.X版本的基本使用</a></p>
+                            <p class="item-date"><time datetime="2018-08-09T06:32:53.000Z" itemprop="datePublished">2018-08-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/09/annotation-simple-note/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Java/">Java</a></p>
+                            <p class="item-title"><a href="/2018/08/09/annotation-simple-note/" class="title">Android中使用注解笔记</a></p>
+                            <p class="item-date"><time datetime="2018-08-09T02:26:42.000Z" itemprop="datePublished">2018-08-09</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">49</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android单元测试/">Android单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bug/">Bug</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Glide/">Glide</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Handler/">Handler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kotlin/">Kotlin</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Okhttp/">Okhttp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Programme/">Programme</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RK3399/">RK3399</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regular/">Regular</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Room/">Room</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Server/">Server</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Source-Code/">Source Code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video/">Video</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="mailto:wangzhumoo@gmail.com">E-mail</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 wangzhumo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
