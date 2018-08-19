@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://www.wangzhumo.com/2018/08/19/websocket-note/</loc>
+    <lastmod>2018-08-19T14:59:10.945Z</lastmod>
+    <data>
+        <display>
+        <title>WebSocket的使用笔记-理论基础</title>
+        <pubTime>2018-08-19T02:57:00.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Server</tag>
+         
+         
+           
+             
+              <breadCrumb title="Server" url="http://www.wangzhumo.com/categories/Server/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.wangzhumo.com/2018/08/17/macos-change-list/</loc>
     <lastmod>2018-08-17T08:46:16.638Z</lastmod>
     <data>
@@ -1493,9 +1515,9 @@
         
         <tag>Android</tag>
          
-        <tag>Rxjava</tag>
-         
         <tag>Okhttp</tag>
+         
+        <tag>Rxjava</tag>
          
          
            
@@ -1517,9 +1539,9 @@
         
         <tag>Android</tag>
          
-        <tag>Rxjava</tag>
-         
         <tag>Okhttp</tag>
+         
+        <tag>Rxjava</tag>
          
          
            
