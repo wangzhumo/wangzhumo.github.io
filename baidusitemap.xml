@@ -3,10 +3,9 @@
 
 
     
-    
   <url>
     <loc>http://www.wangzhumo.com/2018/08/19/websocket-note/</loc>
-    <lastmod>2018-08-19T14:59:10.945Z</lastmod>
+    <lastmod>2018-08-20T01:54:58.239Z</lastmod>
     <data>
         <display>
         <title>WebSocket的使用笔记-理论基础</title>
@@ -25,6 +24,7 @@
     </data>
     </url>
 
+    
     
   <url>
     <loc>http://www.wangzhumo.com/2018/08/17/macos-change-list/</loc>
@@ -1515,9 +1515,9 @@
         
         <tag>Android</tag>
          
-        <tag>Okhttp</tag>
-         
         <tag>Rxjava</tag>
+         
+        <tag>Okhttp</tag>
          
          
            
@@ -1539,9 +1539,9 @@
         
         <tag>Android</tag>
          
-        <tag>Okhttp</tag>
-         
         <tag>Rxjava</tag>
+         
+        <tag>Okhttp</tag>
          
          
            
