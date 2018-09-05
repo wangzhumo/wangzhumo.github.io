@@ -159,7 +159,7 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                80
+                82
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -188,6 +188,309 @@
 
             
             <section id="main">
+    <article id="post-Android-RxBus" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2017/12/25/Android-RxBus/">Android项目中使用RxBus进行通讯</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2017/12/25/Android-RxBus/">
+            <time datetime="2017-12-25T06:50:16.000Z" itemprop="datePublished">2017-12-25</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Android/">Android</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Rxjava/">Rxjava</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>加入JakeWharton大神的RxRelay</p>
+<p><a href="https://github.com/JakeWharton/RxRelay" target="_blank" rel="noopener">JakeWharton/RxRelay</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile &apos;com.jakewharton.rxrelay2:rxrelay:2.0.0&apos;</span><br></pre></td></tr></table></figure></p></p>
+            <p class="article-more-link">
+                <a href="/2017/12/25/Android-RxBus/#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wangzhumo.com/2017/12/25/Android-RxBus/" data-id="cjlp5pt4c000fsmstktcklltq" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-Nginx-install-config" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2017/12/25/Nginx-install-config/">Nginx安装及其简单配置</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2017/12/25/Nginx-install-config/">
+            <time datetime="2017-12-25T05:39:40.000Z" itemprop="datePublished">2017-12-25</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Server/">Server</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Linux/">Linux</a>, <a class="tag-link" href="/tags/Server/">Server</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>环境: centos7</p>
+<p><strong>1.下载安装</strong></p>
+<p>下载nginx-1.12.0,官网<br><code>sudo wget http://nginx.org/download/nginx-1.12.0.tar.gz</code></p>
+<p>解压<br><code>sudo tar -zxvf nginx-1.12.0.tar.gz</code></p>
+<p>其他的库,nginx依赖的库</p>
+<ul>
+<li>安装gcc<br><code>yum -y install gcc</code></li>
+<li>安装pcre<br><code>yum -y install pcre pcre-devel</code></li>
+<li>安装zlib<br><code>yum -y install zlib zlib-devel</code></li>
+<li>安装openssl<br><code>yum -y install openssl openssl-devel</code></li>
+</ul>
+<p>安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo ./configure</span><br><span class="line">  </span><br><span class="line">sudo make</span><br><span class="line">  </span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>默认位置 /usr/local/nginx</p>
+</blockquote>
+<p>如果安装过程中出现文件目录权限问题,百度即可解决.</p>
+<p><strong>2.系统中配置</strong></p>
+<p>1.在系统服务目录里创建nginx.service文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /lib/systemd/system/nginx.service</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=nginx</span><br><span class="line">After=network.target</span><br><span class="line">  </span><br><span class="line">[Service]</span><br><span class="line">Type=forking</span><br><span class="line">ExecStart=/usr/local/nginx/sbin/nginx</span><br><span class="line">ExecReload=/usr/local/nginx/sbin/nginx -s reload</span><br><span class="line">ExecStop=/usr/local/nginx/sbin/nginx -s quit</span><br><span class="line">PrivateTmp=true</span><br><span class="line">  </span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+<p>2.设置开机启动</p>
+<p><code>systemctl enable nginx.service</code></p>
+<p>3.其他命令</p>
+<p>启动nginx服务<code>systemctl start nginx.service</code></p>
+<p>设置开机自启动<code>systemctl enable nginx.service</code></p>
+<p>停止开机自启动<code>systemctl disable nginx.service</code></p>
+<p>查看服务当前状态<code>systemctl status nginx.service</code></p>
+<p>重新启动服务<code>systemctl restart nginx.service</code></p>
+<p>查看所有已启动的服务 <code>systemctl list-units --type=service</code></p>
+<p><strong>3.nginx.conf的配置</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@wangzhumo hooks]# cd /usr/local/nginx/</span><br><span class="line">[root@wangzhumo nginx]# ll</span><br><span class="line">total 96</span><br><span class="line">drwx------ 2 root root  4096 Dec 24 20:57 client_body_temp</span><br><span class="line">drwxr-xr-x 3 root root  4096 Dec 24 23:24 conf</span><br><span class="line">drwx------ 2 root root  4096 Dec 24 20:57 fastcgi_temp</span><br><span class="line">drwxr-xr-x 2 root root  4096 Dec 23 10:38 html</span><br><span class="line">drwxr-xr-x 2 root root  4096 Dec 24 22:43 logs</span><br><span class="line">-rw-r--r-- 1 root root 53861 Dec 25 13:37 on</span><br><span class="line">drwx------ 2 root root  4096 Dec 24 20:57 proxy_temp</span><br><span class="line">drwxr-xr-x 2 root root  4096 Dec 23 10:38 sbin</span><br><span class="line">drwx------ 2 root root  4096 Dec 24 20:57 scgi_temp</span><br><span class="line">drwx------ 2 root root  4096 Dec 24 20:57 uwsgi_temp</span><br></pre></td></tr></table></figure>
+<p>其中/conf存放配置文件/conf/nginx.conf<br><code>vim /conf/nginx.conf</code></p>
+<p>什么都不要动,在nginx.conf第一条server配置下面写入:<br><code>include vhost/*.conf;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#125;</span><br><span class="line">#此处是第一条可用的server的结束</span><br><span class="line"></span><br><span class="line">   #加入这句,其实是把其他地方配置的配置文件加载到里面来</span><br><span class="line">   #主要是为了方便管理,修改</span><br><span class="line">   include vhost/*.conf;</span><br><span class="line">   # another virtual host using mix of IP-, name-, and port-based configuration</span><br><span class="line">   #</span><br><span class="line">   #server &#123;</span><br><span class="line">   #    listen       8000;</span><br><span class="line">   #    listen       somename:8080;</span><br><span class="line">   #    server_name  somename  alias  another.alias;</span><br><span class="line"></span><br><span class="line">   #    location / &#123;</span><br><span class="line">   #        root   html;</span><br><span class="line">   #        index  index.html index.htm;</span><br><span class="line">   #    &#125;</span><br><span class="line">   #&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>3.1 /vhost/*.conf的配置</strong></p>
+<p>当前目录到<br><code>cd /usr/local/nginx/conf</code></p>
+<p>创建目录vhost<br><code>mkdir /usr/local/nginx/conf/vhost</code></p>
+<p>创建.conf文件(我只用到hexo的配置,所以只有一个配置文件)<br><code>vim /usr/local/nginx/conf/vhost/hexo.conf</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">server</span><br><span class="line">&#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    #listen [::]:80;</span><br><span class="line">    server_name www.phyooos.top phyooos.top;</span><br><span class="line">    index index.html index.htm index.php default.html default.htm default.php;</span><br><span class="line">    #web root path</span><br><span class="line">    root  /home/wzm/hexo;</span><br><span class="line"></span><br><span class="line">    #error_page   404   /404.html;</span><br><span class="line">    location ~ .*\.(ico|gif|jpg|jpeg|png|bmp|swf)$</span><br><span class="line">    &#123;</span><br><span class="line">        access_log   on;</span><br><span class="line">        expires      1d;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location ~ .*\.(js|css|txt|xml)?$</span><br><span class="line">    &#123;</span><br><span class="line">        access_log   on;</span><br><span class="line">        expires      12h;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        try_files $uri $uri/ =404;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    access_log  /usr/local/nginx/logs/hexo.log  combined;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>4.重启</strong><br><code>systemctl reload nginx</code></p>
+<p>在外面访问即可</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wangzhumo.com/2017/12/25/Nginx-install-config/" data-id="cjlp5pt6b005gsmstpvzsaauf" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-room-list-object" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -324,7 +627,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/25/room-list-object/" data-id="cjl1mosk5006qmisto91isv0b" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/25/room-list-object/" data-id="cjlp5pt76007ksmstrjgzy1co" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -473,7 +776,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/25/Retrofit2-Okhttp3-Rxjava2-2/" data-id="cjl1mosjl005hmist6oluhojd" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/25/Retrofit2-Okhttp3-Rxjava2-2/" data-id="cjlp5pt6j0061smstqu41njdu" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -637,7 +940,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/25/Retrofit2-Okhttp3-Rxjava2-1/" data-id="cjl1mosjm005lmistk9ub0ofr" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/25/Retrofit2-Okhttp3-Rxjava2-1/" data-id="cjlp5pt6i005xsmstonqev22y" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -784,7 +1087,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/25/Android-build-gradle-config/" data-id="cjl1moshl001bmistnyflmeu2" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/25/Android-build-gradle-config/" data-id="cjlp5pt4v001psmstpn2repev" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -919,7 +1222,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/25/Android-dependent-config/" data-id="cjl1moshp001imistufcjf0ag" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/25/Android-dependent-config/" data-id="cjlp5pt500021smsthnmiygar" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1054,7 +1357,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/25/Google-Chrome-Plug-In/" data-id="cjl1mosj10048mistfb2iil82" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/25/Google-Chrome-Plug-In/" data-id="cjlp5pt5z004lsmsteeil93ej" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1202,7 +1505,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/25/jni-with-so/" data-id="cjl1mosjz006cmist01emw0qu" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/25/jni-with-so/" data-id="cjlp5pt6y006wsmstgltk7sf2" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1333,344 +1636,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/25/EditText-InputType-imeOptions/" data-id="cjl1mosio003gmist6ua64zuk" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-textview-span" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2017/12/25/textview-span/">TextView中的文字颜色,点击,斜体等实现--SpannableString</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2017/12/25/textview-span/">
-            <time datetime="2017-12-25T02:06:03.000Z" itemprop="datePublished">2017-12-25</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android/">Android</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p><strong>一般实现方式如下</strong>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String html = &quot;文字&lt;font color=\&quot;red\&quot;&gt;变色&lt;/font&gt;的效果&quot;;</span><br><span class="line">tvMainShow.setText(Html.fromHtml(html));</span><br></pre></td></tr></table></figure></p>
-<p>使用Html的方式来实现,简单的还好,复杂一点的真的很不方便</p>
-<p>Google显然早就已经想到了这样的问题,所以  </p>
-<blockquote>
-<p><a href="https://developer.android.com/reference/android/text/SpannedString.html" target="_blank" rel="noopener">SpannedString</a> &amp; <a href="https://developer.android.com/reference/android/text/SpannableStringBuilder.html" target="_blank" rel="noopener">SpannableStringBuilder</a> 就是干这个的</p>
-</blockquote>
-<p>他们都实现了 <a href="https://developer.android.com/reference/java/lang/CharSequence.html" target="_blank" rel="noopener">CharSequence</a>,眼熟么?  <figure class="highlight plain"><figcaption><span>text)```.也就是说,你可以直接赋值给TextView</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">他们两个的区别就是    </span><br><span class="line">This is the class for text whose content is immutable but to which markup objects can be attached and detached. For mutable text, see SpannableStringBuilder</span><br><span class="line">文档说的很清楚了,就是CharSequence是固定长度的,一旦通过 new SpannableString(&quot;设置文字&quot;);则不可以更改文字内容,而SpannableStringBuilder是可以的,个人理解比较像String 和 StringBuilder 的关系</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">###不多说了,开搞:</span><br><span class="line">**1.设置文字**</span><br><span class="line">&gt;SpannableString spannableString = new SpannableString(&quot;文字的前景色与背景色&quot;);</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">**2.通过setSpan来修改文字的样式**</span><br><span class="line">```setSpan [Object what, int start, int end, int flags)</span><br></pre></td></tr></table></figure></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2520304-e821febbebd4f8dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="入参.png"></p>
-<p>flags:<br>Spannable.SPAN_EXCLUSIVE_EXCLUSIVE：前后都不包括<br>Spannable.SPAN_EXCLUSIVE_INCLUSIVE    ：前面不包括<br>Spannable.SPAN_INCLUSIVE_EXCLUSIVE    ：前面包括<br>Spannable.SPAN_INCLUSIVE_INCLUSIVE    ：前后都包括</p>
-<p>为了说明这四个参数,有例子如下:</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2520304-3784e1b0d6a15d73.gif?imageMogr2/auto-orient/strip" alt="flags.gif"><br>代码如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> *</span><br><span class="line"> * @author 王诛魔 2017/1/21 上午11:31</span><br><span class="line"> * @e-mail  phyooos@163.com</span><br><span class="line"> */</span><br><span class="line">public class MainActivity extends AppCompatActivity &#123;</span><br><span class="line"></span><br><span class="line">    @BindView(R.id.edit_show)</span><br><span class="line">    EditText etMainShow;</span><br><span class="line">    @BindView(R.id.tab_view)</span><br><span class="line">    TabLayout tabLayout;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onCreate(@Nullable Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        ButterKnife.bind(this);</span><br><span class="line">        showText(Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</span><br><span class="line">        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onTabSelected(TabLayout.Tab tab) &#123;</span><br><span class="line">                switch (tab.getPosition()) &#123;</span><br><span class="line">                    case 0:</span><br><span class="line">                        showText(Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</span><br><span class="line">                        break;</span><br><span class="line">                    case 1:</span><br><span class="line">                        showText(Spannable.SPAN_EXCLUSIVE_INCLUSIVE);</span><br><span class="line">                        break;</span><br><span class="line">                    case 2:</span><br><span class="line">                        showText(Spannable.SPAN_INCLUSIVE_EXCLUSIVE);</span><br><span class="line">                        break;</span><br><span class="line">                    case 3:</span><br><span class="line">                        showText(Spannable.SPAN_INCLUSIVE_INCLUSIVE);</span><br><span class="line">                        break;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            @Override</span><br><span class="line">            public void onTabUnselected(TabLayout.Tab tab) &#123;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            @Override</span><br><span class="line">            public void onTabReselected(TabLayout.Tab tab) &#123;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 展示文字</span><br><span class="line">     */</span><br><span class="line">    private void showText(int type) &#123;</span><br><span class="line">        //构造SpannableString</span><br><span class="line">        SpannableString spanString = new SpannableString(&quot;这里是王诛魔的简书文章&quot;);</span><br><span class="line">        //字体颜色的Span</span><br><span class="line">        ForegroundColorSpan span = new ForegroundColorSpan(Color.RED);</span><br><span class="line">        //指定范围</span><br><span class="line">        spanString.setSpan(span, 3, 6, type);</span><br><span class="line">        //设置给EditText显示出来</span><br><span class="line">        etMainShow.setText(spanString);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>上面的代码中:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//字体颜色的Span</span><br><span class="line">ForegroundColorSpan span = new ForegroundColorSpan(Color.RED);</span><br><span class="line">ForegroundColorSpan就是设置的文字样式,,这个是前景色,,也就是字体的颜色</span><br><span class="line">//指定范围</span><br><span class="line">spanString.setSpan(span, 3, 6, type);</span><br><span class="line">这里的三个参数已经在上面说过了,通过上面的代码也会发现,其实3,6  其中下标3是包含的,而下标6就不会改变</span><br></pre></td></tr></table></figure></p>
-<hr>
-<p><strong>3.至于Span的这些个样式在哪里找,请看文档:</strong><br><strong>关键词:<a href="https://developer.android.com/reference/android/text/style/CharacterStyle.html" target="_blank" rel="noopener">CharacterStyle</a></strong></p>
-<blockquote>
-<p><a href="https://developer.android.com/reference/android/text/style/CharacterStyle.html" target="_blank" rel="noopener">https://developer.android.com/reference/android/text/style/CharacterStyle.html</a></p>
-</blockquote>
-<p><img src="http://upload-images.jianshu.io/upload_images/2520304-50978874ad4c3a7f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Span的一些类型.png"></p>
-<p>说几个常用的吧:</p>
-<ul>
-<li>ForegroundColorSpan  字体颜色</li>
-<li>BackgroundColorSpan 字体背景色设置</li>
-<li>AbsoluteSizeSpan 字体大小</li>
-<li>StyleSpan 粗体等<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//字体由Typeface来控制</span><br><span class="line">StyleSpan span = new StyleSpan(Typeface.BOLD_ITALIC);</span><br><span class="line"></span><br><span class="line">- UnderlineSpan 下划线</span><br><span class="line">- ImageSpan 图片置换</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[ImageSpan https://developer.android.com/reference/android/text/style/ImageSpan.html](https://developer.android.com/reference/android/text/style/ImageSpan.html)</span><br><span class="line"></span><br><span class="line">这个有一点不同,它是将文字中的指定部分替换为一个图片,至于如何构造请参考文档</span><br><span class="line">让我想起来了那个EmojiEditText的库,其实可以用这个ImageSpan实现一个简单的可以显示表情的TextView</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- ClickableSpan 点击</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>//这个有些不同,需要<br>class CustomClickable extends ClickableSpan {</p>
-<pre><code>@Override
-public void updateDrawState(TextPaint ds) {
-    //这里其实还可以对可点击部分设置一些东西
-}
-
-@Override
-public void onClick(View widget) {
-      ...do something
-}
-</code></pre><p>}</p>
-<p>//对了,加上这行代码<br>TextView.setMovementMethod(LinkMovementMethod.getInstance());<br>//要不点不动哦</p>
-<p>```</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2520304-7ccd2161c4d5f5e7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2017-04-05_23-36-38.png"></p>
-<ul>
-<li>URLSpan 这个完全可以用ClickableSpan实现</li>
-</ul>
-<p><strong>SpannableStringBuilder</strong></p>
-<p>SpannableString都说的这么明白了,SpannableStringBuilder就省了</p>
-<p>####End</p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.wangzhumo.com/2017/12/25/textview-span/" data-id="cjl1moske0078mist6o6sog2g" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Flutter-install-net-error" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2017/12/25/Flutter-install-net-error/">Flutter 安装</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2017/12/25/Flutter-install-net-error/">
-            <time datetime="2017-12-25T02:03:55.000Z" itemprop="datePublished">2017-12-25</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Flutter/">Flutter</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/Google/">Google</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <blockquote>
-<p>使用系统Mac OS</p>
-</blockquote>
-<p>已经没办法给大家看问题了,我在github上提了问题.</p>
-<p><a href="https://github.com/flutter/flutter/issues/11674" target="_blank" rel="noopener">github issue</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">使用命令 command</span><br><span class="line"></span><br><span class="line">`flutter doctor`</span><br><span class="line"></span><br><span class="line">异常:</span><br><span class="line">exception</span><br><span class="line"></span><br><span class="line">SocketException: SocketException: Connection failed (OS Error: No route to host, errno = 65), address = android.googlesource.com, port = 443</span><br></pre></td></tr></table></figure>
-<p>总的来说就是下载 Downloading Gradle Wrapper…的时候连接不到外网,以至于失败</p>
-<p>github上的这位小哥提醒了我<a href="https://github.com/lishuhao" target="_blank" rel="noopener">@lishuhao</a></p>
-<blockquote>
-<p><a href="https://github.com/eseidelgoogle" target="_blank" rel="noopener">@eseidelGoogle</a>it’s reachable via https from Chrome<br>Maybe his chrome use proxy but terminal not use proxy.</p>
-</blockquote>
-<p>我确实开了ss,但是终端确实连接不到代理的,不走代理,那当然无解</p>
-<p>##解决:</p>
-<p>####1.Mac下使用Homebrew安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install polipo</span><br></pre></td></tr></table></figure>
-<p>####2.修改配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -sfv /usr/local/opt/polipo/*.plist ~/Library/LaunchAgents</span><br></pre></td></tr></table></figure>
-<p><img src="http://upload-images.jianshu.io/upload_images/2520304-bfa92bf302955c0d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /usr/local/opt/polipo/homebrew.mxcl.polipo.plist</span><br></pre></td></tr></table></figure>
-<p><img src="http://upload-images.jianshu.io/upload_images/2520304-b14154bf99746494.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>在配置文件中添加<br><code>&lt;string&gt;socksParentProxy=localhost:1086&lt;/string&gt;</code></p>
-<p>其中1086这个端口号,自己去看</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2520304-40564c01c67e3f13.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>####3.启动</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">launchctl load ~/Library/LaunchAgents/homebrew.mxcl.polipo.plist</span><br></pre></td></tr></table></figure>
-<p>####4.使用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ http_proxy=http://localhost:8123 curl ip.gs</span><br><span class="line">Current IP / 当前 IP: 47.90.88.133</span><br><span class="line">ISP / 运营商:  ALIYUN</span><br><span class="line">City / 城市:  Hong Kong</span><br><span class="line">Country / 国家: China</span><br><span class="line">IP.GS is now IP.SB, please visit https://ip.sb/ for more IP information, ip.gs will only use for curl purpose. / IP.GS 已更新至 IP.SB 请访问 https://ip.sb/ 获取更多信息, ip.gs 域名仅作 curl 使用</span><br><span class="line">Please join Telegram group https://t.me/sbfans if you have any issues. / 如有问题，请加入 Telegram 群 https://t.me/sbfans</span><br></pre></td></tr></table></figure>
-<p>可以看到,现在我是香港的IP了,http_proxy=<a href="http://localhost:8123这个是提供默认的,至于怎么修改我没有看,也不知道" target="_blank" rel="noopener">http://localhost:8123这个是提供默认的,至于怎么修改我没有看,也不知道</a></p>
-<p><strong>把代理设置为全局的</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">~ ⌚ 11:42:51</span><br><span class="line">$ export http_proxy=http://localhost:8123</span><br><span class="line"></span><br><span class="line">~ ⌚ 11:43:02</span><br><span class="line">$ export https_proxy=http://localhost:8123</span><br><span class="line"></span><br><span class="line">~ ⌚ 11:43:09</span><br><span class="line">$ curl https://www.google.com</span><br><span class="line">&lt;HTML&gt;&lt;HEAD&gt;&lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html;charset=utf-8&quot;&gt;</span><br><span class="line">&lt;TITLE&gt;302 Moved&lt;/TITLE&gt;&lt;/HEAD&gt;&lt;BODY&gt;</span><br><span class="line">&lt;H1&gt;302 Moved&lt;/H1&gt;</span><br><span class="line">The document has moved</span><br><span class="line">&lt;A HREF=&quot;https://www.google.com.hk/?gfe_rd=cr&amp;ei=5FaaWZDNOMLU8Af_nriwDw&quot;&gt;here&lt;/A&gt;.</span><br><span class="line">&lt;/BODY&gt;&lt;/HTML&gt;</span><br><span class="line"></span><br><span class="line">~ ⌚ 11:43:33</span><br><span class="line">$ curl www.google.com</span><br><span class="line">&lt;HTML&gt;&lt;HEAD&gt;&lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html;charset=utf-8&quot;&gt;</span><br><span class="line">&lt;TITLE&gt;302 Moved&lt;/TITLE&gt;&lt;/HEAD&gt;&lt;BODY&gt;</span><br><span class="line">&lt;H1&gt;302 Moved&lt;/H1&gt;</span><br><span class="line">The document has moved</span><br><span class="line">&lt;A HREF=&quot;http://www.google.com.hk/?gfe_rd=cr&amp;ei=6laaWZqEO8_U8AeLlID4CA&quot;&gt;here&lt;/A&gt;.</span><br><span class="line">&lt;/BODY&gt;&lt;/HTML&gt;</span><br></pre></td></tr></table></figure></p>
-<p>####5.End</p>
-<p>##见证奇迹的时刻到了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">~/develop/flutter on  alpha! ⌚ 11:44:11</span><br><span class="line">$ flutter doctor</span><br><span class="line">Downloading Gradle Wrapper...                         1.3s</span><br><span class="line">[✓] Flutter (on Mac OS X 10.12.6 16G29, locale zh-Hans-CN, channel alpha)</span><br><span class="line">    • Flutter at /Users/phyooos/develop/flutter</span><br><span class="line">    • Framework revision b156a0f054 (9 days ago), 2017-08-11 22:01:40 -0700</span><br><span class="line">    • Engine revision fef7d827d6</span><br><span class="line">    • Tools Dart version 1.25.0-dev.9.0</span><br><span class="line"></span><br><span class="line">[✓] Android toolchain - develop for Android devices (Android SDK 26.0.1)</span><br><span class="line">    • Android SDK at /Users/phyooos/Library/Android/sdk</span><br><span class="line">    • Platform android-26, build-tools 26.0.1</span><br><span class="line">    • ANDROID_HOME = /Users/phyooos/Library/Android/sdk</span><br><span class="line">    • Java binary at: /Applications/Android Studio.app/Contents/jre/jdk/Contents/Home/bin/java</span><br><span class="line">    • Java version OpenJDK Runtime Environment (build 1.8.0_112-release-b06)</span><br><span class="line"></span><br><span class="line">[-] iOS toolchain - develop for iOS devices</span><br><span class="line">    ✗ Xcode installation is incomplete; a full installation is necessary for iOS development.</span><br><span class="line">      Download at: https://developer.apple.com/xcode/download/</span><br><span class="line">      Or install Xcode via the App Store.</span><br><span class="line">      Once installed, run:</span><br><span class="line">        sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer</span><br><span class="line">    ✗ libimobiledevice and ideviceinstaller are not installed or require updating. To update, run:</span><br><span class="line">        brew uninstall --ignore-dependencies libimobiledevice</span><br><span class="line">        brew install --HEAD libimobiledevice</span><br><span class="line">        brew install ideviceinstaller</span><br><span class="line">    ✗ ios-deploy not installed. To install:</span><br><span class="line">        brew install ios-deploy</span><br><span class="line">    ✗ CocoaPods not installed.</span><br><span class="line">        CocoaPods is used to retrieve the iOS platform side&apos;s plugin code that responds to your plugin usage on the Dart side.</span><br><span class="line">        Without resolving iOS dependencies with CocoaPods, plugins will not work on iOS.</span><br><span class="line">        For more info, see https://flutter.io/platform-plugins</span><br><span class="line">      To install:</span><br><span class="line">        brew install cocoapods</span><br><span class="line">        pod setup</span><br><span class="line"></span><br><span class="line">[✓] Android Studio (version 2.3)</span><br><span class="line">    • Android Studio at /Applications/Android Studio.app/Contents</span><br><span class="line">    • Java version OpenJDK Runtime Environment (build 1.8.0_112-release-b06)</span><br><span class="line"></span><br><span class="line">[✓] IntelliJ IDEA Ultimate Edition (version 2017.1.3)</span><br><span class="line">    • Flutter plugin version 16.0</span><br><span class="line">    • Dart plugin version 171.4424.63</span><br><span class="line"></span><br><span class="line">[✓] Connected devices</span><br><span class="line">    • None</span><br></pre></td></tr></table></figure>
-<p>我的Flutter就ok了</p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.wangzhumo.com/2017/12/25/Flutter-install-net-error/" data-id="cjl1mosiw003vmist5wcuw82j" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/25/EditText-InputType-imeOptions/" data-id="cjlp5pt5j003fsmstm20fcpr1" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1747,7 +1713,7 @@ public void onClick(View widget) {
 
 
     <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/page/6/">&laquo; 上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/8/">下一页 &raquo;</a>
+        <a class="extend prev" rel="prev" href="/page/6/">&laquo; 上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/8/">下一页 &raquo;</a>
     </nav>
 </section>
             
@@ -1758,7 +1724,7 @@ public void onClick(View widget) {
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">28</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Studio/">Android Studio</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Bug/">Bug</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programme/">Programme</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Source-Code/">Source Code</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/View/">View</a><span class="category-list-count">4</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Studio/">Android Studio</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Bug/">Bug</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programme/">Programme</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Source-Code/">Source Code</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/View/">View</a><span class="category-list-count">4</span></li></ul>
         </div>
     </div>
 
@@ -1767,7 +1733,7 @@ public void onClick(View widget) {
     <div class="widget-wrap">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 15.71px;">Android Studio</a> <a href="/tags/Android单元测试/" style="font-size: 10px;">Android单元测试</a> <a href="/tags/Binder/" style="font-size: 10px;">Binder</a> <a href="/tags/Bug/" style="font-size: 17.14px;">Bug</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Glide/" style="font-size: 10px;">Glide</a> <a href="/tags/Google/" style="font-size: 11.43px;">Google</a> <a href="/tags/Gradle/" style="font-size: 11.43px;">Gradle</a> <a href="/tags/Handler/" style="font-size: 10px;">Handler</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/Java/" style="font-size: 18.57px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Kotlin/" style="font-size: 11.43px;">Kotlin</a> <a href="/tags/Linux/" style="font-size: 12.86px;">Linux</a> <a href="/tags/Okhttp/" style="font-size: 11.43px;">Okhttp</a> <a href="/tags/Programme/" style="font-size: 14.29px;">Programme</a> <a href="/tags/RK3399/" style="font-size: 10px;">RK3399</a> <a href="/tags/Regular/" style="font-size: 10px;">Regular</a> <a href="/tags/Room/" style="font-size: 12.86px;">Room</a> <a href="/tags/Rxjava/" style="font-size: 12.86px;">Rxjava</a> <a href="/tags/Server/" style="font-size: 15.71px;">Server</a> <a href="/tags/Source-Code/" style="font-size: 11.43px;">Source Code</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Video/" style="font-size: 10px;">Video</a> <a href="/tags/View/" style="font-size: 17.14px;">View</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/组件化/" style="font-size: 10px;">组件化</a> <a href="/tags/蓝牙/" style="font-size: 10px;">蓝牙</a> <a href="/tags/设计模式/" style="font-size: 12.86px;">设计模式</a>
+            <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 15.71px;">Android Studio</a> <a href="/tags/Android单元测试/" style="font-size: 10px;">Android单元测试</a> <a href="/tags/Binder/" style="font-size: 10px;">Binder</a> <a href="/tags/Bug/" style="font-size: 17.14px;">Bug</a> <a href="/tags/Flutter/" style="font-size: 11.43px;">Flutter</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Glide/" style="font-size: 10px;">Glide</a> <a href="/tags/Google/" style="font-size: 11.43px;">Google</a> <a href="/tags/Gradle/" style="font-size: 11.43px;">Gradle</a> <a href="/tags/Handler/" style="font-size: 10px;">Handler</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/Java/" style="font-size: 18.57px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Kotlin/" style="font-size: 11.43px;">Kotlin</a> <a href="/tags/Linux/" style="font-size: 12.86px;">Linux</a> <a href="/tags/Okhttp/" style="font-size: 11.43px;">Okhttp</a> <a href="/tags/Programme/" style="font-size: 14.29px;">Programme</a> <a href="/tags/RK3399/" style="font-size: 10px;">RK3399</a> <a href="/tags/Regular/" style="font-size: 10px;">Regular</a> <a href="/tags/Room/" style="font-size: 12.86px;">Room</a> <a href="/tags/Rxjava/" style="font-size: 12.86px;">Rxjava</a> <a href="/tags/Server/" style="font-size: 15.71px;">Server</a> <a href="/tags/Source-Code/" style="font-size: 11.43px;">Source Code</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Video/" style="font-size: 10px;">Video</a> <a href="/tags/View/" style="font-size: 17.14px;">View</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/组件化/" style="font-size: 10px;">组件化</a> <a href="/tags/蓝牙/" style="font-size: 10px;">蓝牙</a> <a href="/tags/设计模式/" style="font-size: 12.86px;">设计模式</a>
         </div>
     </div>
 
@@ -1777,6 +1743,44 @@ public void onClick(View widget) {
         <h3 class="widget-title">最新文章</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/26/flutter-install-china/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Flutter/">Flutter</a></p>
+                            <p class="item-title"><a href="/2018/08/26/flutter-install-china/" class="title">Flutter在Mac上的安装</a></p>
+                            <p class="item-date"><time datetime="2018-08-26T02:47:25.000Z" itemprop="datePublished">2018-08-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/20/okhttp-source-code-websocket/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a></p>
+                            <p class="item-title"><a href="/2018/08/20/okhttp-source-code-websocket/" class="title">OkHttp源码分析-WebSocket</a></p>
+                            <p class="item-date"><time datetime="2018-08-20T02:05:55.000Z" itemprop="datePublished">2018-08-20</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -1835,44 +1839,6 @@ public void onClick(View widget) {
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/08/10/kotlin-learn-note-basic/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Java/">Java</a></p>
-                            <p class="item-title"><a href="/2018/08/10/kotlin-learn-note-basic/" class="title">Kotlin学习笔记-基础</a></p>
-                            <p class="item-date"><time datetime="2018-08-10T07:47:59.000Z" itemprop="datePublished">2018-08-10</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/08/09/glide-okhttp-progress/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Android/">Android</a></p>
-                            <p class="item-title"><a href="/2018/08/09/glide-okhttp-progress/" class="title">Glide4.X版本图片加载显示进度</a></p>
-                            <p class="item-date"><time datetime="2018-08-09T09:40:04.000Z" itemprop="datePublished">2018-08-09</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -1882,7 +1848,7 @@ public void onClick(View widget) {
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -1891,7 +1857,7 @@ public void onClick(View widget) {
     <div class="widget-wrap">
         <h3 class="widget-title">标签</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">50</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android单元测试/">Android单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bug/">Bug</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Glide/">Glide</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Handler/">Handler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kotlin/">Kotlin</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Okhttp/">Okhttp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Programme/">Programme</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RK3399/">RK3399</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regular/">Regular</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Room/">Room</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Server/">Server</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Source-Code/">Source Code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tools/">Tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video/">Video</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">3</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">51</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android单元测试/">Android单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bug/">Bug</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Glide/">Glide</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Handler/">Handler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kotlin/">Kotlin</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Okhttp/">Okhttp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Programme/">Programme</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RK3399/">RK3399</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regular/">Regular</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Room/">Room</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Server/">Server</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Source-Code/">Source Code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tools/">Tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video/">Video</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">3</span></li></ul>
         </div>
     </div>
 

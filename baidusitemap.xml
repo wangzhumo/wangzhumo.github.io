@@ -4,8 +4,48 @@
 
     
   <url>
+    <loc>http://www.wangzhumo.com/2018/08/26/flutter-install-china/</loc>
+    <lastmod>2018-09-05T13:06:30.403Z</lastmod>
+    <data>
+        <display>
+        <title>Flutter在Mac上的安装</title>
+        <pubTime>2018-08-26T02:47:25.000Z</pubTime>
+        
+        <tag>Flutter</tag>
+         
+         
+           
+             
+              <breadCrumb title="Flutter" url="http://www.wangzhumo.com/categories/Flutter/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/08/20/okhttp-source-code-websocket/</loc>
+    <lastmod>2018-08-20T03:28:24.000Z</lastmod>
+    <data>
+        <display>
+        <title>OkHttp源码分析-WebSocket</title>
+        <pubTime>2018-08-20T02:05:55.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.wangzhumo.com/2018/08/19/websocket-note/</loc>
-    <lastmod>2018-08-20T01:54:58.239Z</lastmod>
+    <lastmod>2018-08-20T01:54:58.000Z</lastmod>
     <data>
         <display>
         <title>WebSocket的使用笔记-理论基础</title>
@@ -28,7 +68,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/08/17/macos-change-list/</loc>
-    <lastmod>2018-08-17T08:46:16.638Z</lastmod>
+    <lastmod>2018-08-17T08:46:16.000Z</lastmod>
     <data>
         <display>
         <title>MacOS装机必备</title>
@@ -48,7 +88,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/08/10/kotlin-learn-note-basic/</loc>
-    <lastmod>2018-08-13T07:41:33.425Z</lastmod>
+    <lastmod>2018-08-13T07:41:33.000Z</lastmod>
     <data>
         <display>
         <title>Kotlin学习笔记-基础</title>
@@ -70,7 +110,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/08/13/kotlin-learn-advance-fun/</loc>
-    <lastmod>2018-08-13T07:40:51.235Z</lastmod>
+    <lastmod>2018-08-13T07:40:51.000Z</lastmod>
     <data>
         <display>
         <title>Kotlin学习笔记-高级函数</title>
@@ -92,7 +132,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/08/09/glide-okhttp-progress/</loc>
-    <lastmod>2018-08-10T07:23:06.304Z</lastmod>
+    <lastmod>2018-08-10T07:23:06.000Z</lastmod>
     <data>
         <display>
         <title>Glide4.X版本图片加载显示进度</title>
@@ -116,7 +156,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/08/09/glide-4-note/</loc>
-    <lastmod>2018-08-09T09:26:22.274Z</lastmod>
+    <lastmod>2018-08-09T09:26:22.000Z</lastmod>
     <data>
         <display>
         <title>Glide4.X版本的基本使用</title>
@@ -136,7 +176,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/08/09/annotation-simple-note/</loc>
-    <lastmod>2018-08-09T06:11:14.867Z</lastmod>
+    <lastmod>2018-08-09T06:11:14.000Z</lastmod>
     <data>
         <display>
         <title>Android中使用注解笔记</title>
@@ -156,7 +196,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/08/06/roman-to-integer/</loc>
-    <lastmod>2018-08-08T02:28:10.665Z</lastmod>
+    <lastmod>2018-08-08T02:28:10.000Z</lastmod>
     <data>
         <display>
         <title>LeetCode-罗马数字转整数</title>
@@ -176,7 +216,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/07/30/ConstraintLayout-Advance/</loc>
-    <lastmod>2018-08-06T06:04:34.369Z</lastmod>
+    <lastmod>2018-08-06T06:04:34.000Z</lastmod>
     <data>
         <display>
         <title>ConstraintLayout使用指南-进阶使用</title>
@@ -196,7 +236,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/07/31/Arithmetic-quick-sort/</loc>
-    <lastmod>2018-08-01T01:25:20.678Z</lastmod>
+    <lastmod>2018-08-01T01:25:20.000Z</lastmod>
     <data>
         <display>
         <title>算法复习笔记-快速排序</title>
@@ -216,7 +256,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/07/31/Arithmetic-merge-sort/</loc>
-    <lastmod>2018-08-01T01:24:59.680Z</lastmod>
+    <lastmod>2018-08-01T01:24:59.000Z</lastmod>
     <data>
         <display>
         <title>算法复习笔记-归并排序</title>
@@ -236,7 +276,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/07/26/Android-xml-style/</loc>
-    <lastmod>2018-07-31T07:58:32.282Z</lastmod>
+    <lastmod>2018-07-31T07:58:32.000Z</lastmod>
     <data>
         <display>
         <title>Android开发xml中的样式</title>
@@ -258,7 +298,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2017/07/31/Regular-Expression/</loc>
-    <lastmod>2018-07-31T07:58:12.293Z</lastmod>
+    <lastmod>2018-07-31T07:58:12.000Z</lastmod>
     <data>
         <display>
         <title>常用正则表达式记录</title>
@@ -278,7 +318,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/07/30/Android-MotionEvent-ViewGroup/</loc>
-    <lastmod>2018-07-31T05:24:34.233Z</lastmod>
+    <lastmod>2018-07-31T05:24:34.000Z</lastmod>
     <data>
         <display>
         <title>Android事件分发机制-ViewGroup</title>
@@ -300,7 +340,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/07/30/Screen-toutiao-resize/</loc>
-    <lastmod>2018-07-30T08:24:02.361Z</lastmod>
+    <lastmod>2018-07-30T08:24:02.000Z</lastmod>
     <data>
         <display>
         <title>今日头条的屏幕适配方案</title>
@@ -320,7 +360,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/07/27/Bezier-Google-caihuaxiaoge/</loc>
-    <lastmod>2018-07-30T04:13:03.498Z</lastmod>
+    <lastmod>2018-07-30T04:13:03.000Z</lastmod>
     <data>
         <display>
         <title>贝塞尔曲线练习-谷歌猜画小歌的倒计时</title>
@@ -342,7 +382,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/07/24/Firefly-RK3399/</loc>
-    <lastmod>2018-07-26T09:53:11.972Z</lastmod>
+    <lastmod>2018-07-26T09:53:11.000Z</lastmod>
     <data>
         <display>
         <title>开发板Firefly-RK3399初探</title>
@@ -364,7 +404,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/07/25/Android-Studio-CMake-JNI/</loc>
-    <lastmod>2018-07-26T09:52:17.790Z</lastmod>
+    <lastmod>2018-07-26T09:52:17.000Z</lastmod>
     <data>
         <display>
         <title>Android Studio中使用CMake进行JNI开发</title>
@@ -384,7 +424,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/05/23/Android-VideoPlayer/</loc>
-    <lastmod>2018-07-24T08:48:36.253Z</lastmod>
+    <lastmod>2018-07-24T08:48:36.000Z</lastmod>
     <data>
         <display>
         <title>Android自己封装一个VideoPlayer</title>
@@ -406,7 +446,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/07/22/Data-Structure-Note-1/</loc>
-    <lastmod>2018-07-22T01:55:13.587Z</lastmod>
+    <lastmod>2018-07-22T01:55:13.000Z</lastmod>
     <data>
         <display>
         <title>数据结构-下笔记</title>
@@ -426,7 +466,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/07/02/Git-Submodule/</loc>
-    <lastmod>2018-07-19T09:23:22.736Z</lastmod>
+    <lastmod>2018-07-19T09:23:22.000Z</lastmod>
     <data>
         <display>
         <title>Git Submodule 子模块的使用</title>
@@ -446,7 +486,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/07/15/Recursion-Linked-List/</loc>
-    <lastmod>2018-07-19T09:18:34.323Z</lastmod>
+    <lastmod>2018-07-19T09:18:34.000Z</lastmod>
     <data>
         <display>
         <title>递归调用创建单链表</title>
@@ -466,7 +506,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/07/14/Design-pattern-State/</loc>
-    <lastmod>2018-07-19T09:18:17.965Z</lastmod>
+    <lastmod>2018-07-19T09:18:17.000Z</lastmod>
     <data>
         <display>
         <title>设计模式-状态模式的使用</title>
@@ -488,7 +528,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/06/26/serviceloader-zerenlian/</loc>
-    <lastmod>2018-07-19T09:17:56.635Z</lastmod>
+    <lastmod>2018-07-19T09:17:56.000Z</lastmod>
     <data>
         <display>
         <title>ServiceLoader 与 责任链设计模式</title>
@@ -510,7 +550,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/07/13/RecyclerView-unuseful-notifyItemRangeChanged/</loc>
-    <lastmod>2018-07-19T09:17:30.585Z</lastmod>
+    <lastmod>2018-07-19T09:17:30.000Z</lastmod>
     <data>
         <display>
         <title>RecyclerView中notifyItemRangeChanged无效的BUG</title>
@@ -532,7 +572,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/07/11/JVM-Garbage-Collection/</loc>
-    <lastmod>2018-07-19T09:16:53.738Z</lastmod>
+    <lastmod>2018-07-19T09:16:53.000Z</lastmod>
     <data>
         <display>
         <title>JVM的垃圾回收Garbage Collection</title>
@@ -552,7 +592,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/03/11/JVM-class-loader/</loc>
-    <lastmod>2018-07-19T09:16:38.712Z</lastmod>
+    <lastmod>2018-07-19T09:16:38.000Z</lastmod>
     <data>
         <display>
         <title>JVM虚拟机中的类加载器</title>
@@ -572,7 +612,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/07/12/ConstraintLayout-Basic/</loc>
-    <lastmod>2018-07-19T09:14:34.491Z</lastmod>
+    <lastmod>2018-07-19T09:14:34.000Z</lastmod>
     <data>
         <display>
         <title>ConstraintLayout使用指南-基础的约束</title>
@@ -592,7 +632,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/07/14/Design-Pattern-Decoration/</loc>
-    <lastmod>2018-07-14T13:14:15.360Z</lastmod>
+    <lastmod>2018-07-14T13:14:15.000Z</lastmod>
     <data>
         <display>
         <title>设计模式-装饰者设计模式</title>
@@ -614,7 +654,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/03/10/JVM-load-class/</loc>
-    <lastmod>2018-07-14T03:40:47.196Z</lastmod>
+    <lastmod>2018-07-14T03:40:47.000Z</lastmod>
     <data>
         <display>
         <title>JVM虚拟机的类加载机制</title>
@@ -634,7 +674,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/03/07/Handler-analyze/</loc>
-    <lastmod>2018-07-14T03:40:10.390Z</lastmod>
+    <lastmod>2018-07-14T03:40:10.000Z</lastmod>
     <data>
         <display>
         <title>Android通讯机制分析-Handler</title>
@@ -656,7 +696,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/07/05/GitHub-With-SSH/</loc>
-    <lastmod>2018-07-14T03:39:53.985Z</lastmod>
+    <lastmod>2018-07-14T03:39:53.000Z</lastmod>
     <data>
         <display>
         <title>GitHub使用SSH的方式免密上传</title>
@@ -676,7 +716,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/07/05/Android-Bezier/</loc>
-    <lastmod>2018-07-14T03:39:27.688Z</lastmod>
+    <lastmod>2018-07-14T03:39:27.000Z</lastmod>
     <data>
         <display>
         <title>Android中的贝塞尔曲线</title>
@@ -696,7 +736,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/02/07/Android-Timber-Logger/</loc>
-    <lastmod>2018-07-14T03:39:12.031Z</lastmod>
+    <lastmod>2018-07-14T03:39:12.000Z</lastmod>
     <data>
         <display>
         <title>Android项目中使用Timber + Logger日志输出</title>
@@ -716,7 +756,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2017/12/25/Android-RxBus/</loc>
-    <lastmod>2018-07-14T03:39:04.837Z</lastmod>
+    <lastmod>2018-07-14T03:39:04.000Z</lastmod>
     <data>
         <display>
         <title>Android项目中使用RxBus进行通讯</title>
@@ -736,7 +776,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/01/11/Android-shell-Adb/</loc>
-    <lastmod>2018-07-14T03:38:50.234Z</lastmod>
+    <lastmod>2018-07-14T03:38:50.000Z</lastmod>
     <data>
         <display>
         <title>Android开发中常用的Adb命令</title>
@@ -756,7 +796,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/07/05/Android-inner-class-leak/</loc>
-    <lastmod>2018-07-14T03:38:42.247Z</lastmod>
+    <lastmod>2018-07-14T03:38:42.000Z</lastmod>
     <data>
         <display>
         <title>Android非静态内部类与匿名内部类引起的内存泄漏</title>
@@ -778,7 +818,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/05/09/Android-App-Launch/</loc>
-    <lastmod>2018-07-14T03:38:31.239Z</lastmod>
+    <lastmod>2018-07-14T03:38:31.000Z</lastmod>
     <data>
         <display>
         <title>Android的启动流程</title>
@@ -800,7 +840,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2017/12/26/Android-Studio-Error-Running-app-cannot-debug-application/</loc>
-    <lastmod>2018-07-14T03:38:21.190Z</lastmod>
+    <lastmod>2018-07-14T03:38:21.000Z</lastmod>
     <data>
         <display>
         <title>Android Studio报错Error Running app: cannot debug application</title>
@@ -824,7 +864,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/02/26/Android-Studio-tools-sample/</loc>
-    <lastmod>2018-07-14T03:38:15.078Z</lastmod>
+    <lastmod>2018-07-14T03:38:15.000Z</lastmod>
     <data>
         <display>
         <title>Android Studio 中使用tools:sample</title>
@@ -846,7 +886,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2017/12/25/Android-Studio-Vitamio/</loc>
-    <lastmod>2018-07-14T03:37:27.689Z</lastmod>
+    <lastmod>2018-07-14T03:37:27.000Z</lastmod>
     <data>
         <display>
         <title>Android Studio 导入 Vitamio及横竖屏切换</title>
@@ -868,7 +908,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/05/11/Android-Binder-1/</loc>
-    <lastmod>2018-07-14T03:37:07.519Z</lastmod>
+    <lastmod>2018-07-14T03:37:07.000Z</lastmod>
     <data>
         <display>
         <title>Android Binder机制(一)</title>
@@ -892,7 +932,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2017/12/25/Android-dependent-config/</loc>
-    <lastmod>2018-07-14T03:37:01.191Z</lastmod>
+    <lastmod>2018-07-14T03:37:01.000Z</lastmod>
     <data>
         <display>
         <title>Android 项目统一管理依赖版本</title>
@@ -916,7 +956,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/02/26/Android-unit-test/</loc>
-    <lastmod>2018-07-14T03:36:47.238Z</lastmod>
+    <lastmod>2018-07-14T03:36:47.000Z</lastmod>
     <data>
         <display>
         <title>Android 单元测试(一)</title>
@@ -938,7 +978,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/03/05/Activity-Fragment-life/</loc>
-    <lastmod>2018-07-14T03:36:41.891Z</lastmod>
+    <lastmod>2018-07-14T03:36:41.000Z</lastmod>
     <data>
         <display>
         <title>Activity与Fragment的生命周期</title>
@@ -962,7 +1002,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/05/10/Thread-Process-IPC/</loc>
-    <lastmod>2018-07-14T03:36:32.443Z</lastmod>
+    <lastmod>2018-07-14T03:36:32.000Z</lastmod>
     <data>
         <display>
         <title>线程与进程的异同以及Android中的IPC机制</title>
@@ -982,7 +1022,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/01/11/Charles-Https/</loc>
-    <lastmod>2018-07-14T03:36:16.638Z</lastmod>
+    <lastmod>2018-07-14T03:36:16.000Z</lastmod>
     <data>
         <display>
         <title>使用Charles抓Https的数据请求</title>
@@ -1001,7 +1041,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/07/02/UC-Browser-Like/</loc>
-    <lastmod>2018-07-14T03:34:43.003Z</lastmod>
+    <lastmod>2018-07-14T03:34:43.000Z</lastmod>
     <data>
         <display>
         <title>仿写UC浏览器视频类新闻点赞效果</title>
@@ -1021,7 +1061,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2017/12/25/Bluetooth-iBeacon/</loc>
-    <lastmod>2018-07-14T03:34:31.118Z</lastmod>
+    <lastmod>2018-07-14T03:34:31.000Z</lastmod>
     <data>
         <display>
         <title>低功耗蓝牙iBeacon的开发笔记</title>
@@ -1041,7 +1081,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2017/12/25/Google-Chrome-Plug-In/</loc>
-    <lastmod>2018-07-14T03:33:58.451Z</lastmod>
+    <lastmod>2018-07-14T03:33:58.000Z</lastmod>
     <data>
         <display>
         <title>常用的Google Chrome 浏览器插件</title>
@@ -1064,7 +1104,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2017/12/23/string-format/</loc>
-    <lastmod>2018-07-05T05:14:25.930Z</lastmod>
+    <lastmod>2018-07-05T05:14:25.000Z</lastmod>
     <data>
         <display>
         <title>String.format的参数表</title>
@@ -1084,7 +1124,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/05/21/Android-Shade/</loc>
-    <lastmod>2018-05-23T07:59:43.755Z</lastmod>
+    <lastmod>2018-05-23T07:59:43.000Z</lastmod>
     <data>
         <display>
         <title>Android自定义一个遮罩引导层</title>
@@ -1103,7 +1143,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/05/09/Java-memory-module/</loc>
-    <lastmod>2018-05-10T09:16:37.418Z</lastmod>
+    <lastmod>2018-05-10T09:16:37.000Z</lastmod>
     <data>
         <display>
         <title>Java中的内存模型</title>
@@ -1123,7 +1163,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/03/07/RelativeLayout-Button-over/</loc>
-    <lastmod>2018-03-07T05:09:51.138Z</lastmod>
+    <lastmod>2018-03-07T05:09:51.000Z</lastmod>
     <data>
         <display>
         <title>RelativeLayout中Button覆盖其他View</title>
@@ -1165,7 +1205,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/02/28/Flutter-Install-MAC/</loc>
-    <lastmod>2018-02-28T16:44:14.198Z</lastmod>
+    <lastmod>2018-02-28T16:44:14.000Z</lastmod>
     <data>
         <display>
         <title>Flutter安装指南MAC版</title>
@@ -1187,7 +1227,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2017/12/23/transparency-table/</loc>
-    <lastmod>2018-02-28T16:33:07.972Z</lastmod>
+    <lastmod>2018-02-28T16:33:07.000Z</lastmod>
     <data>
         <display>
         <title>透明度对照表</title>
@@ -1207,7 +1247,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2017/12/25/Flutter-install-net-error/</loc>
-    <lastmod>2018-02-28T16:31:53.550Z</lastmod>
+    <lastmod>2018-02-28T16:31:53.000Z</lastmod>
     <data>
         <display>
         <title>Flutter 安装</title>
@@ -1229,7 +1269,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2017/12/28/Apk-Install-Error/</loc>
-    <lastmod>2018-02-28T16:29:52.521Z</lastmod>
+    <lastmod>2018-02-28T16:29:52.000Z</lastmod>
     <data>
         <display>
         <title>Apk Install 的各种问题</title>
@@ -1251,7 +1291,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/01/17/Room-AppDatabase-Impl-does-not-exist/</loc>
-    <lastmod>2018-02-28T16:29:10.941Z</lastmod>
+    <lastmod>2018-02-28T16:29:10.000Z</lastmod>
     <data>
         <display>
         <title>Room --AppDatabase_Impl does not exist的异常解决</title>
@@ -1275,7 +1315,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/01/04/webview-video-without-image/</loc>
-    <lastmod>2018-02-28T16:28:33.437Z</lastmod>
+    <lastmod>2018-02-28T16:28:33.000Z</lastmod>
     <data>
         <display>
         <title>WebView播放H5视屏没有画面,只有声音</title>
@@ -1297,7 +1337,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2017/12/25/Android-Studio-Config/</loc>
-    <lastmod>2018-02-26T02:33:01.444Z</lastmod>
+    <lastmod>2018-02-26T02:33:01.000Z</lastmod>
     <data>
         <display>
         <title>Android Studio 基本设置</title>
@@ -1317,7 +1357,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2017/12/25/Android-Studio-signature-debug/</loc>
-    <lastmod>2018-02-26T02:32:53.935Z</lastmod>
+    <lastmod>2018-02-26T02:32:53.000Z</lastmod>
     <data>
         <display>
         <title>Android Studio 使用正式签名debug调试</title>
@@ -1339,7 +1379,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/02/04/Java-String-format/</loc>
-    <lastmod>2018-02-07T10:27:47.957Z</lastmod>
+    <lastmod>2018-02-07T10:27:47.000Z</lastmod>
     <data>
         <display>
         <title>Java中String.format()的使用指北</title>
@@ -1359,7 +1399,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/02/05/Jenkins-Android/</loc>
-    <lastmod>2018-02-05T04:49:03.295Z</lastmod>
+    <lastmod>2018-02-05T04:49:03.000Z</lastmod>
     <data>
         <display>
         <title>Jenkins搭建Android自动打包</title>
@@ -1401,7 +1441,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2018/01/03/room-list/</loc>
-    <lastmod>2018-01-09T09:11:17.675Z</lastmod>
+    <lastmod>2018-01-09T09:11:17.000Z</lastmod>
     <data>
         <display>
         <title>Room中List<>使用详解</title>
@@ -1445,7 +1485,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2017/12/28/Android-Font-Size/</loc>
-    <lastmod>2017-12-28T07:32:46.175Z</lastmod>
+    <lastmod>2017-12-28T07:32:46.000Z</lastmod>
     <data>
         <display>
         <title>Android字体不跟随系统变化</title>
@@ -1465,7 +1505,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2017/12/25/Centos-Login-SSH/</loc>
-    <lastmod>2017-12-25T08:34:09.109Z</lastmod>
+    <lastmod>2017-12-25T08:34:09.000Z</lastmod>
     <data>
         <display>
         <title>Centos 创建用户并实现免密码登录</title>
@@ -1487,7 +1527,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2017/12/25/textview-span/</loc>
-    <lastmod>2017-12-25T08:19:22.197Z</lastmod>
+    <lastmod>2017-12-25T08:19:22.000Z</lastmod>
     <data>
         <display>
         <title>TextView中的文字颜色,点击,斜体等实现--SpannableString</title>
@@ -1507,7 +1547,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2017/12/25/Retrofit2-Okhttp3-Rxjava2-2/</loc>
-    <lastmod>2017-12-25T08:19:07.794Z</lastmod>
+    <lastmod>2017-12-25T08:19:07.000Z</lastmod>
     <data>
         <display>
         <title>Retrofit2 + Okhttp3 + Rxjava2 网络请求封装(下)</title>
@@ -1515,9 +1555,9 @@
         
         <tag>Android</tag>
          
-        <tag>Rxjava</tag>
-         
         <tag>Okhttp</tag>
+         
+        <tag>Rxjava</tag>
          
          
            
@@ -1531,7 +1571,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2017/12/25/Retrofit2-Okhttp3-Rxjava2-1/</loc>
-    <lastmod>2017-12-25T08:13:49.835Z</lastmod>
+    <lastmod>2017-12-25T08:13:49.000Z</lastmod>
     <data>
         <display>
         <title>Retrofit2 + Okhttp3 + Rxjava2 网络请求封装(上)</title>
@@ -1539,9 +1579,9 @@
         
         <tag>Android</tag>
          
-        <tag>Rxjava</tag>
-         
         <tag>Okhttp</tag>
+         
+        <tag>Rxjava</tag>
          
          
            
@@ -1577,7 +1617,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2017/12/24/Linux-learn/</loc>
-    <lastmod>2017-12-25T05:40:28.004Z</lastmod>
+    <lastmod>2017-12-25T05:40:28.000Z</lastmod>
     <data>
         <display>
         <title>Linux 学习笔记</title>
@@ -1599,7 +1639,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2017/12/25/Android-build-gradle-config/</loc>
-    <lastmod>2017-12-25T04:25:51.673Z</lastmod>
+    <lastmod>2017-12-25T04:25:51.000Z</lastmod>
     <data>
         <display>
         <title>Android项目的build.gradle通用设置</title>
@@ -1621,7 +1661,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2017/12/25/jni-with-so/</loc>
-    <lastmod>2017-12-25T02:13:30.345Z</lastmod>
+    <lastmod>2017-12-25T02:13:30.000Z</lastmod>
     <data>
         <display>
         <title>jni使用指南,关于.so你应该知道的</title>
@@ -1638,7 +1678,7 @@
     
   <url>
     <loc>http://www.wangzhumo.com/2017/12/25/EditText-InputType-imeOptions/</loc>
-    <lastmod>2017-12-25T02:12:54.159Z</lastmod>
+    <lastmod>2017-12-25T02:12:54.000Z</lastmod>
     <data>
         <display>
         <title>EditText的输入属性InputType以及imeOptions</title>
