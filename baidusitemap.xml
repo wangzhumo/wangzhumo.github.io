@@ -4,6 +4,48 @@
 
     
   <url>
+    <loc>http://www.wangzhumo.com/2018/09/21/time-and-frequency-domain/</loc>
+    <lastmod>2018-09-21T12:47:11.566Z</lastmod>
+    <data>
+        <display>
+        <title>认识时域与频域</title>
+        <pubTime>2018-09-21T11:11:18.000Z</pubTime>
+        
+        <tag>frequency</tag>
+         
+         
+           
+             
+              <breadCrumb title="Other" url="http://www.wangzhumo.com/categories/Other/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/09/21/ffmpeg-cmd-demuxer-muxer/</loc>
+    <lastmod>2018-09-21T11:10:12.324Z</lastmod>
+    <data>
+        <display>
+        <title>音视频-FFmpeg的分解与复用</title>
+        <pubTime>2018-09-21T06:23:02.000Z</pubTime>
+        
+        <tag>FFmpeg</tag>
+         
+        <tag>Media</tag>
+         
+         
+           
+             
+              <breadCrumb title="Media" url="http://www.wangzhumo.com/categories/Media/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.wangzhumo.com/2018/03/05/Activity-Fragment-life/</loc>
     <lastmod>2018-09-21T07:03:41.485Z</lastmod>
     <data>
@@ -835,9 +877,9 @@
         <title>Jenkins搭建Android自动打包</title>
         <pubTime>2018-02-05T01:55:44.000Z</pubTime>
         
-        <tag>Server</tag>
-         
         <tag>Android</tag>
+         
+        <tag>Server</tag>
          
         <tag>Jenkins</tag>
          
@@ -1297,9 +1339,9 @@
         <title>WebSocket的使用笔记-理论基础</title>
         <pubTime>2018-08-19T02:57:00.000Z</pubTime>
         
-        <tag>Server</tag>
-         
         <tag>Android</tag>
+         
+        <tag>Server</tag>
          
          
            

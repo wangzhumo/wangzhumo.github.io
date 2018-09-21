@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[认识时域与频域]]></title>
+    <url>%2F2018%2F09%2F21%2Ftime-and-frequency-domain%2F</url>
+    <content type="text"><![CDATA[前言我也没想到我有一天会捡起这些东西，我一个数学弱鸡压力山大。 起因是最近在学习音视频开发，我发现一涉及到理论知识这块，总会有几个 时域，频域，傅里叶变化这样的名词出现，我能怎么办，学呗 链接： 信号频域和时域的关系？ https://www.zhihu.com/question/21040374 想学习一个东西，首先要搞明白是什么？然后才能继续去认识它。 而我始终认为，学习也是由浅入深的，由点及面的，不可能一上来就认识到了它的核心理论。 简单的认识 @航空航天迷 https://www.zhihu.com/people/jin-it/activities 这位大兄弟的图是我的启蒙。 这张图就是一个时域图，可以看到这个正弦波，x轴上是时间的变化，y轴就是振幅了 频率 ：6Hz 振幅 ：5V 这里就是图1中正弦波的频域图 我们可以看到x轴是频率了，y轴就是振幅了 其中绿色的线，其x轴的交点是指这个正弦波的频率是6,它的高度就是这个正弦波的波峰了5V 进一步认识来自： @一二 https://www.zhihu.com/people/yier-64/activities https://zh.wikipedia.org/wiki/%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2# 傅里叶变换将函数的时域（红色）与频域（蓝色）相关联 刚开始的时候我没看前面 @航空航天迷的答案，直接在CSDN上查的，然后就我懵逼了。 https://blog.csdn.net/jiujiaobusiniao/article/details/53321491 盯着这几张图看了很久，很久。。。 开始理解 @Heinrich https://www.zhihu.com/people/Erdnussoelbearbeiter/activities 傅里叶分析之掐死教程 https://zhuanlan.zhihu.com/p/19763358?refer=wille 真的是给大佬递烟。 大佬，火 下一步我们就看看傅里叶变换]]></content>
+      <categories>
+        <category>Other</category>
+      </categories>
+      <tags>
+        <tag>frequency</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[音视频-FFmpeg的分解与复用]]></title>
+    <url>%2F2018%2F09%2F21%2Fffmpeg-cmd-demuxer-muxer%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>Media</category>
+      </categories>
+      <tags>
+        <tag>FFmpeg</tag>
+        <tag>Media</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[音视频-FFmpeg的编译与安装]]></title>
     <url>%2F2018%2F09%2F20%2Fffmpeg-build-install%2F</url>
     <content type="text"><![CDATA[前言正如FFmpeg的简介所说 FFmpeg is a collection of libraries and tools to process multimedia content such as audio, video, subtitles and related metadata. FFmpeg在音视频领域算得上是集大成者，功能丰富，并且可以自行替换添加编码标准等 可以做到录制，播放，解码，转码，滤镜等等，所以它被很多公司采用。 libavcodec 编解码. libavformat 音视频的解封装 libavutil 工具函数 libavfilter 音视频滤波器（滤镜） libavdevice 硬件的音视频采集、加速和显示 libswresample 重采样，采样格式转换和混合 libswscale 原始视频的缩放，色彩映射转换，图像颜色空间或格式转换 FFmpeg 官方网站 https://ffmpeg.org/ Github https://github.com/FFmpeg/FFmpeg Homebrew12345678# phyooos @ wangzhumo in ~ [20:58:24] C:127$ brew install ffmpeg --with-sdl2 --with-fdk-aac --with-freetype --with-libass --with-libvorbis --with-libvpx --with-opus --with-x265 #经过一段时间的下载==&gt; ./configure --prefix=/usr/local/Cellar/ffmpeg/4.0.2 --enable-shared --enable-pthreads --ena==&gt; make install🍺 /usr/local/Cellar/ffmpeg/4.0.2: 251 files, 53.2MB, built in 8 minutes 1 second#好了已经安装成功了 注意--with-sdl2 其实就是ffplay --with-ffplay已经过时被--with-sdl2替代了，所以一定要替换掉，要不然ffplay的安装会失败 如果你不想自己手动编译安装，那么这里已经够了，下文是手动的编译安装记录。 编译下载官方网站： http://ffmpeg.org/download.html 下载解压，目录ffmpeg Git: 1git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg 准备其他库brew insatll brew install pkg-config brew install speex brew install x264 brew install x265 brew install libsoxr opencore https://sourceforge.net/projects/opencore-amr/ 123$ ./configure$ make$ make install fdk-acc https://sourceforge.net/projects/opencore-amr/files/fdk-aac/ ##### 编译开始编写build_mac_os.sh123456789101112131415161718192021222324252627282930313233#进入ffmpeg目录cd ~/ffmpeg#创建文件build_mac_os.shvim ./build_mac_os.sh#文件写入./configure --cc=/usr/bin/clang \ --prefix=/usr/local/ffmpeg \ --enable-gpl \ --enable-nonfree \ --enable-libfdk-aac \ --enable-libx264 \ --enable-libmp3lame \ --enable-libopencore-amrnb \ --enable-libopencore-amrwb \ --enable-libx265 \ --enable-filter=delogo \ --enable-debug \ --disable-optimizations \ --enable-libspeex \ --enable-videotoolbox \ --enable-shared \ --enable-pthreads \ --enable-version3 \ --enable-hardcoded-tables \ --host-cflags= \ --host-ldflags= make clean#执行文件sudo ./build_mac_os.sh 安装make &amp;&amp; make install等待上面的命令执行完毕，则 1make &amp;&amp; make install 使用简单的录屏查找设备1234567891011121314# phyooos @ wangzhumo in ~ [10:51:09] C:1$ ffmpeg -f avfoundation -list_devices true -i "" # 注意上面命令-i 的参数就是 ”“ 别忘了#输出：#...[AVFoundation input device @ 0x7fe495402280] AVFoundation video devices:[AVFoundation input device @ 0x7fe495402280] [0] FaceTime HD Camera[AVFoundation input device @ 0x7fe495402280] [1] Capture screen 0[AVFoundation input device @ 0x7fe495402280] [2] Capture screen 1[AVFoundation input device @ 0x7fe495402280] AVFoundation audio devices:[AVFoundation input device @ 0x7fe495402280] [0] Built-in Microphone: Input/output error 可以看到AVFoundation video devices的设备有3个 [0] 摄像头 [1] 屏幕1 [2] 屏幕2 录制1ffmpeg -f avfoundation -i 1 -r 30 ~/Downloads/out.yuv 使用Ctrl + c终止录制 -f 使用 avfoundation来录制 -i 指定了当前用来录制的设备，这里的1 -r 帧率30 out.yuv 输出文件 简单的播放在录制过程中，有打印录制的参数 123Metadata: encoder : Lavf58.12.100 Stream #0:0: Video: rawvideo (UYVY / 0x59565955), uyvy422, 2880x1800, q=2-31, 2488320 kb/s, 30 fps, 30 tbn, 30 tbc 我们使用ffplay进行播放 1ffplay -s 2880x1800 -pixel_format uyvy422 ~/Downloads/out.yuv -s 指定分辨率 -pixel_format 编码格式 添加至环境变量]]></content>
@@ -64,8 +87,8 @@
         <category>Server</category>
       </categories>
       <tags>
-        <tag>Server</tag>
         <tag>Android</tag>
+        <tag>Server</tag>
       </tags>
   </entry>
   <entry>
@@ -569,8 +592,8 @@
         <category>Android</category>
       </categories>
       <tags>
-        <tag>Server</tag>
         <tag>Android</tag>
+        <tag>Server</tag>
         <tag>Jenkins</tag>
       </tags>
   </entry>
