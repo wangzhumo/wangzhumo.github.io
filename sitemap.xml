@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.wangzhumo.com/2018/09/08/multimedia-learn-audio-base/</loc>
+    
+    <lastmod>2018-09-21T03:17:58.254Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.wangzhumo.com/2018/09/01/multimedia-learn/</loc>
+    
+    <lastmod>2018-09-21T03:17:56.576Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.wangzhumo.com/2018/09/20/ffmpeg-build-install/</loc>
+    
+    <lastmod>2018-09-21T03:15:24.124Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.wangzhumo.com/2018/08/26/flutter-install-china/</loc>
     
     <lastmod>2018-09-05T13:06:30.403Z</lastmod>
@@ -373,14 +394,14 @@
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/tags/index.html</loc>
+    <loc>http://www.wangzhumo.com/categories/index.html</loc>
     
     <lastmod>2018-07-11T08:10:48.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/categories/index.html</loc>
+    <loc>http://www.wangzhumo.com/tags/index.html</loc>
     
     <lastmod>2018-07-11T08:10:48.000Z</lastmod>
     
