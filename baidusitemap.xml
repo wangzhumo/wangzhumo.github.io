@@ -4,6 +4,1190 @@
 
     
   <url>
+    <loc>http://www.wangzhumo.com/2018/03/05/Activity-Fragment-life/</loc>
+    <lastmod>2018-09-21T07:03:41.485Z</lastmod>
+    <data>
+        <display>
+        <title>Activity与Fragment的生命周期</title>
+        <pubTime>2018-03-05T06:02:42.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Fragment</tag>
+         
+        <tag>Activity</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/07/05/Android-Bezier/</loc>
+    <lastmod>2018-09-21T07:03:30.847Z</lastmod>
+    <data>
+        <display>
+        <title>Android中的贝塞尔曲线</title>
+        <pubTime>2018-07-05T08:05:12.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/05/09/Android-App-Launch/</loc>
+    <lastmod>2018-09-21T07:03:21.824Z</lastmod>
+    <data>
+        <display>
+        <title>Android的启动流程</title>
+        <pubTime>2018-05-09T07:00:12.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Source Code</tag>
+         
+         
+           
+             
+              <breadCrumb title="Source Code" url="http://www.wangzhumo.com/categories/Source-Code/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/05/11/Android-Binder-1/</loc>
+    <lastmod>2018-09-21T07:03:08.528Z</lastmod>
+    <data>
+        <display>
+        <title>Android Binder机制(一)</title>
+        <pubTime>2018-05-11T05:56:25.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Source Code</tag>
+         
+        <tag>Binder</tag>
+         
+         
+           
+             
+              <breadCrumb title="Source Code" url="http://www.wangzhumo.com/categories/Source-Code/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2017/12/25/Android-dependent-config/</loc>
+    <lastmod>2018-09-21T07:02:49.520Z</lastmod>
+    <data>
+        <display>
+        <title>Android 项目统一管理依赖版本</title>
+        <pubTime>2017-12-25T03:39:45.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Gradle</tag>
+         
+        <tag>组件化</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/07/05/Android-inner-class-leak/</loc>
+    <lastmod>2018-09-21T07:02:35.564Z</lastmod>
+    <data>
+        <display>
+        <title>Android非静态内部类与匿名内部类引起的内存泄漏</title>
+        <pubTime>2018-07-05T04:06:51.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Java</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/07/30/Android-MotionEvent-ViewGroup/</loc>
+    <lastmod>2018-09-21T07:02:26.719Z</lastmod>
+    <data>
+        <display>
+        <title>Android事件分发机制-ViewGroup</title>
+        <pubTime>2018-07-30T04:20:02.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>View</tag>
+         
+         
+           
+             
+              <breadCrumb title="View" url="http://www.wangzhumo.com/categories/View/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2017/12/25/Android-RxBus/</loc>
+    <lastmod>2018-09-21T07:02:15.739Z</lastmod>
+    <data>
+        <display>
+        <title>Android项目中使用RxBus进行通讯</title>
+        <pubTime>2017-12-25T06:50:16.000Z</pubTime>
+        
+        <tag>Rxjava</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/05/21/Android-Shade/</loc>
+    <lastmod>2018-09-21T07:02:04.803Z</lastmod>
+    <data>
+        <display>
+        <title>Android自定义一个遮罩引导层</title>
+        <pubTime>2018-05-21T08:53:08.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>View</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/01/11/Android-shell-Adb/</loc>
+    <lastmod>2018-09-21T07:01:52.637Z</lastmod>
+    <data>
+        <display>
+        <title>Android开发中常用的Adb命令</title>
+        <pubTime>2018-01-11T04:07:40.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/07/25/Android-Studio-CMake-JNI/</loc>
+    <lastmod>2018-09-21T07:01:40.234Z</lastmod>
+    <data>
+        <display>
+        <title>Android Studio中使用CMake进行JNI开发</title>
+        <pubTime>2018-07-25T03:07:06.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2017/12/26/Android-Studio-Error-Running-app-cannot-debug-application/</loc>
+    <lastmod>2018-09-21T07:01:14.283Z</lastmod>
+    <data>
+        <display>
+        <title>Android Studio报错Error Running app: cannot debug application</title>
+        <pubTime>2017-12-26T07:26:29.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Android Studio</tag>
+         
+        <tag>Bug</tag>
+         
+         
+           
+             
+              <breadCrumb title="Bug" url="http://www.wangzhumo.com/categories/Bug/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/02/26/Android-Studio-tools-sample/</loc>
+    <lastmod>2018-09-21T07:01:00.963Z</lastmod>
+    <data>
+        <display>
+        <title>Android Studio 中使用tools:sample</title>
+        <pubTime>2018-02-26T02:31:28.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Android Studio</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android Studio" url="http://www.wangzhumo.com/categories/Android-Studio/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2017/12/25/Android-Studio-Vitamio/</loc>
+    <lastmod>2018-09-21T07:00:53.507Z</lastmod>
+    <data>
+        <display>
+        <title>Android Studio 导入 Vitamio及横竖屏切换</title>
+        <pubTime>2017-12-25T01:28:42.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Android Studio</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android Studio" url="http://www.wangzhumo.com/categories/Android-Studio/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/02/07/Android-Timber-Logger/</loc>
+    <lastmod>2018-09-21T06:59:26.695Z</lastmod>
+    <data>
+        <display>
+        <title>Android项目中使用Timber + Logger日志输出</title>
+        <pubTime>2018-02-07T09:48:58.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/07/26/Android-xml-style/</loc>
+    <lastmod>2018-09-21T06:59:00.894Z</lastmod>
+    <data>
+        <display>
+        <title>Android开发xml中的样式</title>
+        <pubTime>2018-07-26T05:23:26.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>View</tag>
+         
+         
+           
+             
+              <breadCrumb title="View" url="http://www.wangzhumo.com/categories/View/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2017/12/28/Apk-Install-Error/</loc>
+    <lastmod>2018-09-21T06:58:47.223Z</lastmod>
+    <data>
+        <display>
+        <title>Apk Install 的各种问题</title>
+        <pubTime>2017-12-28T06:48:09.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Bug</tag>
+         
+         
+           
+             
+              <breadCrumb title="Bug" url="http://www.wangzhumo.com/categories/Bug/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/07/31/Arithmetic-quick-sort/</loc>
+    <lastmod>2018-09-21T06:58:40.628Z</lastmod>
+    <data>
+        <display>
+        <title>算法复习笔记-快速排序</title>
+        <pubTime>2018-07-31T10:04:11.000Z</pubTime>
+        
+        <tag>Programme</tag>
+         
+         
+           
+             
+              <breadCrumb title="Programme" url="http://www.wangzhumo.com/categories/Programme/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/07/31/Arithmetic-merge-sort/</loc>
+    <lastmod>2018-09-21T06:58:33.921Z</lastmod>
+    <data>
+        <display>
+        <title>算法复习笔记-归并排序</title>
+        <pubTime>2018-07-31T08:24:50.000Z</pubTime>
+        
+        <tag>Programme</tag>
+         
+         
+           
+             
+              <breadCrumb title="Programme" url="http://www.wangzhumo.com/categories/Programme/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/07/27/Bezier-Google-caihuaxiaoge/</loc>
+    <lastmod>2018-09-21T06:58:24.761Z</lastmod>
+    <data>
+        <display>
+        <title>贝塞尔曲线练习-谷歌猜画小歌的倒计时</title>
+        <pubTime>2018-07-27T08:42:41.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>View</tag>
+         
+         
+           
+             
+              <breadCrumb title="View" url="http://www.wangzhumo.com/categories/View/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2017/12/25/Bluetooth-iBeacon/</loc>
+    <lastmod>2018-09-21T06:58:14.624Z</lastmod>
+    <data>
+        <display>
+        <title>低功耗蓝牙iBeacon的开发笔记</title>
+        <pubTime>2017-12-25T01:37:23.000Z</pubTime>
+        
+        <tag>蓝牙</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2017/12/25/BottomNavigationView/</loc>
+    <lastmod>2018-09-21T06:57:11.126Z</lastmod>
+    <data>
+        <display>
+        <title>BottomNavigationView使用指南</title>
+        <pubTime>2017-12-25T01:40:44.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2017/12/25/Centos-Login-SSH/</loc>
+    <lastmod>2018-09-21T06:56:43.582Z</lastmod>
+    <data>
+        <display>
+        <title>Centos 创建用户并实现免密码登录</title>
+        <pubTime>2017-12-25T08:25:04.000Z</pubTime>
+        
+        <tag>Server</tag>
+         
+        <tag>Linux</tag>
+         
+         
+           
+             
+              <breadCrumb title="Server" url="http://www.wangzhumo.com/categories/Server/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/01/11/Charles-Https/</loc>
+    <lastmod>2018-09-21T06:56:27.043Z</lastmod>
+    <data>
+        <display>
+        <title>使用Charles抓Https的数据请求</title>
+        <pubTime>2018-01-11T08:09:46.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Https</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/07/30/ConstraintLayout-Advance/</loc>
+    <lastmod>2018-09-21T06:56:12.599Z</lastmod>
+    <data>
+        <display>
+        <title>ConstraintLayout使用指南-进阶使用</title>
+        <pubTime>2018-07-30T06:54:45.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/07/12/ConstraintLayout-Basic/</loc>
+    <lastmod>2018-09-21T06:56:03.030Z</lastmod>
+    <data>
+        <display>
+        <title>ConstraintLayout使用指南-基础的约束</title>
+        <pubTime>2018-07-12T07:49:34.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/07/22/Data-Structure-Note-1/</loc>
+    <lastmod>2018-09-21T06:55:55.144Z</lastmod>
+    <data>
+        <display>
+        <title>数据结构-下笔记</title>
+        <pubTime>2018-07-22T01:50:38.000Z</pubTime>
+        
+        <tag>Programme</tag>
+         
+         
+           
+             
+              <breadCrumb title="Programme" url="http://www.wangzhumo.com/categories/Programme/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/07/14/Design-Pattern-Decoration/</loc>
+    <lastmod>2018-09-21T06:55:49.288Z</lastmod>
+    <data>
+        <display>
+        <title>设计模式-装饰者设计模式</title>
+        <pubTime>2018-07-14T11:05:28.000Z</pubTime>
+        
+        <tag>Java</tag>
+         
+        <tag>设计模式</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://www.wangzhumo.com/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/07/14/Design-pattern-State/</loc>
+    <lastmod>2018-09-21T06:55:41.391Z</lastmod>
+    <data>
+        <display>
+        <title>设计模式-状态模式的使用</title>
+        <pubTime>2018-07-14T00:45:32.000Z</pubTime>
+        
+        <tag>Java</tag>
+         
+        <tag>设计模式</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://www.wangzhumo.com/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2017/12/25/EditText-InputType-imeOptions/</loc>
+    <lastmod>2018-09-21T06:55:33.983Z</lastmod>
+    <data>
+        <display>
+        <title>EditText的输入属性InputType以及imeOptions</title>
+        <pubTime>2017-12-25T02:11:15.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2017/12/24/Facebook-Stetho/</loc>
+    <lastmod>2018-09-21T06:55:26.517Z</lastmod>
+    <data>
+        <display>
+        <title>Facebook/Stetho——Android开发调试神器</title>
+        <pubTime>2017-12-24T15:47:55.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/07/24/Firefly-RK3399/</loc>
+    <lastmod>2018-09-21T06:55:04.748Z</lastmod>
+    <data>
+        <display>
+        <title>开发板Firefly-RK3399初探</title>
+        <pubTime>2018-07-24T08:47:17.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>RK3399</tag>
+         
+         
+           
+             
+              <breadCrumb title="Other" url="http://www.wangzhumo.com/categories/Other/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/02/28/Flutter-Install-MAC/</loc>
+    <lastmod>2018-09-21T06:54:18.513Z</lastmod>
+    <data>
+        <display>
+        <title>Flutter安装指南MAC版</title>
+        <pubTime>2018-02-28T15:56:58.000Z</pubTime>
+        
+        <tag>Google</tag>
+         
+        <tag>Flutter</tag>
+         
+         
+           
+             
+              <breadCrumb title="Flutter" url="http://www.wangzhumo.com/categories/Flutter/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2017/12/25/Flutter-install-net-error/</loc>
+    <lastmod>2018-09-21T06:54:09.973Z</lastmod>
+    <data>
+        <display>
+        <title>Flutter 安装</title>
+        <pubTime>2017-12-25T02:03:55.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Google</tag>
+         
+         
+           
+             
+              <breadCrumb title="Flutter" url="http://www.wangzhumo.com/categories/Flutter/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/07/05/GitHub-With-SSH/</loc>
+    <lastmod>2018-09-21T06:53:22.541Z</lastmod>
+    <data>
+        <display>
+        <title>GitHub使用SSH的方式免密上传</title>
+        <pubTime>2018-07-05T05:13:25.000Z</pubTime>
+        
+        <tag>GitHub</tag>
+         
+         
+           
+             
+              <breadCrumb title="Tools" url="http://www.wangzhumo.com/categories/Tools/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2017/12/25/Google-Chrome-Plug-In/</loc>
+    <lastmod>2018-09-21T06:53:00.773Z</lastmod>
+    <data>
+        <display>
+        <title>常用的Google Chrome 浏览器插件</title>
+        <pubTime>2017-12-25T02:35:02.000Z</pubTime>
+        
+        <tag>tools</tag>
+         
+         
+           
+             
+              <breadCrumb title="Tools" url="http://www.wangzhumo.com/categories/Tools/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/03/07/Handler-analyze/</loc>
+    <lastmod>2018-09-21T06:52:48.778Z</lastmod>
+    <data>
+        <display>
+        <title>Android通讯机制分析-Handler</title>
+        <pubTime>2018-03-07T06:13:47.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Handler</tag>
+         
+         
+           
+             
+              <breadCrumb title="Source Code" url="http://www.wangzhumo.com/categories/Source-Code/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/05/09/Java-memory-module/</loc>
+    <lastmod>2018-09-21T06:52:38.672Z</lastmod>
+    <data>
+        <display>
+        <title>Java中的内存模型</title>
+        <pubTime>2018-05-09T14:26:54.000Z</pubTime>
+        
+        <tag>Java</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://www.wangzhumo.com/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/02/04/Java-String-format/</loc>
+    <lastmod>2018-09-21T06:52:22.440Z</lastmod>
+    <data>
+        <display>
+        <title>Java中String.format()的使用指北</title>
+        <pubTime>2018-02-04T10:16:12.000Z</pubTime>
+        
+        <tag>Java</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://www.wangzhumo.com/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/02/05/Jenkins-Android/</loc>
+    <lastmod>2018-09-21T06:52:04.790Z</lastmod>
+    <data>
+        <display>
+        <title>Jenkins搭建Android自动打包</title>
+        <pubTime>2018-02-05T01:55:44.000Z</pubTime>
+        
+        <tag>Server</tag>
+         
+        <tag>Android</tag>
+         
+        <tag>Jenkins</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2017/12/25/jni-with-so/</loc>
+    <lastmod>2018-09-21T06:51:40.677Z</lastmod>
+    <data>
+        <display>
+        <title>jni使用指南,关于.so你应该知道的</title>
+        <pubTime>2017-12-25T02:12:59.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2017/12/24/Linux-learn/</loc>
+    <lastmod>2018-09-21T06:50:55.426Z</lastmod>
+    <data>
+        <display>
+        <title>Linux 学习笔记</title>
+        <pubTime>2017-12-24T15:50:59.000Z</pubTime>
+        
+        <tag>Server</tag>
+         
+        <tag>Linux</tag>
+         
+         
+           
+             
+              <breadCrumb title="Server" url="http://www.wangzhumo.com/categories/Server/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2017/12/25/Nginx-install-config/</loc>
+    <lastmod>2018-09-21T06:49:59.978Z</lastmod>
+    <data>
+        <display>
+        <title>Nginx安装及其简单配置</title>
+        <pubTime>2017-12-25T05:39:40.000Z</pubTime>
+        
+        <tag>Server</tag>
+         
+        <tag>Linux</tag>
+         
+         
+           
+             
+              <breadCrumb title="Server" url="http://www.wangzhumo.com/categories/Server/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/01/10/OkHttp-support-https/</loc>
+    <lastmod>2018-09-21T06:49:32.569Z</lastmod>
+    <data>
+        <display>
+        <title>OkHttp中添加https支持</title>
+        <pubTime>2018-01-10T08:43:57.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/07/15/Recursion-Linked-List/</loc>
+    <lastmod>2018-09-21T06:49:08.804Z</lastmod>
+    <data>
+        <display>
+        <title>递归调用创建单链表</title>
+        <pubTime>2018-07-15T03:05:09.000Z</pubTime>
+        
+        <tag>Java</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://www.wangzhumo.com/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/07/13/RecyclerView-unuseful-notifyItemRangeChanged/</loc>
+    <lastmod>2018-09-21T06:48:59.827Z</lastmod>
+    <data>
+        <display>
+        <title>RecyclerView中notifyItemRangeChanged无效的BUG</title>
+        <pubTime>2018-07-13T14:39:55.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Bug</tag>
+         
+         
+           
+             
+              <breadCrumb title="Bug" url="http://www.wangzhumo.com/categories/Bug/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2017/07/31/Regular-Expression/</loc>
+    <lastmod>2018-09-21T06:48:47.342Z</lastmod>
+    <data>
+        <display>
+        <title>常用正则表达式记录</title>
+        <pubTime>2017-07-31T05:09:38.000Z</pubTime>
+        
+        <tag>Regular</tag>
+         
+         
+           
+             
+              <breadCrumb title="Other" url="http://www.wangzhumo.com/categories/Other/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/03/07/RelativeLayout-Button-over/</loc>
+    <lastmod>2018-09-21T06:48:36.768Z</lastmod>
+    <data>
+        <display>
+        <title>RelativeLayout中Button覆盖其他View</title>
+        <pubTime>2018-03-07T03:53:36.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Bug</tag>
+         
+         
+           
+             
+              <breadCrumb title="Bug" url="http://www.wangzhumo.com/categories/Bug/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2017/12/25/Retrofit2-Okhttp3-Rxjava2-1/</loc>
+    <lastmod>2018-09-21T06:48:20.507Z</lastmod>
+    <data>
+        <display>
+        <title>Retrofit2 + Okhttp3 + Rxjava2 网络请求封装(上)</title>
+        <pubTime>2017-12-25T04:14:04.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Okhttp</tag>
+         
+        <tag>Rxjava</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/01/17/Room-AppDatabase-Impl-does-not-exist/</loc>
+    <lastmod>2018-09-21T06:47:33.348Z</lastmod>
+    <data>
+        <display>
+        <title>Room --AppDatabase_Impl does not exist的异常解决</title>
+        <pubTime>2018-01-17T09:08:28.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Bug</tag>
+         
+        <tag>Room</tag>
+         
+         
+           
+             
+              <breadCrumb title="Bug" url="http://www.wangzhumo.com/categories/Bug/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2017/12/25/room-list-object/</loc>
+    <lastmod>2018-09-21T06:47:13.006Z</lastmod>
+    <data>
+        <display>
+        <title>Room数据库使用指北List<>的问题</title>
+        <pubTime>2017-12-25T05:08:10.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Room</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/07/30/Screen-toutiao-resize/</loc>
+    <lastmod>2018-09-21T06:46:44.730Z</lastmod>
+    <data>
+        <display>
+        <title>今日头条的屏幕适配方案</title>
+        <pubTime>2018-07-30T06:16:26.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/01/03/room-list/</loc>
+    <lastmod>2018-09-21T06:43:21.312Z</lastmod>
+    <data>
+        <display>
+        <title>Room中List<>使用详解</title>
+        <pubTime>2018-01-03T07:03:38.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Room</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/06/26/serviceloader-zerenlian/</loc>
+    <lastmod>2018-09-21T06:42:29.963Z</lastmod>
+    <data>
+        <display>
+        <title>ServiceLoader 与 责任链设计模式</title>
+        <pubTime>2018-06-26T10:22:46.000Z</pubTime>
+        
+        <tag>Java</tag>
+         
+        <tag>设计模式</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://www.wangzhumo.com/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2017/12/25/textview-span/</loc>
+    <lastmod>2018-09-21T06:42:13.843Z</lastmod>
+    <data>
+        <display>
+        <title>TextView中的文字颜色,点击,斜体等实现--SpannableString</title>
+        <pubTime>2017-12-25T02:06:03.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/05/10/Thread-Process-IPC/</loc>
+    <lastmod>2018-09-21T06:40:54.751Z</lastmod>
+    <data>
+        <display>
+        <title>线程与进程的异同以及Android中的IPC机制</title>
+        <pubTime>2018-05-10T09:16:06.000Z</pubTime>
+        
+        <tag>Java</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://www.wangzhumo.com/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.wangzhumo.com/2018/09/08/multimedia-learn-audio-base/</loc>
     <lastmod>2018-09-21T03:17:58.254Z</lastmod>
     <data>
@@ -113,9 +1297,9 @@
         <title>WebSocket的使用笔记-理论基础</title>
         <pubTime>2018-08-19T02:57:00.000Z</pubTime>
         
-        <tag>Android</tag>
-         
         <tag>Server</tag>
+         
+        <tag>Android</tag>
          
          
            
@@ -277,256 +1461,6 @@
 
     
   <url>
-    <loc>http://www.wangzhumo.com/2018/07/30/ConstraintLayout-Advance/</loc>
-    <lastmod>2018-08-06T06:04:34.000Z</lastmod>
-    <data>
-        <display>
-        <title>ConstraintLayout使用指南-进阶使用</title>
-        <pubTime>2018-07-30T06:54:45.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/07/31/Arithmetic-quick-sort/</loc>
-    <lastmod>2018-08-01T01:25:20.000Z</lastmod>
-    <data>
-        <display>
-        <title>算法复习笔记-快速排序</title>
-        <pubTime>2018-07-31T10:04:11.000Z</pubTime>
-        
-        <tag>Programme</tag>
-         
-         
-           
-             
-              <breadCrumb title="Programme" url="http://www.wangzhumo.com/categories/Programme/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/07/31/Arithmetic-merge-sort/</loc>
-    <lastmod>2018-08-01T01:24:59.000Z</lastmod>
-    <data>
-        <display>
-        <title>算法复习笔记-归并排序</title>
-        <pubTime>2018-07-31T08:24:50.000Z</pubTime>
-        
-        <tag>Programme</tag>
-         
-         
-           
-             
-              <breadCrumb title="Programme" url="http://www.wangzhumo.com/categories/Programme/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/07/26/Android-xml-style/</loc>
-    <lastmod>2018-07-31T07:58:32.000Z</lastmod>
-    <data>
-        <display>
-        <title>Android开发xml中的样式</title>
-        <pubTime>2018-07-26T05:23:26.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>View</tag>
-         
-         
-           
-             
-              <breadCrumb title="View" url="http://www.wangzhumo.com/categories/View/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2017/07/31/Regular-Expression/</loc>
-    <lastmod>2018-07-31T07:58:12.000Z</lastmod>
-    <data>
-        <display>
-        <title>常用正则表达式记录</title>
-        <pubTime>2017-07-31T05:09:38.000Z</pubTime>
-        
-        <tag>Regular</tag>
-         
-         
-           
-             
-              <breadCrumb title="Other" url="http://www.wangzhumo.com/categories/Other/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/07/30/Android-MotionEvent-ViewGroup/</loc>
-    <lastmod>2018-07-31T05:24:34.000Z</lastmod>
-    <data>
-        <display>
-        <title>Android事件分发机制-ViewGroup</title>
-        <pubTime>2018-07-30T04:20:02.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>View</tag>
-         
-         
-           
-             
-              <breadCrumb title="View" url="http://www.wangzhumo.com/categories/View/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/07/30/Screen-toutiao-resize/</loc>
-    <lastmod>2018-07-30T08:24:02.000Z</lastmod>
-    <data>
-        <display>
-        <title>今日头条的屏幕适配方案</title>
-        <pubTime>2018-07-30T06:16:26.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/07/27/Bezier-Google-caihuaxiaoge/</loc>
-    <lastmod>2018-07-30T04:13:03.000Z</lastmod>
-    <data>
-        <display>
-        <title>贝塞尔曲线练习-谷歌猜画小歌的倒计时</title>
-        <pubTime>2018-07-27T08:42:41.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>View</tag>
-         
-         
-           
-             
-              <breadCrumb title="View" url="http://www.wangzhumo.com/categories/View/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/07/24/Firefly-RK3399/</loc>
-    <lastmod>2018-07-26T09:53:11.000Z</lastmod>
-    <data>
-        <display>
-        <title>开发板Firefly-RK3399初探</title>
-        <pubTime>2018-07-24T08:47:17.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>RK3399</tag>
-         
-         
-           
-             
-              <breadCrumb title="Other" url="http://www.wangzhumo.com/categories/Other/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/07/25/Android-Studio-CMake-JNI/</loc>
-    <lastmod>2018-07-26T09:52:17.000Z</lastmod>
-    <data>
-        <display>
-        <title>Android Studio中使用CMake进行JNI开发</title>
-        <pubTime>2018-07-25T03:07:06.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/05/23/Android-VideoPlayer/</loc>
-    <lastmod>2018-07-24T08:48:36.000Z</lastmod>
-    <data>
-        <display>
-        <title>Android自己封装一个VideoPlayer</title>
-        <pubTime>2018-05-23T08:00:32.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>Video</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/07/22/Data-Structure-Note-1/</loc>
-    <lastmod>2018-07-22T01:55:13.000Z</lastmod>
-    <data>
-        <display>
-        <title>数据结构-下笔记</title>
-        <pubTime>2018-07-22T01:50:38.000Z</pubTime>
-        
-        <tag>Programme</tag>
-         
-         
-           
-             
-              <breadCrumb title="Programme" url="http://www.wangzhumo.com/categories/Programme/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://www.wangzhumo.com/2018/07/02/Git-Submodule/</loc>
     <lastmod>2018-07-19T09:23:22.000Z</lastmod>
     <data>
@@ -540,92 +1474,6 @@
            
              
               <breadCrumb title="Tools" url="http://www.wangzhumo.com/categories/Tools/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/07/15/Recursion-Linked-List/</loc>
-    <lastmod>2018-07-19T09:18:34.000Z</lastmod>
-    <data>
-        <display>
-        <title>递归调用创建单链表</title>
-        <pubTime>2018-07-15T03:05:09.000Z</pubTime>
-        
-        <tag>Java</tag>
-         
-         
-           
-             
-              <breadCrumb title="Java" url="http://www.wangzhumo.com/categories/Java/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/07/14/Design-pattern-State/</loc>
-    <lastmod>2018-07-19T09:18:17.000Z</lastmod>
-    <data>
-        <display>
-        <title>设计模式-状态模式的使用</title>
-        <pubTime>2018-07-14T00:45:32.000Z</pubTime>
-        
-        <tag>Java</tag>
-         
-        <tag>设计模式</tag>
-         
-         
-           
-             
-              <breadCrumb title="Java" url="http://www.wangzhumo.com/categories/Java/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/06/26/serviceloader-zerenlian/</loc>
-    <lastmod>2018-07-19T09:17:56.000Z</lastmod>
-    <data>
-        <display>
-        <title>ServiceLoader 与 责任链设计模式</title>
-        <pubTime>2018-06-26T10:22:46.000Z</pubTime>
-        
-        <tag>Java</tag>
-         
-        <tag>设计模式</tag>
-         
-         
-           
-             
-              <breadCrumb title="Java" url="http://www.wangzhumo.com/categories/Java/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/07/13/RecyclerView-unuseful-notifyItemRangeChanged/</loc>
-    <lastmod>2018-07-19T09:17:30.000Z</lastmod>
-    <data>
-        <display>
-        <title>RecyclerView中notifyItemRangeChanged无效的BUG</title>
-        <pubTime>2018-07-13T14:39:55.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>Bug</tag>
-         
-         
-           
-             
-              <breadCrumb title="Bug" url="http://www.wangzhumo.com/categories/Bug/"/>
           
         </display>
     </data>
@@ -673,48 +1521,6 @@
 
     
   <url>
-    <loc>http://www.wangzhumo.com/2018/07/12/ConstraintLayout-Basic/</loc>
-    <lastmod>2018-07-19T09:14:34.000Z</lastmod>
-    <data>
-        <display>
-        <title>ConstraintLayout使用指南-基础的约束</title>
-        <pubTime>2018-07-12T07:49:34.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/07/14/Design-Pattern-Decoration/</loc>
-    <lastmod>2018-07-14T13:14:15.000Z</lastmod>
-    <data>
-        <display>
-        <title>设计模式-装饰者设计模式</title>
-        <pubTime>2018-07-14T11:05:28.000Z</pubTime>
-        
-        <tag>Java</tag>
-         
-        <tag>设计模式</tag>
-         
-         
-           
-             
-              <breadCrumb title="Java" url="http://www.wangzhumo.com/categories/Java/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://www.wangzhumo.com/2018/03/10/JVM-load-class/</loc>
     <lastmod>2018-07-14T03:40:47.000Z</lastmod>
     <data>
@@ -735,373 +1541,6 @@
 
     
   <url>
-    <loc>http://www.wangzhumo.com/2018/03/07/Handler-analyze/</loc>
-    <lastmod>2018-07-14T03:40:10.000Z</lastmod>
-    <data>
-        <display>
-        <title>Android通讯机制分析-Handler</title>
-        <pubTime>2018-03-07T06:13:47.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>Handler</tag>
-         
-         
-           
-             
-              <breadCrumb title="Source Code" url="http://www.wangzhumo.com/categories/Source-Code/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/07/05/GitHub-With-SSH/</loc>
-    <lastmod>2018-07-14T03:39:53.000Z</lastmod>
-    <data>
-        <display>
-        <title>GitHub使用SSH的方式免密上传</title>
-        <pubTime>2018-07-05T05:13:25.000Z</pubTime>
-        
-        <tag>GitHub</tag>
-         
-         
-           
-             
-              <breadCrumb title="Tools" url="http://www.wangzhumo.com/categories/Tools/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/07/05/Android-Bezier/</loc>
-    <lastmod>2018-07-14T03:39:27.000Z</lastmod>
-    <data>
-        <display>
-        <title>Android中的贝塞尔曲线</title>
-        <pubTime>2018-07-05T08:05:12.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/02/07/Android-Timber-Logger/</loc>
-    <lastmod>2018-07-14T03:39:12.000Z</lastmod>
-    <data>
-        <display>
-        <title>Android项目中使用Timber + Logger日志输出</title>
-        <pubTime>2018-02-07T09:48:58.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2017/12/25/Android-RxBus/</loc>
-    <lastmod>2018-07-14T03:39:04.000Z</lastmod>
-    <data>
-        <display>
-        <title>Android项目中使用RxBus进行通讯</title>
-        <pubTime>2017-12-25T06:50:16.000Z</pubTime>
-        
-        <tag>Rxjava</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/01/11/Android-shell-Adb/</loc>
-    <lastmod>2018-07-14T03:38:50.000Z</lastmod>
-    <data>
-        <display>
-        <title>Android开发中常用的Adb命令</title>
-        <pubTime>2018-01-11T04:07:40.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/07/05/Android-inner-class-leak/</loc>
-    <lastmod>2018-07-14T03:38:42.000Z</lastmod>
-    <data>
-        <display>
-        <title>Android非静态内部类与匿名内部类引起的内存泄漏</title>
-        <pubTime>2018-07-05T04:06:51.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>Java</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/05/09/Android-App-Launch/</loc>
-    <lastmod>2018-07-14T03:38:31.000Z</lastmod>
-    <data>
-        <display>
-        <title>Android的启动流程</title>
-        <pubTime>2018-05-09T07:00:12.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>Source Code</tag>
-         
-         
-           
-             
-              <breadCrumb title="Source Code" url="http://www.wangzhumo.com/categories/Source-Code/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2017/12/26/Android-Studio-Error-Running-app-cannot-debug-application/</loc>
-    <lastmod>2018-07-14T03:38:21.000Z</lastmod>
-    <data>
-        <display>
-        <title>Android Studio报错Error Running app: cannot debug application</title>
-        <pubTime>2017-12-26T07:26:29.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>Android Studio</tag>
-         
-        <tag>Bug</tag>
-         
-         
-           
-             
-              <breadCrumb title="Bug" url="http://www.wangzhumo.com/categories/Bug/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/02/26/Android-Studio-tools-sample/</loc>
-    <lastmod>2018-07-14T03:38:15.000Z</lastmod>
-    <data>
-        <display>
-        <title>Android Studio 中使用tools:sample</title>
-        <pubTime>2018-02-26T02:31:28.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>Android Studio</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android Studio" url="http://www.wangzhumo.com/categories/Android-Studio/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2017/12/25/Android-Studio-Vitamio/</loc>
-    <lastmod>2018-07-14T03:37:27.000Z</lastmod>
-    <data>
-        <display>
-        <title>Android Studio 导入 Vitamio及横竖屏切换</title>
-        <pubTime>2017-12-25T01:28:42.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>Android Studio</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android Studio" url="http://www.wangzhumo.com/categories/Android-Studio/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/05/11/Android-Binder-1/</loc>
-    <lastmod>2018-07-14T03:37:07.000Z</lastmod>
-    <data>
-        <display>
-        <title>Android Binder机制(一)</title>
-        <pubTime>2018-05-11T05:56:25.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>Source Code</tag>
-         
-        <tag>Binder</tag>
-         
-         
-           
-             
-              <breadCrumb title="Source Code" url="http://www.wangzhumo.com/categories/Source-Code/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2017/12/25/Android-dependent-config/</loc>
-    <lastmod>2018-07-14T03:37:01.000Z</lastmod>
-    <data>
-        <display>
-        <title>Android 项目统一管理依赖版本</title>
-        <pubTime>2017-12-25T03:39:45.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>Gradle</tag>
-         
-        <tag>组件化</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/02/26/Android-unit-test/</loc>
-    <lastmod>2018-07-14T03:36:47.000Z</lastmod>
-    <data>
-        <display>
-        <title>Android 单元测试(一)</title>
-        <pubTime>2018-02-26T06:25:49.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>Android单元测试</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/03/05/Activity-Fragment-life/</loc>
-    <lastmod>2018-07-14T03:36:41.000Z</lastmod>
-    <data>
-        <display>
-        <title>Activity与Fragment的生命周期</title>
-        <pubTime>2018-03-05T06:02:42.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>Fragment</tag>
-         
-        <tag>Activity</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/05/10/Thread-Process-IPC/</loc>
-    <lastmod>2018-07-14T03:36:32.000Z</lastmod>
-    <data>
-        <display>
-        <title>线程与进程的异同以及Android中的IPC机制</title>
-        <pubTime>2018-05-10T09:16:06.000Z</pubTime>
-        
-        <tag>Java</tag>
-         
-         
-           
-             
-              <breadCrumb title="Java" url="http://www.wangzhumo.com/categories/Java/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/01/11/Charles-Https/</loc>
-    <lastmod>2018-07-14T03:36:16.000Z</lastmod>
-    <data>
-        <display>
-        <title>使用Charles抓Https的数据请求</title>
-        <pubTime>2018-01-11T08:09:46.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>Https</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://www.wangzhumo.com/2018/07/02/UC-Browser-Like/</loc>
     <lastmod>2018-07-14T03:34:43.000Z</lastmod>
     <data>
@@ -1115,46 +1554,6 @@
            
              
               <breadCrumb title="View" url="http://www.wangzhumo.com/categories/View/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2017/12/25/Bluetooth-iBeacon/</loc>
-    <lastmod>2018-07-14T03:34:31.000Z</lastmod>
-    <data>
-        <display>
-        <title>低功耗蓝牙iBeacon的开发笔记</title>
-        <pubTime>2017-12-25T01:37:23.000Z</pubTime>
-        
-        <tag>蓝牙</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2017/12/25/Google-Chrome-Plug-In/</loc>
-    <lastmod>2018-07-14T03:33:58.000Z</lastmod>
-    <data>
-        <display>
-        <title>常用的Google Chrome 浏览器插件</title>
-        <pubTime>2017-12-25T02:35:02.000Z</pubTime>
-        
-        <tag>tools</tag>
-         
-         
-           
-             
-              <breadCrumb title="Tools" url="http://www.wangzhumo.com/categories/Tools/"/>
           
         </display>
     </data>
@@ -1185,67 +1584,6 @@
 
     
   <url>
-    <loc>http://www.wangzhumo.com/2018/05/21/Android-Shade/</loc>
-    <lastmod>2018-05-23T07:59:43.000Z</lastmod>
-    <data>
-        <display>
-        <title>Android自定义一个遮罩引导层</title>
-        <pubTime>2018-05-21T08:53:08.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>View</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/05/09/Java-memory-module/</loc>
-    <lastmod>2018-05-10T09:16:37.000Z</lastmod>
-    <data>
-        <display>
-        <title>Java中的内存模型</title>
-        <pubTime>2018-05-09T14:26:54.000Z</pubTime>
-        
-        <tag>Java</tag>
-         
-         
-           
-             
-              <breadCrumb title="Java" url="http://www.wangzhumo.com/categories/Java/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/03/07/RelativeLayout-Button-over/</loc>
-    <lastmod>2018-03-07T05:09:51.000Z</lastmod>
-    <data>
-        <display>
-        <title>RelativeLayout中Button覆盖其他View</title>
-        <pubTime>2018-03-07T03:53:36.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>Bug</tag>
-         
-         
-           
-             
-              <breadCrumb title="Bug" url="http://www.wangzhumo.com/categories/Bug/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://www.wangzhumo.com/2018/03/05/ConfigChanges/</loc>
     <lastmod>2018-03-05T10:26:08.000Z</lastmod>
     <data>
@@ -1266,28 +1604,6 @@
 
     
   <url>
-    <loc>http://www.wangzhumo.com/2018/02/28/Flutter-Install-MAC/</loc>
-    <lastmod>2018-02-28T16:44:14.000Z</lastmod>
-    <data>
-        <display>
-        <title>Flutter安装指南MAC版</title>
-        <pubTime>2018-02-28T15:56:58.000Z</pubTime>
-        
-        <tag>Google</tag>
-         
-        <tag>Flutter</tag>
-         
-         
-           
-             
-              <breadCrumb title="Flutter" url="http://www.wangzhumo.com/categories/Flutter/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://www.wangzhumo.com/2017/12/23/transparency-table/</loc>
     <lastmod>2018-02-28T16:33:07.000Z</lastmod>
     <data>
@@ -1301,74 +1617,6 @@
            
              
               <breadCrumb title="Tools" url="http://www.wangzhumo.com/categories/Tools/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2017/12/25/Flutter-install-net-error/</loc>
-    <lastmod>2018-02-28T16:31:53.000Z</lastmod>
-    <data>
-        <display>
-        <title>Flutter 安装</title>
-        <pubTime>2017-12-25T02:03:55.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>Google</tag>
-         
-         
-           
-             
-              <breadCrumb title="Flutter" url="http://www.wangzhumo.com/categories/Flutter/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2017/12/28/Apk-Install-Error/</loc>
-    <lastmod>2018-02-28T16:29:52.000Z</lastmod>
-    <data>
-        <display>
-        <title>Apk Install 的各种问题</title>
-        <pubTime>2017-12-28T06:48:09.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>Bug</tag>
-         
-         
-           
-             
-              <breadCrumb title="Bug" url="http://www.wangzhumo.com/categories/Bug/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/01/17/Room-AppDatabase-Impl-does-not-exist/</loc>
-    <lastmod>2018-02-28T16:29:10.000Z</lastmod>
-    <data>
-        <display>
-        <title>Room --AppDatabase_Impl does not exist的异常解决</title>
-        <pubTime>2018-01-17T09:08:28.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>Bug</tag>
-         
-        <tag>Room</tag>
-         
-         
-           
-             
-              <breadCrumb title="Bug" url="http://www.wangzhumo.com/categories/Bug/"/>
           
         </display>
     </data>
@@ -1439,111 +1687,6 @@
     </url>
 
     
-  <url>
-    <loc>http://www.wangzhumo.com/2018/02/04/Java-String-format/</loc>
-    <lastmod>2018-02-07T10:27:47.000Z</lastmod>
-    <data>
-        <display>
-        <title>Java中String.format()的使用指北</title>
-        <pubTime>2018-02-04T10:16:12.000Z</pubTime>
-        
-        <tag>Java</tag>
-         
-         
-           
-             
-              <breadCrumb title="Java" url="http://www.wangzhumo.com/categories/Java/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/02/05/Jenkins-Android/</loc>
-    <lastmod>2018-02-05T04:49:03.000Z</lastmod>
-    <data>
-        <display>
-        <title>Jenkins搭建Android自动打包</title>
-        <pubTime>2018-02-05T01:55:44.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>Server</tag>
-         
-        <tag>Jenkins</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/01/10/OkHttp-support-https/</loc>
-    <lastmod>2018-01-10T15:29:54.000Z</lastmod>
-    <data>
-        <display>
-        <title>OkHttp中添加https支持</title>
-        <pubTime>2018-01-10T08:43:57.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2018/01/03/room-list/</loc>
-    <lastmod>2018-01-09T09:11:17.000Z</lastmod>
-    <data>
-        <display>
-        <title>Room中List<>使用详解</title>
-        <pubTime>2018-01-03T07:03:38.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>Room</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2017/12/25/room-list-object/</loc>
-    <lastmod>2018-01-09T07:15:26.000Z</lastmod>
-    <data>
-        <display>
-        <title>Room数据库使用指北List<>的问题</title>
-        <pubTime>2017-12-25T05:08:10.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>Room</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
-          
-        </display>
-    </data>
-    </url>
-
     
   <url>
     <loc>http://www.wangzhumo.com/2017/12/28/Android-Font-Size/</loc>
@@ -1552,48 +1695,6 @@
         <display>
         <title>Android字体不跟随系统变化</title>
         <pubTime>2017-12-28T07:30:11.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2017/12/25/Centos-Login-SSH/</loc>
-    <lastmod>2017-12-25T08:34:09.000Z</lastmod>
-    <data>
-        <display>
-        <title>Centos 创建用户并实现免密码登录</title>
-        <pubTime>2017-12-25T08:25:04.000Z</pubTime>
-        
-        <tag>Server</tag>
-         
-        <tag>Linux</tag>
-         
-         
-           
-             
-              <breadCrumb title="Server" url="http://www.wangzhumo.com/categories/Server/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2017/12/25/textview-span/</loc>
-    <lastmod>2017-12-25T08:19:22.000Z</lastmod>
-    <data>
-        <display>
-        <title>TextView中的文字颜色,点击,斜体等实现--SpannableString</title>
-        <pubTime>2017-12-25T02:06:03.000Z</pubTime>
         
         <tag>Android</tag>
          
@@ -1632,74 +1733,6 @@
 
     
   <url>
-    <loc>http://www.wangzhumo.com/2017/12/25/Retrofit2-Okhttp3-Rxjava2-1/</loc>
-    <lastmod>2017-12-25T08:13:49.000Z</lastmod>
-    <data>
-        <display>
-        <title>Retrofit2 + Okhttp3 + Rxjava2 网络请求封装(上)</title>
-        <pubTime>2017-12-25T04:14:04.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>Okhttp</tag>
-         
-        <tag>Rxjava</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2017/12/25/Nginx-install-config/</loc>
-    <lastmod>2017-12-25T06:03:27.000Z</lastmod>
-    <data>
-        <display>
-        <title>Nginx安装及其简单配置</title>
-        <pubTime>2017-12-25T05:39:40.000Z</pubTime>
-        
-        <tag>Server</tag>
-         
-        <tag>Linux</tag>
-         
-         
-           
-             
-              <breadCrumb title="Server" url="http://www.wangzhumo.com/categories/Server/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2017/12/24/Linux-learn/</loc>
-    <lastmod>2017-12-25T05:40:28.000Z</lastmod>
-    <data>
-        <display>
-        <title>Linux 学习笔记</title>
-        <pubTime>2017-12-24T15:50:59.000Z</pubTime>
-        
-        <tag>Server</tag>
-         
-        <tag>Linux</tag>
-         
-         
-           
-             
-              <breadCrumb title="Server" url="http://www.wangzhumo.com/categories/Server/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://www.wangzhumo.com/2017/12/25/Android-build-gradle-config/</loc>
     <lastmod>2017-12-25T04:25:51.000Z</lastmod>
     <data>
@@ -1710,83 +1743,6 @@
         <tag>Android</tag>
          
         <tag>Gradle</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2017/12/25/jni-with-so/</loc>
-    <lastmod>2017-12-25T02:13:30.000Z</lastmod>
-    <data>
-        <display>
-        <title>jni使用指南,关于.so你应该知道的</title>
-        <pubTime>2017-12-25T02:12:59.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2017/12/25/EditText-InputType-imeOptions/</loc>
-    <lastmod>2017-12-25T02:12:54.000Z</lastmod>
-    <data>
-        <display>
-        <title>EditText的输入属性InputType以及imeOptions</title>
-        <pubTime>2017-12-25T02:11:15.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2017/12/25/BottomNavigationView/</loc>
-    <lastmod>2017-12-25T01:47:43.000Z</lastmod>
-    <data>
-        <display>
-        <title>BottomNavigationView使用指南</title>
-        <pubTime>2017-12-25T01:40:44.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.wangzhumo.com/categories/Android/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wangzhumo.com/2017/12/24/Facebook-Stetho/</loc>
-    <lastmod>2017-12-24T15:49:36.000Z</lastmod>
-    <data>
-        <display>
-        <title>Facebook/Stetho——Android开发调试神器</title>
-        <pubTime>2017-12-24T15:47:55.000Z</pubTime>
-        
-        <tag>Android</tag>
          
          
            

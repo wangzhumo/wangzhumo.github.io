@@ -159,11 +159,11 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                85
+                83
                 <span>文章</span>
             </div>
             <div class="article-info-block">
-                37
+                35
                 <span>标签</span>
             </div>
         </div>
@@ -188,365 +188,6 @@
 
             
             <section id="main">
-    <article id="post-Android-Timber-Logger" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/02/07/Android-Timber-Logger/">Android项目中使用Timber + Logger日志输出</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/02/07/Android-Timber-Logger/">
-            <time datetime="2018-02-07T09:48:58.000Z" itemprop="datePublished">2018-02-07</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android/">Android</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p>不啰嗦了,直接开始.</p>
-<h4 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h4><blockquote>
-<p>Logger   <a href="https://github.com/orhanobut/logger" target="_blank" rel="noopener">orhanobut/Logger</a></p>
-<p>Timber  <a href="https://github.com/JakeWharton/timber" target="_blank" rel="noopener">JakeWharton/timber</a></p>
-</blockquote>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//logger</span></span><br><span class="line">implementation <span class="string">'com.orhanobut:logger:2.1.1'</span></span><br><span class="line"><span class="comment">//timber</span></span><br><span class="line">implementation <span class="string">'com.jakewharton.timber:timber:4.6.0'</span></span><br></pre></td></tr></table></figure></p>
-            <p class="article-more-link">
-                <a href="/2018/02/07/Android-Timber-Logger/#more">查看更多</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.wangzhumo.com/2018/02/07/Android-Timber-Logger/" data-id="cjmbfu50l001cyystwk5wegsr" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-Jenkins-Android" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/02/05/Jenkins-Android/">Jenkins搭建Android自动打包</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/02/05/Jenkins-Android/">
-            <time datetime="2018-02-05T01:55:44.000Z" itemprop="datePublished">2018-02-05</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/Jenkins/">Jenkins</a>, <a class="tag-link" href="/tags/Server/">Server</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <h4 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h4><ul>
-<li><p>Jenkins的下载与安装</p>
-<p><strong>下载</strong></p>
-<blockquote>
-<p> <a href="https://jenkins.io/download/" target="_blank" rel="noopener">https://jenkins.io/download/</a></p>
-<p> 下载war包</p>
-<p> <a href="http://mirrors.jenkins.io/war-stable/latest/jenkins.war" target="_blank" rel="noopener">Generic Java package (.war)</a></p>
-</blockquote>
-<p>因为打算使用Tomcat来部署,所以需要下载war包,也可以直接下对应版本的安装文件,直接安装</p>
-</li>
-</ul>
-<p>​    <strong>安装</strong></p>
-<p>​    war包放到<code>./apache-tomcat-7.0.77/webapps</code>    </p>
-<p>​    Tomcat的wabapps包下即可</p>
-<ul>
-<li><p>Tomcat (略)</p>
-<p>记得配置一下环境变量,等会方便启动</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export TOMCAT_HOME=/Users/phyooos/develop/apache-tomcat-7.0.77</span><br><span class="line"></span><br><span class="line">export PATH.....:$TOMCAT/bin</span><br></pre></td></tr></table></figure>
-<p>​</p>
-</li>
-</ul>
-<h4 id="初始化Jenkins"><a href="#初始化Jenkins" class="headerlink" title="初始化Jenkins"></a>初始化Jenkins</h4><ul>
-<li><p>启动Jenkins,即启动tomcat</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> startup.sh</span><br><span class="line">Using CATALINA_BASE:   /Users/phyooos/develop/apache-tomcat-7.0.77</span><br><span class="line">Using CATALINA_HOME:   /Users/phyooos/develop/apache-tomcat-7.0.77</span><br><span class="line">Using CATALINA_TMPDIR: /Users/phyooos/develop/apache-tomcat-7.0.77/temp</span><br><span class="line">Using JRE_HOME:        /Library/Java/JavaVirtualMachines/jdk1.8.0/Contents/Home</span><br><span class="line">Using CLASSPATH:       /Users/phyooos/develop/apache-tomcat-7.0.77/bin/bootstrap.jar:/Users/phyooos/develop/apache-tomcat-7.0.77/bin/tomcat-juli.jar</span><br><span class="line">Tomcat started.</span><br></pre></td></tr></table></figure>
-<p>看到这个就说明,已经正常启动</p>
-</li>
-<li><p>访问<a href="http://localhost:8080/jenkins/" target="_blank" rel="noopener">http://localhost:8080/jenkins/</a></p>
-<p>打开后需要输入一个密钥,mac的在<code>jenkins/secrets/initialAdminPassword</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">~ ⌚ 10:11:03</span><br><span class="line"><span class="meta">$</span> cat ~/.jenkins/secrets/initialAdminPassword</span><br><span class="line">55ad44431f6d4ebdb53a7c1971d12df4</span><br></pre></td></tr></table></figure>
-<p>输入此密钥即可.</p>
-</li>
-<li><p>创建用户</p>
-</li>
-</ul>
-<h4 id="配置Jenkins"><a href="#配置Jenkins" class="headerlink" title="配置Jenkins"></a>配置Jenkins</h4><h5 id="1-安装插件"><a href="#1-安装插件" class="headerlink" title="1.安装插件"></a>1.安装插件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">	</span><br><span class="line">Build Timeout</span><br><span class="line"></span><br><span class="line">build-name-setter</span><br><span class="line"></span><br><span class="line">Credentials Binding Plugin</span><br><span class="line"></span><br><span class="line">description setter plugin</span><br><span class="line"></span><br><span class="line">Dynamic Parameter Plug-in(这个插件,搜不到了,因为安全问题被屏蔽了)</span><br><span class="line"></span><br><span class="line">Environment Injector Plugin</span><br><span class="line"></span><br><span class="line">Git plugin</span><br><span class="line"></span><br><span class="line">GitHub Branch Source Plugin</span><br><span class="line">	</span><br><span class="line">Gitlab Authentication plugin</span><br><span class="line"></span><br><span class="line">GitLab Plugin</span><br><span class="line"></span><br><span class="line">Gradle Plugin</span><br><span class="line"></span><br><span class="line">Pipeline</span><br><span class="line"></span><br><span class="line">SSH Slaves plugin</span><br><span class="line">	</span><br><span class="line">SSH plugin</span><br><span class="line">	</span><br><span class="line">Timestamper</span><br><span class="line">	</span><br><span class="line">Upload to pgyer(上传到蒲公英,没有需要的不用安装)</span><br><span class="line">	</span><br><span class="line">Workspace Cleanup Plugin</span><br></pre></td></tr></table></figure>
-<p>以上插件,是常用的插件,尽量全部安装</p>
-<h5 id="2-配置环境变量"><a href="#2-配置环境变量" class="headerlink" title="2.配置环境变量"></a>2.配置环境变量</h5><p><strong>系统管理 - 全局工具配置</strong></p>
-<p>需要配置</p>
-<p>Java</p>
-<p><img src="/images/jenkins_java.png" alt="Java"></p>
-<p>Git</p>
-<p><img src="/images/jenkins_git.png" alt="Git"></p>
-<p>Gradle</p>
-<p><img src="/images/jenkins_gradle.png" alt="Gradle"></p>
-<p>配置好保存即可</p>
-<p><strong>系统管理 - 系统设置</strong></p>
-<p>记得配置gitlab或者 github账号</p>
-<h5 id="3-初始化项目"><a href="#3-初始化项目" class="headerlink" title="3.初始化项目"></a>3.初始化项目</h5><p>创建项目</p>
-<p><img src="/images/jenkins_init.png" alt="init"></p>
-<hr>
-<p><strong>General</strong></p>
-<p>选择参数化构建过程</p>
-<p>IS_JENKINS  是否Jenkins打包,这里肯定是一直true的</p>
-<p>PRODUCT_FLAVORS  环境</p>
-<p>BUILD_TYPE  构建版本</p>
-<p>VERSION_NAME 版本名字</p>
-<p>JENKINS_OUTPUT Apk生成目录</p>
-<p>JENKINS_TIME  时间戳</p>
-<p><img src="/images/jenkins_init1.png" alt="General"></p>
-<p><img src="/images/jenkins_init2.png" alt="General"></p>
-<p><img src="/images/jenkins_init3.png" alt="General"></p>
-<p>这些参数定义完就可以使用了 ${参数名} 的形式,这些参数会写入到 App项目中的 gradle.properties文件</p>
-<p>App项目中的 gradle.properties文件</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># When configured, Gradle will run in incubating parallel mode.</span><br><span class="line"># This option should only be used with decoupled projects. More details, visit</span><br><span class="line"># http://www.gradle.org/docs/current/userguide/multi_project_builds.html#sec:decoupled_projects</span><br><span class="line"># org.gradle.parallel=true</span><br><span class="line">org.gradle.jvmargs=-Xmx4608M</span><br><span class="line"></span><br><span class="line">VERSION_NAME=<span class="number">1.4</span>.0</span><br><span class="line">VERSION_CODE=<span class="number">12</span></span><br><span class="line">IS_JENKINS=<span class="keyword">false</span></span><br><span class="line">JENKINS_OUTPUT=<span class="string">'output/'</span></span><br><span class="line">JENKINS_TIME=<span class="string">'201802021231'</span></span><br></pre></td></tr></table></figure>
-<hr>
-<p>进入下一个配置页面,到<strong>源码管理</strong>那块</p>
-<p><img src="/images/jenkins_gitlab.png" alt="gitlab"></p>
-<p>只要你能下载到源码即可,无所谓非要和我这个一致,branch  就是指定分支了,我这儿是  dev 分支</p>
-<hr>
-<p>下一个配置<strong>构建</strong></p>
-<p><img src="/images/jenkins_build.png" alt="build"></p>
-<p>选择 Invoke Gradle </p>
-<p>Tasks 里面的命令,我来解释一下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#清理</span><br><span class="line">clean  </span><br><span class="line">#打包</span><br><span class="line">assemble$&#123;PRODUCT_FLAVORS&#125;$&#123;BUILD_TYPE&#125;</span><br><span class="line">#这里的意思是 打包指定的一个FLAVOR版本(Release + 版本)</span><br><span class="line">#关于assemble ...  的,请搜 gradle 打包命令</span><br><span class="line"></span><br><span class="line">#其他参数</span><br><span class="line">-PVERSION_NAME=$&#123;VERSION_NAME&#125;</span><br><span class="line">-PVERSION_CODE=$&#123;VERSION_CODE&#125;</span><br><span class="line">-PJENKINS_OUTPUT=$&#123;JENKINS_OUTPUT&#125;</span><br><span class="line">-PJENKINS_TIME=$&#123;JENKINS_TIME&#125;</span><br><span class="line">-PIS_JENKINS=$&#123;IS_JENKINS&#125;</span><br><span class="line"></span><br><span class="line">#-P意味着参数</span><br><span class="line">#-P后面是参数名</span><br><span class="line">#=$&#123;&#125; 则为参数值,就是上面General里面配置的</span><br></pre></td></tr></table></figure>
-<hr>
-<p><strong>构建后操作</strong></p>
-<p><img src="/images/jenkins_pgy.png" alt="pgy"></p>
-<blockquote>
-<p>参考 <a href="https://www.pgyer.com/doc/view/jenkins_plugin" target="_blank" rel="noopener">https://www.pgyer.com/doc/view/jenkins_plugin</a></p>
-</blockquote>
-<p>保存即可</p>
-<h5 id="改造App"><a href="#改造App" class="headerlink" title="改造App"></a>改造App</h5><ul>
-<li>./gradle.properties文件</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">VERSION_NAME=1.4.0</span><br><span class="line">VERSION_CODE=12</span><br><span class="line">IS_JENKINS=false</span><br><span class="line">JENKINS_OUTPUT=&apos;output/&apos;</span><br><span class="line">JENKINS_TIME=&apos;201802021231&apos;</span><br></pre></td></tr></table></figure>
-<p>以上文件,写完请build一次,便于build.gradle中使用</p>
-<p>使用jenkins时,jenkins会把定义的值注入到这里,覆盖这里定义的值</p>
-<ul>
-<li>app/build.gradle</li>
-</ul>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">android&#123;</span><br><span class="line"></span><br><span class="line">	defaultConfig &#123;</span><br><span class="line">    	...</span><br><span class="line">    	<span class="comment">//此处使用gradle.properties中的值   VERSION_CODE和VERSION_NAME</span></span><br><span class="line">    	versionCode VERSION_CODE <span class="keyword">as</span> Integer</span><br><span class="line">    	versionName VERSION_NAME</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//自定义apk名字</span></span><br><span class="line">    android.applicationVariants.all &#123; variant -&gt;</span><br><span class="line">    	<span class="comment">//获取时间戳</span></span><br><span class="line">        <span class="keyword">def</span> timeNow = getDate()</span><br><span class="line">        <span class="comment">//如果是IS_JENKINS构建,则修改打包apk的目录</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="string">'true'</span>.equals(IS_JENKINS)) &#123;</span><br><span class="line">        	<span class="comment">//使用JENKINS_OUTPUT的目录</span></span><br><span class="line">            <span class="keyword">def</span> outputFile = JENKINS_OUTPUT</span><br><span class="line">            <span class="comment">//使用JENKINS_TIME的时间戳</span></span><br><span class="line">            timeNow = JENKINS_TIME</span><br><span class="line">            <span class="comment">//定义apk目录</span></span><br><span class="line">            variant.getPackageApplication().outputDirectory = <span class="keyword">new</span> File(outputFile)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        variant.getPackageApplication().outputScope.apkDatas.forEach &#123; apkData -&gt;</span><br><span class="line">            <span class="comment">//这个修改输出APK的文件名</span></span><br><span class="line">            apkData.outputFileName = <span class="string">"一号车市_$&#123;variant.versionName&#125;_$&#123;timeNow&#125;.apk"</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	flavorDimensions <span class="string">'env'</span></span><br><span class="line"></span><br><span class="line">    productFlavors &#123;</span><br><span class="line">        envapp &#123;</span><br><span class="line">            dimension <span class="string">'env'</span></span><br><span class="line">            <span class="comment">//此处使用jenkins传的VERSION_NAME</span></span><br><span class="line">            versionName VERSION_NAME</span><br><span class="line">            manifestPlaceholders = [<span class="string">UMENG_CHANNEL_VALUE:</span> <span class="string">"app"</span>]</span><br><span class="line">            buildConfigField <span class="string">"String"</span>, <span class="string">"SERVER_HOST"</span>, <span class="string">'"https://app.wangzhumo.com/"'</span></span><br><span class="line">        &#125;</span><br><span class="line">        envtest &#123;</span><br><span class="line">            dimension <span class="string">'env'</span></span><br><span class="line">            <span class="comment">//为了方便测试看出当前app环境,就不用VERSION_NAME了</span></span><br><span class="line">            versionName <span class="string">"Test"</span></span><br><span class="line">            manifestPlaceholders = [<span class="string">UMENG_CHANNEL_VALUE:</span> <span class="string">"app"</span>]</span><br><span class="line">            buildConfigField <span class="string">"String"</span>, <span class="string">"SERVER_HOST"</span>, <span class="string">'"http://app-test.wangzhumo.com/"'</span></span><br><span class="line">        &#125;</span><br><span class="line">        envpre &#123;</span><br><span class="line">            dimension <span class="string">'env'</span></span><br><span class="line">            versionName <span class="string">"Pre"</span></span><br><span class="line">            manifestPlaceholders = [<span class="string">UMENG_CHANNEL_VALUE:</span> <span class="string">"app"</span>]</span><br><span class="line">            buildConfigField <span class="string">"String"</span>, <span class="string">"SERVER_HOST"</span>, <span class="string">'"https://app-pre.wangzhumo.com/"'</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        envdev &#123;</span><br><span class="line">            dimension <span class="string">'env'</span></span><br><span class="line">            versionName <span class="string">"Dev"</span></span><br><span class="line">            manifestPlaceholders = [<span class="string">UMENG_CHANNEL_VALUE:</span> <span class="string">"app"</span>]</span><br><span class="line">            buildConfigField <span class="string">"String"</span>, <span class="string">"SERVER_HOST"</span>, <span class="string">'"http://192.168.1.16:8080/app2c/"'</span></span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//其实UMENG_CHANNEL_VALUE    SERVER_HOST   也都可以使用jenkins定义参数,并使用</span></span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">//一个获取时间戳的方法</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">def</span> getDate() &#123;</span><br><span class="line">    	<span class="keyword">def</span> date = <span class="keyword">new</span> Date()</span><br><span class="line">    	<span class="keyword">def</span> formattedDate = date.format(<span class="string">'yyyyMMddHHmm'</span>)</span><br><span class="line">    	<span class="keyword">return</span> formattedDate</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>记得改完app,上传代码哦</p>
-<h4 id="Jenkins打包"><a href="#Jenkins打包" class="headerlink" title="Jenkins打包"></a>Jenkins打包</h4><p><img src="/images/jenkins_go.png" alt="打包"></p>
-<p>OK了,可以愉快的打包了,打包完就会自动上传到蒲公英.</p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.wangzhumo.com/2018/02/05/Jenkins-Android/" data-id="cjmbfu5220056yystcjzyziau" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
     <article id="post-Java-String-format" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -589,315 +230,13 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <blockquote>
+            <p><blockquote>
 <p>本文非原创,来自<a href="http://blog.csdn.net/lonely_fireworks/article/details/7962171/" target="_blank" rel="noopener">http://blog.csdn.net/lonely_fireworks/article/details/7962171/</a></p>
 <p>这里做一个备份,方便随时查询</p>
-</blockquote>
-<h4 id="常规类型的格式化"><a href="#常规类型的格式化" class="headerlink" title="常规类型的格式化"></a>常规类型的格式化</h4><p>String类的format()方法用于创建格式化的字符串以及连接多个字符串对象,format()方法有两种重载形式。</p>
-<ul>
-<li><p>format(String format, Object… args) </p>
-<p>新字符串使用本地语言环境，制定字符串格式和参数生成格式化的新字符串。</p>
-</li>
-<li><p>format(Locale locale, String format, Object… args) </p>
-<p>使用指定的语言环境，制定字符串格式和参数生成格式化的字符串。</p>
-</li>
-</ul>
-<h5 id="显示不同转换符实现不同数据类型到字符串的转换，如图所示。"><a href="#显示不同转换符实现不同数据类型到字符串的转换，如图所示。" class="headerlink" title="显示不同转换符实现不同数据类型到字符串的转换，如图所示。"></a>显示不同转换符实现不同数据类型到字符串的转换，如图所示。</h5><table>
-<thead>
-<tr>
-<th>转  换  符</th>
-<th>说    明</th>
-<th>示    例</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>%s</td>
-<td>字符串类型</td>
-<td>“mingrisoft”</td>
-</tr>
-<tr>
-<td>%c</td>
-<td>字符类型</td>
-<td>‘m’</td>
-</tr>
-<tr>
-<td>%b</td>
-<td>布尔类型</td>
-<td>true</td>
-</tr>
-<tr>
-<td>%d</td>
-<td>整数类型（十进制）</td>
-<td>99</td>
-</tr>
-<tr>
-<td>%x</td>
-<td>整数类型（十六进制）</td>
-<td>FF</td>
-</tr>
-<tr>
-<td>%o</td>
-<td>整数类型（八进制）</td>
-<td>77</td>
-</tr>
-<tr>
-<td>%f</td>
-<td>浮点类型</td>
-<td>99.99</td>
-</tr>
-<tr>
-<td>%a</td>
-<td>十六进制浮点类型</td>
-<td>FF.35AE</td>
-</tr>
-<tr>
-<td>%e</td>
-<td>指数类型</td>
-<td>9.38e+5</td>
-</tr>
-<tr>
-<td>%g</td>
-<td>通用浮点类型（f和e类型中较短的）</td>
-<td></td>
-</tr>
-<tr>
-<td>%h</td>
-<td>散列码</td>
-<td></td>
-</tr>
-<tr>
-<td>%%</td>
-<td>百分比类型</td>
-<td>％</td>
-</tr>
-<tr>
-<td>%n</td>
-<td>换行符</td>
-<td></td>
-</tr>
-<tr>
-<td>%tx</td>
-<td>日期与时间类型（x代表不同的日期与时间转换符</td>
-</tr>
-</tbody>
-</table>
-<p>测试用例</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    String str=<span class="keyword">null</span>;</span><br><span class="line">    str=String.format(<span class="string">"Hi,%s"</span>, <span class="string">"王力"</span>);</span><br><span class="line">    System.out.println(str);</span><br><span class="line">    str=String.format(<span class="string">"Hi,%s:%s.%s"</span>, <span class="string">"王南"</span>,<span class="string">"王力"</span>,<span class="string">"王张"</span>);          </span><br><span class="line">    System.out.println(str);                         </span><br><span class="line">    System.out.printf(<span class="string">"字母a的大写是：%c %n"</span>, <span class="string">'A'</span>);</span><br><span class="line">    System.out.printf(<span class="string">"3&gt;7的结果是：%b %n"</span>, <span class="number">3</span>&gt;<span class="number">7</span>);</span><br><span class="line">    System.out.printf(<span class="string">"100的一半是：%d %n"</span>, <span class="number">100</span>/<span class="number">2</span>);</span><br><span class="line">    System.out.printf(<span class="string">"100的16进制数是：%x %n"</span>, <span class="number">100</span>);</span><br><span class="line">    System.out.printf(<span class="string">"100的8进制数是：%o %n"</span>, <span class="number">100</span>);</span><br><span class="line">    System.out.printf(<span class="string">"50元的书打8.5折扣是：%f 元%n"</span>, <span class="number">50</span>*<span class="number">0.85</span>);</span><br><span class="line">    System.out.printf(<span class="string">"上面价格的16进制数是：%a %n"</span>, <span class="number">50</span>*<span class="number">0.85</span>);</span><br><span class="line">    System.out.printf(<span class="string">"上面价格的指数表示：%e %n"</span>, <span class="number">50</span>*<span class="number">0.85</span>);</span><br><span class="line">    System.out.printf(<span class="string">"上面价格的指数和浮点数结果的长度较短的是：%g %n"</span>, <span class="number">50</span>*<span class="number">0.85</span>);</span><br><span class="line">    System.out.printf(<span class="string">"上面的折扣是%d%% %n"</span>, <span class="number">85</span>);</span><br><span class="line">    System.out.printf(<span class="string">"字母A的散列码是：%h %n"</span>, <span class="string">'A'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出结果</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Hi,王力</span><br><span class="line">Hi,王南:王力.王张</span><br><span class="line">字母a的大写是：A </span><br><span class="line"><span class="number">3</span>&gt;<span class="number">7</span>的结果是：<span class="keyword">false</span> </span><br><span class="line"><span class="number">100</span>的一半是：<span class="number">50</span> </span><br><span class="line"><span class="number">100</span>的<span class="number">16</span>进制数是：<span class="number">64</span> </span><br><span class="line"><span class="number">100</span>的<span class="number">8</span>进制数是：<span class="number">144</span> </span><br><span class="line"><span class="number">50</span>元的书打<span class="number">8.5</span>折扣是：<span class="number">42.500000</span> 元</span><br><span class="line">上面价格的<span class="number">16</span>进制数是：<span class="number">0x1</span>.54p5 </span><br><span class="line">上面价格的指数表示：<span class="number">4.250000e+01</span> </span><br><span class="line">上面价格的指数和浮点数结果的长度较短的是：<span class="number">42.5000</span> </span><br><span class="line">上面的折扣是<span class="number">85</span>% </span><br><span class="line">字母A的散列码是：<span class="number">41</span></span><br></pre></td></tr></table></figure>
-<h5 id="搭配转换符的标志"><a href="#搭配转换符的标志" class="headerlink" title="搭配转换符的标志"></a>搭配转换符的标志</h5><table>
-<thead>
-<tr>
-<th>标    志</th>
-<th>说    明</th>
-<th>示    例</th>
-<th>结    果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>+</td>
-<td>为正数或者负数添加符号</td>
-<td>(“%+d”,15)</td>
-<td>+15</td>
-</tr>
-<tr>
-<td>−</td>
-<td>左对齐</td>
-<td>(“%-5d”,15)</td>
-<td>\</td>
-<td>15   \</td>
-<td></td>
-</tr>
-<tr>
-<td>0</td>
-<td>数字前面补0</td>
-<td>(“%04d”, 99)</td>
-<td>0099</td>
-</tr>
-<tr>
-<td>空格</td>
-<td>在整数之前添加指定数量的空格</td>
-<td>(“% 4d”, 99)</td>
-<td>\</td>
-<td>99\</td>
-<td></td>
-</tr>
-<tr>
-<td>,</td>
-<td>以“,”对数字分组</td>
-<td>(“%,f”, 9999.99)</td>
-<td>9,999.990000</td>
-</tr>
-<tr>
-<td>(</td>
-<td>使用括号包含负数</td>
-<td>(“%(f”, -99.99)</td>
-<td>(99.990000)</td>
-</tr>
-<tr>
-<td>#</td>
-<td>如果是浮点数则包含小数点，如果是16进制或8进制则添加0x或0</td>
-<td>(“%#x”, 99)(“%#o”, 99)</td>
-<td>0x630143</td>
-</tr>
-<tr>
-<td>&lt;</td>
-<td>格式化前一个转换符所描述的参数</td>
-<td>(“%f和%&lt;3.2f”, 99.45)</td>
-<td>99.450000和99.45</td>
-</tr>
-<tr>
-<td>$</td>
-<td>被格式化的参数索引</td>
-<td>(“%1$d,%2$s”, 99,”abc”)</td>
-<td>99,abc</td>
-</tr>
-</tbody>
-</table>
-<p>测试用例</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;  </span><br><span class="line"></span><br><span class="line">    String str=<span class="keyword">null</span>;  </span><br><span class="line"></span><br><span class="line">    <span class="comment">//$使用  </span></span><br><span class="line">    str=String.format(<span class="string">"格式参数的使用：%1d,%2$s"</span>, <span class="number">99</span>,<span class="string">"abc"</span>);             </span><br><span class="line">    System.out.println(str);                       </span><br><span class="line">   	</span><br><span class="line">   	<span class="comment">//+使用  </span></span><br><span class="line">    System.out.printf(<span class="string">"显示正负数的符号：%+d与%d%n"</span>, <span class="number">99</span>,-<span class="number">99</span>);  </span><br><span class="line"></span><br><span class="line">    <span class="comment">//补O使用  </span></span><br><span class="line">    System.out.printf(<span class="string">"最牛的编号是：%03d%n"</span>, <span class="number">7</span>);  </span><br><span class="line"></span><br><span class="line">    <span class="comment">//空格使用  </span></span><br><span class="line">    System.out.printf(<span class="string">"Tab键的效果是：% 8d%n"</span>, <span class="number">7</span>);  </span><br><span class="line"></span><br><span class="line">    <span class="comment">//.使用  </span></span><br><span class="line">    System.out.printf(<span class="string">"整数分组的效果是：%,d%n"</span>, <span class="number">9989997</span>);  </span><br><span class="line"></span><br><span class="line">    <span class="comment">//空格和小数点后面个数  </span></span><br><span class="line">    System.out.printf(<span class="string">"一本书的价格是：% 50.5f元%n"</span>, <span class="number">49.8</span>);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出结果</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">格式参数$的使用：<span class="number">99</span>,abc</span><br><span class="line">显示正负数的符号：+<span class="number">99</span>与-<span class="number">99</span></span><br><span class="line">最牛的编号是：<span class="number">007</span></span><br><span class="line">Tab键的效果是：       <span class="number">7</span></span><br><span class="line">整数分组的效果是：<span class="number">9</span>,<span class="number">989</span>,<span class="number">997</span></span><br><span class="line">一本书的价格是： <span class="number">49.80000</span>元</span><br></pre></td></tr></table></figure>
-<h4 id="日期和事件字符串格式化"><a href="#日期和事件字符串格式化" class="headerlink" title="日期和事件字符串格式化"></a>日期和事件字符串格式化</h4><p>字符串格式中还有%tx转换符没有详细介绍，它是专门用来格式化日期和时 间的。%tx转换符中的x代表另外的处理日期和时间格式的转换符，它们的组合能够将日期和时间格式化成多种格式。</p>
-<h5 id="常见日期和时间组合的格式"><a href="#常见日期和时间组合的格式" class="headerlink" title="常见日期和时间组合的格式"></a>常见日期和时间组合的格式</h5><table>
-<thead>
-<tr>
-<th>转  换  符</th>
-<th>说    明</th>
-<th>示    例</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>c</td>
-<td>包括全部日期和时间信息</td>
-<td>星期六 十月 27 14:21:20 CST 2007</td>
-</tr>
-<tr>
-<td>F</td>
-<td>“年-月-日”格式</td>
-<td>2007-10-27</td>
-</tr>
-<tr>
-<td>D</td>
-<td>“月/日/年”格式</td>
-<td>10/27/07</td>
-</tr>
-<tr>
-<td>r</td>
-<td>“HH:MM:SS PM”格式（12时制）</td>
-<td>02:25:51 下午</td>
-</tr>
-<tr>
-<td>T</td>
-<td>“HH:MM:SS”格式（24时制）</td>
-<td>14:28:16</td>
-</tr>
-<tr>
-<td>R</td>
-<td>“HH:MM”格式（24时制）</td>
-<td>14:28</td>
-</tr>
-</tbody>
-</table>
-<p>测试用例</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">	Date date=<span class="keyword">new</span> Date();                                </span><br><span class="line">	<span class="comment">//c的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"全部日期和时间信息：%tc%n"</span>,date);        </span><br><span class="line">	<span class="comment">//f的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"年-月-日格式：%tF%n"</span>,date);</span><br><span class="line">	<span class="comment">//d的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"月/日/年格式：%tD%n"</span>,date);</span><br><span class="line">	<span class="comment">//r的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"HH:MM:SS PM格式（12时制）：%tr%n"</span>,date);</span><br><span class="line">	<span class="comment">//t的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"HH:MM:SS格式（24时制）：%tT%n"</span>,date);</span><br><span class="line">	<span class="comment">//R的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"HH:MM格式（24时制）：%tR"</span>,date);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出结果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">全部日期和时间信息：星期一 九月 10 10:43:36 CST 2012</span><br><span class="line">年-月-日格式：2012-09-10</span><br><span class="line">月/日/年格式：09/10/12</span><br><span class="line">HH:MM:SS PM格式（12时制）：10:43:36 上午</span><br><span class="line">HH:MM:SS格式（24时制）：10:43:36</span><br><span class="line">HH:MM格式（24时制）：10:43</span><br></pre></td></tr></table></figure>
-<p>定义日期格式的转换符可以使日期通过指定的转换符生成新字符串。这些日期转换符如图所示。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">  Date date=<span class="keyword">new</span> Date();                                    </span><br><span class="line">  <span class="comment">//b的使用，月份简称</span></span><br><span class="line">  String str=String.format(Locale.US,<span class="string">"英文月份简称：%tb"</span>,date);     </span><br><span class="line">  System.out.println(str);                                                                            </span><br><span class="line">  System.out.printf(<span class="string">"本地月份简称：%tb%n"</span>,date);</span><br><span class="line">  <span class="comment">//B的使用，月份全称</span></span><br><span class="line">  str=String.format(Locale.US,<span class="string">"英文月份全称：%tB"</span>,date);</span><br><span class="line">  System.out.println(str);</span><br><span class="line">  System.out.printf(<span class="string">"本地月份全称：%tB%n"</span>,date);</span><br><span class="line">  <span class="comment">//a的使用，星期简称</span></span><br><span class="line">  str=String.format(Locale.US,<span class="string">"英文星期的简称：%ta"</span>,date);</span><br><span class="line">  System.out.println(str);</span><br><span class="line">  <span class="comment">//A的使用，星期全称</span></span><br><span class="line">  System.out.printf(<span class="string">"本地星期的简称：%tA%n"</span>,date);</span><br><span class="line">  <span class="comment">//C的使用，年前两位</span></span><br><span class="line">  System.out.printf(<span class="string">"年的前两位数字（不足两位前面补0）：%tC%n"</span>,date);</span><br><span class="line">  <span class="comment">//y的使用，年后两位</span></span><br><span class="line">  System.out.printf(<span class="string">"年的后两位数字（不足两位前面补0）：%ty%n"</span>,date);</span><br><span class="line">  <span class="comment">//j的使用，一年的天数</span></span><br><span class="line">  System.out.printf(<span class="string">"一年中的天数（即年的第几天）：%tj%n"</span>,date);</span><br><span class="line">  <span class="comment">//m的使用，月份</span></span><br><span class="line">  System.out.printf(<span class="string">"两位数字的月份（不足两位前面补0）：%tm%n"</span>,date);</span><br><span class="line">  <span class="comment">//d的使用，日（二位，不够补零）</span></span><br><span class="line">  System.out.printf(<span class="string">"两位数字的日（不足两位前面补0）：%td%n"</span>,date);</span><br><span class="line">  <span class="comment">//e的使用，日（一位不补零）</span></span><br><span class="line">  System.out.printf(<span class="string">"月份的日（前面不补0）：%te"</span>,date);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出结果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">英文月份简称：Sep</span><br><span class="line">本地月份简称：九月</span><br><span class="line">英文月份全称：September</span><br><span class="line">本地月份全称：九月</span><br><span class="line">英文星期的简称：Mon</span><br><span class="line">本地星期的简称：星期一</span><br><span class="line">年的前两位数字（不足两位前面补0）：20</span><br><span class="line">年的后两位数字（不足两位前面补0）：12</span><br><span class="line">一年中的天数（即年的第几天）：254</span><br><span class="line">两位数字的月份（不足两位前面补0）：09</span><br><span class="line">两位数字的日（不足两位前面补0）：10</span><br><span class="line">月份的日（前面不补0）：10</span><br></pre></td></tr></table></figure>
-<h5 id="和日期格式转换符相比，时间格式的转换符要更多、更精确。它可以将时间格式化成时、分、秒甚至时毫秒等单位。格式化时间字符串的转换符如图所示。"><a href="#和日期格式转换符相比，时间格式的转换符要更多、更精确。它可以将时间格式化成时、分、秒甚至时毫秒等单位。格式化时间字符串的转换符如图所示。" class="headerlink" title="和日期格式转换符相比，时间格式的转换符要更多、更精确。它可以将时间格式化成时、分、秒甚至时毫秒等单位。格式化时间字符串的转换符如图所示。"></a>和日期格式转换符相比，时间格式的转换符要更多、更精确。它可以将时间格式化成时、分、秒甚至时毫秒等单位。格式化时间字符串的转换符如图所示。</h5><table>
-<thead>
-<tr>
-<th>转  换  符</th>
-<th>说    明</th>
-<th>示    例</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>H</td>
-<td>2位数字24时制的小时（不足2位前面补0）</td>
-<td>15</td>
-</tr>
-<tr>
-<td>I</td>
-<td>2位数字12时制的小时（不足2位前面补0）</td>
-<td>03</td>
-</tr>
-<tr>
-<td>k</td>
-<td>2位数字24时制的小时（前面不补0）</td>
-<td>15</td>
-</tr>
-<tr>
-<td>l</td>
-<td>2位数字12时制的小时（前面不补0）</td>
-<td>3</td>
-</tr>
-<tr>
-<td>M</td>
-<td>2位数字的分钟（不足2位前面补0）</td>
-<td>03</td>
-</tr>
-<tr>
-<td>S</td>
-<td>2位数字的秒（不足2位前面补0）</td>
-<td>09</td>
-</tr>
-<tr>
-<td>L</td>
-<td>3位数字的毫秒（不足3位前面补0）</td>
-<td>015</td>
-</tr>
-<tr>
-<td>N</td>
-<td>9位数字的毫秒数（不足9位前面补0）</td>
-<td>562000000</td>
-</tr>
-<tr>
-<td>p</td>
-<td>小写字母的上午或下午标记</td>
-<td>中：下午英：pm</td>
-</tr>
-<tr>
-<td>z</td>
-<td>相对于GMT的RFC822时区的偏移量</td>
-<td>+0800</td>
-</tr>
-<tr>
-<td>Z</td>
-<td>时区缩写字符串</td>
-<td>CST</td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>s</th>
-<th>1970-1-1 00:00:00 到现在所经过的秒数</th>
-<th>1193468128</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Q</td>
-<td>1970-1-1 00:00:00 到现在所经过的毫秒数</td>
-<td>1193468128984</td>
-</tr>
-</tbody>
-</table>
-<p>测试代码</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">	Date date = <span class="keyword">new</span> Date();</span><br><span class="line">	<span class="comment">//H的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"2位数字24时制的小时（不足2位前面补0）:%tH%n"</span>, date);</span><br><span class="line">	<span class="comment">//I的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"2位数字12时制的小时（不足2位前面补0）:%tI%n"</span>, date);</span><br><span class="line">	<span class="comment">//k的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"2位数字24时制的小时（前面不补0）:%tk%n"</span>, date);</span><br><span class="line">	<span class="comment">//l的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"2位数字12时制的小时（前面不补0）:%tl%n"</span>, date);</span><br><span class="line">	<span class="comment">//M的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"2位数字的分钟（不足2位前面补0）:%tM%n"</span>, date);</span><br><span class="line">	<span class="comment">//S的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"2位数字的秒（不足2位前面补0）:%tS%n"</span>, date);</span><br><span class="line">	<span class="comment">//L的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"3位数字的毫秒（不足3位前面补0）:%tL%n"</span>, date);</span><br><span class="line">	<span class="comment">//N的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"9位数字的毫秒数（不足9位前面补0）:%tN%n"</span>, date);</span><br><span class="line">	<span class="comment">//p的使用</span></span><br><span class="line">	String str = String.format(Locale.US, <span class="string">"小写字母的上午或下午标记(英)：%tp"</span>, date);</span><br><span class="line">	System.out.println(str); </span><br><span class="line">	System.out.printf(<span class="string">"小写字母的上午或下午标记（中）：%tp%n"</span>, date);</span><br><span class="line">	<span class="comment">//z的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"相对于GMT的RFC822时区的偏移量:%tz%n"</span>, date);</span><br><span class="line">	<span class="comment">//Z的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"时区缩写字符串:%tZ%n"</span>, date);</span><br><span class="line">	<span class="comment">//s的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"1970-1-1 00:00:00 到现在所经过的秒数：%ts%n"</span>, date);</span><br><span class="line">	<span class="comment">//Q的使用</span></span><br><span class="line">	System.out.printf(<span class="string">"1970-1-1 00:00:00 到现在所经过的毫秒数：%tQ%n"</span>, date);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出结果</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2</span>位数字<span class="number">24</span>时制的小时（不足<span class="number">2</span>位前面补<span class="number">0</span>）:<span class="number">11</span></span><br><span class="line"><span class="number">2</span>位数字<span class="number">12</span>时制的小时（不足<span class="number">2</span>位前面补<span class="number">0</span>）:<span class="number">11</span></span><br><span class="line"><span class="number">2</span>位数字<span class="number">24</span>时制的小时（前面不补<span class="number">0</span>）:<span class="number">11</span></span><br><span class="line"><span class="number">2</span>位数字<span class="number">12</span>时制的小时（前面不补<span class="number">0</span>）:<span class="number">11</span></span><br><span class="line"><span class="number">2</span>位数字的分钟（不足<span class="number">2</span>位前面补<span class="number">0</span>）:<span class="number">03</span></span><br><span class="line"><span class="number">2</span>位数字的秒（不足<span class="number">2</span>位前面补<span class="number">0</span>）:<span class="number">52</span></span><br><span class="line"><span class="number">3</span>位数字的毫秒（不足<span class="number">3</span>位前面补<span class="number">0</span>）:<span class="number">773</span></span><br><span class="line"><span class="number">9</span>位数字的毫秒数（不足<span class="number">9</span>位前面补<span class="number">0</span>）:<span class="number">773000000</span></span><br><span class="line">小写字母的上午或下午标记(英)：am</span><br><span class="line">小写字母的上午或下午标记（中）：上午</span><br><span class="line">相对于GMT的RFC822时区的偏移量:+<span class="number">0800</span></span><br><span class="line">时区缩写字符串:CST</span><br><span class="line"><span class="number">1970</span>-<span class="number">1</span>-<span class="number">1</span> <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> 到现在所经过的秒数：<span class="number">1347246232</span></span><br><span class="line"><span class="number">1970</span>-<span class="number">1</span>-<span class="number">1</span> <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> 到现在所经过的毫秒数：<span class="number">1347246232773</span></span><br></pre></td></tr></table></figure>
-
+</blockquote></p>
+            <p class="article-more-link">
+                <a href="/2018/02/04/Java-String-format/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -907,7 +246,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/02/04/Java-String-format/" data-id="cjmbfu51y004yyystsp0psfoq" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/02/04/Java-String-format/" data-id="cjmbnu35a004nqtstu0j30jdv" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1025,51 +364,10 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <p>Bug如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Caused by: java.lang.RuntimeException: cannot find implementation for com.wangzhumo.app.datasource.database.AppDB. AppDB_Impl does not exist</span><br></pre></td></tr></table></figure></p>
-<h4 id="寻找原因"><a href="#寻找原因" class="headerlink" title="寻找原因"></a>寻找原因</h4><p>debug依次发现:</p>
-<ul>
-<li><p>getInstance()为空</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> AppDB <span class="title">getInstance</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (sInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">          <span class="keyword">synchronized</span> (AppDB.class) &#123;</span><br><span class="line">              <span class="keyword">if</span> (sInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">              </span><br><span class="line">              	<span class="comment">//此处返回为空</span></span><br><span class="line">                  sInstance = buildDatabase(context);</span><br><span class="line">                  sInstance.updateDatabaseCreated(context);</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> sInstance;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>buildDatabase(context) 返回为空</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Build the database.</span></span><br><span class="line"><span class="comment"> * creates a new instance of the database.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> AppDB <span class="title">buildDatabase</span><span class="params">(<span class="keyword">final</span> Context appContext)</span> </span>&#123;</span><br><span class="line">     AppDB appDB = Room.databaseBuilder(appContext, AppDB.class, DATABASE_NAME)</span><br><span class="line">            .addCallback(<span class="keyword">new</span> Callback() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@NonNull SupportSQLiteDatabase db)</span> </span>&#123;</span><br><span class="line">                    <span class="keyword">super</span>.onCreate(db);</span><br><span class="line">                    AppDB database = AppDB.getInstance(appContext);</span><br><span class="line">                    database.setDatabaseCreated();</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onOpen</span><span class="params">(@NonNull SupportSQLiteDatabase db)</span> </span>&#123;</span><br><span class="line">                    <span class="keyword">super</span>.onOpen(db);</span><br><span class="line">                    Log.e(TAG, <span class="string">"onOpen: "</span> + db.getPath());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;).build();</span><br><span class="line">    <span class="keyword">return</span> appDB;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>databaseBuilder是创建数据库的方法,但是它构建失败了,那么剩下的就是源码了</p>
-</li>
-</ul>
-<h4 id="Debug源码"><a href="#Debug源码" class="headerlink" title="Debug源码"></a>Debug源码</h4><ul>
-<li>databaseBuilder 方法</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SuppressWarnings</span>(<span class="string">"WeakerAccess"</span>)</span><br><span class="line">    <span class="meta">@NonNull</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T extends RoomDatabase&gt; RoomDatabase.<span class="function">Builder&lt;T&gt; <span class="title">databaseBuilder</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">            @NonNull Context context, @NonNull Class&lt;T&gt; klass, @NonNull String name)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//noinspection ConstantConditions</span></span><br><span class="line">        <span class="keyword">if</span> (name == <span class="keyword">null</span> || name.trim().length() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException</span><br><span class="line">              (<span class="string">"Cannot build a database with null or empty name."</span></span><br><span class="line">                    + <span class="string">" If you are trying to create an in memory database, use Room"</span></span><br><span class="line">                    + <span class="string">".inMemoryDatabaseBuilder"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> RoomDatabase.Builder&lt;&gt;(context, klass, name);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>我们可以明显的看出,此处抛出的异常不是AppDB_Impl does not exist 的提示,可以肯定并不是此处的问题</p>
-<p>应该是正常返回的 return new RoomDatabase.Builder&lt;&gt;(context, klass, name);</p>
-<p><code>RoomDatabase.Builder</code></p>
-<p>那么出问题的就可以肯定是</p>
-<ul>
-<li><p>build()方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">@NonNull</span><br><span class="line">        public T build() &#123;</span><br><span class="line">            //noinspection ConstantConditions</span><br><span class="line">            if (mContext == null) &#123;</span><br><span class="line">                throw new IllegalArgumentException</span><br><span class="line">                (&quot;Cannot provide null context for the database.&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            //noinspection ConstantConditions</span><br><span class="line">            if (mDatabaseClass == null) &#123;</span><br><span class="line">                throw new IllegalArgumentException</span><br><span class="line">                (&quot;Must provide an abstract class that&quot;</span><br><span class="line">                        + &quot; extends RoomDatabase&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            if (mFactory == null) &#123;</span><br><span class="line">                mFactory = new FrameworkSQLiteOpenHelperFactory();</span><br><span class="line">            &#125;</span><br><span class="line">            DatabaseConfiguration configuration =</span><br><span class="line">                    new DatabaseConfiguration(mContext, mName, mFactory, mMigrationContainer,</span><br><span class="line">                            mCallbacks, mAllowMainThreadQueries, mRequireMigration);</span><br><span class="line">            T db = Room.getGeneratedImplementation(mDatabaseClass, DB_IMPL_SUFFIX);</span><br><span class="line">            db.init(configuration);</span><br><span class="line">            return db;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-<p>此处,debug发现,是到</p>
-<p><code>T db = Room.getGeneratedImplementation(mDatabaseClass, DB_IMPL_SUFFIX);</code></p>
-<p>抛出异常的.</p>
-</li>
-</ul>
-<h4 id="锁定问题"><a href="#锁定问题" class="headerlink" title="锁定问题"></a>锁定问题</h4><p><code>getGeneratedImplementation</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@NonNull</span></span><br><span class="line">    <span class="keyword">static</span> &lt;T, C&gt; <span class="function">T <span class="title">getGeneratedImplementation</span><span class="params">(Class&lt;C&gt; klass, String suffix)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> String fullPackage = klass.getPackage().getName();</span><br><span class="line">        String name = klass.getCanonicalName();</span><br><span class="line">        <span class="keyword">final</span> String postPackageName = fullPackage.isEmpty()</span><br><span class="line">                ? name</span><br><span class="line">                : (name.substring(fullPackage.length() + <span class="number">1</span>));</span><br><span class="line">        <span class="keyword">final</span> String implName = postPackageName.replace(<span class="string">'.'</span>, <span class="string">'_'</span>) + suffix;</span><br><span class="line">        <span class="comment">//noinspection TryWithIdenticalCatches</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">            <span class="keyword">final</span> Class&lt;T&gt; aClass = (Class&lt;T&gt;) Class.forName(</span><br><span class="line">                    fullPackage.isEmpty() ? implName : fullPackage + <span class="string">"."</span> + implName);</span><br><span class="line">            <span class="keyword">return</span> aClass.newInstance();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">        </span><br><span class="line">        	</span><br><span class="line">        	<span class="comment">//**很明显,就是这个地方了**</span></span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"cannot find implementation for "</span></span><br><span class="line">                    + klass.getCanonicalName() + <span class="string">". "</span> + implName + <span class="string">" does not exist"</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Cannot access the constructor"</span></span><br><span class="line">                    + klass.getCanonicalName());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InstantiationException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Failed to create an instance of "</span></span><br><span class="line">                    + klass.getCanonicalName());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>其实就是,生成类失败了</p>
-<p>其他参数都正常,偏偏生成失败,所以就怀疑到 </p>
-<p> Java  -&gt;     <code>apt</code> 的问题</p>
-<p>Kotlin -&gt;  <code>kapt</code>的问题</p>
-<p>这两个就是用来生成代码的,这里的生成失败,有很大概率是这个问题</p>
-<h4 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h4><p>查看项目的依赖  <code>lib_opensource  -&gt; build.gradle</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//arch</span><br><span class="line">api deps.archLibs.archExtensions</span><br><span class="line">api deps.archLibs.archLifecycleCommon</span><br><span class="line">api deps.archLibs.archRoomRuntime</span><br><span class="line">kapt deps.archLibs.archRoomCompiler</span><br></pre></td></tr></table></figure>
-<p>查看发现,我已经添加了,那么什么鬼问题呢?</p>
-<p><strong>怀疑是library的问题,打开我使用Room的library</strong>    ,查看 <code>lib_datasource -&gt; build.gradle</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: &apos;com.android.library&apos;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">    implementation fileTree(dir: &apos;libs&apos;, include: [&apos;*.jar&apos;])</span><br><span class="line">    api project(&apos;:lib_opensource&apos;)</span><br><span class="line"></span><br><span class="line">//    kapt deps.archLibs.archRoomCompiler</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>果然忘了加</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: &apos;com.android.library&apos;</span><br><span class="line">apply plugin: &apos;kotlin-android&apos;</span><br><span class="line">apply plugin: &apos;kotlin-kapt&apos;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">    implementation fileTree(dir: &apos;libs&apos;, include: [&apos;*.jar&apos;])</span><br><span class="line">    api project(&apos;:lib_opensource&apos;)</span><br><span class="line"></span><br><span class="line">//    kapt deps.archLibs.archRoomCompiler</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>就Ok了,我又可以愉快的玩耍了</p>
-<h4 id="记得-kapt"><a href="#记得-kapt" class="headerlink" title="记得:  kapt"></a>记得:  kapt</h4>
+            <p><p>Bug如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Caused by: java.lang.RuntimeException: cannot find implementation for com.wangzhumo.app.datasource.database.AppDB. AppDB_Impl does not exist</span><br></pre></td></tr></table></figure></p></p>
+            <p class="article-more-link">
+                <a href="/2018/01/17/Room-AppDatabase-Impl-does-not-exist/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -1079,7 +377,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/01/17/Room-AppDatabase-Impl-does-not-exist/" data-id="cjmbfu52h0062yystt5d294ia" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/01/17/Room-AppDatabase-Impl-does-not-exist/" data-id="cjmbnu35p005jqtst4ja6946y" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1207,7 +505,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/01/11/Charles-Https/" data-id="cjmbfu517002vyystgr6dnz6z" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/01/11/Charles-Https/" data-id="cjmbnu34e002jqtstdrb767hb" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1343,7 +641,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/01/11/Android-shell-Adb/" data-id="cjmbfu50v0021yystptg6256d" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/01/11/Android-shell-Adb/" data-id="cjmbnu340001lqtst1w52kjcs" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1456,87 +754,13 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <p><strong>基础知识</strong></p>
+            <p><p><strong>基础知识</strong></p>
 <p>感觉就是一堆有信誉的机构,说: 我们这些机构的公钥是可信的,我们下面的小弟当然也是可以信任的啦</p>
 <p>然后大家就去当人家小弟,就是可信的了….</p>
-<p>当然这里面有的大佬不高兴,就自己搞一套证书,比如12306</p>
-<p>Https中,值得注意的密钥有:</p>
-<ul>
-<li>服务器端的<code>公钥</code>和<code>私钥</code></li>
-</ul>
-<ul>
-<li>客户端的<code>随机密钥</code></li>
-</ul>
-<p>值得注意的是一个HTTPS请求实际上就是两次HTTP传输.</p>
-<p>1.客户端向服务器发起HTTPS请求，连接到服务器的443端口。</p>
-<p>2.服务端收到请求,向客户端发送自己的<code>公钥</code></p>
-<p>3.客户端收到服务器公钥,开始验证证书的合法性,我们知道系统内置了一些证书,应该是叫顶级证书吧</p>
-<p>我们的证书并不是啥大机构发的,肯定不在里面,那么就没法验证合法.</p>
-<p>​     合法 &gt; 继续</p>
-<p>​     不合法 &gt; 此次Https请求终止</p>
-<p>4.客户端验证公钥合格后(也就是给你发消息的服务器是正经服务器)，那么客户端会生成一个 随机密码,客户端会拿着这个随机密码和刚才收到的服务器密钥做非对称加密 &gt;&gt; 得到密文的密码</p>
-<p>——–以上第一次http请求结束了——–</p>
-<p>5.客户端会发起HTTPS中的第二个HTTP请求,发送客户端密钥(密文)给服务器。</p>
-<p>6.服务器收到密文，会用自己的私钥对其进行非对称解密,得到客户端刚才生成的客户端随机密码.</p>
-<p>此时服务器使用客户端随机密码,对数据进行对称加密</p>
-<p>7.把对称加密后的数据返回给客户端,客户端对称解密,OK    此次Https完美结束</p>
-<p>——–整个https请求结束了——–</p>
-<p>其中 , <code>对称加密</code>和<code>非对称加密</code>,  各司其职,共同完成整个请求.</p>
-<p>  对称加密: 最快速,最简单</p>
-<p>  非对称加密:速度慢,很安全,不需要把秘钥分发,客户端利用公钥加密的数据,只能是拥有秘钥的服务器解密</p>
-<p>利用非对称加密的特性传递  客户端生成的随机密钥 ,达到只有服务器和客户端互相知道的密钥,从而使用密钥进行(高速简单的)对称加密数据.</p>
-<p><strong>第一部分:信任所有</strong></p>
-<p>这就是,我不管是谁传递的消息,不是你家服务器传递的消息,你也会信</p>
-<p><strong>Api.java</strong> (提供okhttp实例,并创建Retroit服务)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">OkHttpClient okHttpClient = new OkHttpClient.Builder()</span><br><span class="line">               .hostnameVerifier(new HostnameVerifier() &#123;</span><br><span class="line">                   @Override</span><br><span class="line">                   public boolean verify(String hostname, SSLSession session) &#123;</span><br><span class="line">                       return true;</span><br><span class="line">                   &#125;</span><br><span class="line">               &#125;)</span><br><span class="line">               .sslSocketFactory(createSSLSocketFactory())</span><br><span class="line">               .build();</span><br><span class="line">               </span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">//这里是创建一个SSLSocketFactory,提供给上面的 .sslSocketFactory()</span><br><span class="line">private  SSLSocketFactory createSSLSocketFactory() &#123;</span><br><span class="line">       SSLSocketFactory ssfFactory = null;</span><br><span class="line">       try &#123;</span><br><span class="line">           SSLContext sc = SSLContext.getInstance(&quot;TLS&quot;);</span><br><span class="line">           sc.init(null, new TrustManager[]&#123;new TrustAllCerts()&#125;, new SecureRandom());</span><br><span class="line">           ssfFactory = sc.getSocketFactory();</span><br><span class="line">       &#125; catch (Exception e) &#123;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       return ssfFactory;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-<p>其中涉及到<strong>TrustAllCerts.java</strong>,可以看到只是实现X509TrustManager,所有方法都是默认实现</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * If you have any questions, you can contact by email &#123; wangzhumoo@gmail.com&#125;</span><br><span class="line"> * @author 王诛魔 2018/1/8 下午2:25</span><br><span class="line"> */</span><br><span class="line">public class TrustAllCerts implements X509TrustManager &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException &#123;&#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException &#123;&#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public X509Certificate[] getAcceptedIssuers() &#123;</span><br><span class="line">        return new X509Certificate[0];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里就以及可以了,信任所有的连接</p>
-<hr>
-<p><strong>第二部分:(强验证)</strong></p>
-<p>我只信任证书合法的服务器传递的数据.</p>
-<ul>
-<li>查看Https的证书</li>
-</ul>
-<p><img src="images/https_zhengshu.png" alt="https证书"></p>
-<p>在浏览器上看到这个,这个已经是我把证书添加为信任了,所以他是一个 <code>安全</code> 的标志</p>
-<ul>
-<li>分析</li>
-</ul>
-<p><img src="images/https_root.png" alt="https证书"></p>
-<p>这里是我查看当前网站证书的结构</p>
-<p>最顶—是根证书,到期时间是2028年</p>
-<p>最底—是我司证书,到期时间是2018.12.9日</p>
-<p>这里我们可以发现,我们网站的证书是有时间限制的,那么就会有一个问题,到了2018.12.9这一天怎么办.</p>
-<blockquote>
-<p>我也不知道会怎么样,应该是续签吧!那么万一这个证书变化了怎么办?</p>
-</blockquote>
-<p>所以,我们应该把根证书置为信任.</p>
-<ul>
-<li>下载保存</li>
-</ul>
-<p><img src="images/https_save.png" alt="https证书"></p>
-<p>Mac的在  钥匙串访问  中</p>
-<p>Windows 没法放图,在chrome上查看证书的时候应该就能保存.</p>
-<p><strong>HttpsUtils.java </strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * If you have any questions, you can contact by email &#123; wangzhumoo@gmail.com&#125;</span><br><span class="line"> * @author 王诛魔 2018/1/10 下午5:07</span><br><span class="line"> * 支持https的工具类</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">public class HttpsUtils &#123;</span><br><span class="line">    private static final String TAG = &quot;OkHttp&quot;;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 创建一个空白的KeyStore</span><br><span class="line">     * @return KeyStore</span><br><span class="line">     * @throws GeneralSecurityException</span><br><span class="line">     */</span><br><span class="line">    private static KeyStore createEmptyKeyStore() throws GeneralSecurityException &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());</span><br><span class="line">            //此处密码随意,不会产生问题</span><br><span class="line">            keystore.load(null, &quot;password&quot;.toCharArray());</span><br><span class="line">            return keystore;</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * TrustManager  生成</span><br><span class="line">     * @return</span><br><span class="line">     * @throws GeneralSecurityException</span><br><span class="line">     */</span><br><span class="line">    private static TrustManager[] generateTrustManager() throws GeneralSecurityException &#123;</span><br><span class="line"></span><br><span class="line">        //创建一个X.509格式的CertificateFactory</span><br><span class="line">        CertificateFactory certificateFactory = CertificateFactory.getInstance(&quot;X.509&quot;);</span><br><span class="line"></span><br><span class="line">        Certificate ca;</span><br><span class="line">        //证书工厂根据证书文件的流生成证书Certificate</span><br><span class="line">        InputStream assets = App.getContext().getResources().openRawResource(R.raw.rootca);</span><br><span class="line">        ca = certificateFactory.generateCertificate(assets);</span><br><span class="line">        Log.e(TAG, &quot;trustManager: ca = &quot; + ((X509Certificate) ca).getSubjectDN() );</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        //创建KeyStore，用来存储信任证书</span><br><span class="line">        KeyStore keyStor = createEmptyKeyStore();</span><br><span class="line">        keyStor.setCertificateEntry(&quot;ca&quot;,ca);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        //创建一个默认类型的TrustManagerFactory</span><br><span class="line">        String defaultAlgorithm = TrustManagerFactory.getDefaultAlgorithm();</span><br><span class="line">        TrustManagerFactory tmf = TrustManagerFactory.getInstance(defaultAlgorithm);</span><br><span class="line"></span><br><span class="line">        //用keyStore实例初始化TrustManagerFactory,此时TrustManagerFactory会信任我们保存的证书</span><br><span class="line">        tmf.init(keyStor);</span><br><span class="line"></span><br><span class="line">        //通过tmf获取TrustManager数组，TrustManager也会信任keyStor中的证书</span><br><span class="line"></span><br><span class="line">        return tmf.getTrustManagers();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 提供一个一个SSLSocketFactory</span><br><span class="line">     * @return SSLSocketFactory实例</span><br><span class="line">     */</span><br><span class="line">    public static SSLSocketFactory generateSSLSocketFactory()  &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            SSLContext sc = SSLContext.getInstance(&quot;TLS&quot;);</span><br><span class="line">            sc.init(null, generateTrustManager(), new SecureRandom());</span><br><span class="line">            Log.e(TAG, &quot;generateSSLSocketFactory &quot;);</span><br><span class="line">            return sc.getSocketFactory();</span><br><span class="line">        &#125; catch (GeneralSecurityException e) &#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注释很清楚了.</p>
-<p><strong>关键:</strong></p>
-<p>1.拿到帧数的流</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">InputStream assets = App.getContext().getResources().openRawResource(R.raw.rootca);</span><br></pre></td></tr></table></figure>
-<p>2.保存到keystore</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">KeyStore keyStor = createEmptyKeyStore();</span><br><span class="line">keyStor.setCertificateEntry(&quot;ca&quot;,ca);</span><br></pre></td></tr></table></figure>
-<p>3.初始化并拿到TrustManager[]</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tmf.init(keyStor);</span><br><span class="line">tmf.getTrustManagers()</span><br></pre></td></tr></table></figure>
-<p><strong>使用即可:</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//这样就Ok</span><br><span class="line">OkHttpClient okHttpClient = new OkHttpClient.Builder()</span><br><span class="line">                .hostnameVerifier((hostname, session) -&gt; true)</span><br><span class="line">                .sslSocketFactory(HttpsUtils.generateSSLSocketFactory())</span><br><span class="line">                .build();</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>超好的两篇</p>
-<p><a href="http://blog.csdn.net/lmj623565791/article/details/48129405" target="_blank" rel="noopener">http://blog.csdn.net/lmj623565791/article/details/48129405</a></p>
-<p><a href="http://blog.csdn.net/iispring/article/details/51615631" target="_blank" rel="noopener">http://blog.csdn.net/iispring/article/details/51615631</a></p>
-</blockquote>
-
+<p>当然这里面有的大佬不高兴,就自己搞一套证书,比如12306</p></p>
+            <p class="article-more-link">
+                <a href="/2018/01/10/OkHttp-support-https/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -1546,7 +770,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/01/10/OkHttp-support-https/" data-id="cjmbfu526005hyystiwtovam4" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/01/10/OkHttp-support-https/" data-id="cjmbnu35i0055qtstplzdy2ee" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1700,7 +924,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/01/04/webview-video-without-image/" data-id="cjmbfu53d008iyyst1683xjvk" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/01/04/webview-video-without-image/" data-id="cjmbnu36q007zqtsty9tk2818" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1818,75 +1042,14 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <blockquote>
+            <p><blockquote>
 <p>手摸手教你在Room中使用List<object>.</object></p>
 </blockquote>
 <p>实际项目有很多这样的结构:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;id&quot;: &quot;001&quot;,</span><br><span class="line">  &quot;name&quot;: &quot;王诛魔&quot;,</span><br><span class="line">  &quot;age&quot;: 2018,</span><br><span class="line">  &quot;books&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;bookId&quot;: 10081,</span><br><span class="line">      &quot;userId&quot;: 1,</span><br><span class="line">      &quot;book&quot;: &quot;断罪小学&quot;,</span><br><span class="line">      &quot;desc&quot;: &quot;漫画讲述了李杀神、王诛魔和刘斩仙三位少年，为了十万小学生的未来、为了改变被诅咒的命运，相聚在狼牙区飞虎路私立断罪小学，誓死打败四年级的魔神赵日天的故事。&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;bookId&quot;: 10088,</span><br><span class="line">      &quot;userId&quot;: 1,</span><br><span class="line">      &quot;book&quot;: &quot;狂霸天下之断罪学园&quot;,</span><br><span class="line">      &quot;desc&quot;: &quot;《狂霸天下之断罪学园》，后来因为名字太长，而且“学园”和“学院”容易混淆的原因而改名。&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>也就是,类似books这样的,List<object>作为一个元素存在.</object></p>
-<blockquote>
-<p>下面就以上面的结构为例,做一个简单的演示,按照最简答的方法实现.</p>
-</blockquote>
-<p><strong>1.添加依赖</strong></p>
-<p><a href="https://developer.android.google.cn/topic/libraries/architecture/adding-components.html" target="_blank" rel="noopener">https://developer.android.google.cn/topic/libraries/architecture/adding-components.html</a></p>
-<p>值得注意的是,如果你在kotlin中使用</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: <span class="string">'kotlin-kapt'</span></span><br><span class="line">...</span><br><span class="line">dependencies&#123;</span><br><span class="line">  </span><br><span class="line">  ...</span><br><span class="line">  	<span class="comment">//这个无法生成代码,要用下面的那一条,不要疏忽忘掉了.</span></span><br><span class="line">    <span class="comment">//annotationProcessor "android.arch.persistence.room:compiler:1.0.0"</span></span><br><span class="line">    </span><br><span class="line">    kapt <span class="string">"android.arch.persistence.room:compiler:1.0.0"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>一定记得使用kapt,要不然就会遇到这个BUG.</p>
-<p><strong>2.创建表</strong></p>
-<ul>
-<li><p>User.java表</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * If you have any questions, you can contact by email &#123; wangzhumoo@gmail.com&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> 王诛魔 2018/1/3 下午1:31</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Entity</span>(tableName = <span class="string">"users"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="meta">@PrimaryKey</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> id;</span><br><span class="line">    <span class="keyword">public</span> String name;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>@Entity 中指定了表名</p>
-<p>@PrimaryKey 主键</p>
-<p>这张表users 用于保存用户数据</p>
-</li>
-</ul>
-<ul>
-<li><p>Book.java表</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * If you have any questions, you can contact by email &#123; wangzhumoo@gmail.com&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> 王诛魔 2018/1/3 下午1:30</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Entity</span>(foreignKeys = &#123;</span><br><span class="line">        <span class="meta">@ForeignKey</span>(</span><br><span class="line">                entity = User.class,</span><br><span class="line">                parentColumns =&#123;<span class="string">"id"</span>&#125;,</span><br><span class="line">                childColumns = &#123;<span class="string">"userId"</span>&#125;)</span><br><span class="line">&#125;,tableName = <span class="string">"books"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Book</span> </span>&#123;</span><br><span class="line">    <span class="meta">@PrimaryKey</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> bookId;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> userId;<span class="comment">//同User.java中的id</span></span><br><span class="line">    <span class="keyword">public</span> String book;</span><br><span class="line">    <span class="keyword">public</span> String desc;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>@Entity 中</p>
-<ul>
-<li>foreignKeys = {} 中外键,可以是多个,这里只关联了User表</li>
-<li>tableName = “books” 指定了表名</li>
-</ul>
-<p>@PrimaryKey 该表主键</p>
-<p>​</p>
-<p>​</p>
-</li>
-<li><p>UserAndBook.java表 —-UserAndBook只是辅助,不作为一张表存在.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * If you have any questions, you can contact by email &#123; wangzhumoo@gmail.com&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> 王诛魔 2018/1/3 下午1:43</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserAndBook</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Embedded</span>   <span class="comment">//请看之前的文章,这是指把User中所有元素带入到这里作为元素存在</span></span><br><span class="line">    <span class="keyword">public</span> User userEntity;</span><br><span class="line"></span><br><span class="line">  	<span class="comment">//@Relation</span></span><br><span class="line">    <span class="meta">@Relation</span>(parentColumn = <span class="string">"id"</span>,entityColumn = <span class="string">"userId"</span>,entity = Book.class)</span><br><span class="line">    <span class="keyword">public</span> List&lt;Book&gt; books;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>@Embedded   请看另一篇,有解释</p>
-<p>​</p>
-<p>@Relation <a href="https://developer.android.google.cn/reference/android/arch/persistence/room/Relation.html" target="_blank" rel="noopener"> 点这里去看官方文档  </a></p>
-<blockquote>
-<p>A convenience annotation which can be used in a Pojo to automatically fetch relation entities. When the Pojo is returned from a query, all of its relations are also fetched by Room.</p>
-</blockquote>
-<p>个人以为就是一注解,指明关系,可以把实体关联起来,然后自动组装起来.   </p>
-<p>​</p>
-<p>并且在文档中还展示了一种高端的功能,用上面做例</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//@Relation</span></span><br><span class="line">    <span class="meta">@Relation</span>(parentColumn = <span class="string">"id"</span>,entityColumn = <span class="string">"userId"</span>,</span><br><span class="line">              entity = Book.class ,projection = &#123;<span class="string">"book"</span>&#125;)</span><br><span class="line">    <span class="keyword">public</span> List&lt;String&gt; bookNames;</span><br></pre></td></tr></table></figure>
-<p>解释一下,projection指定了要取出的值,当前指明要在 books表中寻找符合条件parentColumn = “id”,entityColumn = “userId”   的项,找到之后会拿到book这个值并返回.</p>
-</li>
-</ul>
-<p><strong>3.Dao实现</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * If you have any questions, you can contact by email &#123; wangzhumoo@gmail.com&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> 王诛魔 2018/1/3 下午4:20</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Dao</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">UserAndBookDao</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Insert</span>(onConflict = OnConflictStrategy.REPLACE)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(User user)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Insert</span>(onConflict = OnConflictStrategy.REPLACE)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(List&lt;Book&gt; books)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Transaction</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(UserAndBook userAndBook)</span></span>&#123;</span><br><span class="line">        insert(userAndBook.userEntity);</span><br><span class="line">        insert(userAndBook.books);</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="meta">@Query</span>(<span class="string">"SELECT * FROM users"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> List&lt;UserAndBook&gt; <span class="title">getAll</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>insert(User user);</code>  ,<code>insert(List&lt;Book&gt; books);</code></p>
-<p>两个方法,也可以私有化,只对外提供<code>insert(UserAndBook userAndBook)</code></p>
-<p>最近换公司项目的数据库,用sql,真的有意思,可以很方便的实现很多功能</p>
-<p><strong>4.建立数据库</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * If you have any questions, you can contact by email &#123; wangzhumoo@gmail.com&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> 王诛魔 2017/10/24 上午10:13</span></span><br><span class="line"><span class="comment"> * 数据库</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Database</span>(entities = &#123;Book.class, User.class&#125;, </span><br><span class="line">          version = <span class="number">1</span>, exportSchema = <span class="keyword">false</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AppDB</span> <span class="keyword">extends</span> <span class="title">RoomDatabase</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"AppDB"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 数据库实例</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> AppDB sInstance;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String DATABASE_NAME = <span class="string">"developer.db"</span>;</span><br><span class="line">    <span class="keyword">private</span> ObservableBoolean mIsDatabaseCreated = <span class="keyword">new</span> ObservableBoolean(<span class="keyword">false</span>);</span><br><span class="line"></span><br><span class="line">  	</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> UserAndBookDao <span class="title">userbook</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 单例</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> context</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> AppDB <span class="title">getInstance</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (sInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (AppDB.class) &#123;</span><br><span class="line">                <span class="keyword">if</span> (sInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    sInstance = buildDatabase(context);</span><br><span class="line">                    sInstance.updateDatabaseCreated(context);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sInstance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Build the database.</span></span><br><span class="line"><span class="comment">     * creates a new instance of the database.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> AppDB <span class="title">buildDatabase</span><span class="params">(Context appContext)</span> </span>&#123;</span><br><span class="line">         AppDB appDB = Room.databaseBuilder(appContext, AppDB.class, DATABASE_NAME)</span><br><span class="line">                .addCallback(<span class="keyword">new</span> Callback() &#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@NonNull SupportSQLiteDatabase db)</span> </span>&#123;</span><br><span class="line">                        <span class="keyword">super</span>.onCreate(db);</span><br><span class="line">                        AppDB database = AppDB.getInstance(appContext);</span><br><span class="line">                        database.setDatabaseCreated();</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onOpen</span><span class="params">(@NonNull SupportSQLiteDatabase db)</span> </span>&#123;</span><br><span class="line">                        <span class="keyword">super</span>.onOpen(db);</span><br><span class="line">                        Log.e(TAG, <span class="string">"onOpen: "</span> + db.getPath());</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;).build();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> appDB;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Check whether the database already exists and expose it via </span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">updateDatabaseCreated</span><span class="params">(<span class="keyword">final</span> Context context)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (context.getDatabasePath(DATABASE_NAME).exists()) &#123;</span><br><span class="line">            setDatabaseCreated();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setDatabaseCreated</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        mIsDatabaseCreated.set(<span class="keyword">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ObservableBoolean <span class="title">getDatabaseCreated</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mIsDatabaseCreated;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>为了方便使用,在Application中添加了</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> AppDB <span class="title">getDatabase</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> AppDB.getInstance(context);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>5.使用</strong></p>
-<p>这里的使用方式,不建议使用,太粗暴了.</p>
-<p>可以学学Demo,Google出的<a href="https://github.com/googlesamples/android-architecture-components" target="_blank" rel="noopener">googlesamples/android-architecture-components</a></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">class RoomActivity : BindingActivity&lt;ActivityRoomBinding, RoomViewModel&gt;() &#123;</span><br><span class="line">    val gson = Gson()</span><br><span class="line"></span><br><span class="line">    <span class="function">override fun <span class="title">getBundle</span><span class="params">(extras: Bundle)</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">override fun <span class="title">layoutID</span><span class="params">()</span>: Int </span>= R.layout.activity_room</span><br><span class="line"></span><br><span class="line">    <span class="function">override fun <span class="title">initViews</span><span class="params">(savedInstanceState: Bundle?)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//点击事件  ADD按钮,添加数据到数据库</span></span><br><span class="line">        mBindingView.button.setOnClickListener(&#123;</span><br><span class="line">            val userBook = UserAndBook()</span><br><span class="line">            val jsonStr = FileUtils.getJson(<span class="keyword">this</span>, <span class="string">"data.txt"</span>)</span><br><span class="line">            val objectJson = JsonParser().parse(jsonStr).asJsonObject</span><br><span class="line"></span><br><span class="line">            <span class="comment">//获取用户</span></span><br><span class="line">            val user = objectJson.get(<span class="string">"user"</span>)</span><br><span class="line">            userBook.userEntity = gson.fromJson&lt;User&gt;(user, User::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>)</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">            //保存用户</span></span><br><span class="line"><span class="class">            <span class="title">Observable</span></span></span><br><span class="line"><span class="class">            	.<span class="title">empty</span>&lt;<span class="title">Any</span>&gt;()</span></span><br><span class="line"><span class="class">            	.<span class="title">observeOn</span>(<span class="title">Schedulers</span>.<span class="title">io</span>())</span></span><br><span class="line">            	.subscribe(object : EmptyObserver&lt;Any?&gt;() &#123;</span><br><span class="line">                	<span class="function">override fun <span class="title">onComplete</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                    	App.getDatabase().userbook().insert(userBook.userEntity)</span><br><span class="line">                	&#125;</span><br><span class="line">            	&#125;)</span><br><span class="line"></span><br><span class="line">            <span class="comment">//获取书籍</span></span><br><span class="line">            val books = objectJson.get(<span class="string">"books"</span>)</span><br><span class="line">            userBook.books = gson.fromJson&lt;ArrayList&lt;Book&gt;&gt;</span><br><span class="line">            					(books, object : TypeToken&lt;List&lt;Book&gt;&gt;() &#123;&#125;.type)</span><br><span class="line">            <span class="comment">//保存书籍</span></span><br><span class="line">            Observable</span><br><span class="line">            	.empty&lt;Any&gt;()</span><br><span class="line">            	.observeOn(Schedulers.io())</span><br><span class="line">            	.subscribe(object : EmptyObserver&lt;Any?&gt;() &#123;</span><br><span class="line">               		 <span class="function">override fun <span class="title">onComplete</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                    	App.getDatabase().userbook().insert(userBook.books)</span><br><span class="line">                	&#125;</span><br><span class="line">            	&#125;)</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="comment">//点击事件,按钮QUERY   查询数据</span></span><br><span class="line">        mBindingView.button2.setOnClickListener &#123;</span><br><span class="line">            Flowable.create(FlowableOnSubscribe&lt;List&lt;UserAndBook&gt;&gt; &#123; e -&gt;</span><br><span class="line">                val userBook = App.getDatabase().userbook().all</span><br><span class="line">                e.onNext(userBook)</span><br><span class="line">                e.onComplete()</span><br><span class="line">            &#125;, BackpressureStrategy.DROP)</span><br><span class="line">                    .compose(DatabaseTransformer())</span><br><span class="line">                    .subscribe(object : DatabaseSubscriber&lt;List&lt;UserAndBook&gt;&gt;() &#123;</span><br><span class="line">                        <span class="function">override fun <span class="title">onNext</span><span class="params">(userAndBooks: List&lt;UserAndBook&gt;)</span> </span>&#123;</span><br><span class="line">                            mBindingView.data = userAndBooks[<span class="number">0</span>]</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">layout</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">data</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">import</span> <span class="attr">type</span>=<span class="string">"com.wangzhumo.app.data.UserAndBook"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">import</span> <span class="attr">type</span>=<span class="string">"com.wangzhumo.app.data.User"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">import</span> <span class="attr">type</span>=<span class="string">"com.wangzhumo.app.data.Book"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">variable</span></span></span><br><span class="line"><span class="tag">            <span class="attr">name</span>=<span class="string">"data"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">type</span>=<span class="string">"com.wangzhumo.app.data.UserAndBook"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">data</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">RelativeLayout</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">Button</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">"@+id/button"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_alignParentLeft</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_alignParentStart</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_alignParentTop</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_marginLeft</span>=<span class="string">"57dp"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_marginStart</span>=<span class="string">"57dp"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_marginTop</span>=<span class="string">"125dp"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:text</span>=<span class="string">"Add"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">Button</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">"@+id/button2"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_alignBaseline</span>=<span class="string">"@+id/button"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_alignBottom</span>=<span class="string">"@+id/button"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_alignParentEnd</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_alignParentRight</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_marginEnd</span>=<span class="string">"56dp"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_marginRight</span>=<span class="string">"56dp"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:text</span>=<span class="string">"Query"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">RelativeLayout</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_alignParentLeft</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_alignParentStart</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_below</span>=<span class="string">"@+id/button"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_marginTop</span>=<span class="string">"68dp"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">TextView</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:id</span>=<span class="string">"@+id/textView"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_alignParentLeft</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_alignParentStart</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_alignParentTop</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_marginLeft</span>=<span class="string">"36dp"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_marginStart</span>=<span class="string">"36dp"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_marginTop</span>=<span class="string">"32dp"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:text</span>=<span class="string">"@&#123;data.userEntity.name&#125;"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">TextView</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:id</span>=<span class="string">"@+id/textView2"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_alignLeft</span>=<span class="string">"@+id/textView"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_alignStart</span>=<span class="string">"@+id/textView"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_below</span>=<span class="string">"@+id/textView"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_marginTop</span>=<span class="string">"41dp"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:text</span>=<span class="string">"@&#123;data.books.get(0).book&#125;"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">TextView</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:id</span>=<span class="string">"@+id/textView3"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_alignLeft</span>=<span class="string">"@+id/textView2"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_alignStart</span>=<span class="string">"@+id/textView2"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:layout_centerVertical</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">                <span class="attr">android:text</span>=<span class="string">"@&#123;data.books.get(0).desc&#125;"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">layout</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><img src="images/room_shot.png" alt="如图"></p>
-<p>​    </p>
-<p>​     </p>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;id&quot;: &quot;001&quot;,</span><br><span class="line">  &quot;name&quot;: &quot;王诛魔&quot;,</span><br><span class="line">  &quot;age&quot;: 2018,</span><br><span class="line">  &quot;books&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;bookId&quot;: 10081,</span><br><span class="line">      &quot;userId&quot;: 1,</span><br><span class="line">      &quot;book&quot;: &quot;断罪小学&quot;,</span><br><span class="line">      &quot;desc&quot;: &quot;漫画讲述了李杀神、王诛魔和刘斩仙三位少年，为了十万小学生的未来、为了改变被诅咒的命运，相聚在狼牙区飞虎路私立断罪小学，誓死打败四年级的魔神赵日天的故事。&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;bookId&quot;: 10088,</span><br><span class="line">      &quot;userId&quot;: 1,</span><br><span class="line">      &quot;book&quot;: &quot;狂霸天下之断罪学园&quot;,</span><br><span class="line">      &quot;desc&quot;: &quot;《狂霸天下之断罪学园》，后来因为名字太长，而且“学园”和“学院”容易混淆的原因而改名。&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+            <p class="article-more-link">
+                <a href="/2018/01/03/room-list/#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -1896,7 +1059,7 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/01/03/room-list/" data-id="cjmbfu5350080yystcvx3n13u" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2018/01/03/room-list/" data-id="cjmbnu36l007lqtst0mj046iy" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2031,7 +1194,274 @@
 
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2017/12/28/Android-Font-Size/" data-id="cjmbfu507000gyystg1dshrie" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.wangzhumo.com/2017/12/28/Android-Font-Size/" data-id="cjmbnu33h000eqtstg6bu9yxj" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-Apk-Install-Error" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2017/12/28/Apk-Install-Error/">Apk Install 的各种问题</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2017/12/28/Apk-Install-Error/">
+            <time datetime="2017-12-28T06:48:09.000Z" itemprop="datePublished">2017-12-28</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Bug/">Bug</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/Bug/">Bug</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><strong>[INSTALL_FAILED_TEST_ONLY: installPackageLI]</strong></p>
+<ul>
+<li><p>方法1：<br>AndroidManifest.xml 加入android:testOnly=”false”。</p>
+</li>
+<li><p>方法2：<br>adb install -t *.apk</p>
+</li>
+</ul>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wangzhumo.com/2017/12/28/Apk-Install-Error/" data-id="cjmbnu342001pqtstr1m2hqss" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-Android-Studio-Error-Running-app-cannot-debug-application" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2017/12/26/Android-Studio-Error-Running-app-cannot-debug-application/">Android Studio报错Error Running app: cannot debug application</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2017/12/26/Android-Studio-Error-Running-app-cannot-debug-application/">
+            <time datetime="2017-12-26T07:26:29.000Z" itemprop="datePublished">2017-12-26</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Bug/">Bug</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/Android-Studio/">Android Studio</a>, <a class="tag-link" href="/tags/Bug/">Bug</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>Android Studio报错Error Running app: cannot debug application</p></p>
+            <p class="article-more-link">
+                <a href="/2017/12/26/Android-Studio-Error-Running-app-cannot-debug-application/#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wangzhumo.com/2017/12/26/Android-Studio-Error-Running-app-cannot-debug-application/" data-id="cjmbnu33r000wqtstgpkj746k" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2119,7 +1549,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Studio/">Android Studio</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Bug/">Bug</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Media/">Media</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programme/">Programme</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Source-Code/">Source Code</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/View/">View</a><span class="category-list-count">4</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">27</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Studio/">Android Studio</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Bug/">Bug</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Media/">Media</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programme/">Programme</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Source-Code/">Source Code</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/View/">View</a><span class="category-list-count">4</span></li></ul>
         </div>
     </div>
 
@@ -2128,7 +1558,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 15.71px;">Android Studio</a> <a href="/tags/Android单元测试/" style="font-size: 10px;">Android单元测试</a> <a href="/tags/Audio/" style="font-size: 10px;">Audio</a> <a href="/tags/Binder/" style="font-size: 10px;">Binder</a> <a href="/tags/Bug/" style="font-size: 17.14px;">Bug</a> <a href="/tags/FFmpeg/" style="font-size: 10px;">FFmpeg</a> <a href="/tags/Flutter/" style="font-size: 11.43px;">Flutter</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Glide/" style="font-size: 10px;">Glide</a> <a href="/tags/Google/" style="font-size: 11.43px;">Google</a> <a href="/tags/Gradle/" style="font-size: 11.43px;">Gradle</a> <a href="/tags/Handler/" style="font-size: 10px;">Handler</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/Java/" style="font-size: 18.57px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Kotlin/" style="font-size: 11.43px;">Kotlin</a> <a href="/tags/Linux/" style="font-size: 12.86px;">Linux</a> <a href="/tags/Media/" style="font-size: 11.43px;">Media</a> <a href="/tags/Okhttp/" style="font-size: 11.43px;">Okhttp</a> <a href="/tags/Programme/" style="font-size: 14.29px;">Programme</a> <a href="/tags/RK3399/" style="font-size: 10px;">RK3399</a> <a href="/tags/Regular/" style="font-size: 10px;">Regular</a> <a href="/tags/Room/" style="font-size: 12.86px;">Room</a> <a href="/tags/Rxjava/" style="font-size: 12.86px;">Rxjava</a> <a href="/tags/Server/" style="font-size: 15.71px;">Server</a> <a href="/tags/Source-Code/" style="font-size: 11.43px;">Source Code</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Video/" style="font-size: 10px;">Video</a> <a href="/tags/View/" style="font-size: 17.14px;">View</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/组件化/" style="font-size: 10px;">组件化</a> <a href="/tags/蓝牙/" style="font-size: 10px;">蓝牙</a> <a href="/tags/设计模式/" style="font-size: 12.86px;">设计模式</a>
+            <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 15.71px;">Android Studio</a> <a href="/tags/Audio/" style="font-size: 10px;">Audio</a> <a href="/tags/Binder/" style="font-size: 10px;">Binder</a> <a href="/tags/Bug/" style="font-size: 17.14px;">Bug</a> <a href="/tags/FFmpeg/" style="font-size: 10px;">FFmpeg</a> <a href="/tags/Flutter/" style="font-size: 11.43px;">Flutter</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Glide/" style="font-size: 10px;">Glide</a> <a href="/tags/Google/" style="font-size: 11.43px;">Google</a> <a href="/tags/Gradle/" style="font-size: 11.43px;">Gradle</a> <a href="/tags/Handler/" style="font-size: 10px;">Handler</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/Java/" style="font-size: 18.57px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Kotlin/" style="font-size: 11.43px;">Kotlin</a> <a href="/tags/Linux/" style="font-size: 12.86px;">Linux</a> <a href="/tags/Media/" style="font-size: 11.43px;">Media</a> <a href="/tags/Okhttp/" style="font-size: 11.43px;">Okhttp</a> <a href="/tags/Programme/" style="font-size: 14.29px;">Programme</a> <a href="/tags/RK3399/" style="font-size: 10px;">RK3399</a> <a href="/tags/Regular/" style="font-size: 10px;">Regular</a> <a href="/tags/Room/" style="font-size: 12.86px;">Room</a> <a href="/tags/Rxjava/" style="font-size: 12.86px;">Rxjava</a> <a href="/tags/Server/" style="font-size: 15.71px;">Server</a> <a href="/tags/Source-Code/" style="font-size: 11.43px;">Source Code</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/View/" style="font-size: 17.14px;">View</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/组件化/" style="font-size: 10px;">组件化</a> <a href="/tags/蓝牙/" style="font-size: 10px;">蓝牙</a> <a href="/tags/设计模式/" style="font-size: 12.86px;">设计模式</a>
         </div>
     </div>
 
@@ -2243,7 +1673,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -2252,7 +1682,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">51</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android单元测试/">Android单元测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Audio/">Audio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bug/">Bug</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FFmpeg/">FFmpeg</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Glide/">Glide</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Handler/">Handler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kotlin/">Kotlin</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Media/">Media</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Okhttp/">Okhttp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Programme/">Programme</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RK3399/">RK3399</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regular/">Regular</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Room/">Room</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Server/">Server</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Source-Code/">Source Code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tools/">Tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Video/">Video</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">3</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">49</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Audio/">Audio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bug/">Bug</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FFmpeg/">FFmpeg</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Glide/">Glide</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Handler/">Handler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kotlin/">Kotlin</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Media/">Media</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Okhttp/">Okhttp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Programme/">Programme</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RK3399/">RK3399</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regular/">Regular</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Room/">Room</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Server/">Server</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Source-Code/">Source Code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tools/">Tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">3</span></li></ul>
         </div>
     </div>
 
