@@ -4,28 +4,8 @@
 
     
   <url>
-    <loc>http://www.wangzhumo.com/2018/09/21/time-and-frequency-domain/</loc>
-    <lastmod>2018-09-21T12:47:11.566Z</lastmod>
-    <data>
-        <display>
-        <title>认识时域与频域</title>
-        <pubTime>2018-09-21T11:11:18.000Z</pubTime>
-        
-        <tag>frequency</tag>
-         
-         
-           
-             
-              <breadCrumb title="Other" url="http://www.wangzhumo.com/categories/Other/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://www.wangzhumo.com/2018/09/21/ffmpeg-cmd-demuxer-muxer/</loc>
-    <lastmod>2018-09-21T11:10:12.324Z</lastmod>
+    <lastmod>2018-09-25T12:21:29.109Z</lastmod>
     <data>
         <display>
         <title>音视频-FFmpeg的分解与复用</title>
@@ -39,6 +19,26 @@
            
              
               <breadCrumb title="Media" url="http://www.wangzhumo.com/categories/Media/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wangzhumo.com/2018/09/21/time-and-frequency-domain/</loc>
+    <lastmod>2018-09-21T12:47:11.566Z</lastmod>
+    <data>
+        <display>
+        <title>认识时域与频域</title>
+        <pubTime>2018-09-21T11:11:18.000Z</pubTime>
+        
+        <tag>frequency</tag>
+         
+         
+           
+             
+              <breadCrumb title="Other" url="http://www.wangzhumo.com/categories/Other/"/>
           
         </display>
     </data>
