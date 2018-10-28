@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://www.wangzhumo.com/2018/10/28/taste-jni-default-project/</loc>
+    <lastmod>2018-10-28T12:29:56.110Z</lastmod>
+    <data>
+        <display>
+        <title>JNI-从Android Studio默认工程认识JNI</title>
+        <pubTime>2018-10-28T12:12:17.000Z</pubTime>
+        
+        <tag>JNI</tag>
+         
+         
+           
+             
+              <breadCrumb title="JNI" url="http://www.wangzhumo.com/categories/JNI/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.wangzhumo.com/2018/09/21/ffmpeg-cmd-demuxer-muxer/</loc>
     <lastmod>2018-09-25T12:21:29.109Z</lastmod>
     <data>
@@ -11,9 +31,9 @@
         <title>音视频-FFmpeg的分解与复用</title>
         <pubTime>2018-09-21T06:23:02.000Z</pubTime>
         
-        <tag>FFmpeg</tag>
-         
         <tag>Media</tag>
+         
+        <tag>FFmpeg</tag>
          
          
            

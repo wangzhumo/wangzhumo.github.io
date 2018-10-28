@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.wangzhumo.com/2018/10/28/taste-jni-default-project/</loc>
+    
+    <lastmod>2018-10-28T12:29:56.110Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.wangzhumo.com/2018/09/21/ffmpeg-cmd-demuxer-muxer/</loc>
     
     <lastmod>2018-09-25T12:21:29.109Z</lastmod>
@@ -541,14 +548,14 @@
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/tags/index.html</loc>
+    <loc>http://www.wangzhumo.com/categories/index.html</loc>
     
     <lastmod>2018-07-11T08:10:48.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wangzhumo.com/categories/index.html</loc>
+    <loc>http://www.wangzhumo.com/tags/index.html</loc>
     
     <lastmod>2018-07-11T08:10:48.000Z</lastmod>
     
