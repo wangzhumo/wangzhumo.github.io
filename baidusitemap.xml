@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://www.wangzhumo.com/2018/10/28/jni-basic-conception/</loc>
+    <lastmod>2018-10-28T12:41:34.286Z</lastmod>
+    <data>
+        <display>
+        <title>JNI 认识JNI的基本概念</title>
+        <pubTime>2018-10-28T12:32:20.000Z</pubTime>
+        
+        <tag>JNI</tag>
+         
+         
+           
+             
+              <breadCrumb title="JNI" url="http://www.wangzhumo.com/categories/JNI/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.wangzhumo.com/2018/10/28/taste-jni-default-project/</loc>
     <lastmod>2018-10-28T12:29:56.110Z</lastmod>
     <data>
@@ -31,9 +51,9 @@
         <title>音视频-FFmpeg的分解与复用</title>
         <pubTime>2018-09-21T06:23:02.000Z</pubTime>
         
-        <tag>Media</tag>
-         
         <tag>FFmpeg</tag>
+         
+        <tag>Media</tag>
          
          
            

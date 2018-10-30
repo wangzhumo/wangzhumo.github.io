@@ -3,22 +3,18 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Git Submodule 子模块的使用 | 王诛魔</title>
+    <title>归档: 2018 | 王诛魔</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="前言Git是一个开源的分布式版本控制系统,大家公司可能都是使用的Git来进行版本控制. 对于我个人,本地项目也喜欢使用git,万一哪天想回退一下,没有git可就真费劲了. 对于git的常规操作不用多说,今天贴一个submodule的真实使用过程">
-<meta name="keywords" content="Git">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Git Submodule 子模块的使用">
-<meta property="og:url" content="http://www.wangzhumo.com/2018/07/02/Git-Submodule/index.html">
+    <meta name="description" content="王诛魔">
+<meta property="og:type" content="website">
+<meta property="og:title" content="王诛魔">
+<meta property="og:url" content="http://www.wangzhumo.com/archives/2018/page/7/index.html">
 <meta property="og:site_name" content="王诛魔">
-<meta property="og:description" content="前言Git是一个开源的分布式版本控制系统,大家公司可能都是使用的Git来进行版本控制. 对于我个人,本地项目也喜欢使用git,万一哪天想回退一下,没有git可就真费劲了. 对于git的常规操作不用多说,今天贴一个submodule的真实使用过程">
+<meta property="og:description" content="王诛魔">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://www.wangzhumo.com/images/git_all_project.png">
-<meta property="og:updated_time" content="2018-07-19T09:23:22.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Git Submodule 子模块的使用">
-<meta name="twitter:description" content="前言Git是一个开源的分布式版本控制系统,大家公司可能都是使用的Git来进行版本控制. 对于我个人,本地项目也喜欢使用git,万一哪天想回退一下,没有git可就真费劲了. 对于git的常规操作不用多说,今天贴一个submodule的真实使用过程">
-<meta name="twitter:image" content="http://www.wangzhumo.com/images/git_all_project.png">
+<meta name="twitter:title" content="王诛魔">
+<meta name="twitter:description" content="王诛魔">
     
 
     
@@ -191,209 +187,54 @@
 </aside>
 
             
-            <section id="main"><article id="post-Git-Submodule" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
+            <section id="main"><div class="timeline timeline-wrap">
+    
+            <div class="timeline-row timeline-row-major">
+                <span class="node"><i class="fas fa-calendar-alt"></i></span>
+                <h1 class="title">2018</h1>
+            </div>
         
-        
-            <header class="article-header">
+        <div class="timeline-row">
+            <span class="node"></span>
+            <div class="content">
                 
     
-        <h1 class="article-title" itemprop="name">
-            Git Submodule 子模块的使用
+        <h1 itemprop="name">
+            <a class="timeline-article-title" href="/2018/01/03/room-list/">Room中List&lt;&gt;使用详解</a>
         </h1>
     
 
-                
-                    <div class="article-meta">
-                        
+                <div class="article-meta">
+                    
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/07/02/Git-Submodule/">
-            <time datetime="2018-07-02T08:41:23.000Z" itemprop="datePublished">2018-07-02</time>
+        <a href="/2018/01/03/room-list/">
+            <time datetime="2018-01-03T07:03:38.000Z" itemprop="datePublished">2018-01-03</time>
         </a>
     </div>
 
 
-                        
+                    
     <div class="article-category">
     	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Tools/">Tools</a>
+        <a class="article-category-link" href="/categories/Android/">Android</a>
     </div>
 
-                        
+                    
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Git/">Git</a>
+        <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/Room/">Room</a>
     </div>
 
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p><em>Git</em>是一个开源的分布式版本控制系统,大家公司可能都是使用的Git来进行版本控制.</p>
-<p>对于我个人,本地项目也喜欢使用git,万一哪天想回退一下,没有git可就真费劲了.</p>
-<p>对于git的常规操作不用多说,今天贴一个submodule的真实使用过程</p>
-<a id="more"></a>
-<p><img src="/images/git_all_project.png" alt="project"></p>
-<p>项目结构如上.</p>
-<p>为了方便我自己玩,我开了一个playground的项目</p>
-<p>playground</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── app              #主项目</span><br><span class="line">├── lib_common		 #子项目,其中主要提供三方的依赖,以及整个项目的公共代码部分</span><br><span class="line">                     #因为这个项目需要及时更新,方便每个人使用,所以是一个submodule来管理 </span><br><span class="line">├── lib_player   </span><br><span class="line">├── module_views     #今天要演示的子模块</span><br></pre></td></tr></table></figure>
-<p>其实Submodule 和Android的组件化更配哦,属于强强联合</p>
-<h4 id="创建module-views模块"><a href="#创建module-views模块" class="headerlink" title="创建module_views模块"></a>创建module_views模块</h4><h5 id="建立module"><a href="#建立module" class="headerlink" title="建立module"></a>建立module</h5><p>在我们playground的项目上,创建一个新模块,怎么操作就不说了</p>
-<h5 id="在module-views中初始化Git"><a href="#在module-views中初始化Git" class="headerlink" title="在module_views中初始化Git"></a>在module_views中初始化Git</h5><blockquote>
-<p>注意,当module_views这个模块创建时,一定不要手快把这个模块添加到playground整个项目的版本控制中</p>
-<p>记得<strong>忽略module_views整个module</strong></p>
-</blockquote>
-<p>直接贴操作了</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> phyooos @ wangzhumo in ~ [16:38:01]</span><br><span class="line"><span class="meta">$</span> cd ~/workspace/playground</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> phyooos @ wangzhumo in ~/workspace/playground on git:master x [16:58:48]</span><br><span class="line"><span class="meta">$</span> ll | grep 'module_views'</span><br><span class="line">drwxr-xr-x  11 phyooos  staff   352B  7  2 16:31 module_views</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> phyooos @ wangzhumo in ~/workspace/playground on git:master x [16:59:03]</span><br><span class="line"><span class="meta">$</span> cd module_views</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> phyooos @ wangzhumo in ~/workspace/playground/module_views  [16:59:19]</span><br><span class="line"><span class="meta">$</span> git init</span><br><span class="line">Reinitialized existing Git repository in /Users/phyooos/workspace/playground/module_views/.git/</span><br></pre></td></tr></table></figure>
-<p>因为我的module_views已经创建git仓库了,所以最后一步提示 <code>Reinitialized existing Git repository</code></p>
-<h5 id="关联远程仓库"><a href="#关联远程仓库" class="headerlink" title="关联远程仓库"></a>关联远程仓库</h5><p>这一步随意,我本人是在github上创建了一个名为<a href="https://github.com/wangzhumo/module_views" target="_blank" rel="noopener">module_views</a>的库</p>
-<p>拿到远程仓库地址 git@github.com:wangzhumo/module_views.git</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> phyooos @ wangzhumo in ~/workspace/playground/module_views  [16:59:30]</span><br><span class="line"><span class="meta">$</span> git remote add origin git@github.com:wangzhumo/module_views.git</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> phyooos @ wangzhumo in ~/workspace/playground/module_views on git:master o [16:59:30]</span><br><span class="line"><span class="meta">$</span> git push</span><br><span class="line">Everything up-to-date</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> phyooos @ wangzhumo in ~/workspace/playground/module_views on git:master o [17:06:51]</span><br><span class="line"><span class="meta">$</span> git status</span><br><span class="line">On branch master</span><br><span class="line">Your branch is up to date with 'origin/master'.</span><br><span class="line"></span><br><span class="line">nothing to commit, working tree clean</span><br></pre></td></tr></table></figure>
-<p>添加远程仓库,并push,把本地代码提交到github上去,因为我自己已经提交过了,所以可以看到</p>
-<p><code>Everything up-to-date</code></p>
-<h4 id="添加子模块到playground中"><a href="#添加子模块到playground中" class="headerlink" title="添加子模块到playground中"></a>添加子模块到playground中</h4><p>贴操作</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> phyooos @ wangzhumo in ~/workspace/playground on git:master x [16:38:12]</span><br><span class="line"><span class="meta">$</span> git submodule add git@github.com:wangzhumo/module_views.git ./module_views</span><br><span class="line">The following path is ignored by one of your .gitignore files:</span><br><span class="line">module_views</span><br><span class="line">Use -f if you really want to add it.</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> phyooos @ wangzhumo in ~/workspace/playground on git:master x [16:38:59] C:1</span><br><span class="line"><span class="meta">$</span> git submodule add -f git@github.com:wangzhumo/module_views.git ./module_views</span><br><span class="line">Adding existing repo at 'module_views' to the index</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> phyooos @ wangzhumo in ~/workspace/playground on git:master x [16:39:21]</span><br><span class="line"><span class="meta">$</span> git submodule</span><br><span class="line"> 1616423ab118e2154bcf018c825f6ed3a57cf59b lib_common (heads/master)</span><br><span class="line"> 55ae43eb327207a456624c69e3c01868f8cf43e3 module_views (heads/master)</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> phyooos @ wangzhumo in ~/workspace/playground on git:master x [16:39:48]</span><br><span class="line"><span class="meta">$</span> git submodule foreach git pull</span><br><span class="line">Entering 'lib_common'</span><br><span class="line">Already up to date.</span><br><span class="line">Entering 'module_views'</span><br><span class="line">Already up to date.</span><br></pre></td></tr></table></figure>
-<p>下面解释每一条命令</p>
-<ol>
-<li><p><code>git submodule add git@github.com:wangzhumo/module_views.git ./module_views</code></p>
-<p>添加子模块 <code>git submodule add &lt;repository&gt; &lt;path&gt; 添加子模块</code></p>
-<p>提示如下:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">The following path is ignored by one of your .gitignore files:</span><br><span class="line">module_views</span><br><span class="line">Use -f if you really want to add it.</span><br></pre></td></tr></table></figure>
-<p>说我已经把<code>module_views</code>添加到忽略文件中了,如果确实想这样操作,加上<code>-f</code>强制操作</p>
-</li>
-</ol>
-<ol>
-<li><p><code>git submodule add -f git@github.com:wangzhumo/module_views.git ./module_views</code></p>
-<p>可以看到提示,我已经成功的把<code>module_views</code>作为子项目添加到<code>playground</code>中了</p>
-</li>
-</ol>
-<ol>
-<li><p><code>git submodule</code></p>
-<p>一共看到两个子模块,一个是刚添加的<code>module_views</code>,一个是我之前添加的</p>
-</li>
-</ol>
-<ol>
-<li><p><code>git submodule foreach git pull</code></p>
-<p>拉取最新代码</p>
-</li>
-</ol>
-<h4 id="其他submodule操作"><a href="#其他submodule操作" class="headerlink" title="其他submodule操作"></a>其他submodule操作</h4><p>文档</p>
-
-        
+                </div>
+            </div>
         </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
+    
 </div>
 
-    <a data-url="http://www.wangzhumo.com/2018/07/02/Git-Submodule/" data-id="cjnvf3src003ovlstnq38u0cy" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-        
-<nav id="article-nav">
-    
-        <a href="/2018/07/02/UC-Browser-Like/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    仿写UC浏览器视频类新闻点赞效果
-                
-            </div>
-        </a>
-    
-    
-        <a href="/2018/06/26/serviceloader-zerenlian/" id="article-nav-older" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">ServiceLoader 与 责任链设计模式</div>
-        </a>
-    
-</nav>
-
-
-    
-</article>
-
-
-    
-    
-
+    <nav id="page-nav">
+        <a class="extend prev" rel="prev" href="/archives/2018/page/6/">&laquo; 上一页</a><a class="page-number" href="/archives/2018/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2018/page/5/">5</a><a class="page-number" href="/archives/2018/page/6/">6</a><span class="page-number current">7</span>
+    </nav>
 </section>
             
                 
