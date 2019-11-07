@@ -106,33 +106,6 @@
   
   
   <entry>
-    <title>音视频-FFmpeg的分解与复用</title>
-    <link href="undefined2018/09/21/ffmpeg-cmd-demuxer-muxer/"/>
-    <url>2018/09/21/ffmpeg-cmd-demuxer-muxer/</url>
-    
-    <content type="html"><![CDATA[]]></content>
-    
-    
-    <categories>
-      
-      <category>Media</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>Media</tag>
-      
-      <tag>FFmpeg</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>音视频-FFmpeg的编译与安装</title>
     <link href="undefined2018/09/20/ffmpeg-build-install/"/>
     <url>2018/09/20/ffmpeg-build-install/</url>

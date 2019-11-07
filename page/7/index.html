@@ -96,7 +96,7 @@
 </nav>
 
     <div class="view intro-2" id="background"
-         style="background: url('/img/default.png')no-repeat center center;
+         style="background: url('/img/mountain_covered_by_cloud.jpg')no-repeat center center;
            background-size: cover;
            background-attachment: fixed;">
       <div class="full-bg-img">
@@ -129,59 +129,6 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
-
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2017/12/28/Android-Font-Size/">
-        <p class="h4 index-header">Android字体不跟随系统变化</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">已知的方法有两种:
-第一种
-不使用sp 而使用 dp
-第二种
-在Application中加入
-@Override
-public void onConfigurationChanged(Configuration newConfig) {
-    if (newConfig.fontScale != 1)
-        getResources();
-    super.onConfigurationChanged(newConfig);
-}
-
-@Override
-public Resources getResources() {
-     Resources res = super.getResources();
-     if (res.getConfiguration().fontScale != 1) {
-        Configuration newConfig = new Configuration();
-        newConfig.setToDefaults();
-        res.updateConfiguration(newConfig, res.g</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-28&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android">Android</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Android">Android</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
 
   <div class="row mb-4 mx-auto">
     
@@ -618,6 +565,66 @@ android {
             <a href="/tags/Android">Android</a>&nbsp;
           
             <a href="/tags/Gradle">Gradle</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/2017/12/25/Android-dependent-config/">
+        <p class="h4 index-header">Android 项目统一管理依赖版本</p>
+        
+        
+          
+          
+        
+        <div class="index-excerpt" style="max-height: none;">
+          <div class="index-text mb-1">准备引入Arouter,做一个组件的demo,就开始慢慢的改造项目
+.
+|-- app
+|   |-- build.gradle
+|   |-- libs
+|   |-- src
+|   |   |-- androidTest
+|   |   |-- main
+|   |   `-- test
+|
+|-- opensource
+|   |-- build.gradle
+|   |-- libs
+|   `-- src
+|       `-- main
+|-- build.gradle
+|-- settings.gradle
+`-- versions.gradle
+
+app 为主项目opensource 作为library存在,将来会成为baseLib的依赖,其中是所有的三方依赖,开源代码等等
+...</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-25&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android">Android</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Android">Android</a>&nbsp;
+          
+            <a href="/tags/Gradle">Gradle</a>&nbsp;
+          
+            <a href="/tags/%E7%BB%84%E4%BB%B6%E5%8C%96">组件化</a>&nbsp;
           
         
       </div>
