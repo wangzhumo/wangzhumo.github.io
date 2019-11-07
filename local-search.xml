@@ -1012,12 +1012,6 @@
     <content type="html"><![CDATA[<h3 id="ServiceManager"><a href="#ServiceManager" class="headerlink" title="ServiceManager"></a>ServiceManager</h3><p>首先我们要了解一下ServiceManager.</p><p>ServiceManager的功能主要就是注册,查询服务,作为一个大管家的角色出现.</p><ul><li>注册服务：记录服务名和信息，放到服务列表</li><li>查询服务：根据服务名查询相应的的信息</li></ul><p>ServiceManager是有权限控制的，只有具有相应权限的进程才能注册,查询服务</p><p><a href="http://gityuan.com/2015/11/08/binder-get-sm/" target="_blank" rel="noopener">http://gityuan.com/2015/11/08/binder-get-sm/</a></p><a id="more"></a><h3 id="Linux内存"><a href="#Linux内存" class="headerlink" title="Linux内存"></a>Linux内存</h3><h4 id="内核空间"><a href="#内核空间" class="headerlink" title="内核空间"></a>内核空间</h4><p>为什么进程间不可以直接通讯那?</p><p>因为每个进程的内存空间都是隔离起来的,不可能随意去访问其他进程的内存.</p><p>在32位系统中,寻址空间最大为4G,那么这4G内存,一般将1G分配给内核空间,3G用户空间,Linux内核由系统内的所有进程共享.</p><p><img src="/images/linux_memory.png" srcset="/img/loading.gif" alt=""></p><p>这么一来,我们就可以在内核空间为所欲为了,不,并不能.用户进程不能直接操作内核.</p><p>Android是在Linux的内核上跑的,那么为什么Android要自己做一个Binder来实现进程间的通讯那?</p><p>我们都知道Linux上Socket/管道/消息队列都可以做到进程间的通讯,但是通过这些都需要2次内存拷贝,</p><p>而Binder只需要一次就可以完成,大大的提高效率</p><h4 id="BINDER-MMAP"><a href="#BINDER-MMAP" class="headerlink" title="BINDER_MMAP"></a>BINDER_MMAP</h4><p>mmap可以将一个文件或者其它对象映射进内存</p><p>在Binder中,通过在用户空间(当前进程的用户空间)创建一个虚拟地址空间,并在内核空间创建相同大小的虚拟地址空间.</p><p>接着申请一块物理内存,将物理内存映射到内核虚拟地址空间和用户虚拟内存空间,这样就实现了用户控件和内核空间的同步.</p><p><img src="/images/binder_physical_memory.jpg" srcset="/img/loading.gif" alt="来自Gityuan大佬"></p><h4 id="大概流程"><a href="#大概流程" class="headerlink" title="大概流程"></a>大概流程</h4><ol><li>copy_from_user 首先是要发出消息的,那么先从用户控件from 拷贝数据</li><li>binder_thread_write 第二步就是把刚才拷贝的数据写入到内核空间</li><li>binder_thread_read 第三步再次读取刚才从用户控件from读取并写入内核空间的数据</li><li>copy_to_user 最后当然是从内核空间拷贝数据到用户空间to(即目标)</li></ol><p>PS:以上均建立在每一次操作都成功的基础上</p><p>来自Gityuan大神的分享<a href="http://gityuan.com/2015/11/01/binder-driver/" target="_blank" rel="noopener">http://gityuan.com/2015/11/01/binder-driver/</a></p><p><img src="/images/binder_memory_map.jpg" srcset="/img/loading.gif" alt="binder_memory"></p><p>解释说明:</p><p>首先Client端发送消息,通过copy_from_user从Client端<strong>拷贝数据</strong>到内核空间去</p><p>而后还记得<strong>BINDER_MMAP</strong>中的操作么,内核空间的地址与Server是同一块物理内存,</p><p>Server就可以通过这个方式,直接同步到Client发送的数据.</p><blockquote><ul><li>binder_init：初始化字符设备；</li><li>binder_open：打开驱动设备，过程需要持有binder_main_lock同步锁；</li><li>binder_mmap：申请内存空间，该过程需要持有binder_mmap_lock同步锁；</li><li>binder_ioctl：执行相应的ioctl操作，该过程需要持有binder_main_lock同步锁；<ul><li>当处于binder_thread_read过程，read_buffer无数据则释放同步锁，并处于wait_event_freezable过程，等有数据到来则唤醒并尝试持有同步锁。</li></ul></li></ul></blockquote>]]></content>
     
     
-    <categories>
-      
-      <category>Source Code</category>
-      
-    </categories>
-    
     
     <tags>
       
@@ -1269,6 +1263,31 @@
   
   
   <entry>
+    <title>Flutter安装指南MAC版</title>
+    <link href="undefined2018/02/28/Flutter-Install-MAC/"/>
+    <url>2018/02/28/Flutter-Install-MAC/</url>
+    
+    <content type="html"><![CDATA[<h4 id="下载Flutter-SDK"><a href="#下载Flutter-SDK" class="headerlink" title="下载Flutter SDK"></a>下载Flutter SDK</h4><h5 id="使用Git安装"><a href="#使用Git安装" class="headerlink" title="使用Git安装"></a>使用Git安装</h5><p>如果已经下载过flutter的,切换到flutter目录去直接</p><pre><code>git checkout betagit pull//可能会失败,因为这个目录中可能有修改过,要目放弃修改,要么暂存均可(如果失败,这里选择了暂存) -- Startgit checkout betagit stashgit pull(如果失败,这里选择了暂存)  -- End</code></pre><p>未下载过,第一次安装</p><pre><code>//克隆flutter的beta分支git clone -b beta https://github.com/flutter/flutter.git</code></pre><a id="more"></a><h5 id="配置”环境变量”"><a href="#配置”环境变量”" class="headerlink" title="配置”环境变量”"></a>配置”环境变量”</h5><p>熟悉命令的自己搞一下</p><pre><code>//把         安装目录/flutter/binexport PATH=`pwd`/flutter/bin:$PATH</code></pre><p>不熟悉的</p><pre><code>~ ⌚ 0:01:37$ vim ~/.bash_profile//会进入vim编辑,如下配置即可export FLUTTER_HOME=/Users/phyooos/develop/flutterexport PATH=$PATH:$FLUTTER_HOME/bin:</code></pre><p>不会的</p><pre><code>open ~/.bash_profile//编辑器,总可以了吧,如下配置即可export FLUTTER_HOME=/Users/phyooos/develop/flutterexport PATH=$PATH:$FLUTTER_HOME/bin:</code></pre><p>放一下我自己的配置:</p><pre><code>export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0/Contents/Homeexport ANDROID_HOME=/Users/phyooos/Library/Android/sdkexport TOMCAT_HOME=/Users/phyooos/develop/apache-tomcat-7.0.77export GRADLE_USER_HOME=/Users/phyooos/develop/gradleexport MYSQL_HOME=/usr/local/mysql-5.7.18-macos10.12-x86_64export GOROOT=/usr/local/goexport GOPATH=/Users/phyooos/develop/workspaceexport GOBIN=$GOPATH/binexport SCALA_HOME=/Users/phyooos/develop/scala-2.11.8export MAVEN_HOME=/Users/phyooos/develop/apache-maven-3.5.0export FLUTTER_HOME=/Users/phyooos/develop/flutterexport PATH=/usr/local/Cellar/git/2.15.0/bin:$PATH:$JAVA_HOME/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$TOMCAT_HOME/bin:$GRADLE_HOME/bin:$MYSQL_HOME/bin:$GOROOT/bin:$GOPATH:$GOBIN:$GOPATH/bin:$FLUTTER_HOME/bin:$MAVEN_HOME/bin:$SCALA_HOME/bin</code></pre><h4 id="安装Flutter"><a href="#安装Flutter" class="headerlink" title="安装Flutter"></a>安装Flutter</h4><pre><code>flutter doctor</code></pre><blockquote><p>这里要注意的是,这个配置需要”良好的网络环境”,最好翻墙下载为妙,但是<strong>终端不走代理</strong></p><p>所以,需要手动给终端配置一下,请看我另一篇文章</p><p><a href="http://www.wangzhumo.com/Flutter/Flutter-%E5%AE%89%E8%A3%85/">Flutter 安装</a></p></blockquote>]]></content>
+    
+    
+    <categories>
+      
+      <category>Flutter</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Flutter</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Android Studio 中使用tools:sample</title>
     <link href="undefined2018/02/26/Android-Studio-tools-sample/"/>
     <url>2018/02/26/Android-Studio-tools-sample/</url>
@@ -1375,6 +1394,35 @@
   
   
   <entry>
+    <title>Room --AppDatabase_Impl does not exist的异常解决</title>
+    <link href="undefined2018/01/17/Room-AppDatabase-Impl-does-not-exist/"/>
+    <url>2018/01/17/Room-AppDatabase-Impl-does-not-exist/</url>
+    
+    <content type="html"><![CDATA[<p>Bug如下:</p><pre><code>Caused by: java.lang.RuntimeException: cannot find implementation for com.wangzhumo.app.datasource.database.AppDB. AppDB_Impl does not exist</code></pre><a id="more"></a><h4 id="寻找原因"><a href="#寻找原因" class="headerlink" title="寻找原因"></a>寻找原因</h4><p>debug依次发现:</p><ul><li><p>getInstance()为空</p><pre><code class="java">  public static AppDB getInstance(Context context) {        if (sInstance == null) {            synchronized (AppDB.class) {                if (sInstance == null) {                    //此处返回为空                    sInstance = buildDatabase(context);                    sInstance.updateDatabaseCreated(context);                }            }        }        return sInstance;    }</code></pre></li><li><p>buildDatabase(context) 返回为空</p><pre><code class="java">/** * Build the database. * creates a new instance of the database. */private static AppDB buildDatabase(final Context appContext) {     AppDB appDB = Room.databaseBuilder(appContext, AppDB.class, DATABASE_NAME)            .addCallback(new Callback() {                @Override                public void onCreate(@NonNull SupportSQLiteDatabase db) {                    super.onCreate(db);                    AppDB database = AppDB.getInstance(appContext);                    database.setDatabaseCreated();                }                @Override                public void onOpen(@NonNull SupportSQLiteDatabase db) {                    super.onOpen(db);                    Log.e(TAG, &quot;onOpen: &quot; + db.getPath());                }            }).build();    return appDB;}</code></pre></li></ul><ul><li>databaseBuilder是创建数据库的方法,但是它构建失败了,那么剩下的就是源码了</li></ul><h4 id="Debug源码"><a href="#Debug源码" class="headerlink" title="Debug源码"></a>Debug源码</h4><ul><li>databaseBuilder 方法</li></ul><pre><code class="java">@SuppressWarnings(&quot;WeakerAccess&quot;)    @NonNull    public static &lt;T extends RoomDatabase&gt; RoomDatabase.Builder&lt;T&gt; databaseBuilder(            @NonNull Context context, @NonNull Class&lt;T&gt; klass, @NonNull String name) {        //noinspection ConstantConditions        if (name == null || name.trim().length() == 0) {            throw new IllegalArgumentException              (&quot;Cannot build a database with null or empty name.&quot;                    + &quot; If you are trying to create an in memory database, use Room&quot;                    + &quot;.inMemoryDatabaseBuilder&quot;);        }        return new RoomDatabase.Builder&lt;&gt;(context, klass, name);    }</code></pre><p>我们可以明显的看出,此处抛出的异常不是AppDB_Impl does not exist 的提示,可以肯定并不是此处的问题</p><p>应该是正常返回的 return new RoomDatabase.Builder&lt;&gt;(context, klass, name);</p><p><code>RoomDatabase.Builder</code></p><p>那么出问题的就可以肯定是</p><ul><li><p>build()方法</p><pre><code>@NonNull        public T build() {            //noinspection ConstantConditions            if (mContext == null) {                throw new IllegalArgumentException                (&quot;Cannot provide null context for the database.&quot;);            }            //noinspection ConstantConditions            if (mDatabaseClass == null) {                throw new IllegalArgumentException                (&quot;Must provide an abstract class that&quot;                        + &quot; extends RoomDatabase&quot;);            }            if (mFactory == null) {                mFactory = new FrameworkSQLiteOpenHelperFactory();            }            DatabaseConfiguration configuration =                    new DatabaseConfiguration(mContext, mName, mFactory, mMigrationContainer,                            mCallbacks, mAllowMainThreadQueries, mRequireMigration);            T db = Room.getGeneratedImplementation(mDatabaseClass, DB_IMPL_SUFFIX);            db.init(configuration);            return db;        }</code></pre><p>此处,debug发现,是到</p><p><code>T db = Room.getGeneratedImplementation(mDatabaseClass, DB_IMPL_SUFFIX);</code></p><p>抛出异常的.</p></li></ul><h4 id="锁定问题"><a href="#锁定问题" class="headerlink" title="锁定问题"></a>锁定问题</h4><p><code>getGeneratedImplementation</code></p><pre><code class="java">@NonNull    static &lt;T, C&gt; T getGeneratedImplementation(Class&lt;C&gt; klass, String suffix) {        final String fullPackage = klass.getPackage().getName();        String name = klass.getCanonicalName();        final String postPackageName = fullPackage.isEmpty()                ? name                : (name.substring(fullPackage.length() + 1));        final String implName = postPackageName.replace(&#39;.&#39;, &#39;_&#39;) + suffix;        //noinspection TryWithIdenticalCatches        try {            @SuppressWarnings(&quot;unchecked&quot;)            final Class&lt;T&gt; aClass = (Class&lt;T&gt;) Class.forName(                    fullPackage.isEmpty() ? implName : fullPackage + &quot;.&quot; + implName);            return aClass.newInstance();        } catch (ClassNotFoundException e) {            //**很明显,就是这个地方了**            throw new RuntimeException(&quot;cannot find implementation for &quot;                    + klass.getCanonicalName() + &quot;. &quot; + implName + &quot; does not exist&quot;);        } catch (IllegalAccessException e) {            throw new RuntimeException(&quot;Cannot access the constructor&quot;                    + klass.getCanonicalName());        } catch (InstantiationException e) {            throw new RuntimeException(&quot;Failed to create an instance of &quot;                    + klass.getCanonicalName());        }    }</code></pre><p>其实就是,生成类失败了</p><p>其他参数都正常,偏偏生成失败,所以就怀疑到 </p><p> Java  -&gt;     <code>apt</code> 的问题</p><p>Kotlin -&gt;  <code>kapt</code>的问题</p><p>这两个就是用来生成代码的,这里的生成失败,有很大概率是这个问题</p><h4 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h4><p>查看项目的依赖  <code>lib_opensource  -&gt; build.gradle</code></p><pre><code>    //arch    api deps.archLibs.archExtensions    api deps.archLibs.archLifecycleCommon    api deps.archLibs.archRoomRuntime    kapt deps.archLibs.archRoomCompiler</code></pre><p>查看发现,我已经添加了,那么什么鬼问题呢?</p><p><strong>怀疑是library的问题,打开我使用Room的library</strong>    ,查看 <code>lib_datasource -&gt; build.gradle</code></p><pre><code>apply plugin: &#39;com.android.library&#39;...dependencies {    implementation fileTree(dir: &#39;libs&#39;, include: [&#39;*.jar&#39;])    api project(&#39;:lib_opensource&#39;)//    kapt deps.archLibs.archRoomCompiler}</code></pre><p>果然忘了加</p><pre><code>apply plugin: &#39;com.android.library&#39;apply plugin: &#39;kotlin-android&#39;apply plugin: &#39;kotlin-kapt&#39;...dependencies {    implementation fileTree(dir: &#39;libs&#39;, include: [&#39;*.jar&#39;])    api project(&#39;:lib_opensource&#39;)//    kapt deps.archLibs.archRoomCompiler}</code></pre><p>就Ok了,我又可以愉快的玩耍了</p><h4 id="记得-kapt"><a href="#记得-kapt" class="headerlink" title="记得:  kapt"></a>记得:  kapt</h4>]]></content>
+    
+    
+    <categories>
+      
+      <category>Bug</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Android</tag>
+      
+      <tag>Bug</tag>
+      
+      <tag>Room</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>使用Charles抓Https的数据请求</title>
     <link href="undefined2018/01/11/Charles-Https/"/>
     <url>2018/01/11/Charles-Https/</url>
@@ -1467,6 +1515,33 @@
   
   
   <entry>
+    <title>Room中List&lt;&gt;使用详解</title>
+    <link href="undefined2018/01/03/room-list/"/>
+    <url>2018/01/03/room-list/</url>
+    
+    <content type="html"><![CDATA[<blockquote><p>手摸手教你在Room中使用List<object>.</object></p></blockquote><p>实际项目有很多这样的结构:</p><pre><code>{  &quot;id&quot;: &quot;001&quot;,  &quot;name&quot;: &quot;王诛魔&quot;,  &quot;age&quot;: 2018,  &quot;books&quot;: [    {      &quot;bookId&quot;: 10081,      &quot;userId&quot;: 1,      &quot;book&quot;: &quot;断罪小学&quot;,      &quot;desc&quot;: &quot;漫画讲述了李杀神、王诛魔和刘斩仙三位少年，为了十万小学生的未来、为了改变被诅咒的命运，相聚在狼牙区飞虎路私立断罪小学，誓死打败四年级的魔神赵日天的故事。&quot;    },    {      &quot;bookId&quot;: 10088,      &quot;userId&quot;: 1,      &quot;book&quot;: &quot;狂霸天下之断罪学园&quot;,      &quot;desc&quot;: &quot;《狂霸天下之断罪学园》，后来因为名字太长，而且“学园”和“学院”容易混淆的原因而改名。&quot;    }  ]}</code></pre><a id="more"></a><p>也就是,类似books这样的,List<object>作为一个元素存在.</object></p><blockquote><p>下面就以上面的结构为例,做一个简单的演示,按照最简答的方法实现.</p></blockquote><p><strong>1.添加依赖</strong></p><p><a href="https://developer.android.google.cn/topic/libraries/architecture/adding-components.html" target="_blank" rel="noopener">https://developer.android.google.cn/topic/libraries/architecture/adding-components.html</a></p><p>值得注意的是,如果你在kotlin中使用</p><pre><code class="java">apply plugin: &#39;kotlin-kapt&#39;...dependencies{  ...      //这个无法生成代码,要用下面的那一条,不要疏忽忘掉了.    //annotationProcessor &quot;android.arch.persistence.room:compiler:1.0.0&quot;    kapt &quot;android.arch.persistence.room:compiler:1.0.0&quot;}</code></pre><p>一定记得使用kapt,要不然就会遇到这个BUG.</p><p><strong>2.创建表</strong></p><ul><li><p>User.java表</p><pre><code class="java">/** * If you have any questions, you can contact by email { wangzhumoo@gmail.com} * @author 王诛魔 2018/1/3 下午1:31 */@Entity(tableName = &quot;users&quot;)public class User {    @PrimaryKey    public int id;    public String name;    public int age;}</code></pre><p>@Entity 中指定了表名</p><p>@PrimaryKey 主键</p><p>这张表users 用于保存用户数据</p></li></ul><ul><li><p>Book.java表</p><pre><code class="java">/** * If you have any questions, you can contact by email { wangzhumoo@gmail.com} * @author 王诛魔 2018/1/3 下午1:30 */@Entity(foreignKeys = {        @ForeignKey(                entity = User.class,                parentColumns ={&quot;id&quot;},                childColumns = {&quot;userId&quot;})},tableName = &quot;books&quot;)public class Book {    @PrimaryKey    public int bookId;    public int userId;//同User.java中的id    public String book;    public String desc;}</code></pre><p>@Entity 中</p><ul><li>foreignKeys = {} 中外键,可以是多个,这里只关联了User表</li><li>tableName = “books” 指定了表名</li></ul><p>@PrimaryKey 该表主键</p></li></ul><ul><li><p>UserAndBook.java表 —-UserAndBook只是辅助,不作为一张表存在.</p><pre><code class="Java">/** * If you have any questions, you can contact by email { wangzhumoo@gmail.com} * @author 王诛魔 2018/1/3 下午1:43 */public class UserAndBook {    @Embedded   //请看之前的文章,这是指把User中所有元素带入到这里作为元素存在    public User userEntity;      //@Relation    @Relation(parentColumn = &quot;id&quot;,entityColumn = &quot;userId&quot;,entity = Book.class)    public List&lt;Book&gt; books;}</code></pre><p>@Embedded   请看另一篇,有解释</p></li></ul><p>  @Relation <a href="https://developer.android.google.cn/reference/android/arch/persistence/room/Relation.html" target="_blank" rel="noopener"> 点这里去看官方文档  </a></p><blockquote><p>A convenience annotation which can be used in a Pojo to automatically fetch relation entities. When the Pojo is returned from a query, all of its relations are also fetched by Room.</p></blockquote><p>  个人以为就是一注解,指明关系,可以把实体关联起来,然后自动组装起来.   </p><p>  并且在文档中还展示了一种高端的功能,用上面做例</p><pre><code class="java">  //@Relation      @Relation(parentColumn = &quot;id&quot;,entityColumn = &quot;userId&quot;,                entity = Book.class ,projection = {&quot;book&quot;})      public List&lt;String&gt; bookNames;</code></pre><p>  解释一下,projection指定了要取出的值,当前指明要在 books表中寻找符合条件parentColumn = “id”,entityColumn = “userId”   的项,找到之后会拿到book这个值并返回.</p><p><strong>3.Dao实现</strong></p><pre><code class="java">/** * If you have any questions, you can contact by email { wangzhumoo@gmail.com} * @author 王诛魔 2018/1/3 下午4:20 */@Daopublic abstract class UserAndBookDao {    @Insert(onConflict = OnConflictStrategy.REPLACE)    public abstract void insert(User user);    @Insert(onConflict = OnConflictStrategy.REPLACE)    public abstract void insert(List&lt;Book&gt; books);    @Transaction    public void insert(UserAndBook userAndBook){        insert(userAndBook.userEntity);        insert(userAndBook.books);    }    @Query(&quot;SELECT * FROM users&quot;)    public abstract List&lt;UserAndBook&gt; getAll();}</code></pre><p><code>insert(User user);</code>  ,<code>insert(List&lt;Book&gt; books);</code></p><p>两个方法,也可以私有化,只对外提供<code>insert(UserAndBook userAndBook)</code></p><p>最近换公司项目的数据库,用sql,真的有意思,可以很方便的实现很多功能</p><p><strong>4.建立数据库</strong></p><pre><code class="java">/** * If you have any questions, you can contact by email { wangzhumoo@gmail.com} * @author 王诛魔 2017/10/24 上午10:13 * 数据库 */@Database(entities = {Book.class, User.class},           version = 1, exportSchema = false)public abstract class AppDB extends RoomDatabase {    private static final String TAG = &quot;AppDB&quot;;    /**     * 数据库实例     */    private static AppDB sInstance;    private static String DATABASE_NAME = &quot;developer.db&quot;;    private ObservableBoolean mIsDatabaseCreated = new ObservableBoolean(false);    public abstract UserAndBookDao userbook();    /**     * 单例     * @param context     * @return     */    public static AppDB getInstance(Context context) {        if (sInstance == null) {            synchronized (AppDB.class) {                if (sInstance == null) {                    sInstance = buildDatabase(context);                    sInstance.updateDatabaseCreated(context);                }            }        }        return sInstance;    }    /**     * Build the database.     * creates a new instance of the database.     */    private static AppDB buildDatabase(Context appContext) {         AppDB appDB = Room.databaseBuilder(appContext, AppDB.class, DATABASE_NAME)                .addCallback(new Callback() {                    @Override                    public void onCreate(@NonNull SupportSQLiteDatabase db) {                        super.onCreate(db);                        AppDB database = AppDB.getInstance(appContext);                        database.setDatabaseCreated();                    }                    @Override                    public void onOpen(@NonNull SupportSQLiteDatabase db) {                        super.onOpen(db);                        Log.e(TAG, &quot;onOpen: &quot; + db.getPath());                    }                }).build();        return appDB;    }    /**     * Check whether the database already exists and expose it via      */    private void updateDatabaseCreated(final Context context) {        if (context.getDatabasePath(DATABASE_NAME).exists()) {            setDatabaseCreated();        }    }    private void setDatabaseCreated() {        mIsDatabaseCreated.set(true);    }    public ObservableBoolean getDatabaseCreated() {        return mIsDatabaseCreated;    }}</code></pre><p>为了方便使用,在Application中添加了</p><pre><code class="java">public static AppDB getDatabase() {    return AppDB.getInstance(context);}</code></pre><p><strong>5.使用</strong></p><p>这里的使用方式,不建议使用,太粗暴了.</p><p>可以学学Demo,Google出的<a href="https://github.com/googlesamples/android-architecture-components" target="_blank" rel="noopener">googlesamples/android-architecture-components</a></p><pre><code class="java">class RoomActivity : BindingActivity&lt;ActivityRoomBinding, RoomViewModel&gt;() {    val gson = Gson()    override fun getBundle(extras: Bundle) {    }    override fun layoutID(): Int = R.layout.activity_room    override fun initViews(savedInstanceState: Bundle?) {        //点击事件  ADD按钮,添加数据到数据库        mBindingView.button.setOnClickListener({            val userBook = UserAndBook()            val jsonStr = FileUtils.getJson(this, &quot;data.txt&quot;)            val objectJson = JsonParser().parse(jsonStr).asJsonObject            //获取用户            val user = objectJson.get(&quot;user&quot;)            userBook.userEntity = gson.fromJson&lt;User&gt;(user, User::class.java)            //保存用户            Observable                .empty&lt;Any&gt;()                .observeOn(Schedulers.io())                .subscribe(object : EmptyObserver&lt;Any?&gt;() {                    override fun onComplete() {                        App.getDatabase().userbook().insert(userBook.userEntity)                    }                })            //获取书籍            val books = objectJson.get(&quot;books&quot;)            userBook.books = gson.fromJson&lt;ArrayList&lt;Book&gt;&gt;                                (books, object : TypeToken&lt;List&lt;Book&gt;&gt;() {}.type)            //保存书籍            Observable                .empty&lt;Any&gt;()                .observeOn(Schedulers.io())                .subscribe(object : EmptyObserver&lt;Any?&gt;() {                        override fun onComplete() {                        App.getDatabase().userbook().insert(userBook.books)                    }                })        })        //点击事件,按钮QUERY   查询数据        mBindingView.button2.setOnClickListener {            Flowable.create(FlowableOnSubscribe&lt;List&lt;UserAndBook&gt;&gt; { e -&gt;                val userBook = App.getDatabase().userbook().all                e.onNext(userBook)                e.onComplete()            }, BackpressureStrategy.DROP)                    .compose(DatabaseTransformer())                    .subscribe(object : DatabaseSubscriber&lt;List&lt;UserAndBook&gt;&gt;() {                        override fun onNext(userAndBooks: List&lt;UserAndBook&gt;) {                            mBindingView.data = userAndBooks[0]                        }                    })        }    }}</code></pre><pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&lt;layout    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;    &lt;data&gt;        &lt;import type=&quot;com.wangzhumo.app.data.UserAndBook&quot;/&gt;        &lt;import type=&quot;com.wangzhumo.app.data.User&quot;/&gt;        &lt;import type=&quot;com.wangzhumo.app.data.Book&quot;/&gt;        &lt;variable            name=&quot;data&quot;            type=&quot;com.wangzhumo.app.data.UserAndBook&quot;/&gt;    &lt;/data&gt;    &lt;RelativeLayout        android:layout_width=&quot;match_parent&quot;        android:layout_height=&quot;match_parent&quot;&gt;        &lt;Button            android:id=&quot;@+id/button&quot;            android:layout_width=&quot;wrap_content&quot;            android:layout_height=&quot;wrap_content&quot;            android:layout_alignParentLeft=&quot;true&quot;            android:layout_alignParentStart=&quot;true&quot;            android:layout_alignParentTop=&quot;true&quot;            android:layout_marginLeft=&quot;57dp&quot;            android:layout_marginStart=&quot;57dp&quot;            android:layout_marginTop=&quot;125dp&quot;            android:text=&quot;Add&quot; /&gt;        &lt;Button            android:id=&quot;@+id/button2&quot;            android:layout_width=&quot;wrap_content&quot;            android:layout_height=&quot;wrap_content&quot;            android:layout_alignBaseline=&quot;@+id/button&quot;            android:layout_alignBottom=&quot;@+id/button&quot;            android:layout_alignParentEnd=&quot;true&quot;            android:layout_alignParentRight=&quot;true&quot;            android:layout_marginEnd=&quot;56dp&quot;            android:layout_marginRight=&quot;56dp&quot;            android:text=&quot;Query&quot; /&gt;        &lt;RelativeLayout            android:layout_width=&quot;match_parent&quot;            android:layout_height=&quot;match_parent&quot;            android:layout_alignParentLeft=&quot;true&quot;            android:layout_alignParentStart=&quot;true&quot;            android:layout_below=&quot;@+id/button&quot;            android:layout_marginTop=&quot;68dp&quot;&gt;            &lt;TextView                android:id=&quot;@+id/textView&quot;                android:layout_width=&quot;wrap_content&quot;                android:layout_height=&quot;wrap_content&quot;                android:layout_alignParentLeft=&quot;true&quot;                android:layout_alignParentStart=&quot;true&quot;                android:layout_alignParentTop=&quot;true&quot;                android:layout_marginLeft=&quot;36dp&quot;                android:layout_marginStart=&quot;36dp&quot;                android:layout_marginTop=&quot;32dp&quot;                android:text=&quot;@{data.userEntity.name}&quot; /&gt;            &lt;TextView                android:id=&quot;@+id/textView2&quot;                android:layout_width=&quot;wrap_content&quot;                android:layout_height=&quot;wrap_content&quot;                android:layout_alignLeft=&quot;@+id/textView&quot;                android:layout_alignStart=&quot;@+id/textView&quot;                android:layout_below=&quot;@+id/textView&quot;                android:layout_marginTop=&quot;41dp&quot;                android:text=&quot;@{data.books.get(0).book}&quot; /&gt;            &lt;TextView                android:id=&quot;@+id/textView3&quot;                android:layout_width=&quot;wrap_content&quot;                android:layout_height=&quot;wrap_content&quot;                android:layout_alignLeft=&quot;@+id/textView2&quot;                android:layout_alignStart=&quot;@+id/textView2&quot;                android:layout_centerVertical=&quot;true&quot;                android:text=&quot;@{data.books.get(0).desc}&quot; /&gt;        &lt;/RelativeLayout&gt;    &lt;/RelativeLayout&gt;&lt;/layout&gt;</code></pre><p><img src="images/room_shot.png" srcset="/img/loading.gif" alt="如图"></p><p>​    </p><p>​     </p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Android</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Android</tag>
+      
+      <tag>Room</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Android字体不跟随系统变化</title>
     <link href="undefined2017/12/28/Android-Font-Size/"/>
     <url>2017/12/28/Android-Font-Size/</url>
@@ -1484,6 +1559,62 @@
     <tags>
       
       <tag>Android</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Apk Install 的各种问题</title>
+    <link href="undefined2017/12/28/Apk-Install-Error/"/>
+    <url>2017/12/28/Apk-Install-Error/</url>
+    
+    <content type="html"><![CDATA[<p><strong>[INSTALL_FAILED_TEST_ONLY: installPackageLI]</strong></p><ul><li><p>方法1：<br>AndroidManifest.xml 加入android:testOnly=”false”。</p></li><li><p>方法2：<br>adb install -t *.apk</p></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>Bug</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Android</tag>
+      
+      <tag>Bug</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Android Studio报错Error Running app: cannot debug application</title>
+    <link href="undefined2017/12/26/Android-Studio-Error-Running-app-cannot-debug-application/"/>
+    <url>2017/12/26/Android-Studio-Error-Running-app-cannot-debug-application/</url>
+    
+    <content type="html"><![CDATA[<p>Android Studio报错Error Running app: cannot debug application</p><a id="more"></a><p>这里有一位仁兄帮忙翻译了.</p><blockquote><p><a href="http://blog.csdn.net/yishichangan1/article/details/77451486" target="_blank" rel="noopener">http://blog.csdn.net/yishichangan1/article/details/77451486</a></p></blockquote><pre><code>Cannot debug application xx.xxx.xxx.app on device lge_nexus_5x(此处表示你的手机型号).你的xxxapp不能在型号为Nexus 5x的LGE手机上调试。This application does not have the debuggable attribute enabled in its manifest.这个项目在清单文件（AndroidManifest.xml）中没有设置可以调试的参数。If you have manually set it in the manifest, then remove it and let the IDE automatically assign it.如果你已经手动在清单文件种设置了这个属性，请remove掉，让IDE自动生成。If you are using Gradle, make sure that your current variant is debuggable.如果你使用Gradle，确认你现在的变体是可调试的。</code></pre><p>####我就知道是我自己选了release….果然</p><p><img src="/images/canot_debug.png" srcset="/img/loading.gif" alt="cannotdebug"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Bug</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Android</tag>
+      
+      <tag>Bug</tag>
+      
+      <tag>Android Studio</tag>
       
     </tags>
     
@@ -1571,6 +1702,33 @@
   
   
   <entry>
+    <title>Room数据库使用指北List&lt;&gt;的问题</title>
+    <link href="undefined2017/12/25/room-list-object/"/>
+    <url>2017/12/25/room-list-object/</url>
+    
+    <content type="html"><![CDATA[<p>Room依赖</p><pre><code>implementation &quot;android.arch.persistence.room:runtime:1.0.0&quot;annotationProcessor &quot;android.arch.persistence.room:compiler:1.0.0&quot;</code></pre><a id="more"></a><p>查找**</p><ul><li>查找表中所有数据</li></ul><pre><code>  /**     * 查找user     * @return     */    @Query(&quot;SELECT * FROM banners&quot;)    List&lt;BannerModel&gt; findBanners();</code></pre><ul><li>按条件查找</li></ul><pre><code>    /**     * filters     * @return     * @param typeSort     */    @Query(&quot;SELECT * FROM filters WHERE type != :typeSort&quot;)    List&lt;FilterItemModel&gt; findFilters(String typeSort);</code></pre><ul><li>限制条数的条件查找</li></ul><pre><code>    /**     * 获取排序     * @return     */    @Query(&quot;SELECT * FROM filters WHERE type = :name LIMIT 0,1&quot;)    FilterItemModel findSort(String name);</code></pre><p>现在获取的是第一条数据</p><p>//文档中的例子</p><pre><code>@Daopublic interface MyDao {    @Query(&quot;SELECT first_name, last_name FROM user WHERE region IN (:regions)&quot;)    public List&lt;NameTuple&gt; loadUsersFromRegions(List&lt;String&gt; regions);}</code></pre><p>在user表中查找满足集合List<string> regions中条件的元素</string></p><ul><li>获取总行数</li></ul><pre><code>    /**     * 获取数据库表中总条数     * @return     */    @Query(&quot;SELECT count(*) FROM search_history&quot;)    long findHistoryCount();</code></pre><ul><li>获取某一列的和</li></ul><pre><code>    /**     * 求和     * @return     */    @Query(&quot;SELECT sum(count) FROM status_stock&quot;)    long findStatusStockCount();</code></pre><ul><li>按照降序排列(ASC升序  DESC降序)</li></ul><pre><code>    /**     * 查找user     * @return     */    @Query(&quot;SELECT * FROM search_history ORDER BY time DESC&quot;)    List&lt;SearchHistoryModel&gt; findSearchHistory();</code></pre><hr><p>文档中的例子:</p><pre><code>@Daopublic interface MyDao {    //正常的查询    @Query(&quot;SELECT * FROM user WHERE age != :minAge&quot;)    public User[] loadAllUsersOlderThan(int minAge);}@Daopublic interface MyDao {    //区间中的值    @Query(&quot;SELECT * FROM user WHERE age BETWEEN :minAge AND :maxAge&quot;)    public User[] loadAllUsersBetweenAges(int minAge, int maxAge);    //或关系的查询    @Query(&quot;SELECT * FROM user WHERE first_name LIKE :search &quot;           + &quot;OR last_name LIKE :search&quot;)    public List&lt;User&gt; findUserWithName(String search);}</code></pre><p><strong>如果,你不想查到表 行中所有字段,则</strong><br>1.定义一个实体</p><pre><code>public class NameTuple {    @ColumnInfo(name=&quot;first_name&quot;)    public String firstName;    @ColumnInfo(name=&quot;last_name&quot;)    public String lastName;}</code></pre><p>2.查询</p><pre><code>@Daopublic interface MyDao {    @Query(&quot;SELECT first_name, last_name FROM user&quot;)    public List&lt;NameTuple&gt; loadFullName();}</code></pre><ul><li>多表查询Querying multiple tables</li></ul><pre><code>@Daopublic interface MyDao {   @Query(&quot;SELECT user.name AS userName, pet.name AS petName &quot;          + &quot;FROM user, pet &quot;          + &quot;WHERE user.id = pet.user_id&quot;)   public LiveData&lt;List&lt;UserPet&gt;&gt; loadUserAndPetNames();   // You can also define this class in a separate file, as long as you add the   // &quot;public&quot; access modifier.   //注意 public   static class UserPet {       public String userName;       public String petName;   }}</code></pre><p><strong>更新</strong></p><ul><li>更新指定条目</li></ul><pre><code>    /**     * 更新时间     * @param time     */    @Query(&quot;UPDATE search_history SET time = :time WHERE content = :content&quot;)    void updateSearchHistory(String content,long time);</code></pre><p><strong>删除数据</strong></p><ul><li>删除所有数据</li></ul><pre><code>    /**     * 删除表     * @return     */    @Query(&quot;DELETE FROM filters&quot;)    void delectFilters();</code></pre><ul><li>删除最后一条</li></ul><pre><code>    /**     * 删除最后一个     * @return     */    @Query(&quot;DELETE FROM search_history WHERE time in(SELECT time FROM search_history ORDER BY time ASC LIMIT 1 )&quot;)    void delectLastHistory();</code></pre><ul><li>按条件删除</li></ul><pre><code>    /**     * 删除表by listtype     * @return     */    @Query(&quot;DELETE FROM vehicle_model WHERE listType = :type&quot;)    void delectVehicleByType(String type);</code></pre><p>####补充</p><p><strong><code>1.List&lt;String&gt;</code>这样的元素</strong></p><pre><code>   private ArrayList&lt;String&gt; tags;</code></pre><p>这样的元素,可以通过Converter搞定</p><pre><code>    /**    * If you have any questions, you can contact by email { wangzhumoo@gmail.com}    *    * @author 王诛魔 2017/12/27 上午11:51    */    public class TagsConverter {        @TypeConverter        public static ArrayList&lt;String&gt; fromString(String value) {            Type listType = new TypeToken&lt;ArrayList&lt;String&gt;&gt;() {}.getType();            return new Gson().fromJson(value, listType);        }        @TypeConverter        public static String fromArrayList(ArrayList&lt;String&gt; list) {            Gson gson = new Gson();            String json = gson.toJson(list);            return json;        }    }</code></pre><p>在db中,会存为 </p><pre><code>[&quot;精选&quot;][&quot;精选&quot;,&quot;急售&quot;][&quot;准新&quot;,&quot;SUV&quot;]</code></pre><p><strong>3.@Embedded</strong></p><p>作用是,把已经写好的普通的类添加到数据表中.<br>用Room的文档做说明:</p><pre><code>//这是一个标准的数据表@Entityclass User {    @PrimaryKey    public int id;    public String firstName;}</code></pre><p>其中只有id , firstName</p><p>而我想添加<br>    street;<br>    state;<br>    city;<br>    postCode;<br>刚好之前写了一个类叫Address</p><pre><code>class Address {    public String street;    public String state;    public String city;    @Ignore    public String nothing;    @ColumnInfo(name = &quot;post_code&quot;)    public int postCode;}</code></pre><p>那么我通过 @Embedded</p><pre><code>@Entityclass User {    @PrimaryKey    public int id;    public String firstName;    @Embedded    public Address address;}</code></pre><p>表中就会有:<br><code>names: id, firstName, street, state, city, and post_code</code></p><p>如果你想给@Embedded的类中所有元素前面加上统一的标志</p><p><code>@Embedded(prefix = &quot;address_&quot;)</code></p><p>表中就会有:</p><p><code>names: id, firstName, address_street, address_state, address_city, and address_post_code</code></p><p><strong>3.<code>List&lt;Object&gt;</code>这样的数据</strong></p><ul><li>解决方法<br><a href="https://developer.android.com/reference/android/arch/persistence/room/Relation.html" target="_blank" rel="noopener">google developer</a></li></ul><p>真的给谷歌跪了,什么鬼文档</p><pre><code>@Entitypublic class User {    // 这里是用户的 Id    @PrimaryKey    public int id;    //省略    ...}@Entitypublic class Book {    //书的id    @PrimaryKey    public int bookId;    //这里就是这本书与 User的关系,这里的是User.id    public int userId;    public String name;    public String desc;}//注意,什么注解也不要加public class UserAndBooks {    //加入所有的user的属性   @Embedded   public User user;    //这里定义User 和 Book的关系   @Relation(parentColumn = &quot;id&quot;, entityColumn = &quot;userId&quot;, entity = Book.class)   public List&lt;Book&gt; books; }//文档上还讲了一个比较牛逼的功能,这里不讨论public class UserAndAllPets {   @Embedded   public User user;   @Relation(parentColumn = &quot;id&quot;, entityColumn = &quot;userId&quot;, entity = Book.class,           projection = {&quot;name&quot;})   public List&lt;String&gt; bookNames; }//然后,dao是这样的@Daopublic interface UserDao {    @Query(&quot;SELECT * FROM User&quot;)    public List&lt;UserAndBooks&gt; loadUserWithBooks();}PS:当然你存的时候,分辨别存User  和 Book 即可</code></pre>]]></content>
+    
+    
+    <categories>
+      
+      <category>Android</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Android</tag>
+      
+      <tag>Room</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Retrofit2 + Okhttp3 + Rxjava2 网络请求封装(下)</title>
     <link href="undefined2017/12/25/Retrofit2-Okhttp3-Rxjava2-2/"/>
     <url>2017/12/25/Retrofit2-Okhttp3-Rxjava2-2/</url>
@@ -1589,9 +1747,9 @@
       
       <tag>Android</tag>
       
-      <tag>Rxjava</tag>
-      
       <tag>Okhttp</tag>
+      
+      <tag>Rxjava</tag>
       
     </tags>
     
@@ -1618,9 +1776,9 @@
       
       <tag>Android</tag>
       
-      <tag>Rxjava</tag>
-      
       <tag>Okhttp</tag>
+      
+      <tag>Rxjava</tag>
       
     </tags>
     
@@ -1823,6 +1981,33 @@
       <tag>Android</tag>
       
       <tag>View</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Android Studio 使用正式签名debug调试</title>
+    <link href="undefined2017/12/25/Android-Studio-signature-debug/"/>
+    <url>2017/12/25/Android-Studio-signature-debug/</url>
+    
+    <content type="html"><![CDATA[<p>###解决问题:</p><blockquote><p>很多时候我们使用第三方登录什么的东西,需要我们提供正式签名,但是我们总是需要调试的.<br>一般情况,我们不可能一次性OK,那么每一次调试都需要正式签名打包,并安装,然后再调试,这也太麻烦了,.</p></blockquote><p>所以,直接上代码:</p><pre><code>signingConfigs {        release {            keyAlias &#39;phyooos&#39;            keyPassword &#39;phyooos&#39;            storeFile file(&#39;phyooos.jks&#39;)            storePassword &#39;phyooos&#39;        }    }    buildTypes {        release {            minifyEnabled false            signingConfig signingConfigs.release            proguardFiles getDefaultProguardFile(&#39;proguard-android.txt&#39;), &#39;proguard-rules.pro&#39;        }        debug{            minifyEnabled false            signingConfig signingConfigs.release            proguardFiles getDefaultProguardFile(&#39;proguard-android.txt&#39;), &#39;proguard-rules.pro&#39;        }    }</code></pre><p><strong>解释一下:</strong></p><pre><code>signingConfigs {        release {            keyAlias &#39;phyooos&#39;            keyPassword &#39;phyooos&#39;            storeFile file(&#39;phyooos.jks&#39;)            storePassword &#39;phyooos&#39;        }    }</code></pre><p>这一段代码写在项目app目录下&gt;gradle配置文件中&gt;android节点下,<br>是我们自定义的一个配置</p><ul><li>keyAlias ‘phyooos’  这是签名文件的Alias</li><li>keyPassword ‘phyooos’   这是签名文件的密码</li><li>storeFile file(‘phyooos.jks’)  这个就是签名文件的地址,我放在app目录下了</li><li>storePassword ‘phyooos’  这是store密码</li></ul><hr><pre><code>buildTypes {        release {            minifyEnabled false            signingConfig signingConfigs.release            proguardFiles getDefaultProguardFile(&#39;proguard-android.txt&#39;), &#39;proguard-rules.pro&#39;        }        debug{            minifyEnabled false            signingConfig signingConfigs.release            proguardFiles getDefaultProguardFile(&#39;proguard-android.txt&#39;), &#39;proguard-rules.pro&#39;        }    }</code></pre><p>这一段的意思就是debug调试以及正式打包都使用上面自定义的配置</p><h4 id="The-End-好了-愉快的玩耍吧"><a href="#The-End-好了-愉快的玩耍吧" class="headerlink" title="The End   好了,愉快的玩耍吧"></a>The End   好了,愉快的玩耍吧</h4>]]></content>
+    
+    
+    <categories>
+      
+      <category>Android Studio</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Android</tag>
+      
+      <tag>Android Studio</tag>
       
     </tags>
     

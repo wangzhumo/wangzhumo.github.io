@@ -134,6 +134,48 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2018/02/26/Android-Studio-tools-sample/">
+        <p class="h4 index-header">Android Studio 中使用tools:sample</p>
+        
+        
+          
+          
+        
+        <div class="index-excerpt" style="max-height: none;">
+          <div class="index-text mb-1">
+Google 官方文档
+https://developer.android.com/studio/write/tool-attributes.html#toolssample_resources
+
+他所能达到的效果就是,提供给你一些数据,并直接在 Preview 或者 Design面板中查看样式...</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-02-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android%20Studio">Android Studio</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Android">Android</a>&nbsp;
+          
+            <a href="/tags/Android%20Studio">Android Studio</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2018/02/07/Android-Timber-Logger/">
         <p class="h4 index-header">Android项目中使用Timber + Logger日志输出</p>
         
@@ -272,6 +314,48 @@ export PATH.....:$TOMCAT/bin
           <i class="iconfont icon-tag"></i>
           
             <a href="/tags/Java">Java</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/2018/01/17/Room-AppDatabase-Impl-does-not-exist/">
+        <p class="h4 index-header">Room --AppDatabase_Impl does not exist的异常解决</p>
+        
+        
+          
+          
+        
+        <div class="index-excerpt" style="max-height: none;">
+          <div class="index-text mb-1">Bug如下:
+Caused by: java.lang.RuntimeException: cannot find implementation for com.wangzhumo.app.datasource.database.AppDB. AppDB_Impl does not exist
+...</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-01-17&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Bug">Bug</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Android">Android</a>&nbsp;
+          
+            <a href="/tags/Bug">Bug</a>&nbsp;
+          
+            <a href="/tags/Room">Room</a>&nbsp;
           
         
       </div>
@@ -461,38 +545,44 @@ android:hardwareAccelerated=&quot;true&quot;
     
     
     <div class="col-12 col-md-8 m-auto">
-      <a href="/2017/12/28/Android-Font-Size/">
-        <p class="h4 index-header">Android字体不跟随系统变化</p>
+      <a href="/2018/01/03/room-list/">
+        <p class="h4 index-header">Room中List&lt;&gt;使用详解</p>
         
         
           
+          
         
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">已知的方法有两种:
-第一种
-不使用sp 而使用 dp
-第二种
-在Application中加入
-@Override
-public void onConfigurationChanged(Configuration newConfig) {
-    if (newConfig.fontScale != 1)
-        getResources();
-    super.onConfigurationChanged(newConfig);
-}
+        <div class="index-excerpt" style="max-height: none;">
+          <div class="index-text mb-1">
+手摸手教你在Room中使用List.
 
-@Override
-public Resources getResources() {
-     Resources res = super.getResources();
-     if (res.getConfiguration().fontScale != 1) {
-        Configuration newConfig = new Configuration();
-        newConfig.setToDefaults();
-        res.updateConfiguration(newConfig, res.g</div>
+实际项目有很多这样的结构:
+{
+  &quot;id&quot;: &quot;001&quot;,
+  &quot;name&quot;: &quot;王诛魔&quot;,
+  &quot;age&quot;: 2018,
+  &quot;books&quot;: [
+    {
+      &quot;bookId&quot;: 10081,
+      &quot;userId&quot;: 1,
+      &quot;book&quot;: &quot;断罪小学&quot;,
+      &quot;desc&quot;: &quot;漫画讲述了李杀神、王诛魔和刘斩仙三位少年，为了十万小学生的未来、为了改变被诅咒的命运，相聚在狼牙区飞虎路私立断罪小学，誓死打败四年级的魔神赵日天的故事。&quot;
+    },
+    {
+      &quot;bookId&quot;: 10088,
+      &quot;userId&quot;: 1,
+      &quot;book&quot;: &quot;狂霸天下之断罪学园&quot;,
+      &quot;desc&quot;: &quot;《狂霸天下之断罪学园》，后来因为名字太长，而且“学园”和“学院”容易混淆的原因而改名。&quot;
+    }
+  ]
+}
+...</div>
         </div>
       </a>
 
       <div>
         
-          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-28&nbsp;&nbsp;
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-01-03&nbsp;&nbsp;
         
         
           <i class="iconfont icon-inbox"></i>
@@ -505,91 +595,7 @@ public Resources getResources() {
           
             <a href="/tags/Android">Android</a>&nbsp;
           
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2017/12/25/Centos-Login-SSH/">
-        <p class="h4 index-header">Centos 创建用户并实现免密码登录</p>
-        
-        
-          
-          
-        
-        <div class="index-excerpt" style="max-height: none;">
-          <div class="index-text mb-1">
-比如,创建一个名为wzm的账号
-
-####创建账号
-1.创建
-[root@localhost ~]# adduser wzm
-[root@localhost ~]# passwd wzm
-
-#此时,输入两次密码即可
-...</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-25&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Server">Server</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Server">Server</a>&nbsp;
-          
-            <a href="/tags/Linux">Linux</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2017/12/25/Android-RxBus/">
-        <p class="h4 index-header">Android项目中使用RxBus进行通讯</p>
-        
-        
-          
-          
-        
-        <div class="index-excerpt" style="max-height: none;">
-          <div class="index-text mb-1">加入JakeWharton大神的RxRelay
-JakeWharton/RxRelay
-compile &#39;com.jakewharton.rxrelay2:rxrelay:2.0.0&#39;
-...</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-25&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android">Android</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Rxjava">Rxjava</a>&nbsp;
+            <a href="/tags/Room">Room</a>&nbsp;
           
         
       </div>
@@ -600,7 +606,7 @@ compile &#39;com.jakewharton.rxrelay2:rxrelay:2.0.0&#39;
 
   <nav aria-label="index posts navigation">
     <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/5/"><i class="fas fa-angle-double-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/7/"><i class="fas fa-angle-double-right"></i></a>
+      <a class="extend prev" rel="prev" href="/page/5/"><i class="fas fa-angle-double-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/7/"><i class="fas fa-angle-double-right"></i></a>
     </span>
   </nav>
   

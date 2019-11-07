@@ -4,6 +4,225 @@
 
     
   <url>
+    <loc>https://www.wangzhumo.com/2018/01/03/room-list/</loc>
+    <lastmod>2019-11-07T11:18:17.640Z</lastmod>
+    <data>
+        <display>
+        <title>Room中List<>使用详解</title>
+        <pubTime>2018-01-03T07:03:38.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Room</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="https://www.wangzhumo.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.wangzhumo.com/2018/01/17/Room-AppDatabase-Impl-does-not-exist/</loc>
+    <lastmod>2019-11-07T11:18:02.761Z</lastmod>
+    <data>
+        <display>
+        <title>Room --AppDatabase_Impl does not exist的异常解决</title>
+        <pubTime>2018-01-17T09:08:28.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Bug</tag>
+         
+        <tag>Room</tag>
+         
+         
+           
+             
+              <breadCrumb title="Bug" url="https://www.wangzhumo.com/categories/Bug/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.wangzhumo.com/2017/12/25/room-list-object/</loc>
+    <lastmod>2019-11-07T11:17:44.794Z</lastmod>
+    <data>
+        <display>
+        <title>Room数据库使用指北List<>的问题</title>
+        <pubTime>2017-12-25T05:08:10.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Room</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="https://www.wangzhumo.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.wangzhumo.com/2018/02/28/Flutter-Install-MAC/</loc>
+    <lastmod>2019-11-07T11:17:26.085Z</lastmod>
+    <data>
+        <display>
+        <title>Flutter安装指南MAC版</title>
+        <pubTime>2018-02-28T15:56:58.000Z</pubTime>
+        
+        <tag>Flutter</tag>
+         
+         
+           
+             
+              <breadCrumb title="Flutter" url="https://www.wangzhumo.com/categories/Flutter/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.wangzhumo.com/2017/12/28/Apk-Install-Error/</loc>
+    <lastmod>2019-11-07T11:16:57.181Z</lastmod>
+    <data>
+        <display>
+        <title>Apk Install 的各种问题</title>
+        <pubTime>2017-12-28T06:48:09.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Bug</tag>
+         
+         
+           
+             
+              <breadCrumb title="Bug" url="https://www.wangzhumo.com/categories/Bug/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.wangzhumo.com/2017/12/26/Android-Studio-Error-Running-app-cannot-debug-application/</loc>
+    <lastmod>2019-11-07T11:16:39.165Z</lastmod>
+    <data>
+        <display>
+        <title>Android Studio报错Error Running app: cannot debug application</title>
+        <pubTime>2017-12-26T07:26:29.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Bug</tag>
+         
+        <tag>Android Studio</tag>
+         
+         
+           
+             
+              <breadCrumb title="Bug" url="https://www.wangzhumo.com/categories/Bug/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.wangzhumo.com/2018/05/11/Android-Binder-1/</loc>
+    <lastmod>2019-11-07T11:15:16.989Z</lastmod>
+    <data>
+        <display>
+        <title>Android Binder机制(一)</title>
+        <pubTime>2018-05-11T05:56:25.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Source Code</tag>
+         
+        <tag>Binder</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.wangzhumo.com/2018/05/09/Android-App-Launch/</loc>
+    <lastmod>2019-11-07T11:15:01.905Z</lastmod>
+    <data>
+        <display>
+        <title>Android的启动流程</title>
+        <pubTime>2018-05-09T07:00:12.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Source Code</tag>
+         
+         
+           
+             
+              <breadCrumb title="Source Code" url="https://www.wangzhumo.com/categories/Source-Code/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.wangzhumo.com/2018/07/05/Android-Bezier/</loc>
+    <lastmod>2019-11-07T11:14:55.512Z</lastmod>
+    <data>
+        <display>
+        <title>Android中的贝塞尔曲线</title>
+        <pubTime>2018-07-05T08:05:12.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="https://www.wangzhumo.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.wangzhumo.com/2017/12/25/Android-Studio-signature-debug/</loc>
+    <lastmod>2019-11-07T11:14:35.549Z</lastmod>
+    <data>
+        <display>
+        <title>Android Studio 使用正式签名debug调试</title>
+        <pubTime>2017-12-25T01:38:59.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Android Studio</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android Studio" url="https://www.wangzhumo.com/categories/Android-Studio/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.wangzhumo.com/2018/01/04/webview-video-without-image/</loc>
     <lastmod>2019-11-07T10:59:04.990Z</lastmod>
     <data>
@@ -239,9 +458,9 @@
         
         <tag>Android</tag>
          
-        <tag>Rxjava</tag>
-         
         <tag>Okhttp</tag>
+         
+        <tag>Rxjava</tag>
          
          
            
@@ -263,9 +482,9 @@
         
         <tag>Android</tag>
          
-        <tag>Rxjava</tag>
-         
         <tag>Okhttp</tag>
+         
+        <tag>Rxjava</tag>
          
          
            
@@ -1553,72 +1772,6 @@
            
              
               <breadCrumb title="Android" url="https://www.wangzhumo.com/categories/Android/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://www.wangzhumo.com/2018/05/11/Android-Binder-1/</loc>
-    <lastmod>2019-11-07T10:41:40.522Z</lastmod>
-    <data>
-        <display>
-        <title>Android Binder机制(一)</title>
-        <pubTime>2018-05-11T05:56:25.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>Source Code</tag>
-         
-        <tag>Binder</tag>
-         
-         
-           
-             
-              <breadCrumb title="Source Code" url="https://www.wangzhumo.com/categories/Source-Code/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://www.wangzhumo.com/2018/07/05/Android-Bezier/</loc>
-    <lastmod>2019-11-07T10:41:21.235Z</lastmod>
-    <data>
-        <display>
-        <title>Android中的贝塞尔曲线</title>
-        <pubTime>2018-07-05T08:05:12.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="https://www.wangzhumo.com/categories/Android/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://www.wangzhumo.com/2018/05/09/Android-App-Launch/</loc>
-    <lastmod>2019-11-07T10:41:12.728Z</lastmod>
-    <data>
-        <display>
-        <title>Android的启动流程</title>
-        <pubTime>2018-05-09T07:00:12.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>Source Code</tag>
-         
-         
-           
-             
-              <breadCrumb title="Source Code" url="https://www.wangzhumo.com/categories/Source-Code/"/>
           
         </display>
     </data>
