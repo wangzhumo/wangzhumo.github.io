@@ -1,249 +1,166 @@
 <!DOCTYPE html>
-<html lang=zh>
+<html lang="zh-CN">
+
+
+
+
+
 <head>
-    <meta charset="utf-8">
-    
-    <title>Jenkins搭建Android自动打包 | 王诛魔</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="下载安装 Jenkins的下载与安装 下载   https://jenkins.io/download/  下载war包  Generic Java package (.war)  因为打算使用Tomcat来部署,所以需要下载war包,也可以直接下对应版本的安装文件,直接安装   **安装**  war包放到`./apache-tomcat-7.0.77/webapps`      Tomcat的">
-<meta name="keywords" content="Android,Server,Jenkins">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Jenkins搭建Android自动打包">
-<meta property="og:url" content="https://www.wangzhumo.com/2018/02/05/Jenkins-Android/index.html">
-<meta property="og:site_name" content="王诛魔">
-<meta property="og:description" content="下载安装 Jenkins的下载与安装 下载   https://jenkins.io/download/  下载war包  Generic Java package (.war)  因为打算使用Tomcat来部署,所以需要下载war包,也可以直接下对应版本的安装文件,直接安装   **安装**  war包放到`./apache-tomcat-7.0.77/webapps`      Tomcat的">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.wangzhumo.com/images/jenkins_java.png">
-<meta property="og:image" content="https://www.wangzhumo.com/images/jenkins_git.png">
-<meta property="og:image" content="https://www.wangzhumo.com/images/jenkins_gradle.png">
-<meta property="og:image" content="https://www.wangzhumo.com/images/jenkins_init.png">
-<meta property="og:image" content="https://www.wangzhumo.com/images/jenkins_init1.png">
-<meta property="og:image" content="https://www.wangzhumo.com/images/jenkins_init2.png">
-<meta property="og:image" content="https://www.wangzhumo.com/images/jenkins_init3.png">
-<meta property="og:image" content="https://www.wangzhumo.com/images/jenkins_gitlab.png">
-<meta property="og:image" content="https://www.wangzhumo.com/images/jenkins_build.png">
-<meta property="og:image" content="https://www.wangzhumo.com/images/jenkins_pgy.png">
-<meta property="og:image" content="https://www.wangzhumo.com/images/jenkins_go.png">
-<meta property="og:updated_time" content="2018-09-21T06:52:04.000Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Jenkins搭建Android自动打包">
-<meta name="twitter:description" content="下载安装 Jenkins的下载与安装 下载   https://jenkins.io/download/  下载war包  Generic Java package (.war)  因为打算使用Tomcat来部署,所以需要下载war包,也可以直接下对应版本的安装文件,直接安装   **安装**  war包放到`./apache-tomcat-7.0.77/webapps`      Tomcat的">
-<meta name="twitter:image" content="https://www.wangzhumo.com/images/jenkins_java.png">
-    
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="description" content="王诛魔">
+  <meta name="author" content="wangzhumo">
+  <meta name="keywords" content="">
+  <title>Jenkins搭建Android自动打包 ~ 王诛魔</title>
 
-    
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
+<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
+<link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css"  >
+<link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css"  >
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
 
-    
-        <link rel="icon" href="/css/images/favicon-32x32-next.png" />
-    
 
-    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
-    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
-    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
-    <link rel="stylesheet" href="/libs/open-sans/styles.css">
-    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+  <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css"  >
 
-    <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/main.css"  >
 
-    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
-    
-    
-        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
-    
-    
-        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
-    
-    
-    
-    
+
+  <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.min.css"  >
 
 
 </head>
 
+
 <body>
-    <div id="container">
-        <header id="header">
-    <div id="header-main" class="header-inner">
-        <div class="outer">
-            <a href="/" id="logo">
-                <i class="logo"></i>
-                <span class="site-title">王诛魔</span>
-            </a>
-            <nav id="main-nav">
-                
-                    <a class="main-nav-link" href="/.">Home</a>
-                
-                    <a class="main-nav-link" href="/archives">Archives</a>
-                
-                    <a class="main-nav-link" href="/categories">Categories</a>
-                
-                    <a class="main-nav-link" href="/tags">Tags</a>
-                
-                    <a class="main-nav-link" href="/about">About</a>
-                
-            </nav>
-            
-                
-                <nav id="sub-nav">
-                    <div class="profile" id="profile-nav">
-                        <a id="profile-anchor" href="javascript:;">
-                            <img class="avatar" src="/css/images/avatar.png" />
-                            <i class="fas fa-caret-down"></i>
-                        </a>
-                    </div>
-                </nav>
-            
-            <div id="search-form-wrap">
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>王诛魔</strong>&nbsp;</a>
 
-    <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
-        <button type="submit" class="search-form-submit"></button>
-    </form>
-    <div class="ins-search">
-    <div class="ins-search-mask"></div>
-    <div class="ins-search-container">
-        <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
-            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
-        </div>
-        <div class="ins-section-wrapper">
-            <div class="ins-section-container"></div>
-        </div>
-    </div>
-</div>
-<script>
-(function (window) {
-    var INSIGHT_CONFIG = {
-        TRANSLATION: {
-            POSTS: '文章',
-            PAGES: '页面',
-            CATEGORIES: '分类',
-            TAGS: '标签',
-            UNTITLED: '(未命名)',
-        },
-        ROOT_URL: '/',
-        CONTENT_URL: '/content.json',
-    };
-    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
-})(window);
-</script>
-<script src="/js/insight.js"></script>
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
 
-</div>
-        </div>
-    </div>
-    <div id="main-nav-mobile" class="header-sub header-inner">
-        <table class="menu outer">
-            <tr>
-                
-                    <td><a class="main-nav-link" href="/.">Home</a></td>
-                
-                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
-                
-                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
-                
-                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
-                
-                    <td><a class="main-nav-link" href="/about">About</a></td>
-                
-                <td>
-                    
-    <div class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
-    </div>
-
-                </td>
-            </tr>
-        </table>
-    </div>
-</header>
-
-        <div class="outer">
-            
-                
-
-<aside id="profile" class="profile-fixed">
-    <div class="inner profile-inner">
-        <div class="base-info profile-block">
-            <img id="avatar" src="/css/images/avatar.png" />
-            <h2 id="name">王诛魔</h2>
-            <h3 id="title">Android Developer</h3>
-            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>Beijing, China</span>
-            <a id="follow" target="_blank" href="mailto:wangzhumoo@gmail.com">联系我</a>
-        </div>
-        <div class="article-info profile-block">
-            <div class="article-info-block">
-                88
-                <span>文章</span>
-            </div>
-            <div class="article-info-block">
-                38
-                <span>标签</span>
-            </div>
-        </div>
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
         
-        <div class="profile-block social-links">
-            <table>
-                <tr>
-                    
-                    
-                    <td>
-                        <a href="https://github.com/wangzhumo" target="_blank" title="github" >
-                            <i class="fab fa-github"></i>
-                        </a>
-                    </td>
-                    
-                </tr>
-            </table>
-        </div>
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
         
-    </div>
-</aside>
-
-            
-            <section id="main"><article id="post-Jenkins-Android" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
         
         
-            <header class="article-header">
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+</nav>
+
+    <div class="view intro-2" id="background"
+         style="background: url('/img/default.png')no-repeat center center;
+           background-size: cover;
+           background-attachment: fixed;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期一, 二月 5日 2018, 9:55 上午
+                </p>
+              
+
+              <p>
                 
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    1.1k 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      5 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
     
-        <h1 class="article-title" itemprop="name">
-            Jenkins搭建Android自动打包
-        </h1>
-    
+      
 
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/02/05/Jenkins-Android/">
-            <time datetime="2018-02-05T01:55:44.000Z" itemprop="datePublished">2018-02-05</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/Jenkins/">Jenkins</a>, <a class="tag-link" href="/tags/Server/">Server</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
             <h4 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h4><ul>
 <li><p>Jenkins的下载与安装</p>
 <p><strong>下载</strong></p>
@@ -263,38 +180,84 @@ Tomcat的wabapps包下即可
 </code></pre><ul>
 <li><p>Tomcat (略)</p>
 <p>记得配置一下环境变量,等会方便启动</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export TOMCAT_HOME=/Users/phyooos/develop/apache-tomcat-7.0.77</span><br><span class="line"></span><br><span class="line">export PATH.....:$TOMCAT/bin</span><br></pre></td></tr></table></figure>
+<pre><code class="shell">export TOMCAT_HOME=/Users/phyooos/develop/apache-tomcat-7.0.77
+
+export PATH.....:$TOMCAT/bin
+</code></pre>
 </li>
 </ul>
 <a id="more"></a>
 <h4 id="初始化Jenkins"><a href="#初始化Jenkins" class="headerlink" title="初始化Jenkins"></a>初始化Jenkins</h4><ul>
 <li><p>启动Jenkins,即启动tomcat</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> startup.sh</span><br><span class="line">Using CATALINA_BASE:   /Users/phyooos/develop/apache-tomcat-7.0.77</span><br><span class="line">Using CATALINA_HOME:   /Users/phyooos/develop/apache-tomcat-7.0.77</span><br><span class="line">Using CATALINA_TMPDIR: /Users/phyooos/develop/apache-tomcat-7.0.77/temp</span><br><span class="line">Using JRE_HOME:        /Library/Java/JavaVirtualMachines/jdk1.8.0/Contents/Home</span><br><span class="line">Using CLASSPATH:       /Users/phyooos/develop/apache-tomcat-7.0.77/bin/bootstrap.jar:/Users/phyooos/develop/apache-tomcat-7.0.77/bin/tomcat-juli.jar</span><br><span class="line">Tomcat started.</span><br></pre></td></tr></table></figure>
+<pre><code class="shell">$ startup.sh
+Using CATALINA_BASE:   /Users/phyooos/develop/apache-tomcat-7.0.77
+Using CATALINA_HOME:   /Users/phyooos/develop/apache-tomcat-7.0.77
+Using CATALINA_TMPDIR: /Users/phyooos/develop/apache-tomcat-7.0.77/temp
+Using JRE_HOME:        /Library/Java/JavaVirtualMachines/jdk1.8.0/Contents/Home
+Using CLASSPATH:       /Users/phyooos/develop/apache-tomcat-7.0.77/bin/bootstrap.jar:/Users/phyooos/develop/apache-tomcat-7.0.77/bin/tomcat-juli.jar
+Tomcat started.
+</code></pre>
 <p>看到这个就说明,已经正常启动</p>
 </li>
 <li><p>访问<a href="http://localhost:8080/jenkins/" target="_blank" rel="noopener">http://localhost:8080/jenkins/</a></p>
 <p>打开后需要输入一个密钥,mac的在<code>jenkins/secrets/initialAdminPassword</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">~ ⌚ 10:11:03</span><br><span class="line"><span class="meta">$</span> cat ~/.jenkins/secrets/initialAdminPassword</span><br><span class="line">55ad44431f6d4ebdb53a7c1971d12df4</span><br></pre></td></tr></table></figure>
+<pre><code class="shell">~ ⌚ 10:11:03
+$ cat ~/.jenkins/secrets/initialAdminPassword
+55ad44431f6d4ebdb53a7c1971d12df4
+</code></pre>
 <p>输入此密钥即可.</p>
 </li>
 <li><p>创建用户</p>
 </li>
 </ul>
-<h4 id="配置Jenkins"><a href="#配置Jenkins" class="headerlink" title="配置Jenkins"></a>配置Jenkins</h4><h5 id="1-安装插件"><a href="#1-安装插件" class="headerlink" title="1.安装插件"></a>1.安装插件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">	</span><br><span class="line">Build Timeout</span><br><span class="line"></span><br><span class="line">build-name-setter</span><br><span class="line"></span><br><span class="line">Credentials Binding Plugin</span><br><span class="line"></span><br><span class="line">description setter plugin</span><br><span class="line"></span><br><span class="line">Dynamic Parameter Plug-in(这个插件,搜不到了,因为安全问题被屏蔽了)</span><br><span class="line"></span><br><span class="line">Environment Injector Plugin</span><br><span class="line"></span><br><span class="line">Git plugin</span><br><span class="line"></span><br><span class="line">GitHub Branch Source Plugin</span><br><span class="line">	</span><br><span class="line">Gitlab Authentication plugin</span><br><span class="line"></span><br><span class="line">GitLab Plugin</span><br><span class="line"></span><br><span class="line">Gradle Plugin</span><br><span class="line"></span><br><span class="line">Pipeline</span><br><span class="line"></span><br><span class="line">SSH Slaves plugin</span><br><span class="line">	</span><br><span class="line">SSH plugin</span><br><span class="line">	</span><br><span class="line">Timestamper</span><br><span class="line">	</span><br><span class="line">Upload to pgyer(上传到蒲公英,没有需要的不用安装)</span><br><span class="line">	</span><br><span class="line">Workspace Cleanup Plugin</span><br></pre></td></tr></table></figure>
-<p>以上插件,是常用的插件,尽量全部安装</p>
+<h4 id="配置Jenkins"><a href="#配置Jenkins" class="headerlink" title="配置Jenkins"></a>配置Jenkins</h4><h5 id="1-安装插件"><a href="#1-安装插件" class="headerlink" title="1.安装插件"></a>1.安装插件</h5><pre><code>
+Build Timeout
+
+build-name-setter
+
+Credentials Binding Plugin
+
+description setter plugin
+
+Dynamic Parameter Plug-in(这个插件,搜不到了,因为安全问题被屏蔽了)
+
+Environment Injector Plugin
+
+Git plugin
+
+GitHub Branch Source Plugin
+
+Gitlab Authentication plugin
+
+GitLab Plugin
+
+Gradle Plugin
+
+Pipeline
+
+SSH Slaves plugin
+
+SSH plugin
+
+Timestamper
+
+Upload to pgyer(上传到蒲公英,没有需要的不用安装)
+
+Workspace Cleanup Plugin
+</code></pre><p>以上插件,是常用的插件,尽量全部安装</p>
 <h5 id="2-配置环境变量"><a href="#2-配置环境变量" class="headerlink" title="2.配置环境变量"></a>2.配置环境变量</h5><p><strong>系统管理 - 全局工具配置</strong></p>
 <p>需要配置</p>
 <p>Java</p>
-<p><img src="/images/jenkins_java.png" alt="Java"></p>
+<p><img src="/images/jenkins_java.png" srcset="/img/loading.gif" alt="Java"></p>
 <p>Git</p>
-<p><img src="/images/jenkins_git.png" alt="Git"></p>
+<p><img src="/images/jenkins_git.png" srcset="/img/loading.gif" alt="Git"></p>
 <p>Gradle</p>
-<p><img src="/images/jenkins_gradle.png" alt="Gradle"></p>
+<p><img src="/images/jenkins_gradle.png" srcset="/img/loading.gif" alt="Gradle"></p>
 <p>配置好保存即可</p>
 <p><strong>系统管理 - 系统设置</strong></p>
 <p>记得配置gitlab或者 github账号</p>
 <h5 id="3-初始化项目"><a href="#3-初始化项目" class="headerlink" title="3.初始化项目"></a>3.初始化项目</h5><p>创建项目</p>
-<p><img src="/images/jenkins_init.png" alt="init"></p>
+<p><img src="/images/jenkins_init.png" srcset="/img/loading.gif" alt="init"></p>
 <hr>
 <p><strong>General</strong></p>
 <p>选择参数化构建过程</p>
@@ -304,25 +267,52 @@ Tomcat的wabapps包下即可
 <p>VERSION_NAME 版本名字</p>
 <p>JENKINS_OUTPUT Apk生成目录</p>
 <p>JENKINS_TIME  时间戳</p>
-<p><img src="/images/jenkins_init1.png" alt="General"></p>
-<p><img src="/images/jenkins_init2.png" alt="General"></p>
-<p><img src="/images/jenkins_init3.png" alt="General"></p>
+<p><img src="/images/jenkins_init1.png" srcset="/img/loading.gif" alt="General"></p>
+<p><img src="/images/jenkins_init2.png" srcset="/img/loading.gif" alt="General"></p>
+<p><img src="/images/jenkins_init3.png" srcset="/img/loading.gif" alt="General"></p>
 <p>这些参数定义完就可以使用了 ${参数名} 的形式,这些参数会写入到 App项目中的 gradle.properties文件</p>
 <p>App项目中的 gradle.properties文件</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># When configured, Gradle will run in incubating parallel mode.</span><br><span class="line"># This option should only be used with decoupled projects. More details, visit</span><br><span class="line"># http://www.gradle.org/docs/current/userguide/multi_project_builds.html#sec:decoupled_projects</span><br><span class="line"># org.gradle.parallel=true</span><br><span class="line">org.gradle.jvmargs=-Xmx4608M</span><br><span class="line"></span><br><span class="line">VERSION_NAME=<span class="number">1.4</span>.0</span><br><span class="line">VERSION_CODE=<span class="number">12</span></span><br><span class="line">IS_JENKINS=<span class="keyword">false</span></span><br><span class="line">JENKINS_OUTPUT=<span class="string">'output/'</span></span><br><span class="line">JENKINS_TIME=<span class="string">'201802021231'</span></span><br></pre></td></tr></table></figure>
+<pre><code class="java"># When configured, Gradle will run in incubating parallel mode.
+# This option should only be used with decoupled projects. More details, visit
+# http://www.gradle.org/docs/current/userguide/multi_project_builds.html#sec:decoupled_projects
+# org.gradle.parallel=true
+org.gradle.jvmargs=-Xmx4608M
+
+VERSION_NAME=1.4.0
+VERSION_CODE=12
+IS_JENKINS=false
+JENKINS_OUTPUT=&#39;output/&#39;
+JENKINS_TIME=&#39;201802021231&#39;
+</code></pre>
 <hr>
 <p>进入下一个配置页面,到<strong>源码管理</strong>那块</p>
-<p><img src="/images/jenkins_gitlab.png" alt="gitlab"></p>
+<p><img src="/images/jenkins_gitlab.png" srcset="/img/loading.gif" alt="gitlab"></p>
 <p>只要你能下载到源码即可,无所谓非要和我这个一致,branch  就是指定分支了,我这儿是  dev 分支</p>
 <hr>
 <p>下一个配置<strong>构建</strong></p>
-<p><img src="/images/jenkins_build.png" alt="build"></p>
+<p><img src="/images/jenkins_build.png" srcset="/img/loading.gif" alt="build"></p>
 <p>选择 Invoke Gradle </p>
 <p>Tasks 里面的命令,我来解释一下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#清理</span><br><span class="line">clean  </span><br><span class="line">#打包</span><br><span class="line">assemble$&#123;PRODUCT_FLAVORS&#125;$&#123;BUILD_TYPE&#125;</span><br><span class="line">#这里的意思是 打包指定的一个FLAVOR版本(Release + 版本)</span><br><span class="line">#关于assemble ...  的,请搜 gradle 打包命令</span><br><span class="line"></span><br><span class="line">#其他参数</span><br><span class="line">-PVERSION_NAME=$&#123;VERSION_NAME&#125;</span><br><span class="line">-PVERSION_CODE=$&#123;VERSION_CODE&#125;</span><br><span class="line">-PJENKINS_OUTPUT=$&#123;JENKINS_OUTPUT&#125;</span><br><span class="line">-PJENKINS_TIME=$&#123;JENKINS_TIME&#125;</span><br><span class="line">-PIS_JENKINS=$&#123;IS_JENKINS&#125;</span><br><span class="line"></span><br><span class="line">#-P意味着参数</span><br><span class="line">#-P后面是参数名</span><br><span class="line">#=$&#123;&#125; 则为参数值,就是上面General里面配置的</span><br></pre></td></tr></table></figure>
-<hr>
+<pre><code>#清理
+clean  
+#打包
+assemble${PRODUCT_FLAVORS}${BUILD_TYPE}
+#这里的意思是 打包指定的一个FLAVOR版本(Release + 版本)
+#关于assemble ...  的,请搜 gradle 打包命令
+
+#其他参数
+-PVERSION_NAME=${VERSION_NAME}
+-PVERSION_CODE=${VERSION_CODE}
+-PJENKINS_OUTPUT=${JENKINS_OUTPUT}
+-PJENKINS_TIME=${JENKINS_TIME}
+-PIS_JENKINS=${IS_JENKINS}
+
+#-P意味着参数
+#-P后面是参数名
+#=${} 则为参数值,就是上面General里面配置的
+</code></pre><hr>
 <p><strong>构建后操作</strong></p>
-<p><img src="/images/jenkins_pgy.png" alt="pgy"></p>
+<p><img src="/images/jenkins_pgy.png" srcset="/img/loading.gif" alt="pgy"></p>
 <blockquote>
 <p>参考 <a href="https://www.pgyer.com/doc/view/jenkins_plugin" target="_blank" rel="noopener">https://www.pgyer.com/doc/view/jenkins_plugin</a></p>
 </blockquote>
@@ -330,330 +320,329 @@ Tomcat的wabapps包下即可
 <h5 id="改造App"><a href="#改造App" class="headerlink" title="改造App"></a>改造App</h5><ul>
 <li>./gradle.properties文件</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">VERSION_NAME=1.4.0</span><br><span class="line">VERSION_CODE=12</span><br><span class="line">IS_JENKINS=false</span><br><span class="line">JENKINS_OUTPUT=&apos;output/&apos;</span><br><span class="line">JENKINS_TIME=&apos;201802021231&apos;</span><br></pre></td></tr></table></figure>
-<p>以上文件,写完请build一次,便于build.gradle中使用</p>
+<pre><code>VERSION_NAME=1.4.0
+VERSION_CODE=12
+IS_JENKINS=false
+JENKINS_OUTPUT=&#39;output/&#39;
+JENKINS_TIME=&#39;201802021231&#39;
+</code></pre><p>以上文件,写完请build一次,便于build.gradle中使用</p>
 <p>使用jenkins时,jenkins会把定义的值注入到这里,覆盖这里定义的值</p>
 <ul>
 <li>app/build.gradle</li>
 </ul>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">android&#123;</span><br><span class="line"></span><br><span class="line">	defaultConfig &#123;</span><br><span class="line">    	...</span><br><span class="line">    	<span class="comment">//此处使用gradle.properties中的值   VERSION_CODE和VERSION_NAME</span></span><br><span class="line">    	versionCode VERSION_CODE <span class="keyword">as</span> Integer</span><br><span class="line">    	versionName VERSION_NAME</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//自定义apk名字</span></span><br><span class="line">    android.applicationVariants.all &#123; variant -&gt;</span><br><span class="line">    	<span class="comment">//获取时间戳</span></span><br><span class="line">        <span class="keyword">def</span> timeNow = getDate()</span><br><span class="line">        <span class="comment">//如果是IS_JENKINS构建,则修改打包apk的目录</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="string">'true'</span>.equals(IS_JENKINS)) &#123;</span><br><span class="line">        	<span class="comment">//使用JENKINS_OUTPUT的目录</span></span><br><span class="line">            <span class="keyword">def</span> outputFile = JENKINS_OUTPUT</span><br><span class="line">            <span class="comment">//使用JENKINS_TIME的时间戳</span></span><br><span class="line">            timeNow = JENKINS_TIME</span><br><span class="line">            <span class="comment">//定义apk目录</span></span><br><span class="line">            variant.getPackageApplication().outputDirectory = <span class="keyword">new</span> File(outputFile)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        variant.getPackageApplication().outputScope.apkDatas.forEach &#123; apkData -&gt;</span><br><span class="line">            <span class="comment">//这个修改输出APK的文件名</span></span><br><span class="line">            apkData.outputFileName = <span class="string">"一号车市_$&#123;variant.versionName&#125;_$&#123;timeNow&#125;.apk"</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	flavorDimensions <span class="string">'env'</span></span><br><span class="line"></span><br><span class="line">    productFlavors &#123;</span><br><span class="line">        envapp &#123;</span><br><span class="line">            dimension <span class="string">'env'</span></span><br><span class="line">            <span class="comment">//此处使用jenkins传的VERSION_NAME</span></span><br><span class="line">            versionName VERSION_NAME</span><br><span class="line">            manifestPlaceholders = [<span class="string">UMENG_CHANNEL_VALUE:</span> <span class="string">"app"</span>]</span><br><span class="line">            buildConfigField <span class="string">"String"</span>, <span class="string">"SERVER_HOST"</span>, <span class="string">'"https://app.wangzhumo.com/"'</span></span><br><span class="line">        &#125;</span><br><span class="line">        envtest &#123;</span><br><span class="line">            dimension <span class="string">'env'</span></span><br><span class="line">            <span class="comment">//为了方便测试看出当前app环境,就不用VERSION_NAME了</span></span><br><span class="line">            versionName <span class="string">"Test"</span></span><br><span class="line">            manifestPlaceholders = [<span class="string">UMENG_CHANNEL_VALUE:</span> <span class="string">"app"</span>]</span><br><span class="line">            buildConfigField <span class="string">"String"</span>, <span class="string">"SERVER_HOST"</span>, <span class="string">'"http://app-test.wangzhumo.com/"'</span></span><br><span class="line">        &#125;</span><br><span class="line">        envpre &#123;</span><br><span class="line">            dimension <span class="string">'env'</span></span><br><span class="line">            versionName <span class="string">"Pre"</span></span><br><span class="line">            manifestPlaceholders = [<span class="string">UMENG_CHANNEL_VALUE:</span> <span class="string">"app"</span>]</span><br><span class="line">            buildConfigField <span class="string">"String"</span>, <span class="string">"SERVER_HOST"</span>, <span class="string">'"https://app-pre.wangzhumo.com/"'</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        envdev &#123;</span><br><span class="line">            dimension <span class="string">'env'</span></span><br><span class="line">            versionName <span class="string">"Dev"</span></span><br><span class="line">            manifestPlaceholders = [<span class="string">UMENG_CHANNEL_VALUE:</span> <span class="string">"app"</span>]</span><br><span class="line">            buildConfigField <span class="string">"String"</span>, <span class="string">"SERVER_HOST"</span>, <span class="string">'"http://192.168.1.16:8080/app2c/"'</span></span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//其实UMENG_CHANNEL_VALUE    SERVER_HOST   也都可以使用jenkins定义参数,并使用</span></span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">//一个获取时间戳的方法</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">def</span> getDate() &#123;</span><br><span class="line">    	<span class="keyword">def</span> date = <span class="keyword">new</span> Date()</span><br><span class="line">    	<span class="keyword">def</span> formattedDate = date.format(<span class="string">'yyyyMMddHHmm'</span>)</span><br><span class="line">    	<span class="keyword">return</span> formattedDate</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="groovy">android{
+
+    defaultConfig {
+        ...
+        //此处使用gradle.properties中的值   VERSION_CODE和VERSION_NAME
+        versionCode VERSION_CODE as Integer
+        versionName VERSION_NAME
+    }
+
+
+    //自定义apk名字
+    android.applicationVariants.all { variant -&gt;
+        //获取时间戳
+        def timeNow = getDate()
+        //如果是IS_JENKINS构建,则修改打包apk的目录
+        if (&#39;true&#39;.equals(IS_JENKINS)) {
+            //使用JENKINS_OUTPUT的目录
+            def outputFile = JENKINS_OUTPUT
+            //使用JENKINS_TIME的时间戳
+            timeNow = JENKINS_TIME
+            //定义apk目录
+            variant.getPackageApplication().outputDirectory = new File(outputFile)
+        }
+
+
+        variant.getPackageApplication().outputScope.apkDatas.forEach { apkData -&gt;
+            //这个修改输出APK的文件名
+            apkData.outputFileName = &quot;一号车市_${variant.versionName}_${timeNow}.apk&quot;
+        }
+    }
+
+
+    flavorDimensions &#39;env&#39;
+
+    productFlavors {
+        envapp {
+            dimension &#39;env&#39;
+            //此处使用jenkins传的VERSION_NAME
+            versionName VERSION_NAME
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: &quot;app&quot;]
+            buildConfigField &quot;String&quot;, &quot;SERVER_HOST&quot;, &#39;&quot;https://app.wangzhumo.com/&quot;&#39;
+        }
+        envtest {
+            dimension &#39;env&#39;
+            //为了方便测试看出当前app环境,就不用VERSION_NAME了
+            versionName &quot;Test&quot;
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: &quot;app&quot;]
+            buildConfigField &quot;String&quot;, &quot;SERVER_HOST&quot;, &#39;&quot;http://app-test.wangzhumo.com/&quot;&#39;
+        }
+        envpre {
+            dimension &#39;env&#39;
+            versionName &quot;Pre&quot;
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: &quot;app&quot;]
+            buildConfigField &quot;String&quot;, &quot;SERVER_HOST&quot;, &#39;&quot;https://app-pre.wangzhumo.com/&quot;&#39;
+        }
+
+        envdev {
+            dimension &#39;env&#39;
+            versionName &quot;Dev&quot;
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: &quot;app&quot;]
+            buildConfigField &quot;String&quot;, &quot;SERVER_HOST&quot;, &#39;&quot;http://192.168.1.16:8080/app2c/&quot;&#39;
+        }
+
+        //其实UMENG_CHANNEL_VALUE    SERVER_HOST   也都可以使用jenkins定义参数,并使用
+    } 
+
+
+    //一个获取时间戳的方法
+    static def getDate() {
+        def date = new Date()
+        def formattedDate = date.format(&#39;yyyyMMddHHmm&#39;)
+        return formattedDate
+    }
+
+}
+</code></pre>
 <p>记得改完app,上传代码哦</p>
-<h4 id="Jenkins打包"><a href="#Jenkins打包" class="headerlink" title="Jenkins打包"></a>Jenkins打包</h4><p><img src="/images/jenkins_go.png" alt="打包"></p>
+<h4 id="Jenkins打包"><a href="#Jenkins打包" class="headerlink" title="Jenkins打包"></a>Jenkins打包</h4><p><img src="/images/jenkins_go.png" srcset="/img/loading.gif" alt="打包"></p>
 <p>OK了,可以愉快的打包了,打包完就会自动上传到蒲公英.</p>
 
-        
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              <span>
+                <i class="iconfont icon-inbox"></i>
+                
+                  <a class="hover-with-bg" href="/categories/Android">Android</a>
+                  &nbsp;
+                
+              </span>&nbsp;&nbsp;
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/Android">Android</a>
+                
+                  <a class="hover-with-bg" href="/tags/Server">Server</a>
+                
+                  <a class="hover-with-bg" href="/tags/Jenkins">Jenkins</a>
+                
+              </span>
+            
+            </p>
+            
+          </div>
         </div>
-        <footer class="article-footer">
-            <div class="share-container">
+      </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
 
-
-
+    </div>
+  </div>
 </div>
 
-    <a data-url="https://www.wangzhumo.com/2018/02/05/Jenkins-Android/" data-id="ck2n20uyk004ukerxrzmc0oe7" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
+<!-- custom -->
 
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
 
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
     
-
-        </footer>
-    </div>
-    
-        
-<nav id="article-nav">
-    
-        <a href="/2018/02/07/Android-Timber-Logger/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    Android项目中使用Timber + Logger日志输出
-                
-            </div>
-        </a>
-    
-    
-        <a href="/2018/02/04/Java-String-format/" id="article-nav-older" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">Java中String.format()的使用指北</div>
-        </a>
-    
-</nav>
-
+  </div>
+</div>
 
     
-</article>
+  </main>
 
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
 
-    
-    
-
-</section>
-            
-                
-<aside id="sidebar">
-   
-        
-    <div class="widget-wrap">
-        <h3 class="widget-title">分类</h3>
-        <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">27</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Studio/">Android Studio</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Bug/">Bug</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JNI/">JNI</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Media/">Media</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programme/">Programme</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Source-Code/">Source Code</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/View/">View</a><span class="category-list-count">4</span></li></ul>
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
         </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
     </div>
+  </div>
+</div>
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <br>
 
     
-        
-    <div class="widget-wrap">
-        <h3 class="widget-title">标签云</h3>
-        <div class="widget tagcloud">
-            <a href="/tags/Media-Server/" style="font-size: 10px;">-Media -Server</a> <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 15.71px;">Android Studio</a> <a href="/tags/Audio/" style="font-size: 10px;">Audio</a> <a href="/tags/Binder/" style="font-size: 10px;">Binder</a> <a href="/tags/Bug/" style="font-size: 17.14px;">Bug</a> <a href="/tags/FFmpeg/" style="font-size: 11.43px;">FFmpeg</a> <a href="/tags/Flutter/" style="font-size: 11.43px;">Flutter</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Glide/" style="font-size: 10px;">Glide</a> <a href="/tags/Google/" style="font-size: 11.43px;">Google</a> <a href="/tags/Gradle/" style="font-size: 11.43px;">Gradle</a> <a href="/tags/Handler/" style="font-size: 10px;">Handler</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/JNI/" style="font-size: 11.43px;">JNI</a> <a href="/tags/Java/" style="font-size: 18.57px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Kotlin/" style="font-size: 11.43px;">Kotlin</a> <a href="/tags/Linux/" style="font-size: 12.86px;">Linux</a> <a href="/tags/Media/" style="font-size: 12.86px;">Media</a> <a href="/tags/Okhttp/" style="font-size: 11.43px;">Okhttp</a> <a href="/tags/Programme/" style="font-size: 14.29px;">Programme</a> <a href="/tags/RK3399/" style="font-size: 10px;">RK3399</a> <a href="/tags/Regular/" style="font-size: 10px;">Regular</a> <a href="/tags/Room/" style="font-size: 12.86px;">Room</a> <a href="/tags/Rxjava/" style="font-size: 12.86px;">Rxjava</a> <a href="/tags/Server/" style="font-size: 15.71px;">Server</a> <a href="/tags/Source-Code/" style="font-size: 11.43px;">Source Code</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/View/" style="font-size: 17.14px;">View</a> <a href="/tags/frequency/" style="font-size: 10px;">frequency</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/组件化/" style="font-size: 10px;">组件化</a> <a href="/tags/蓝牙/" style="font-size: 10px;">蓝牙</a> <a href="/tags/设计模式/" style="font-size: 12.86px;">设计模式</a>
-        </div>
-    </div>
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv">总访问量 
+          <span id="busuanzi_value_site_pv"></span> 次</span>&nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv">总访客数 
+            <span id="busuanzi_value_site_uv"></span> 人</span>&nbsp;
+  
+  <br>
 
-    
-        
-    <div class="widget-wrap">
-        <h3 class="widget-title">最新文章</h3>
-        <div class="widget">
-            <ul id="recent-post" class="">
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2019/11/06/coturn-install-ubuntu/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Media/">Media</a></p>
-                            <p class="item-title"><a href="/2019/11/06/coturn-install-ubuntu/" class="title">Ubuntu安装coturn服务</a></p>
-                            <p class="item-date"><time datetime="2019-11-06T03:59:03.000Z" itemprop="datePublished">2019-11-06</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/10/28/jni-basic-conception/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/JNI/">JNI</a></p>
-                            <p class="item-title"><a href="/2018/10/28/jni-basic-conception/" class="title">JNI 认识JNI的基本概念</a></p>
-                            <p class="item-date"><time datetime="2018-10-28T12:32:20.000Z" itemprop="datePublished">2018-10-28</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/10/28/taste-jni-default-project/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/JNI/">JNI</a></p>
-                            <p class="item-title"><a href="/2018/10/28/taste-jni-default-project/" class="title">JNI-从Android Studio默认工程认识JNI</a></p>
-                            <p class="item-date"><time datetime="2018-10-28T12:12:17.000Z" itemprop="datePublished">2018-10-28</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/09/21/time-and-frequency-domain/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Other/">Other</a></p>
-                            <p class="item-title"><a href="/2018/09/21/time-and-frequency-domain/" class="title">认识时域与频域</a></p>
-                            <p class="item-date"><time datetime="2018-09-21T11:11:18.000Z" itemprop="datePublished">2018-09-21</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/09/21/ffmpeg-cmd-demuxer-muxer/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://www.wangzhumo.com/images/ffmpeg.jpeg)" alt="音视频-FFmpeg的分解与复用" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Media/">Media</a></p>
-                            <p class="item-title"><a href="/2018/09/21/ffmpeg-cmd-demuxer-muxer/" class="title">音视频-FFmpeg的分解与复用</a></p>
-                            <p class="item-date"><time datetime="2018-09-21T06:23:02.000Z" itemprop="datePublished">2018-09-21</time></p>
-                        </div>
-                    </li>
-                
-            </ul>
-        </div>
-    </div>
-
-    
-        
-    <div class="widget-wrap">
-        <h3 class="widget-title">归档</h3>
-        <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li></ul>
-        </div>
-    </div>
-
-    
-        
-    <div class="widget-wrap">
-        <h3 class="widget-title">标签</h3>
-        <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Media-Server/">-Media -Server</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">49</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Audio/">Audio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bug/">Bug</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FFmpeg/">FFmpeg</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Glide/">Glide</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Handler/">Handler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JNI/">JNI</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kotlin/">Kotlin</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Media/">Media</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Okhttp/">Okhttp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Programme/">Programme</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RK3399/">RK3399</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regular/">Regular</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Room/">Room</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Server/">Server</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Source-Code/">Source Code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tools/">Tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/frequency/">frequency</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">3</span></li></ul>
-        </div>
-    </div>
-
-    
-        
-    <div class="widget-wrap widget-list">
-        <h3 class="widget-title">链接</h3>
-        <div class="widget">
-            <ul>
-                
-                    <li>
-                        <a href="mailto:wangzhumoo@gmail.com">E-mail</a>
-                    </li>
-                
-                    <li>
-                        <a href="http://hexo.io">Hexo</a>
-                    </li>
-                
-            </ul>
-        </div>
-    </div>
 
 
     
-    <div id="toTop" class="fas fa-angle-up"></div>
-</aside>
 
-            
-        </div>
-        <footer id="footer">
-    <div class="outer">
-        <div id="footer-info" class="inner">
-            &copy; 2019 wangzhumo<br>
-            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
-        </div>
-    </div>
+  </div>
 </footer>
-        
+
+<!-- SCRIPTS -->
+<script src="/lib/jquery/jquery.min.js" ></script>
+<script src="/lib/popper/popper.min.js" ></script>
+<script src="/lib/bootstrap/js/bootstrap.min.js" ></script>
+<script src="/lib/mdbootstrap/js/mdb.min.js" ></script>
+<script src="/js/main.js" ></script>
 
 
-    
-        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
-    
-    
-        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
-    
-    
+  <script src="/js/lazyload.js" ></script>
 
 
 
-<!-- Custom Scripts -->
-<script src="/js/main.js"></script>
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
 
-    </div>
+
+
+  <script src="/lib/smooth-scroll/smooth-scroll.min.js" ></script>
+
+
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+<!-- Plugins -->
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  <script src="/lib/prettify/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script src="/lib/typed/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Jenkins搭建Android自动打包&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script src="/lib/anchor/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "false",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script src="/lib/fancybox/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
 </body>
 </html>

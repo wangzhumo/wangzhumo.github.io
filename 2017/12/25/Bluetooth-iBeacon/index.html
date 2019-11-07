@@ -1,240 +1,166 @@
 <!DOCTYPE html>
-<html lang=zh>
+<html lang="zh-CN">
+
+
+
+
+
 <head>
-    <meta charset="utf-8">
-    
-    <title>低功耗蓝牙iBeacon的开发笔记 | 王诛魔</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="###1.挣扎的开始各种百度,google,发现国内资料很少,有的也是商业公司提供的sdk,这并不符合我需要,google倒是不少,然而以我的英语水平,望洋兴叹罢了@  首先你需要了解这些资料1、profile rofile可以理解为一种规范，一个标准的通信协议，它存在于从机中。蓝牙组织规定了一些标准的profile，例如 HID OVER GATT ，防丢器 ，心率计等。每个profile中会包">
-<meta name="keywords" content="蓝牙">
-<meta property="og:type" content="article">
-<meta property="og:title" content="低功耗蓝牙iBeacon的开发笔记">
-<meta property="og:url" content="https://www.wangzhumo.com/2017/12/25/Bluetooth-iBeacon/index.html">
-<meta property="og:site_name" content="王诛魔">
-<meta property="og:description" content="###1.挣扎的开始各种百度,google,发现国内资料很少,有的也是商业公司提供的sdk,这并不符合我需要,google倒是不少,然而以我的英语水平,望洋兴叹罢了@  首先你需要了解这些资料1、profile rofile可以理解为一种规范，一个标准的通信协议，它存在于从机中。蓝牙组织规定了一些标准的profile，例如 HID OVER GATT ，防丢器 ，心率计等。每个profile中会包">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://img.blog.csdn.net/20160710190336812">
-<meta property="og:image" content="http://img.blog.csdn.net/20160712000123059">
-<meta property="og:updated_time" content="2018-09-21T06:58:14.000Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="低功耗蓝牙iBeacon的开发笔记">
-<meta name="twitter:description" content="###1.挣扎的开始各种百度,google,发现国内资料很少,有的也是商业公司提供的sdk,这并不符合我需要,google倒是不少,然而以我的英语水平,望洋兴叹罢了@  首先你需要了解这些资料1、profile rofile可以理解为一种规范，一个标准的通信协议，它存在于从机中。蓝牙组织规定了一些标准的profile，例如 HID OVER GATT ，防丢器 ，心率计等。每个profile中会包">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20160710190336812">
-    
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="description" content="王诛魔">
+  <meta name="author" content="wangzhumo">
+  <meta name="keywords" content="">
+  <title>低功耗蓝牙iBeacon的开发笔记 ~ 王诛魔</title>
 
-    
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
+<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
+<link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css"  >
+<link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css"  >
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
 
-    
-        <link rel="icon" href="/css/images/favicon-32x32-next.png" />
-    
 
-    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
-    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
-    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
-    <link rel="stylesheet" href="/libs/open-sans/styles.css">
-    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+  <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css"  >
 
-    <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/main.css"  >
 
-    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
-    
-    
-        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
-    
-    
-        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
-    
-    
-    
-    
+
+  <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.min.css"  >
 
 
 </head>
 
+
 <body>
-    <div id="container">
-        <header id="header">
-    <div id="header-main" class="header-inner">
-        <div class="outer">
-            <a href="/" id="logo">
-                <i class="logo"></i>
-                <span class="site-title">王诛魔</span>
-            </a>
-            <nav id="main-nav">
-                
-                    <a class="main-nav-link" href="/.">Home</a>
-                
-                    <a class="main-nav-link" href="/archives">Archives</a>
-                
-                    <a class="main-nav-link" href="/categories">Categories</a>
-                
-                    <a class="main-nav-link" href="/tags">Tags</a>
-                
-                    <a class="main-nav-link" href="/about">About</a>
-                
-            </nav>
-            
-                
-                <nav id="sub-nav">
-                    <div class="profile" id="profile-nav">
-                        <a id="profile-anchor" href="javascript:;">
-                            <img class="avatar" src="/css/images/avatar.png" />
-                            <i class="fas fa-caret-down"></i>
-                        </a>
-                    </div>
-                </nav>
-            
-            <div id="search-form-wrap">
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>王诛魔</strong>&nbsp;</a>
 
-    <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
-        <button type="submit" class="search-form-submit"></button>
-    </form>
-    <div class="ins-search">
-    <div class="ins-search-mask"></div>
-    <div class="ins-search-container">
-        <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
-            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
-        </div>
-        <div class="ins-section-wrapper">
-            <div class="ins-section-container"></div>
-        </div>
-    </div>
-</div>
-<script>
-(function (window) {
-    var INSIGHT_CONFIG = {
-        TRANSLATION: {
-            POSTS: '文章',
-            PAGES: '页面',
-            CATEGORIES: '分类',
-            TAGS: '标签',
-            UNTITLED: '(未命名)',
-        },
-        ROOT_URL: '/',
-        CONTENT_URL: '/content.json',
-    };
-    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
-})(window);
-</script>
-<script src="/js/insight.js"></script>
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
 
-</div>
-        </div>
-    </div>
-    <div id="main-nav-mobile" class="header-sub header-inner">
-        <table class="menu outer">
-            <tr>
-                
-                    <td><a class="main-nav-link" href="/.">Home</a></td>
-                
-                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
-                
-                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
-                
-                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
-                
-                    <td><a class="main-nav-link" href="/about">About</a></td>
-                
-                <td>
-                    
-    <div class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
-    </div>
-
-                </td>
-            </tr>
-        </table>
-    </div>
-</header>
-
-        <div class="outer">
-            
-                
-
-<aside id="profile" class="profile-fixed">
-    <div class="inner profile-inner">
-        <div class="base-info profile-block">
-            <img id="avatar" src="/css/images/avatar.png" />
-            <h2 id="name">王诛魔</h2>
-            <h3 id="title">Android Developer</h3>
-            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>Beijing, China</span>
-            <a id="follow" target="_blank" href="mailto:wangzhumoo@gmail.com">联系我</a>
-        </div>
-        <div class="article-info profile-block">
-            <div class="article-info-block">
-                88
-                <span>文章</span>
-            </div>
-            <div class="article-info-block">
-                38
-                <span>标签</span>
-            </div>
-        </div>
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
         
-        <div class="profile-block social-links">
-            <table>
-                <tr>
-                    
-                    
-                    <td>
-                        <a href="https://github.com/wangzhumo" target="_blank" title="github" >
-                            <i class="fab fa-github"></i>
-                        </a>
-                    </td>
-                    
-                </tr>
-            </table>
-        </div>
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
         
-    </div>
-</aside>
-
-            
-            <section id="main"><article id="post-Bluetooth-iBeacon" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
         
         
-            <header class="article-header">
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+</nav>
+
+    <div class="view intro-2" id="background"
+         style="background: url('/img/default.png')no-repeat center center;
+           background-size: cover;
+           background-attachment: fixed;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期一, 十二月 25日 2017, 9:37 上午
+                </p>
+              
+
+              <p>
                 
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    1.6k 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      6 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
     
-        <h1 class="article-title" itemprop="name">
-            低功耗蓝牙iBeacon的开发笔记
-        </h1>
-    
+      
 
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2017/12/25/Bluetooth-iBeacon/">
-            <time datetime="2017-12-25T01:37:23.000Z" itemprop="datePublished">2017-12-25</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/蓝牙/">蓝牙</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
             <p>###1.挣扎的开始<br>各种百度,google,发现国内资料很少,有的也是商业公司提供的sdk,这并不符合我需要,<br>google倒是不少,然而以我的英语水平,望洋兴叹罢了@</p>
 <blockquote>
 <p>首先你需要了解这些资料<br>1、profile<br> rofile可以理解为一种规范，一个标准的通信协议，它存在于从机中。蓝牙组织规定了一些标准的profile，例如 HID OVER GATT ，防丢器 ，心率计等。每个profile中会包含多个service，每个service代表从机的一种能力。</p>
@@ -245,7 +171,7 @@
 <a id="more"></a>
 <p>###2.资料,准备<br>资料看这里:</p>
 <ul>
-<li>这也是最重要的资料来源,谷歌SDK的例子里面有的项目<br><img src="http://img.blog.csdn.net/20160710190336812" alt="Android SDK 中的doc文档"></li>
+<li>这也是最重要的资料来源,谷歌SDK的例子里面有的项目<br><img src="http://img.blog.csdn.net/20160710190336812" srcset="/img/loading.gif" alt="Android SDK 中的doc文档"></li>
 </ul>
 <ul>
 <li>接上文,说完资料,<blockquote>
@@ -267,19 +193,49 @@
 <ol>
 <li>首先要说明的一点是,要求Android版本为4.3及其以上<br>  接着确认设备支持</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 支持BLE</span><br><span class="line"> *  check to determine whether BLE is supported on the device</span><br><span class="line"> */</span><br><span class="line">public void isSupported()&#123;</span><br><span class="line">     if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) &#123;</span><br><span class="line">            Toast.makeText(this, &quot;设备不支持BLE功能&quot;, Toast.LENGTH_SHORT).show();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<ol>
+<pre><code>/**
+ * 支持BLE
+ *  check to determine whether BLE is supported on the device
+ */
+public void isSupported(){
+     if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+            Toast.makeText(this, &quot;设备不支持BLE功能&quot;, Toast.LENGTH_SHORT).show();
+        }
+    }
+</code></pre><ol>
 <li>确认手机支持并打开蓝牙的状态下,你就可以进行设备的搜索了<br>   有两种模式</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//第一种</span><br><span class="line">//serviceUuids   指定设备的UUID</span><br><span class="line">//callback       搜索的回调</span><br><span class="line">startLeScan(final UUID[] serviceUuids, final LeScanCallback callback)</span><br><span class="line"></span><br><span class="line">//第二种</span><br><span class="line">//其实就是不传入serviceUuids的,就是说搜索范围内所有蓝牙设备</span><br><span class="line">public boolean startLeScan(LeScanCallback callback) &#123;</span><br><span class="line">     return startLeScan(null, callback);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol>
+<pre><code>//第一种
+//serviceUuids   指定设备的UUID
+//callback       搜索的回调
+startLeScan(final UUID[] serviceUuids, final LeScanCallback callback)
+
+//第二种
+//其实就是不传入serviceUuids的,就是说搜索范围内所有蓝牙设备
+public boolean startLeScan(LeScanCallback callback) {
+     return startLeScan(null, callback);
+}
+</code></pre><ol>
 <li>同时记得停止搜索,当然你也可以一直搜<br>PS：其实我见到的app大部分是不停的搜索，这样的话会有一个广播数据持续刷新的效果,那么很多的距离判断什么的都是通过这种不停搜索的形式来工作的</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//mBluetoothAdapter   请自行查看谷歌文档</span><br><span class="line">//mLeScanCallback     这就是上面提过的LeScanCallback的实例</span><br><span class="line">mBluetoothAdapter.stopLeScan(mLeScanCallback);</span><br></pre></td></tr></table></figure>
-<p>接着就是在回调中拿到各个设备数据了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 搜索设备回调 </span><br><span class="line"> */</span><br><span class="line">private BluetoothAdapter.LeScanCallback mLeScanCallback =</span><br><span class="line">            new BluetoothAdapter.LeScanCallback() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void onLeScan(final BluetoothDevice device, int rssi, </span><br><span class="line">            byte[] scanRecord) &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<p>这里有几个值得说一下的东西</p>
+<pre><code>//mBluetoothAdapter   请自行查看谷歌文档
+//mLeScanCallback     这就是上面提过的LeScanCallback的实例
+mBluetoothAdapter.stopLeScan(mLeScanCallback);
+</code></pre><p>接着就是在回调中拿到各个设备数据了</p>
+<pre><code>/**
+ * 搜索设备回调 
+ */
+private BluetoothAdapter.LeScanCallback mLeScanCallback =
+            new BluetoothAdapter.LeScanCallback() {
+    @Override
+    public void onLeScan(final BluetoothDevice device, int rssi, 
+            byte[] scanRecord) {
+
+    }
+};
+</code></pre><p>这里有几个值得说一下的东西</p>
 <ul>
-<li><strong>BluetoothDevice device</strong><br><img src="http://img.blog.csdn.net/20160712000123059" alt="这里写图片描述"><br>  该可以看的很清楚,    device中包含了设备的基本信息               </li>
+<li><strong>BluetoothDevice device</strong><br><img src="http://img.blog.csdn.net/20160712000123059" srcset="/img/loading.gif" alt="这里写图片描述"><br>  该可以看的很清楚,    device中包含了设备的基本信息               </li>
 </ul>
 <ul>
 <li><strong>rssi信号质量,也有人告诉我是质量</strong><br>不过我这次并没有使用到</li>
@@ -291,332 +247,313 @@
 <p>###4.读取蓝牙设备内部数据<br>这里涉及到两个重要部分<br>service  以及 characteristic</p>
 <p>一般来说<br> 一个Service  eg: FF01-XXXXXXXXXXX-XXXXX<br> 下面可能有很多的characteristic<br>Marjor : FF16 -XXXXXX<br>Power : FF17 - XXX<br>….一堆的characteristic </p>
 <ul>
-<li><strong>如果需要给指定的项目写入一个数据</strong><br> 条件：<pre><code>1.此特征在哪个Service下，即该service的UUID
-2.该特征的UUID
-3.该特征的写入格式，16进制还是其他的东西
+<li><strong>如果需要给指定的项目写入一个数据</strong><br> 条件：<pre><code>          1.此特征在哪个Service下，即该service的UUID
+          2.该特征的UUID
+          3.该特征的写入格式，16进制还是其他的东西
 </code></pre></li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//代码片段1</span><br><span class="line">//此方法获取对应特征值的对象BluetoothGattCharacteristic的实体</span><br><span class="line">    public BluetoothGattCharacteristic getCharacteristic(String service,String charact) &#123;</span><br><span class="line">        if (mBluetoothGatt == null) return null;</span><br><span class="line">        if(mBluetoothGatt.getService(UUID.fromString(service))==null)&#123;return null ;&#125;</span><br><span class="line">        return mBluetoothGatt.getService(UUID.fromString(service)).getCharacteristic(UUID.fromString(charact));</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//代码片段2</span><br><span class="line">if(!TextUtils.isEmpty(value))&#123;//输入非空</span><br><span class="line">      byte[] arrayOfByte= new byte[2];//传入数据规定为2个byte</span><br><span class="line">      arrayOfByte[0] = ((byte)Integer.parseInt((value).substring(0, 2), 16));</span><br><span class="line">      arrayOfByte[1] = ((byte)Integer.parseInt((value).substring(2, 4), 16));</span><br><span class="line">      //上面操作，先切，再转为16进制</span><br><span class="line">      characteristic.setValue(arrayOfByte);</span><br><span class="line">      //characteristic实体就是片段1代码获取到的</span><br><span class="line">      gattServer.writeCharacteristic(characteristic);</span><br><span class="line">      //所有的操作都封装在一个service中，gattServer为其实体对象</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//片段3就是服务中的写入方法</span><br><span class="line">/**</span><br><span class="line">   * 写入一个数据</span><br><span class="line">   * @param characteristic</span><br><span class="line">   */</span><br><span class="line">  public void writeCharacteristic(BluetoothGattCharacteristic characteristic) &#123;</span><br><span class="line">      mBluetoothGatt.setCharacteristicNotification(characteristic, true);</span><br><span class="line">      mBluetoothGatt.writeCharacteristic(characteristic);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">//代码片段4   这是回调，</span><br><span class="line">//在连接时就作为参数传入了 mBluetoothGatt = device.connectGatt(this, false, mGattCallback);</span><br><span class="line">private final BluetoothGattCallback mGattCallback = new BluetoothGattCallback() &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) &#123;</span><br><span class="line">            if (newState == BluetoothProfile.STATE_CONNECTED) &#123;            </span><br><span class="line">                Log.e(TAG, &quot;连接至 GATT server.&quot;);</span><br><span class="line">            &#125; else if (newState == BluetoothProfile.STATE_DISCONNECTED) &#123;</span><br><span class="line">                Log.e(TAG, &quot;断开 GATT server.&quot;);             </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public void onServicesDiscovered(BluetoothGatt gatt, int status) &#123;</span><br><span class="line">            if (status == BluetoothGatt.GATT_SUCCESS) &#123;</span><br><span class="line">                Log.e(TAG, &quot;建立连接成功&quot;);              </span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                Log.e(TAG, &quot;连接状态异常: &quot; + status);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) &#123;</span><br><span class="line">            if (status == BluetoothGatt.GATT_SUCCESS) &#123;</span><br><span class="line">                  Log.e(TAG, &quot;写入数据成功&quot;);   </span><br><span class="line">            &#125; </span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic</span><br><span class="line">                characteristic, int status) &#123;</span><br><span class="line">            if (status == BluetoothGatt.GATT_SUCCESS) &#123;</span><br><span class="line">               Log.e(TAG, &quot;读取数据成功&quot;);   </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public void onCharacteristicChanged(BluetoothGatt gatt,</span><br><span class="line">                                            BluetoothGattCharacteristic characteristic) &#123;</span><br><span class="line">            Log.e(TAG, &quot;连接状态发生改变&quot;);      </span><br><span class="line">        &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
+<pre><code>//代码片段1
+//此方法获取对应特征值的对象BluetoothGattCharacteristic的实体
+    public BluetoothGattCharacteristic getCharacteristic(String service,String charact) {
+        if (mBluetoothGatt == null) return null;
+        if(mBluetoothGatt.getService(UUID.fromString(service))==null){return null ;}
+        return mBluetoothGatt.getService(UUID.fromString(service)).getCharacteristic(UUID.fromString(charact));
+    }
+</code></pre><pre><code>//代码片段2
+if(!TextUtils.isEmpty(value)){//输入非空
+      byte[] arrayOfByte= new byte[2];//传入数据规定为2个byte
+      arrayOfByte[0] = ((byte)Integer.parseInt((value).substring(0, 2), 16));
+      arrayOfByte[1] = ((byte)Integer.parseInt((value).substring(2, 4), 16));
+      //上面操作，先切，再转为16进制
+      characteristic.setValue(arrayOfByte);
+      //characteristic实体就是片段1代码获取到的
+      gattServer.writeCharacteristic(characteristic);
+      //所有的操作都封装在一个service中，gattServer为其实体对象
+}
+</code></pre><pre><code>  //片段3就是服务中的写入方法
+  /**
+     * 写入一个数据
+     * @param characteristic
+     */
+    public void writeCharacteristic(BluetoothGattCharacteristic characteristic) {
+        mBluetoothGatt.setCharacteristicNotification(characteristic, true);
+        mBluetoothGatt.writeCharacteristic(characteristic);
+    }
+</code></pre><pre><code>//代码片段4   这是回调，
+//在连接时就作为参数传入了 mBluetoothGatt = device.connectGatt(this, false, mGattCallback);
+private final BluetoothGattCallback mGattCallback = new BluetoothGattCallback() {
+        @Override
+        public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
+            if (newState == BluetoothProfile.STATE_CONNECTED) {            
+                Log.e(TAG, &quot;连接至 GATT server.&quot;);
+            } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
+                Log.e(TAG, &quot;断开 GATT server.&quot;);             
+            }
+        }
+
+        @Override
+        public void onServicesDiscovered(BluetoothGatt gatt, int status) {
+            if (status == BluetoothGatt.GATT_SUCCESS) {
+                Log.e(TAG, &quot;建立连接成功&quot;);              
+            } else {
+                Log.e(TAG, &quot;连接状态异常: &quot; + status);
+            }
+        }
+
+        @Override
+        public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
+            if (status == BluetoothGatt.GATT_SUCCESS) {
+                  Log.e(TAG, &quot;写入数据成功&quot;);   
+            } 
+        }
+
+        @Override
+        public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic
+                characteristic, int status) {
+            if (status == BluetoothGatt.GATT_SUCCESS) {
+               Log.e(TAG, &quot;读取数据成功&quot;);   
+            }
+        }
+
+        @Override
+        public void onCharacteristicChanged(BluetoothGatt gatt,
+                                            BluetoothGattCharacteristic characteristic) {
+            Log.e(TAG, &quot;连接状态发生改变&quot;);      
+        };
+}
+</code></pre><blockquote>
 <p>PS:<strong>这里的例子是写入，其实读取的操作与此类似，操作完成后在回调里面判断状态以及读取数据即可</strong></p>
 </blockquote>
 
-        
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              <span>
+                <i class="iconfont icon-inbox"></i>
+                
+                  <a class="hover-with-bg" href="/categories/Android">Android</a>
+                  &nbsp;
+                
+              </span>&nbsp;&nbsp;
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/Android">Android</a>
+                
+              </span>
+            
+            </p>
+            
+          </div>
         </div>
-        <footer class="article-footer">
-            <div class="share-container">
+      </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
 
-
-
+    </div>
+  </div>
 </div>
 
-    <a data-url="https://www.wangzhumo.com/2017/12/25/Bluetooth-iBeacon/" data-id="ck2n20uy3003ckerx0n9g2xly" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
+<!-- custom -->
 
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
 
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
     
-
-        </footer>
-    </div>
-    
-        
-<nav id="article-nav">
-    
-        <a href="/2017/12/25/Android-Studio-signature-debug/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    Android Studio 使用正式签名debug调试
-                
-            </div>
-        </a>
-    
-    
-        <a href="/2017/12/25/Android-Studio-Config/" id="article-nav-older" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">Android Studio 基本设置</div>
-        </a>
-    
-</nav>
-
+  </div>
+</div>
 
     
-</article>
+  </main>
 
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
 
-    
-    
-
-</section>
-            
-                
-<aside id="sidebar">
-   
-        
-    <div class="widget-wrap">
-        <h3 class="widget-title">分类</h3>
-        <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">27</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Studio/">Android Studio</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Bug/">Bug</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JNI/">JNI</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Media/">Media</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programme/">Programme</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Source-Code/">Source Code</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/View/">View</a><span class="category-list-count">4</span></li></ul>
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
         </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
     </div>
+  </div>
+</div>
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <br>
 
     
-        
-    <div class="widget-wrap">
-        <h3 class="widget-title">标签云</h3>
-        <div class="widget tagcloud">
-            <a href="/tags/Media-Server/" style="font-size: 10px;">-Media -Server</a> <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 15.71px;">Android Studio</a> <a href="/tags/Audio/" style="font-size: 10px;">Audio</a> <a href="/tags/Binder/" style="font-size: 10px;">Binder</a> <a href="/tags/Bug/" style="font-size: 17.14px;">Bug</a> <a href="/tags/FFmpeg/" style="font-size: 11.43px;">FFmpeg</a> <a href="/tags/Flutter/" style="font-size: 11.43px;">Flutter</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Glide/" style="font-size: 10px;">Glide</a> <a href="/tags/Google/" style="font-size: 11.43px;">Google</a> <a href="/tags/Gradle/" style="font-size: 11.43px;">Gradle</a> <a href="/tags/Handler/" style="font-size: 10px;">Handler</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/JNI/" style="font-size: 11.43px;">JNI</a> <a href="/tags/Java/" style="font-size: 18.57px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Kotlin/" style="font-size: 11.43px;">Kotlin</a> <a href="/tags/Linux/" style="font-size: 12.86px;">Linux</a> <a href="/tags/Media/" style="font-size: 12.86px;">Media</a> <a href="/tags/Okhttp/" style="font-size: 11.43px;">Okhttp</a> <a href="/tags/Programme/" style="font-size: 14.29px;">Programme</a> <a href="/tags/RK3399/" style="font-size: 10px;">RK3399</a> <a href="/tags/Regular/" style="font-size: 10px;">Regular</a> <a href="/tags/Room/" style="font-size: 12.86px;">Room</a> <a href="/tags/Rxjava/" style="font-size: 12.86px;">Rxjava</a> <a href="/tags/Server/" style="font-size: 15.71px;">Server</a> <a href="/tags/Source-Code/" style="font-size: 11.43px;">Source Code</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/View/" style="font-size: 17.14px;">View</a> <a href="/tags/frequency/" style="font-size: 10px;">frequency</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/组件化/" style="font-size: 10px;">组件化</a> <a href="/tags/蓝牙/" style="font-size: 10px;">蓝牙</a> <a href="/tags/设计模式/" style="font-size: 12.86px;">设计模式</a>
-        </div>
-    </div>
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv">总访问量 
+          <span id="busuanzi_value_site_pv"></span> 次</span>&nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv">总访客数 
+            <span id="busuanzi_value_site_uv"></span> 人</span>&nbsp;
+  
+  <br>
 
-    
-        
-    <div class="widget-wrap">
-        <h3 class="widget-title">最新文章</h3>
-        <div class="widget">
-            <ul id="recent-post" class="">
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2019/11/06/coturn-install-ubuntu/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Media/">Media</a></p>
-                            <p class="item-title"><a href="/2019/11/06/coturn-install-ubuntu/" class="title">Ubuntu安装coturn服务</a></p>
-                            <p class="item-date"><time datetime="2019-11-06T03:59:03.000Z" itemprop="datePublished">2019-11-06</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/10/28/jni-basic-conception/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/JNI/">JNI</a></p>
-                            <p class="item-title"><a href="/2018/10/28/jni-basic-conception/" class="title">JNI 认识JNI的基本概念</a></p>
-                            <p class="item-date"><time datetime="2018-10-28T12:32:20.000Z" itemprop="datePublished">2018-10-28</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/10/28/taste-jni-default-project/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/JNI/">JNI</a></p>
-                            <p class="item-title"><a href="/2018/10/28/taste-jni-default-project/" class="title">JNI-从Android Studio默认工程认识JNI</a></p>
-                            <p class="item-date"><time datetime="2018-10-28T12:12:17.000Z" itemprop="datePublished">2018-10-28</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/09/21/time-and-frequency-domain/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Other/">Other</a></p>
-                            <p class="item-title"><a href="/2018/09/21/time-and-frequency-domain/" class="title">认识时域与频域</a></p>
-                            <p class="item-date"><time datetime="2018-09-21T11:11:18.000Z" itemprop="datePublished">2018-09-21</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/09/21/ffmpeg-cmd-demuxer-muxer/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://www.wangzhumo.com/images/ffmpeg.jpeg)" alt="音视频-FFmpeg的分解与复用" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Media/">Media</a></p>
-                            <p class="item-title"><a href="/2018/09/21/ffmpeg-cmd-demuxer-muxer/" class="title">音视频-FFmpeg的分解与复用</a></p>
-                            <p class="item-date"><time datetime="2018-09-21T06:23:02.000Z" itemprop="datePublished">2018-09-21</time></p>
-                        </div>
-                    </li>
-                
-            </ul>
-        </div>
-    </div>
-
-    
-        
-    <div class="widget-wrap">
-        <h3 class="widget-title">归档</h3>
-        <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li></ul>
-        </div>
-    </div>
-
-    
-        
-    <div class="widget-wrap">
-        <h3 class="widget-title">标签</h3>
-        <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Media-Server/">-Media -Server</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">49</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Audio/">Audio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bug/">Bug</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FFmpeg/">FFmpeg</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Glide/">Glide</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Handler/">Handler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JNI/">JNI</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kotlin/">Kotlin</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Media/">Media</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Okhttp/">Okhttp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Programme/">Programme</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RK3399/">RK3399</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regular/">Regular</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Room/">Room</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Server/">Server</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Source-Code/">Source Code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tools/">Tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/frequency/">frequency</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">3</span></li></ul>
-        </div>
-    </div>
-
-    
-        
-    <div class="widget-wrap widget-list">
-        <h3 class="widget-title">链接</h3>
-        <div class="widget">
-            <ul>
-                
-                    <li>
-                        <a href="mailto:wangzhumoo@gmail.com">E-mail</a>
-                    </li>
-                
-                    <li>
-                        <a href="http://hexo.io">Hexo</a>
-                    </li>
-                
-            </ul>
-        </div>
-    </div>
 
 
     
-    <div id="toTop" class="fas fa-angle-up"></div>
-</aside>
 
-            
-        </div>
-        <footer id="footer">
-    <div class="outer">
-        <div id="footer-info" class="inner">
-            &copy; 2019 wangzhumo<br>
-            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
-        </div>
-    </div>
+  </div>
 </footer>
-        
+
+<!-- SCRIPTS -->
+<script src="/lib/jquery/jquery.min.js" ></script>
+<script src="/lib/popper/popper.min.js" ></script>
+<script src="/lib/bootstrap/js/bootstrap.min.js" ></script>
+<script src="/lib/mdbootstrap/js/mdb.min.js" ></script>
+<script src="/js/main.js" ></script>
 
 
-    
-        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
-    
-    
-        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
-    
-    
+  <script src="/js/lazyload.js" ></script>
 
 
 
-<!-- Custom Scripts -->
-<script src="/js/main.js"></script>
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
 
-    </div>
+
+
+  <script src="/lib/smooth-scroll/smooth-scroll.min.js" ></script>
+
+
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+<!-- Plugins -->
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  <script src="/lib/prettify/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script src="/lib/typed/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "低功耗蓝牙iBeacon的开发笔记&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script src="/lib/anchor/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "false",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script src="/lib/fancybox/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
 </body>
 </html>

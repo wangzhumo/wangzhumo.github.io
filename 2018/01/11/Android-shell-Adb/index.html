@@ -1,239 +1,181 @@
 <!DOCTYPE html>
-<html lang=zh>
+<html lang="zh-CN">
+
+
+
+
+
 <head>
-    <meta charset="utf-8">
-    
-    <title>Android开发中常用的Adb命令 | 王诛魔</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="在做这些之前,先配置好adb环境变量,以我的配置为例 12345678910111213$ vim ~/.bash_profileexport ANDROID_HOME=/Users/phyooos/Library/Android/sdk...export PATH=&amp;#123;省略&amp;#125;:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools$ s">
-<meta name="keywords" content="Android">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Android开发中常用的Adb命令">
-<meta property="og:url" content="https://www.wangzhumo.com/2018/01/11/Android-shell-Adb/index.html">
-<meta property="og:site_name" content="王诛魔">
-<meta property="og:description" content="在做这些之前,先配置好adb环境变量,以我的配置为例 12345678910111213$ vim ~/.bash_profileexport ANDROID_HOME=/Users/phyooos/Library/Android/sdk...export PATH=&amp;#123;省略&amp;#125;:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools$ s">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-09-21T07:01:52.000Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android开发中常用的Adb命令">
-<meta name="twitter:description" content="在做这些之前,先配置好adb环境变量,以我的配置为例 12345678910111213$ vim ~/.bash_profileexport ANDROID_HOME=/Users/phyooos/Library/Android/sdk...export PATH=&amp;#123;省略&amp;#125;:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools$ s">
-    
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="description" content="王诛魔">
+  <meta name="author" content="wangzhumo">
+  <meta name="keywords" content="">
+  <title>Android开发中常用的Adb命令 ~ 王诛魔</title>
 
-    
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
+<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
+<link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css"  >
+<link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css"  >
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
 
-    
-        <link rel="icon" href="/css/images/favicon-32x32-next.png" />
-    
 
-    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
-    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
-    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
-    <link rel="stylesheet" href="/libs/open-sans/styles.css">
-    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+  <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css"  >
 
-    <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/main.css"  >
 
-    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
-    
-    
-        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
-    
-    
-        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
-    
-    
-    
-    
+
+  <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.min.css"  >
 
 
 </head>
 
+
 <body>
-    <div id="container">
-        <header id="header">
-    <div id="header-main" class="header-inner">
-        <div class="outer">
-            <a href="/" id="logo">
-                <i class="logo"></i>
-                <span class="site-title">王诛魔</span>
-            </a>
-            <nav id="main-nav">
-                
-                    <a class="main-nav-link" href="/.">Home</a>
-                
-                    <a class="main-nav-link" href="/archives">Archives</a>
-                
-                    <a class="main-nav-link" href="/categories">Categories</a>
-                
-                    <a class="main-nav-link" href="/tags">Tags</a>
-                
-                    <a class="main-nav-link" href="/about">About</a>
-                
-            </nav>
-            
-                
-                <nav id="sub-nav">
-                    <div class="profile" id="profile-nav">
-                        <a id="profile-anchor" href="javascript:;">
-                            <img class="avatar" src="/css/images/avatar.png" />
-                            <i class="fas fa-caret-down"></i>
-                        </a>
-                    </div>
-                </nav>
-            
-            <div id="search-form-wrap">
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>王诛魔</strong>&nbsp;</a>
 
-    <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
-        <button type="submit" class="search-form-submit"></button>
-    </form>
-    <div class="ins-search">
-    <div class="ins-search-mask"></div>
-    <div class="ins-search-container">
-        <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
-            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
-        </div>
-        <div class="ins-section-wrapper">
-            <div class="ins-section-container"></div>
-        </div>
-    </div>
-</div>
-<script>
-(function (window) {
-    var INSIGHT_CONFIG = {
-        TRANSLATION: {
-            POSTS: '文章',
-            PAGES: '页面',
-            CATEGORIES: '分类',
-            TAGS: '标签',
-            UNTITLED: '(未命名)',
-        },
-        ROOT_URL: '/',
-        CONTENT_URL: '/content.json',
-    };
-    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
-})(window);
-</script>
-<script src="/js/insight.js"></script>
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
 
-</div>
-        </div>
-    </div>
-    <div id="main-nav-mobile" class="header-sub header-inner">
-        <table class="menu outer">
-            <tr>
-                
-                    <td><a class="main-nav-link" href="/.">Home</a></td>
-                
-                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
-                
-                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
-                
-                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
-                
-                    <td><a class="main-nav-link" href="/about">About</a></td>
-                
-                <td>
-                    
-    <div class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
-    </div>
-
-                </td>
-            </tr>
-        </table>
-    </div>
-</header>
-
-        <div class="outer">
-            
-                
-
-<aside id="profile" class="profile-fixed">
-    <div class="inner profile-inner">
-        <div class="base-info profile-block">
-            <img id="avatar" src="/css/images/avatar.png" />
-            <h2 id="name">王诛魔</h2>
-            <h3 id="title">Android Developer</h3>
-            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>Beijing, China</span>
-            <a id="follow" target="_blank" href="mailto:wangzhumoo@gmail.com">联系我</a>
-        </div>
-        <div class="article-info profile-block">
-            <div class="article-info-block">
-                88
-                <span>文章</span>
-            </div>
-            <div class="article-info-block">
-                38
-                <span>标签</span>
-            </div>
-        </div>
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
         
-        <div class="profile-block social-links">
-            <table>
-                <tr>
-                    
-                    
-                    <td>
-                        <a href="https://github.com/wangzhumo" target="_blank" title="github" >
-                            <i class="fab fa-github"></i>
-                        </a>
-                    </td>
-                    
-                </tr>
-            </table>
-        </div>
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
         
-    </div>
-</aside>
-
-            
-            <section id="main"><article id="post-Android-shell-Adb" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
         
         
-            <header class="article-header">
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+</nav>
+
+    <div class="view intro-2" id="background"
+         style="background: url('/img/default.png')no-repeat center center;
+           background-size: cover;
+           background-attachment: fixed;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期四, 一月 11日 2018, 12:07 中午
+                </p>
+              
+
+              <p>
                 
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    1.5k 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      7 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
     
-        <h1 class="article-title" itemprop="name">
-            Android开发中常用的Adb命令
-        </h1>
-    
+      
 
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/01/11/Android-shell-Adb/">
-            <time datetime="2018-01-11T04:07:40.000Z" itemprop="datePublished">2018-01-11</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android/">Android</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
             <p>在做这些之前,先配置好adb环境变量,以我的配置为例</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> vim ~/.bash_profile</span><br><span class="line"></span><br><span class="line">export ANDROID_HOME=/Users/phyooos/Library/Android/sdk</span><br><span class="line">...</span><br><span class="line">export PATH=&#123;省略&#125;:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> source ~/.bas</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> adb</span><br><span class="line">Android Debug Bridge version 1.0.39</span><br><span class="line">Version 0.0.1-4500957</span><br><span class="line">Installed as /Users/phyooos/Library/Android/sdk/platform-tools/adb</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<pre><code class="shell">$ vim ~/.bash_profile
+
+export ANDROID_HOME=/Users/phyooos/Library/Android/sdk
+...
+export PATH={省略}:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+
+$ source ~/.bas
+
+$ adb
+Android Debug Bridge version 1.0.39
+Version 0.0.1-4500957
+Installed as /Users/phyooos/Library/Android/sdk/platform-tools/adb
+...
+</code></pre>
 <p>补充</p>
 <blockquote>
 <p>adb shell pm list packages   当前手机安装的所有app包名<br>adb shell pm list packages | grep ‘google’  在所有包名中查找带’google’的</p>
@@ -245,37 +187,66 @@
 </li>
 <li><p>通过wifi连接</p>
 <p>保证Android设备与电脑在局域网中,网段好像也要一致 eg:  <code>192.168.2.98 , 192.168.2.111</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">~ ⌚ 9:44:55</span><br><span class="line"><span class="meta">$</span> adb connect 192.168.6.51</span><br><span class="line">unable to connect to 192.168.6.51:5555: Connection refused</span><br></pre></td></tr></table></figure>
+<pre><code class="shell">~ ⌚ 9:44:55
+$ adb connect 192.168.6.51
+unable to connect to 192.168.6.51:5555: Connection refused
+</code></pre>
 <p>此时是连接不上的,要先tcpip 5555,如下:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>使用Tcp并监听端口5555</span><br><span class="line">adb tcpip 5555</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>连接设备</span><br><span class="line">adb connect 192.168.6.51</span><br></pre></td></tr></table></figure>
+<pre><code class="shell">#使用Tcp并监听端口5555
+adb tcpip 5555
+
+#连接设备
+adb connect 192.168.6.51
+</code></pre>
 <p>如果你想用usb调试</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>使用usb调试  </span><br><span class="line">adb usb</span><br></pre></td></tr></table></figure>
+<pre><code class="shell">#使用usb调试  
+adb usb
+</code></pre>
 <p>PS:有的设备直接adb connect  即可,所以不妨先试试</p>
-<p>​</p>
 </li>
 </ul>
 <h4 id="查看设备"><a href="#查看设备" class="headerlink" title="查看设备"></a>查看设备</h4><ul>
 <li><p>查看所有连接的设备</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb devices</span><br><span class="line">List of devices attached</span><br><span class="line">3080b82d	device</span><br><span class="line">860BCML228J8	device</span><br></pre></td></tr></table></figure>
+<pre><code class="shell">$ adb devices
+List of devices attached
+3080b82d    device
+860BCML228J8    device
+</code></pre>
 </li>
 <li><p>指定设备(adb 命令必须指定一个设备使用)</p>
 </li>
 </ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">abd -s 编号 命令</span><br><span class="line">比如我要连接3080b82d	device 这个设备,安装一个apk</span><br><span class="line"></span><br><span class="line">eg:</span><br><span class="line"><span class="meta">$</span> adb -s 3080b82d install Test.apk</span><br><span class="line">Success</span><br></pre></td></tr></table></figure>
+<pre><code class="shell">abd -s 编号 命令
+比如我要连接3080b82d    device 这个设备,安装一个apk
+
+eg:
+$ adb -s 3080b82d install Test.apk
+Success
+</code></pre>
 <h4 id="安装-卸载apk"><a href="#安装-卸载apk" class="headerlink" title="安装,卸载apk"></a>安装,卸载apk</h4><ul>
-<li>安装<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb -s 3080b82d install Users/phyooos/develop/Test.apk</span><br><span class="line">Success</span><br></pre></td></tr></table></figure>
-</li>
+<li>安装<pre><code class="shell">$ adb -s 3080b82d install Users/phyooos/develop/Test.apk
+Success
+</code></pre>
+install 跟上apk的path即可</li>
 </ul>
-<p>install 跟上apk的path即可</p>
 <p>install 可以搭配几个参数使用,比较常用的是</p>
 <p><code>install -r</code>   替换掉原来的apk.(被称为强制安装)    至于其他的参数去google官网看吧</p>
 <p><code>install -t</code>  可以安装测试包</p>
 <ul>
 <li>卸载</li>
 </ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">adb uninstall [软件包名]</span><br><span class="line"></span><br><span class="line">adb uninstall -k [软件包名]</span><br></pre></td></tr></table></figure>
+<pre><code class="shell">adb uninstall [软件包名]
+
+adb uninstall -k [软件包名]
+</code></pre>
 <p>-k 参数,卸载软件但是保留配置和缓存文件.</p>
-<p>包名使用文章开始的命令查找即可(当前有两个手机,还要指定设备)<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb -s 3080b82d shell pm list packages | grep 'miui'</span><br><span class="line">package:com.miui.screenrecorder</span><br><span class="line">package:com.miui.contentextension</span><br><span class="line">package:com.miui.powerkeeper</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>包名使用文章开始的命令查找即可(当前有两个手机,还要指定设备)</p>
+<pre><code class="shell">$ adb -s 3080b82d shell pm list packages | grep &#39;miui&#39;
+package:com.miui.screenrecorder
+package:com.miui.contentextension
+package:com.miui.powerkeeper
+...
+</code></pre>
 <h4 id="拉取-推送文件"><a href="#拉取-推送文件" class="headerlink" title="拉取,推送文件"></a>拉取,推送文件</h4><ul>
 <li>发送文件到Android设备</li>
 </ul>
@@ -286,406 +257,425 @@
 <p>　　<code>adb pull [远程路径] [本地路径]</code></p>
 <h4 id="截图录屏"><a href="#截图录屏" class="headerlink" title="截图录屏"></a>截图录屏</h4><ul>
 <li><p>截图<code>adb shell screencap [path]</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adb shell screencap /sdcard/screen.png</span><br><span class="line">#截图并保存到/sdcard/screen.png</span><br></pre></td></tr></table></figure>
-</li>
+<pre><code>adb shell screencap /sdcard/screen.png
+#截图并保存到/sdcard/screen.png
+</code></pre></li>
 <li><p>录屏<code>adb shell screenrecord [path]</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adb shell screenrecord /sdcard/demo.mp4</span><br><span class="line">#录屏</span><br></pre></td></tr></table></figure>
-<p>注意:   按Ctrl-C 结束录制</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">adb shell screenrecord --size &lt;WIDTHxHEIGHT&gt;</span><br><span class="line"></span><br><span class="line">adb shell screenrecord --bit-rate &lt;RATE&gt;</span><br><span class="line">adb shell screenrecord --bit-rate 5000000 /sdcard/demo.mp4</span><br><span class="line"></span><br><span class="line">adb shell screenrecord --time-limit &lt;TIME&gt;</span><br><span class="line"></span><br><span class="line">adb shell screenrecord --rotate</span><br><span class="line"></span><br><span class="line">adb shell screenrecord --verbose</span><br></pre></td></tr></table></figure>
-<p>​</p>
-</li>
+<pre><code>adb shell screenrecord /sdcard/demo.mp4
+#录屏
+</code></pre><p>注意:   按Ctrl-C 结束录制</p>
+<pre><code>adb shell screenrecord --size &lt;WIDTHxHEIGHT&gt;
+
+adb shell screenrecord --bit-rate &lt;RATE&gt;
+adb shell screenrecord --bit-rate 5000000 /sdcard/demo.mp4
+
+adb shell screenrecord --time-limit &lt;TIME&gt;
+
+adb shell screenrecord --rotate
+
+adb shell screenrecord --verbose
+</code></pre></li>
 </ul>
 <h4 id="Package"><a href="#Package" class="headerlink" title="Package"></a>Package</h4><ul>
 <li><p>查看系统内app信息  <code>adb shell pm list packages</code></p>
 <ul>
 <li><p>查看当前所有包</p>
 <p><code>adb shell pm list packages</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb shell pm list packages</span><br><span class="line">package:com.flyme.roamingpay</span><br><span class="line">package:com.android.cts.priv.ctsshim</span><br><span class="line">package:com.meizu.pps</span><br><span class="line">package:com.meizu.net.pedometer</span><br><span class="line">package:com.android.providers.telephony</span><br></pre></td></tr></table></figure>
+<pre><code class="shell">$ adb shell pm list packages
+package:com.flyme.roamingpay
+package:com.android.cts.priv.ctsshim
+package:com.meizu.pps
+package:com.meizu.net.pedometer
+package:com.android.providers.telephony
+</code></pre>
 </li>
 <li><p>系统应用</p>
 <p><code>adb shell pm list packages -s</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb shell pm list packages -s</span><br><span class="line">package:com.miui.screenrecorder</span><br><span class="line">package:com.android.cts.priv.ctsshim</span><br><span class="line">package:com.qualcomm.qti.auth.sampleextauthservice</span><br><span class="line">package:com.qualcomm.qti.perfdump</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<pre><code class="shell">$ adb shell pm list packages -s
+package:com.miui.screenrecorder
+package:com.android.cts.priv.ctsshim
+package:com.qualcomm.qti.auth.sampleextauthservice
+package:com.qualcomm.qti.perfdump
+...
+</code></pre>
 </li>
 <li><p>普通外来应用</p>
 <p><code>adb shell pm list packages -3</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb shell pm list packages -3</span><br><span class="line">package:com.google.android.youtube</span><br><span class="line">package:com.hpbr.bosszhipin</span><br><span class="line">package:de.blinkt.openvpn</span><br><span class="line">package:org.iggymedia.periodtracker</span><br><span class="line">package:com.daimajia.gold</span><br></pre></td></tr></table></figure>
+<pre><code class="shell">$ adb shell pm list packages -3
+package:com.google.android.youtube
+package:com.hpbr.bosszhipin
+package:de.blinkt.openvpn
+package:org.iggymedia.periodtracker
+package:com.daimajia.gold
+</code></pre>
 </li>
 <li><p>其他参数</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>See their associated file.</span><br><span class="line">adb shell pm list packages -f </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>Filter to only show disabled packages.</span><br><span class="line">adb shell pm list packages -d </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>Filter to only show enabled packages.</span><br><span class="line">adb shell pm list packages -e </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>See the installer for the packages.</span><br><span class="line">adb shell pm list packages -i </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>Also include uninstalled packages.</span><br><span class="line">adb shell pm list packages -u</span><br></pre></td></tr></table></figure>
+<pre><code class="shell">#See their associated file.
+adb shell pm list packages -f 
+
+#Filter to only show disabled packages.
+adb shell pm list packages -d 
+
+#Filter to only show enabled packages.
+adb shell pm list packages -e 
+
+#See the installer for the packages.
+adb shell pm list packages -i 
+
+#Also include uninstalled packages.
+adb shell pm list packages -u
+</code></pre>
 </li>
 </ul>
 </li>
 <li><p>通过包名查找app位置 <code>adb shell pm path [packagename]</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ adb shell pm path com.miui.screenrecorder</span><br><span class="line">package:/system/app/MiuiScreenRecorder/MiuiScreenRecorder.apk</span><br></pre></td></tr></table></figure>
-</li>
+<pre><code>$ adb shell pm path com.miui.screenrecorder
+package:/system/app/MiuiScreenRecorder/MiuiScreenRecorder.apk
+</code></pre></li>
 <li><p>清除缓存<code>adb shell pm clear  [packageName]</code></p>
 <p>清除了该app的  data  cache</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ adb shell pm clear com.yhcs.carmart</span><br><span class="line">Success</span><br></pre></td></tr></table></figure>
-<p>​</p>
-</li>
+<pre><code>$ adb shell pm clear com.yhcs.carmart
+Success
+</code></pre></li>
 </ul>
 <h4 id="shell"><a href="#shell" class="headerlink" title="shell"></a>shell</h4><p>我们知道android其实精简了linux的命令,有一大部分linux命令没法用的</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb shell</span><br><span class="line"><span class="meta">#</span>即可进入</span><br><span class="line"></span><br><span class="line">如果要root权限,国内手机好像不一致,我是用过的为</span><br><span class="line"><span class="meta">$</span> adb root</span><br><span class="line"><span class="meta">$</span> adb shell</span><br><span class="line"></span><br><span class="line">此时权限就是root</span><br><span class="line"></span><br><span class="line">进入shell后,就可以为所欲为,一般和linux一致</span><br></pre></td></tr></table></figure>
+<pre><code class="shell">$ adb shell
+#即可进入
+
+如果要root权限,国内手机好像不一致,我是用过的为
+$ adb root
+$ adb shell
+
+此时权限就是root
+
+进入shell后,就可以为所欲为,一般和linux一致
+</code></pre>
 <p>不过这些,还是管用的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls , cd , rm , mkdir , touch , pwd ,cp , mv ,netstat , ping, ip</span><br></pre></td></tr></table></figure>
-<p>举一个例子,我想查看当前wifi的ip是多少.</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> adb shell</span><br><span class="line">sagit:/ $ ip -f inet addr show wlan0</span><br><span class="line">23: wlan0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP group default qlen 3000</span><br><span class="line">    inet 192.168.6.51/23 brd 192.168.7.255 scope global wlan0</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">sagit:/ $</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>ip  inet 192.168.6.51  这个就是</span><br></pre></td></tr></table></figure>
+<pre><code>ls , cd , rm , mkdir , touch , pwd ,cp , mv ,netstat , ping, ip
+</code></pre><p>举一个例子,我想查看当前wifi的ip是多少.</p>
+<pre><code class="shell">$ adb shell
+sagit:/ $ ip -f inet addr show wlan0
+23: wlan0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc mq state UP group default qlen 3000
+    inet 192.168.6.51/23 brd 192.168.7.255 scope global wlan0
+       valid_lft forever preferred_lft forever
+sagit:/ $
+
+#ip  inet 192.168.6.51  这个就是
+</code></pre>
 <h4 id="Logcat"><a href="#Logcat" class="headerlink" title="Logcat"></a>Logcat</h4><p><code>adb logcat [option] [filter]</code></p>
 <ul>
 <li><p>查看log <code>adb logcat</code></p>
 <p>通过  control + c  退出</p>
-<p>​</p>
 </li>
-<li><p>查看Debug的log <code>adb logcat *:D</code></p>
-</li>
+</ul>
+<ul>
+<li>查看Debug的log <code>adb logcat *:D</code></li>
 </ul>
 <p>Logcat,还是Android studio 看起来方便,所以没有继续去看,也就不说了</p>
 <h4 id="dumpsys"><a href="#dumpsys" class="headerlink" title="dumpsys"></a>dumpsys</h4><p>这是一个很强大的命令</p>
 <ul>
-<li><p>电量 <code>adb shell dumpsys battery</code></p>
-<p>​</p>
-</li>
+<li>电量 <code>adb shell dumpsys battery</code></li>
+</ul>
+<ul>
 <li><p>服务列表 <code>adb shell dumpsys</code></p>
 <p>下面的命令  <code>| more</code> 是为了显示所有的数据 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ adb shell dumpsys | more</span><br><span class="line">Currently running services:</span><br><span class="line">  DockObserver</span><br><span class="line">  MiuiBackup</span><br><span class="line">  MiuiInit</span><br><span class="line">  SurfaceFlinger</span><br><span class="line">  accessibility</span><br><span class="line">  account</span><br><span class="line">  activity</span><br><span class="line">  alarm</span><br><span class="line">  ...</span><br></pre></td></tr></table></figure>
-<p>这个Currently running services   所有的项目,都可以详细查询</p>
+<pre><code>$ adb shell dumpsys | more
+Currently running services:
+  DockObserver
+  MiuiBackup
+  MiuiInit
+  SurfaceFlinger
+  accessibility
+  account
+  activity
+  alarm
+  ...
+</code></pre><p>这个Currently running services   所有的项目,都可以详细查询</p>
 </li>
 <li><p>查询单个service  <code>adb shell dumpsys [service name]</code></p>
 <p>搞几个例子看看:</p>
 <ul>
 <li>屏幕分辨率<code>adb shell dumpsys window displays</code></li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ adb shell dumpsys window displays</span><br><span class="line"></span><br><span class="line">WINDOW MANAGER DISPLAY CONTENTS (dumpsys window displays)</span><br><span class="line">  Display: mDisplayId=0</span><br><span class="line">    init=1080x1920 480dpi cur=1080x1920 app=1080x1920 rng=1080x1020-1920x1860</span><br><span class="line">    deferred=false mLayoutNeeded=false</span><br></pre></td></tr></table></figure>
-<p>其中:</p>
+<pre><code>$ adb shell dumpsys window displays
+
+WINDOW MANAGER DISPLAY CONTENTS (dumpsys window displays)
+  Display: mDisplayId=0
+    init=1080x1920 480dpi cur=1080x1920 app=1080x1920 rng=1080x1020-1920x1860
+    deferred=false mLayoutNeeded=false
+</code></pre><p>其中:</p>
 <p>init=1080x1920  分辨率</p>
 <p>480dpi   dpi值</p>
-<p>​</p>
+</li>
+</ul>
 <ul>
 <li><p>activity信息<code>adb shell dumpsys activity</code></p>
 <p>比如我想看看我activity的信息<code>adb shell dumpsys activity | grep &#39;com.yhcs.carmart&#39;</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ adb shell dumpsys activity | grep &quot;com.yhcs.carmart&quot;</span><br><span class="line">  * com.yhcs.carmart: 2 items</span><br><span class="line">    #0: PendingIntentRecord&#123;c526be3 com.yhcs.carmart startService&#125;</span><br><span class="line">    #1: PendingIntentRecord&#123;8949e0 com.yhcs.carmart broadcastIntent&#125;</span><br><span class="line">      -&gt; 8161:com.yhcs.carmart/u0a460 s1/1 u0/0 +44s372ms</span><br><span class="line">      -&gt; 8556:com.yhcs.carmart:channel/u0a460 s1/1 u0/0 +33s684ms</span><br><span class="line">      </span><br><span class="line">      ...</span><br><span class="line">      </span><br><span class="line">  * Recent #0: TaskRecord&#123;6019b81 #14799 A=com.yhcs.carmart U=0 StackId=1 sz=1&#125;</span><br><span class="line">   packageName=com.yhcs.carmart processName=com.yhcs.carmart</span><br><span class="line">   launchedFromUid=10460 launchedFromPackage=com.yhcs.carmart userId=0</span><br><span class="line">   app=ProcessRecord&#123;3c52934 8161:com.yhcs.carmart/u0a460&#125;</span><br><span class="line">   Intent &#123; cmp=com.yhcs.carmart/.ui.main.MainActivity &#125;</span><br><span class="line">   frontOfTask=true task=TaskRecord&#123;6019b81 #14799 A=com.yhcs.carmart U=0 StackId=1 sz=1&#125;</span><br><span class="line">   taskAffinity=com.yhcs.carmart</span><br><span class="line">   realActivity=com.yhcs.carmart/.ui.main.MainActivity</span><br></pre></td></tr></table></figure>
-<p>现在指定查看这个activity</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ adb shell dumpsys activity com.yhcs.carmart/.ui.main.MainActivity</span><br><span class="line">TASK com.yhcs.carmart id=14799 userId=0</span><br><span class="line">  ACTIVITY com.yhcs.carmart/.ui.main.MainActivity a99200b pid=8161</span><br><span class="line">    Local Activity 90efa41 State:</span><br><span class="line">      mResumed=false mStopped=true mFinished=false</span><br><span class="line">      mChangingConfigurations=false</span><br><span class="line">      mCurrentConfig=&#123;1.0 460mcc11mnc [zh_CN] ldltr sw360dp w360dp h620dp 480dpi nrml long port finger -keyb/v/h -nav/h appBounds=Rect(0, 0 - 1080, 1920) s.12 themeChanged=0 themeChangedFlags=0&#125;</span><br><span class="line">      ...</span><br><span class="line">View Hierarchy:</span><br><span class="line">      DecorView@ce71c9e[MainActivity]</span><br><span class="line">        android.widget.LinearLayout&#123;6106377 V.E...... ......ID 0,0-1080,1920&#125;</span><br><span class="line">      ...</span><br><span class="line">Active Fragments </span><br><span class="line">	  ...</span><br></pre></td></tr></table></figure>
-<p>里面有很多信息</p>
-<p>​</p>
-</li>
-</ul>
+<pre><code>$ adb shell dumpsys activity | grep &quot;com.yhcs.carmart&quot;
+  * com.yhcs.carmart: 2 items
+    #0: PendingIntentRecord{c526be3 com.yhcs.carmart startService}
+    #1: PendingIntentRecord{8949e0 com.yhcs.carmart broadcastIntent}
+      -&gt; 8161:com.yhcs.carmart/u0a460 s1/1 u0/0 +44s372ms
+      -&gt; 8556:com.yhcs.carmart:channel/u0a460 s1/1 u0/0 +33s684ms
+
+      ...
+
+  * Recent #0: TaskRecord{6019b81 #14799 A=com.yhcs.carmart U=0 StackId=1 sz=1}
+   packageName=com.yhcs.carmart processName=com.yhcs.carmart
+   launchedFromUid=10460 launchedFromPackage=com.yhcs.carmart userId=0
+   app=ProcessRecord{3c52934 8161:com.yhcs.carmart/u0a460}
+   Intent { cmp=com.yhcs.carmart/.ui.main.MainActivity }
+   frontOfTask=true task=TaskRecord{6019b81 #14799 A=com.yhcs.carmart U=0 StackId=1 sz=1}
+   taskAffinity=com.yhcs.carmart
+   realActivity=com.yhcs.carmart/.ui.main.MainActivity
+</code></pre><p>现在指定查看这个activity</p>
+<pre><code>$ adb shell dumpsys activity com.yhcs.carmart/.ui.main.MainActivity
+TASK com.yhcs.carmart id=14799 userId=0
+  ACTIVITY com.yhcs.carmart/.ui.main.MainActivity a99200b pid=8161
+    Local Activity 90efa41 State:
+      mResumed=false mStopped=true mFinished=false
+      mChangingConfigurations=false
+      mCurrentConfig={1.0 460mcc11mnc [zh_CN] ldltr sw360dp w360dp h620dp 480dpi nrml long port finger -keyb/v/h -nav/h appBounds=Rect(0, 0 - 1080, 1920) s.12 themeChanged=0 themeChangedFlags=0}
+      ...
+View Hierarchy:
+      DecorView@ce71c9e[MainActivity]
+        android.widget.LinearLayout{6106377 V.E...... ......ID 0,0-1080,1920}
+      ...
+Active Fragments 
+      ...
+</code></pre><p>里面有很多信息</p>
 </li>
 </ul>
 
-        
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              <span>
+                <i class="iconfont icon-inbox"></i>
+                
+                  <a class="hover-with-bg" href="/categories/Android">Android</a>
+                  &nbsp;
+                
+              </span>&nbsp;&nbsp;
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/Android">Android</a>
+                
+              </span>
+            
+            </p>
+            
+          </div>
         </div>
-        <footer class="article-footer">
-            <div class="share-container">
+      </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
 
-
-
+    </div>
+  </div>
 </div>
 
-    <a data-url="https://www.wangzhumo.com/2018/01/11/Android-shell-Adb/" data-id="ck2n20uy20038kerxskeqvhwf" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
+<!-- custom -->
 
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
 
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
     
-
-        </footer>
-    </div>
-    
-        
-<nav id="article-nav">
-    
-        <a href="/2018/01/11/Charles-Https/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    使用Charles抓Https的数据请求
-                
-            </div>
-        </a>
-    
-    
-        <a href="/2018/01/10/OkHttp-support-https/" id="article-nav-older" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">OkHttp中添加https支持</div>
-        </a>
-    
-</nav>
-
+  </div>
+</div>
 
     
-</article>
+  </main>
 
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
 
-    
-    
-
-</section>
-            
-                
-<aside id="sidebar">
-   
-        
-    <div class="widget-wrap">
-        <h3 class="widget-title">分类</h3>
-        <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">27</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Studio/">Android Studio</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Bug/">Bug</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JNI/">JNI</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Media/">Media</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programme/">Programme</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Source-Code/">Source Code</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/View/">View</a><span class="category-list-count">4</span></li></ul>
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
         </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
     </div>
+  </div>
+</div>
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <br>
 
     
-        
-    <div class="widget-wrap">
-        <h3 class="widget-title">标签云</h3>
-        <div class="widget tagcloud">
-            <a href="/tags/Media-Server/" style="font-size: 10px;">-Media -Server</a> <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 15.71px;">Android Studio</a> <a href="/tags/Audio/" style="font-size: 10px;">Audio</a> <a href="/tags/Binder/" style="font-size: 10px;">Binder</a> <a href="/tags/Bug/" style="font-size: 17.14px;">Bug</a> <a href="/tags/FFmpeg/" style="font-size: 11.43px;">FFmpeg</a> <a href="/tags/Flutter/" style="font-size: 11.43px;">Flutter</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Glide/" style="font-size: 10px;">Glide</a> <a href="/tags/Google/" style="font-size: 11.43px;">Google</a> <a href="/tags/Gradle/" style="font-size: 11.43px;">Gradle</a> <a href="/tags/Handler/" style="font-size: 10px;">Handler</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/JNI/" style="font-size: 11.43px;">JNI</a> <a href="/tags/Java/" style="font-size: 18.57px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Kotlin/" style="font-size: 11.43px;">Kotlin</a> <a href="/tags/Linux/" style="font-size: 12.86px;">Linux</a> <a href="/tags/Media/" style="font-size: 12.86px;">Media</a> <a href="/tags/Okhttp/" style="font-size: 11.43px;">Okhttp</a> <a href="/tags/Programme/" style="font-size: 14.29px;">Programme</a> <a href="/tags/RK3399/" style="font-size: 10px;">RK3399</a> <a href="/tags/Regular/" style="font-size: 10px;">Regular</a> <a href="/tags/Room/" style="font-size: 12.86px;">Room</a> <a href="/tags/Rxjava/" style="font-size: 12.86px;">Rxjava</a> <a href="/tags/Server/" style="font-size: 15.71px;">Server</a> <a href="/tags/Source-Code/" style="font-size: 11.43px;">Source Code</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/View/" style="font-size: 17.14px;">View</a> <a href="/tags/frequency/" style="font-size: 10px;">frequency</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/组件化/" style="font-size: 10px;">组件化</a> <a href="/tags/蓝牙/" style="font-size: 10px;">蓝牙</a> <a href="/tags/设计模式/" style="font-size: 12.86px;">设计模式</a>
-        </div>
-    </div>
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv">总访问量 
+          <span id="busuanzi_value_site_pv"></span> 次</span>&nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv">总访客数 
+            <span id="busuanzi_value_site_uv"></span> 人</span>&nbsp;
+  
+  <br>
 
-    
-        
-    <div class="widget-wrap">
-        <h3 class="widget-title">最新文章</h3>
-        <div class="widget">
-            <ul id="recent-post" class="">
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2019/11/06/coturn-install-ubuntu/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Media/">Media</a></p>
-                            <p class="item-title"><a href="/2019/11/06/coturn-install-ubuntu/" class="title">Ubuntu安装coturn服务</a></p>
-                            <p class="item-date"><time datetime="2019-11-06T03:59:03.000Z" itemprop="datePublished">2019-11-06</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/10/28/jni-basic-conception/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/JNI/">JNI</a></p>
-                            <p class="item-title"><a href="/2018/10/28/jni-basic-conception/" class="title">JNI 认识JNI的基本概念</a></p>
-                            <p class="item-date"><time datetime="2018-10-28T12:32:20.000Z" itemprop="datePublished">2018-10-28</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/10/28/taste-jni-default-project/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/JNI/">JNI</a></p>
-                            <p class="item-title"><a href="/2018/10/28/taste-jni-default-project/" class="title">JNI-从Android Studio默认工程认识JNI</a></p>
-                            <p class="item-date"><time datetime="2018-10-28T12:12:17.000Z" itemprop="datePublished">2018-10-28</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/09/21/time-and-frequency-domain/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Other/">Other</a></p>
-                            <p class="item-title"><a href="/2018/09/21/time-and-frequency-domain/" class="title">认识时域与频域</a></p>
-                            <p class="item-date"><time datetime="2018-09-21T11:11:18.000Z" itemprop="datePublished">2018-09-21</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/09/21/ffmpeg-cmd-demuxer-muxer/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://www.wangzhumo.com/images/ffmpeg.jpeg)" alt="音视频-FFmpeg的分解与复用" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Media/">Media</a></p>
-                            <p class="item-title"><a href="/2018/09/21/ffmpeg-cmd-demuxer-muxer/" class="title">音视频-FFmpeg的分解与复用</a></p>
-                            <p class="item-date"><time datetime="2018-09-21T06:23:02.000Z" itemprop="datePublished">2018-09-21</time></p>
-                        </div>
-                    </li>
-                
-            </ul>
-        </div>
-    </div>
-
-    
-        
-    <div class="widget-wrap">
-        <h3 class="widget-title">归档</h3>
-        <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li></ul>
-        </div>
-    </div>
-
-    
-        
-    <div class="widget-wrap">
-        <h3 class="widget-title">标签</h3>
-        <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Media-Server/">-Media -Server</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">49</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Audio/">Audio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bug/">Bug</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FFmpeg/">FFmpeg</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Glide/">Glide</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Handler/">Handler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JNI/">JNI</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kotlin/">Kotlin</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Media/">Media</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Okhttp/">Okhttp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Programme/">Programme</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RK3399/">RK3399</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regular/">Regular</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Room/">Room</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Server/">Server</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Source-Code/">Source Code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tools/">Tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/frequency/">frequency</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">3</span></li></ul>
-        </div>
-    </div>
-
-    
-        
-    <div class="widget-wrap widget-list">
-        <h3 class="widget-title">链接</h3>
-        <div class="widget">
-            <ul>
-                
-                    <li>
-                        <a href="mailto:wangzhumoo@gmail.com">E-mail</a>
-                    </li>
-                
-                    <li>
-                        <a href="http://hexo.io">Hexo</a>
-                    </li>
-                
-            </ul>
-        </div>
-    </div>
 
 
     
-    <div id="toTop" class="fas fa-angle-up"></div>
-</aside>
 
-            
-        </div>
-        <footer id="footer">
-    <div class="outer">
-        <div id="footer-info" class="inner">
-            &copy; 2019 wangzhumo<br>
-            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
-        </div>
-    </div>
+  </div>
 </footer>
-        
+
+<!-- SCRIPTS -->
+<script src="/lib/jquery/jquery.min.js" ></script>
+<script src="/lib/popper/popper.min.js" ></script>
+<script src="/lib/bootstrap/js/bootstrap.min.js" ></script>
+<script src="/lib/mdbootstrap/js/mdb.min.js" ></script>
+<script src="/js/main.js" ></script>
 
 
-    
-        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
-    
-    
-        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
-    
-    
+  <script src="/js/lazyload.js" ></script>
 
 
 
-<!-- Custom Scripts -->
-<script src="/js/main.js"></script>
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
 
-    </div>
+
+
+  <script src="/lib/smooth-scroll/smooth-scroll.min.js" ></script>
+
+
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+<!-- Plugins -->
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  <script src="/lib/prettify/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script src="/lib/typed/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Android开发中常用的Adb命令&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script src="/lib/anchor/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "false",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script src="/lib/fancybox/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
 </body>
 </html>

@@ -1,568 +1,648 @@
 <!DOCTYPE html>
-<html lang=zh>
+<html lang="zh-CN">
+
+
+
+
+
 <head>
-    <meta charset="utf-8">
-    
-    <title>Android 项目统一管理依赖版本 | 王诛魔</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="准备引入Arouter,做一个组件的demo,就开始慢慢的改造项目 1234567891011121314151617.|-- app|   |-- build.gradle|   |-- libs|   |-- src|   |   |-- androidTest|   |   |-- main|   |   `-- test||-- opensource|   |-- build.gradle">
-<meta name="keywords" content="Android,Gradle,组件化">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Android 项目统一管理依赖版本">
-<meta property="og:url" content="https://www.wangzhumo.com/2017/12/25/Android-dependent-config/index.html">
-<meta property="og:site_name" content="王诛魔">
-<meta property="og:description" content="准备引入Arouter,做一个组件的demo,就开始慢慢的改造项目 1234567891011121314151617.|-- app|   |-- build.gradle|   |-- libs|   |-- src|   |   |-- androidTest|   |   |-- main|   |   `-- test||-- opensource|   |-- build.gradle">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-09-21T07:02:49.000Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android 项目统一管理依赖版本">
-<meta name="twitter:description" content="准备引入Arouter,做一个组件的demo,就开始慢慢的改造项目 1234567891011121314151617.|-- app|   |-- build.gradle|   |-- libs|   |-- src|   |   |-- androidTest|   |   |-- main|   |   `-- test||-- opensource|   |-- build.gradle">
-    
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="description" content="王诛魔">
+  <meta name="author" content="wangzhumo">
+  <meta name="keywords" content="">
+  <title>Android 项目统一管理依赖版本 ~ 王诛魔</title>
 
-    
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
+<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
+<link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css"  >
+<link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css"  >
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
 
-    
-        <link rel="icon" href="/css/images/favicon-32x32-next.png" />
-    
 
-    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
-    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
-    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
-    <link rel="stylesheet" href="/libs/open-sans/styles.css">
-    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+  <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css"  >
 
-    <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/main.css"  >
 
-    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
-    
-    
-        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
-    
-    
-        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
-    
-    
-    
-    
+
+  <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.min.css"  >
 
 
 </head>
 
+
 <body>
-    <div id="container">
-        <header id="header">
-    <div id="header-main" class="header-inner">
-        <div class="outer">
-            <a href="/" id="logo">
-                <i class="logo"></i>
-                <span class="site-title">王诛魔</span>
-            </a>
-            <nav id="main-nav">
-                
-                    <a class="main-nav-link" href="/.">Home</a>
-                
-                    <a class="main-nav-link" href="/archives">Archives</a>
-                
-                    <a class="main-nav-link" href="/categories">Categories</a>
-                
-                    <a class="main-nav-link" href="/tags">Tags</a>
-                
-                    <a class="main-nav-link" href="/about">About</a>
-                
-            </nav>
-            
-                
-                <nav id="sub-nav">
-                    <div class="profile" id="profile-nav">
-                        <a id="profile-anchor" href="javascript:;">
-                            <img class="avatar" src="/css/images/avatar.png" />
-                            <i class="fas fa-caret-down"></i>
-                        </a>
-                    </div>
-                </nav>
-            
-            <div id="search-form-wrap">
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>王诛魔</strong>&nbsp;</a>
 
-    <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
-        <button type="submit" class="search-form-submit"></button>
-    </form>
-    <div class="ins-search">
-    <div class="ins-search-mask"></div>
-    <div class="ins-search-container">
-        <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
-            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
-        </div>
-        <div class="ins-section-wrapper">
-            <div class="ins-section-container"></div>
-        </div>
-    </div>
-</div>
-<script>
-(function (window) {
-    var INSIGHT_CONFIG = {
-        TRANSLATION: {
-            POSTS: '文章',
-            PAGES: '页面',
-            CATEGORIES: '分类',
-            TAGS: '标签',
-            UNTITLED: '(未命名)',
-        },
-        ROOT_URL: '/',
-        CONTENT_URL: '/content.json',
-    };
-    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
-})(window);
-</script>
-<script src="/js/insight.js"></script>
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
 
-</div>
-        </div>
-    </div>
-    <div id="main-nav-mobile" class="header-sub header-inner">
-        <table class="menu outer">
-            <tr>
-                
-                    <td><a class="main-nav-link" href="/.">Home</a></td>
-                
-                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
-                
-                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
-                
-                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
-                
-                    <td><a class="main-nav-link" href="/about">About</a></td>
-                
-                <td>
-                    
-    <div class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
-    </div>
-
-                </td>
-            </tr>
-        </table>
-    </div>
-</header>
-
-        <div class="outer">
-            
-                
-
-<aside id="profile" class="profile-fixed">
-    <div class="inner profile-inner">
-        <div class="base-info profile-block">
-            <img id="avatar" src="/css/images/avatar.png" />
-            <h2 id="name">王诛魔</h2>
-            <h3 id="title">Android Developer</h3>
-            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>Beijing, China</span>
-            <a id="follow" target="_blank" href="mailto:wangzhumoo@gmail.com">联系我</a>
-        </div>
-        <div class="article-info profile-block">
-            <div class="article-info-block">
-                88
-                <span>文章</span>
-            </div>
-            <div class="article-info-block">
-                38
-                <span>标签</span>
-            </div>
-        </div>
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
         
-        <div class="profile-block social-links">
-            <table>
-                <tr>
-                    
-                    
-                    <td>
-                        <a href="https://github.com/wangzhumo" target="_blank" title="github" >
-                            <i class="fab fa-github"></i>
-                        </a>
-                    </td>
-                    
-                </tr>
-            </table>
-        </div>
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
         
-    </div>
-</aside>
-
-            
-            <section id="main"><article id="post-Android-dependent-config" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
         
         
-            <header class="article-header">
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+</nav>
+
+    <div class="view intro-2" id="background"
+         style="background: url('/img/default.png')no-repeat center center;
+           background-size: cover;
+           background-attachment: fixed;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期一, 十二月 25日 2017, 11:39 中午
+                </p>
+              
+
+              <p>
                 
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    1.3k 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      7 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
     
-        <h1 class="article-title" itemprop="name">
-            Android 项目统一管理依赖版本
-        </h1>
-    
+      
 
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2017/12/25/Android-dependent-config/">
-            <time datetime="2017-12-25T03:39:45.000Z" itemprop="datePublished">2017-12-25</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Android/">Android</a>, <a class="tag-link" href="/tags/Gradle/">Gradle</a>, <a class="tag-link" href="/tags/组件化/">组件化</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
             <p>准备引入Arouter,做一个组件的demo,就开始慢慢的改造项目</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">|-- app</span><br><span class="line">|   |-- build.gradle</span><br><span class="line">|   |-- libs</span><br><span class="line">|   |-- src</span><br><span class="line">|   |   |-- androidTest</span><br><span class="line">|   |   |-- main</span><br><span class="line">|   |   `-- test</span><br><span class="line">|</span><br><span class="line">|-- opensource</span><br><span class="line">|   |-- build.gradle</span><br><span class="line">|   |-- libs</span><br><span class="line">|   `-- src</span><br><span class="line">|       `-- main</span><br><span class="line">|-- build.gradle</span><br><span class="line">|-- settings.gradle</span><br><span class="line">`-- versions.gradle</span><br></pre></td></tr></table></figure>
-<blockquote>
+<pre><code>.
+|-- app
+|   |-- build.gradle
+|   |-- libs
+|   |-- src
+|   |   |-- androidTest
+|   |   |-- main
+|   |   `-- test
+|
+|-- opensource
+|   |-- build.gradle
+|   |-- libs
+|   `-- src
+|       `-- main
+|-- build.gradle
+|-- settings.gradle
+`-- versions.gradle
+</code></pre><blockquote>
 <p>app 为主项目<br>opensource 作为library存在,将来会成为baseLib的依赖,其中是所有的三方依赖,开源代码等等</p>
 </blockquote>
 <a id="more"></a>
 <p><strong>1.根目录创建versions.gradle</strong></p>
 <p><code>/versions.gradle</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">ext.deps = [:]</span><br><span class="line">    def versions = [:]</span><br><span class="line">    versions.arch = &quot;1.0.0&quot;</span><br><span class="line">    versions.support = &quot;27.0.1&quot;</span><br><span class="line">    versions.dagger = &quot;2.13&quot;</span><br><span class="line">    versions.stetho = &quot;1.5.0&quot;</span><br><span class="line">    versions.dialogs = &quot;0.9.6.0&quot;</span><br><span class="line"></span><br><span class="line">    versions.glide = &quot;4.3.1&quot;</span><br><span class="line">    versions.gradle = &quot;3.0.1&quot;</span><br><span class="line"></span><br><span class="line">    versions.rxJava = &quot;2.1.7&quot;</span><br><span class="line">    versions.rxAndroid = &quot;2.0.1&quot;</span><br><span class="line">    versions.rxRelay = &quot;2.0.0&quot;</span><br><span class="line">    versions.rxBinding = &quot;2.0.0&quot;</span><br><span class="line"></span><br><span class="line">    versions.paging = &quot;1.0.0-alpha3&quot;</span><br><span class="line"></span><br><span class="line">    versions.okhttp = &quot;3.9.0&quot;</span><br><span class="line">    versions.retrofit = &quot;2.3.0&quot;</span><br><span class="line"></span><br><span class="line">    versions.kotlin = &quot;1.2.0&quot;</span><br><span class="line">    versions.kotlinBind = &quot;3.0.1&quot;</span><br><span class="line"></span><br><span class="line">    versions.gson = &quot;2.8.2&quot;</span><br><span class="line"></span><br><span class="line">    versions.arouterVersion = &quot;1.2.4&quot;</span><br><span class="line">    versions.arouterProcessor = &quot;1.1.4&quot;</span><br><span class="line">    versions.atslRunner = &quot;1.0.1&quot;</span><br><span class="line">    versions.atslRules = &quot;1.0.1&quot;</span><br><span class="line">    versions.hamcrest = &quot;1.3&quot;</span><br><span class="line">    versions.timber = &quot;4.5.1&quot;</span><br><span class="line">    versions.mockwebserver = &quot;3.8.1&quot;</span><br><span class="line">    versions.apache_commons = &quot;2.5&quot;</span><br><span class="line">    versions.mockito = &quot;2.7.19&quot;</span><br><span class="line">    versions.mockito_all = &quot;1.10.19&quot;</span><br><span class="line">    versions.dexmaker = &quot;2.2.0&quot;</span><br><span class="line">    versions.constraint = &quot;1.0.2&quot;</span><br><span class="line">    versions.junit = &quot;4.12&quot;</span><br><span class="line">    versions.espresso = &quot;3.0.1&quot;</span><br><span class="line">    def deps = [:]</span><br><span class="line"></span><br><span class="line">    def rxLib = [:]</span><br><span class="line">    rxLib.rxJava = &quot;io.reactivex.rxjava2:rxjava:$versions.rxJava&quot;</span><br><span class="line">    rxLib.rxAndroid = &quot;io.reactivex.rxjava2:rxandroid:$versions.rxAndroid&quot;</span><br><span class="line">    rxLib.rxBinding = &quot;com.jakewharton.rxbinding2:rxbinding:$versions.rxBinding&quot;</span><br><span class="line">    rxLib.rxBingingV4 = &quot;com.jakewharton.rxbinding2:rxbinding-support-v4:$versions.rxBinding&quot;</span><br><span class="line">    rxLib.rxBingingRecycler = &quot;com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:$versions.rxBinding&quot;</span><br><span class="line">        rxLib.rxBingingV7 = &quot;com.jakewharton.rxbinding2:rxbinding-appcompat-v7:$versions.rxBinding&quot;</span><br><span class="line">    rxLib.rxBingingDesign = &quot;com.jakewharton.rxbinding2:rxbinding-design:$versions.rxBinding&quot;</span><br><span class="line">    rxLib.rxRelay = &quot;com.jakewharton.rxrelay2:rxrelay:$versions.rxRelay&quot;</span><br><span class="line">    deps.rxLibs = rxLib</span><br><span class="line"></span><br><span class="line">    def support = [:]</span><br><span class="line">    support.annotations = &quot;com.android.support:support-annotations:$versions.support&quot;</span><br><span class="line">    support.appCompat = &quot;com.android.support:appcompat-v7:$versions.support&quot;</span><br><span class="line">    support.recyclerview = &quot;com.android.support:recyclerview-v7:$versions.support&quot;</span><br><span class="line">    support.cardview = &quot;com.android.support:cardview-v7:$versions.support&quot;</span><br><span class="line">    support.design = &quot;com.android.support:design:$versions.support&quot;</span><br><span class="line">    support.v4 = &quot;com.android.support:support-v4:$versions.support&quot;</span><br><span class="line">    support.coreUtils = &quot;com.android.support:support-core-utils:$versions.support&quot;</span><br><span class="line">    deps.support = support</span><br><span class="line"></span><br><span class="line">    def archLib = [:]</span><br><span class="line">    archLib.archExtensions = &quot;android.arch.lifecycle:extensions:$versions.arch&quot;</span><br><span class="line">    archLib.archRoomRuntime = &quot;android.arch.persistence.room:runtime:$versions.arch&quot;</span><br><span class="line">    archLib.archRoomCompiler = &quot;android.arch.persistence.room:compiler:$versions.arch&quot;</span><br><span class="line">    archLib.archLifecycleCommon = &quot;android.arch.lifecycle:common-java8:$versions.arch&quot;</span><br><span class="line">    deps.archLibs = archLib</span><br><span class="line"></span><br><span class="line">    def glide = [:]</span><br><span class="line">    glide.glide = &quot;com.github.bumptech.glide:glide:$versions.glide&quot;</span><br><span class="line">    glide.glideCompiler = &quot;com.github.bumptech.glide:compiler:$versions.glide&quot;</span><br><span class="line">    deps.glide = glide</span><br><span class="line"></span><br><span class="line">    def stethos = [:]</span><br><span class="line">    stethos.stetho = &quot;com.facebook.stetho:stetho:$versions.stetho&quot;</span><br><span class="line">    stethos.stethoHttp = &quot;com.facebook.stetho:stetho-okhttp3:$versions.stetho&quot;</span><br><span class="line">    deps.stetho = stethos</span><br><span class="line"></span><br><span class="line">    def okhttp = [:]</span><br><span class="line">    okhttp.okhttp = &quot;com.squareup.okhttp3:okhttp:$versions.okhttp&quot;</span><br><span class="line">    okhttp.okhttpLogging = &quot;com.squareup.okhttp3:logging-interceptor:$versions.okhttp&quot;</span><br><span class="line">    deps.okhttp = okhttp</span><br><span class="line"></span><br><span class="line">    def retrofit = [:]</span><br><span class="line">    retrofit.retrofit = &quot;com.squareup.retrofit2:retrofit:$versions.retrofit&quot;</span><br><span class="line">    retrofit.converterGson = &quot;com.squareup.retrofit2:converter-gson:$versions.retrofit&quot;</span><br><span class="line">    retrofit.adapterRxjava = &quot;com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit&quot;</span><br><span class="line">    deps.retrofit = retrofit</span><br><span class="line"></span><br><span class="line">    def arouter = [:]</span><br><span class="line">    arouter.runtime = &quot;com.alibaba:arouter-api:$versions.arouterVersion&quot;</span><br><span class="line">    arouter.compiler = &quot;com.alibaba:arouter-compiler:$versions.arouterProcessor&quot;</span><br><span class="line">    deps.arouter = arouter</span><br><span class="line"></span><br><span class="line">    def dagger = [:]</span><br><span class="line">    dagger.dagger = &quot;com.google.dagger:dagger:$versions.dagger&quot;</span><br><span class="line">    dagger.daggerAndroid = &quot;com.google.dagger:dagger-android:$versions.dagger&quot;</span><br><span class="line">    dagger.daggerAndroidSupport = &quot;com.google.dagger:dagger-android-support:$versions.dagger&quot;</span><br><span class="line">    dagger.daggerCompiler = &quot;com.google.dagger:dagger-compiler:$versions.dagger&quot;</span><br><span class="line">    dagger.daggerAndroidCompiler = &quot;com.google.dagger:dagger-android-processor:$versions.dagger&quot;</span><br><span class="line">    deps.dagger = dagger</span><br><span class="line"></span><br><span class="line">    def kotlin = [:]</span><br><span class="line">    kotlin.kotlinStdlib = &quot;org.jetbrains.kotlin:kotlin-stdlib-jre8:$versions.kotlin&quot;</span><br><span class="line">    kotlin.kotlinPlugin = &quot;org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin&quot;</span><br><span class="line">    kotlin.kotlinDatabind = &quot;com.android.databinding:compiler:$versions.kotlinBind&quot;</span><br><span class="line">    deps.kotlin = kotlin</span><br><span class="line"></span><br><span class="line">    def espresso = [:]</span><br><span class="line">    espresso.core = &quot;com.android.support.test.espresso:espresso-core:$versions.espresso&quot;</span><br><span class="line">    espresso.contrib = &quot;com.android.support.test.espresso:espresso-contrib:$versions.espresso&quot;</span><br><span class="line">    espresso.intents = &quot;com.android.support.test.espresso:espresso-intents:$versions.espresso&quot;</span><br><span class="line">    deps.espresso = espresso</span><br><span class="line"></span><br><span class="line">    def atsl = [:]</span><br><span class="line">    atsl.runner = &quot;com.android.support.test:runner:$versions.atsl_runner&quot;</span><br><span class="line">    atsl.rules = &quot;com.android.support.test:rules:$versions.atsl_runner&quot;</span><br><span class="line">    deps.atsl = atsl</span><br><span class="line"></span><br><span class="line">    deps.multidex = &quot;com.android.support:multidex:1.0.1&quot;</span><br><span class="line">    deps.dialog =  &quot;com.afollestad.material-dialogs:core:$versions.dialogs&quot;</span><br><span class="line">    deps.gson = &quot;com.google.code.gson:gson:$versions.gson&quot;</span><br><span class="line">    deps.paging = &quot;android.arch.paging:runtime:$versions.paging&quot;</span><br><span class="line">    deps.dexmaker = &quot;com.linkedin.dexmaker:dexmaker-mockito:$versions.dexmaker&quot;</span><br><span class="line">    deps.constraint = &quot;com.android.support.constraint:constraint-layout:$versions.constraint&quot;</span><br><span class="line">    deps.timber = &quot;com.jakewharton.timber:timber:$versions.timber&quot;</span><br><span class="line">    deps.gradlePlugin = &quot;com.android.tools.build:gradle:$versions.gradle&quot;</span><br><span class="line">    deps.kotlinPlugin = &quot;org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin&quot;</span><br><span class="line">    ext.deps = deps</span><br><span class="line"></span><br><span class="line">    def buildVersions = [:]</span><br><span class="line">    buildVersions.minSDK = 14</span><br><span class="line">    buildVersions.targetSDK = 26</span><br><span class="line">    buildVersions.compileSDK = 27</span><br><span class="line">    buildVersions.buildTools = &quot;26.0.2&quot;</span><br><span class="line">    ext.buildVersion = buildVersions</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    def addRepos(RepositoryHandler handler) &#123;</span><br><span class="line">        handler.google()</span><br><span class="line">        handler.jcenter()</span><br><span class="line">        handler.mavenCentral()</span><br><span class="line">        handler.maven &#123; url &apos;https://oss.jfrog.org/libs-snapshot&apos; &#125;</span><br><span class="line">        handler.maven &#123; url &apos;https://jitpack.io&apos; &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ext.addRepos = this.&amp;addRepos</span><br></pre></td></tr></table></figure>
-<p>其中声明了所有已经用到,或者可能使用的Lib版本,以及Android sdk tools 的版本.</p>
+<pre><code>
+ext.deps = [:]
+    def versions = [:]
+    versions.arch = &quot;1.0.0&quot;
+    versions.support = &quot;27.0.1&quot;
+    versions.dagger = &quot;2.13&quot;
+    versions.stetho = &quot;1.5.0&quot;
+    versions.dialogs = &quot;0.9.6.0&quot;
+
+    versions.glide = &quot;4.3.1&quot;
+    versions.gradle = &quot;3.0.1&quot;
+
+    versions.rxJava = &quot;2.1.7&quot;
+    versions.rxAndroid = &quot;2.0.1&quot;
+    versions.rxRelay = &quot;2.0.0&quot;
+    versions.rxBinding = &quot;2.0.0&quot;
+
+    versions.paging = &quot;1.0.0-alpha3&quot;
+
+    versions.okhttp = &quot;3.9.0&quot;
+    versions.retrofit = &quot;2.3.0&quot;
+
+    versions.kotlin = &quot;1.2.0&quot;
+    versions.kotlinBind = &quot;3.0.1&quot;
+
+    versions.gson = &quot;2.8.2&quot;
+
+    versions.arouterVersion = &quot;1.2.4&quot;
+    versions.arouterProcessor = &quot;1.1.4&quot;
+    versions.atslRunner = &quot;1.0.1&quot;
+    versions.atslRules = &quot;1.0.1&quot;
+    versions.hamcrest = &quot;1.3&quot;
+    versions.timber = &quot;4.5.1&quot;
+    versions.mockwebserver = &quot;3.8.1&quot;
+    versions.apache_commons = &quot;2.5&quot;
+    versions.mockito = &quot;2.7.19&quot;
+    versions.mockito_all = &quot;1.10.19&quot;
+    versions.dexmaker = &quot;2.2.0&quot;
+    versions.constraint = &quot;1.0.2&quot;
+    versions.junit = &quot;4.12&quot;
+    versions.espresso = &quot;3.0.1&quot;
+    def deps = [:]
+
+    def rxLib = [:]
+    rxLib.rxJava = &quot;io.reactivex.rxjava2:rxjava:$versions.rxJava&quot;
+    rxLib.rxAndroid = &quot;io.reactivex.rxjava2:rxandroid:$versions.rxAndroid&quot;
+    rxLib.rxBinding = &quot;com.jakewharton.rxbinding2:rxbinding:$versions.rxBinding&quot;
+    rxLib.rxBingingV4 = &quot;com.jakewharton.rxbinding2:rxbinding-support-v4:$versions.rxBinding&quot;
+    rxLib.rxBingingRecycler = &quot;com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:$versions.rxBinding&quot;
+        rxLib.rxBingingV7 = &quot;com.jakewharton.rxbinding2:rxbinding-appcompat-v7:$versions.rxBinding&quot;
+    rxLib.rxBingingDesign = &quot;com.jakewharton.rxbinding2:rxbinding-design:$versions.rxBinding&quot;
+    rxLib.rxRelay = &quot;com.jakewharton.rxrelay2:rxrelay:$versions.rxRelay&quot;
+    deps.rxLibs = rxLib
+
+    def support = [:]
+    support.annotations = &quot;com.android.support:support-annotations:$versions.support&quot;
+    support.appCompat = &quot;com.android.support:appcompat-v7:$versions.support&quot;
+    support.recyclerview = &quot;com.android.support:recyclerview-v7:$versions.support&quot;
+    support.cardview = &quot;com.android.support:cardview-v7:$versions.support&quot;
+    support.design = &quot;com.android.support:design:$versions.support&quot;
+    support.v4 = &quot;com.android.support:support-v4:$versions.support&quot;
+    support.coreUtils = &quot;com.android.support:support-core-utils:$versions.support&quot;
+    deps.support = support
+
+    def archLib = [:]
+    archLib.archExtensions = &quot;android.arch.lifecycle:extensions:$versions.arch&quot;
+    archLib.archRoomRuntime = &quot;android.arch.persistence.room:runtime:$versions.arch&quot;
+    archLib.archRoomCompiler = &quot;android.arch.persistence.room:compiler:$versions.arch&quot;
+    archLib.archLifecycleCommon = &quot;android.arch.lifecycle:common-java8:$versions.arch&quot;
+    deps.archLibs = archLib
+
+    def glide = [:]
+    glide.glide = &quot;com.github.bumptech.glide:glide:$versions.glide&quot;
+    glide.glideCompiler = &quot;com.github.bumptech.glide:compiler:$versions.glide&quot;
+    deps.glide = glide
+
+    def stethos = [:]
+    stethos.stetho = &quot;com.facebook.stetho:stetho:$versions.stetho&quot;
+    stethos.stethoHttp = &quot;com.facebook.stetho:stetho-okhttp3:$versions.stetho&quot;
+    deps.stetho = stethos
+
+    def okhttp = [:]
+    okhttp.okhttp = &quot;com.squareup.okhttp3:okhttp:$versions.okhttp&quot;
+    okhttp.okhttpLogging = &quot;com.squareup.okhttp3:logging-interceptor:$versions.okhttp&quot;
+    deps.okhttp = okhttp
+
+    def retrofit = [:]
+    retrofit.retrofit = &quot;com.squareup.retrofit2:retrofit:$versions.retrofit&quot;
+    retrofit.converterGson = &quot;com.squareup.retrofit2:converter-gson:$versions.retrofit&quot;
+    retrofit.adapterRxjava = &quot;com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit&quot;
+    deps.retrofit = retrofit
+
+    def arouter = [:]
+    arouter.runtime = &quot;com.alibaba:arouter-api:$versions.arouterVersion&quot;
+    arouter.compiler = &quot;com.alibaba:arouter-compiler:$versions.arouterProcessor&quot;
+    deps.arouter = arouter
+
+    def dagger = [:]
+    dagger.dagger = &quot;com.google.dagger:dagger:$versions.dagger&quot;
+    dagger.daggerAndroid = &quot;com.google.dagger:dagger-android:$versions.dagger&quot;
+    dagger.daggerAndroidSupport = &quot;com.google.dagger:dagger-android-support:$versions.dagger&quot;
+    dagger.daggerCompiler = &quot;com.google.dagger:dagger-compiler:$versions.dagger&quot;
+    dagger.daggerAndroidCompiler = &quot;com.google.dagger:dagger-android-processor:$versions.dagger&quot;
+    deps.dagger = dagger
+
+    def kotlin = [:]
+    kotlin.kotlinStdlib = &quot;org.jetbrains.kotlin:kotlin-stdlib-jre8:$versions.kotlin&quot;
+    kotlin.kotlinPlugin = &quot;org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin&quot;
+    kotlin.kotlinDatabind = &quot;com.android.databinding:compiler:$versions.kotlinBind&quot;
+    deps.kotlin = kotlin
+
+    def espresso = [:]
+    espresso.core = &quot;com.android.support.test.espresso:espresso-core:$versions.espresso&quot;
+    espresso.contrib = &quot;com.android.support.test.espresso:espresso-contrib:$versions.espresso&quot;
+    espresso.intents = &quot;com.android.support.test.espresso:espresso-intents:$versions.espresso&quot;
+    deps.espresso = espresso
+
+    def atsl = [:]
+    atsl.runner = &quot;com.android.support.test:runner:$versions.atsl_runner&quot;
+    atsl.rules = &quot;com.android.support.test:rules:$versions.atsl_runner&quot;
+    deps.atsl = atsl
+
+    deps.multidex = &quot;com.android.support:multidex:1.0.1&quot;
+    deps.dialog =  &quot;com.afollestad.material-dialogs:core:$versions.dialogs&quot;
+    deps.gson = &quot;com.google.code.gson:gson:$versions.gson&quot;
+    deps.paging = &quot;android.arch.paging:runtime:$versions.paging&quot;
+    deps.dexmaker = &quot;com.linkedin.dexmaker:dexmaker-mockito:$versions.dexmaker&quot;
+    deps.constraint = &quot;com.android.support.constraint:constraint-layout:$versions.constraint&quot;
+    deps.timber = &quot;com.jakewharton.timber:timber:$versions.timber&quot;
+    deps.gradlePlugin = &quot;com.android.tools.build:gradle:$versions.gradle&quot;
+    deps.kotlinPlugin = &quot;org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin&quot;
+    ext.deps = deps
+
+    def buildVersions = [:]
+    buildVersions.minSDK = 14
+    buildVersions.targetSDK = 26
+    buildVersions.compileSDK = 27
+    buildVersions.buildTools = &quot;26.0.2&quot;
+    ext.buildVersion = buildVersions
+
+
+    def addRepos(RepositoryHandler handler) {
+        handler.google()
+        handler.jcenter()
+        handler.mavenCentral()
+        handler.maven { url &#39;https://oss.jfrog.org/libs-snapshot&#39; }
+        handler.maven { url &#39;https://jitpack.io&#39; }
+    }
+
+    ext.addRepos = this.&amp;addRepos
+</code></pre><p>其中声明了所有已经用到,或者可能使用的Lib版本,以及Android sdk tools 的版本.</p>
 <p><strong>2.将声明的版本,添加到项目中,方便引用</strong></p>
 <p><code>/build.gradle</code></p>
 <p>项目的build.gradle中</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">buildscript &#123;</span><br><span class="line">    //加入引用</span><br><span class="line">    apply from: &apos;versions.gradle&apos;</span><br><span class="line"></span><br><span class="line">    //添加rep</span><br><span class="line">    addRepos(repositories)</span><br><span class="line">    dependencies &#123;</span><br><span class="line">        //由versions.gradle管理的版本</span><br><span class="line">        classpath deps.gradlePlugin</span><br><span class="line">        classpath deps.kotlinPlugin</span><br><span class="line">        // NOTE: Do not place your application dependencies here; they belong</span><br><span class="line">        // in the individual module build.gradle files</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">allprojects &#123;</span><br><span class="line">    //添加rep</span><br><span class="line">    addRepos(repositories)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>3.对Android Tools,SDK版本的控制</strong><br>项目/app/build.gradle</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    //sdk的版本</span><br><span class="line">    compileSdkVersion buildVersion.compileSDK</span><br><span class="line">    //tools的版本</span><br><span class="line">    buildToolsVersion buildVersion.buildTools</span><br><span class="line"></span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        //sdk版本</span><br><span class="line">        minSdkVersion buildVersion.minSDK</span><br><span class="line">        targetSdkVersion buildVersion.targetSDK</span><br><span class="line">        versionCode 1  //也可以使用</span><br><span class="line">        versionName &quot;1.0&quot;</span><br><span class="line">    &#125;</span><br><span class="line">//</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>4.其他Lib的依赖</strong><br>按照这样的格式即可</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    //support</span><br><span class="line">    api deps.support.appCompat</span><br><span class="line">    api deps.support.recyclerview</span><br><span class="line">    api deps.support.cardview</span><br><span class="line">    api deps.support.design</span><br><span class="line">    api deps.multidex</span><br><span class="line">    api deps.constraint</span><br><span class="line">    //rxjava</span><br><span class="line">    api deps.rxLibs.rxJava</span><br><span class="line">    api deps.rxLibs.rxAndroid</span><br><span class="line">    api deps.rxLibs.rxRelay</span><br><span class="line">    //http</span><br><span class="line">    api deps.okhttp.okhttp</span><br><span class="line">    api deps.okhttp.okhttpLogging</span><br><span class="line">    api deps.retrofit.retrofit</span><br><span class="line">    api deps.retrofit.converterGson</span><br><span class="line">    api deps.retrofit.adapterRxjava</span><br><span class="line">    api deps.gson</span><br><span class="line">    //arch</span><br><span class="line">    api deps.archLibs.archExtensions</span><br><span class="line">    api deps.archLibs.archRoomRuntime</span><br><span class="line">    api deps.archLibs.archLifecycleCommon</span><br><span class="line">    annotationProcessor deps.archLibs.archRoomCompiler</span><br><span class="line">    //stetho</span><br><span class="line">    api deps.stetho.stetho</span><br><span class="line">    api deps.stetho.stethoHttp</span><br><span class="line">    //dialog</span><br><span class="line">    api deps.dialog</span><br><span class="line">    //glide</span><br><span class="line">    api deps.glide.glide</span><br><span class="line">    annotationProcessor deps.glide.glideCompiler</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-        
+<pre><code>buildscript {
+    //加入引用
+    apply from: &#39;versions.gradle&#39;
+
+    //添加rep
+    addRepos(repositories)
+    dependencies {
+        //由versions.gradle管理的版本
+        classpath deps.gradlePlugin
+        classpath deps.kotlinPlugin
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    //添加rep
+    addRepos(repositories)
+}
+</code></pre><p><strong>3.对Android Tools,SDK版本的控制</strong><br>项目/app/build.gradle</p>
+<pre><code>android {
+    //sdk的版本
+    compileSdkVersion buildVersion.compileSDK
+    //tools的版本
+    buildToolsVersion buildVersion.buildTools
+
+    defaultConfig {
+        //sdk版本
+        minSdkVersion buildVersion.minSDK
+        targetSdkVersion buildVersion.targetSDK
+        versionCode 1  //也可以使用
+        versionName &quot;1.0&quot;
+    }
+//
+
+}
+</code></pre><p><strong>4.其他Lib的依赖</strong><br>按照这样的格式即可</p>
+<pre><code>dependencies {
+    //support
+    api deps.support.appCompat
+    api deps.support.recyclerview
+    api deps.support.cardview
+    api deps.support.design
+    api deps.multidex
+    api deps.constraint
+    //rxjava
+    api deps.rxLibs.rxJava
+    api deps.rxLibs.rxAndroid
+    api deps.rxLibs.rxRelay
+    //http
+    api deps.okhttp.okhttp
+    api deps.okhttp.okhttpLogging
+    api deps.retrofit.retrofit
+    api deps.retrofit.converterGson
+    api deps.retrofit.adapterRxjava
+    api deps.gson
+    //arch
+    api deps.archLibs.archExtensions
+    api deps.archLibs.archRoomRuntime
+    api deps.archLibs.archLifecycleCommon
+    annotationProcessor deps.archLibs.archRoomCompiler
+    //stetho
+    api deps.stetho.stetho
+    api deps.stetho.stethoHttp
+    //dialog
+    api deps.dialog
+    //glide
+    api deps.glide.glide
+    annotationProcessor deps.glide.glideCompiler
+}
+</code></pre>
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              <span>
+                <i class="iconfont icon-inbox"></i>
+                
+                  <a class="hover-with-bg" href="/categories/Android">Android</a>
+                  &nbsp;
+                
+              </span>&nbsp;&nbsp;
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/Android">Android</a>
+                
+                  <a class="hover-with-bg" href="/tags/Gradle">Gradle</a>
+                
+                  <a class="hover-with-bg" href="/tags/%E7%BB%84%E4%BB%B6%E5%8C%96">组件化</a>
+                
+              </span>
+            
+            </p>
+            
+          </div>
         </div>
-        <footer class="article-footer">
-            <div class="share-container">
+      </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
 
-
-
+    </div>
+  </div>
 </div>
 
-    <a data-url="https://www.wangzhumo.com/2017/12/25/Android-dependent-config/" data-id="ck2n20uxo001tkerx2bi1bwvi" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
+<!-- custom -->
 
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
 
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
     
-
-        </footer>
-    </div>
-    
-        
-<nav id="article-nav">
-    
-        <a href="/2017/12/25/Android-build-gradle-config/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    Android项目的build.gradle通用设置
-                
-            </div>
-        </a>
-    
-    
-        <a href="/2017/12/25/Google-Chrome-Plug-In/" id="article-nav-older" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">常用的Google Chrome 浏览器插件</div>
-        </a>
-    
-</nav>
-
+  </div>
+</div>
 
     
-</article>
+  </main>
 
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
 
-    
-    
-
-</section>
-            
-                
-<aside id="sidebar">
-   
-        
-    <div class="widget-wrap">
-        <h3 class="widget-title">分类</h3>
-        <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">27</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android-Studio/">Android Studio</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Bug/">Bug</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JNI/">JNI</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Media/">Media</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Other/">Other</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programme/">Programme</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Server/">Server</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Source-Code/">Source Code</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/View/">View</a><span class="category-list-count">4</span></li></ul>
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
         </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
     </div>
+  </div>
+</div>
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <br>
 
     
-        
-    <div class="widget-wrap">
-        <h3 class="widget-title">标签云</h3>
-        <div class="widget tagcloud">
-            <a href="/tags/Media-Server/" style="font-size: 10px;">-Media -Server</a> <a href="/tags/Activity/" style="font-size: 10px;">Activity</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 15.71px;">Android Studio</a> <a href="/tags/Audio/" style="font-size: 10px;">Audio</a> <a href="/tags/Binder/" style="font-size: 10px;">Binder</a> <a href="/tags/Bug/" style="font-size: 17.14px;">Bug</a> <a href="/tags/FFmpeg/" style="font-size: 11.43px;">FFmpeg</a> <a href="/tags/Flutter/" style="font-size: 11.43px;">Flutter</a> <a href="/tags/Fragment/" style="font-size: 10px;">Fragment</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Glide/" style="font-size: 10px;">Glide</a> <a href="/tags/Google/" style="font-size: 11.43px;">Google</a> <a href="/tags/Gradle/" style="font-size: 11.43px;">Gradle</a> <a href="/tags/Handler/" style="font-size: 10px;">Handler</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/JNI/" style="font-size: 11.43px;">JNI</a> <a href="/tags/Java/" style="font-size: 18.57px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Kotlin/" style="font-size: 11.43px;">Kotlin</a> <a href="/tags/Linux/" style="font-size: 12.86px;">Linux</a> <a href="/tags/Media/" style="font-size: 12.86px;">Media</a> <a href="/tags/Okhttp/" style="font-size: 11.43px;">Okhttp</a> <a href="/tags/Programme/" style="font-size: 14.29px;">Programme</a> <a href="/tags/RK3399/" style="font-size: 10px;">RK3399</a> <a href="/tags/Regular/" style="font-size: 10px;">Regular</a> <a href="/tags/Room/" style="font-size: 12.86px;">Room</a> <a href="/tags/Rxjava/" style="font-size: 12.86px;">Rxjava</a> <a href="/tags/Server/" style="font-size: 15.71px;">Server</a> <a href="/tags/Source-Code/" style="font-size: 11.43px;">Source Code</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/View/" style="font-size: 17.14px;">View</a> <a href="/tags/frequency/" style="font-size: 10px;">frequency</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/组件化/" style="font-size: 10px;">组件化</a> <a href="/tags/蓝牙/" style="font-size: 10px;">蓝牙</a> <a href="/tags/设计模式/" style="font-size: 12.86px;">设计模式</a>
-        </div>
-    </div>
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv">总访问量 
+          <span id="busuanzi_value_site_pv"></span> 次</span>&nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv">总访客数 
+            <span id="busuanzi_value_site_uv"></span> 人</span>&nbsp;
+  
+  <br>
 
-    
-        
-    <div class="widget-wrap">
-        <h3 class="widget-title">最新文章</h3>
-        <div class="widget">
-            <ul id="recent-post" class="">
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2019/11/06/coturn-install-ubuntu/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Media/">Media</a></p>
-                            <p class="item-title"><a href="/2019/11/06/coturn-install-ubuntu/" class="title">Ubuntu安装coturn服务</a></p>
-                            <p class="item-date"><time datetime="2019-11-06T03:59:03.000Z" itemprop="datePublished">2019-11-06</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/10/28/jni-basic-conception/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/JNI/">JNI</a></p>
-                            <p class="item-title"><a href="/2018/10/28/jni-basic-conception/" class="title">JNI 认识JNI的基本概念</a></p>
-                            <p class="item-date"><time datetime="2018-10-28T12:32:20.000Z" itemprop="datePublished">2018-10-28</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/10/28/taste-jni-default-project/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/JNI/">JNI</a></p>
-                            <p class="item-title"><a href="/2018/10/28/taste-jni-default-project/" class="title">JNI-从Android Studio默认工程认识JNI</a></p>
-                            <p class="item-date"><time datetime="2018-10-28T12:12:17.000Z" itemprop="datePublished">2018-10-28</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/09/21/time-and-frequency-domain/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Other/">Other</a></p>
-                            <p class="item-title"><a href="/2018/09/21/time-and-frequency-domain/" class="title">认识时域与频域</a></p>
-                            <p class="item-date"><time datetime="2018-09-21T11:11:18.000Z" itemprop="datePublished">2018-09-21</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/09/21/ffmpeg-cmd-demuxer-muxer/" class="thumbnail">
-    
-    
-        <span style="background-image:url(https://www.wangzhumo.com/images/ffmpeg.jpeg)" alt="音视频-FFmpeg的分解与复用" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Media/">Media</a></p>
-                            <p class="item-title"><a href="/2018/09/21/ffmpeg-cmd-demuxer-muxer/" class="title">音视频-FFmpeg的分解与复用</a></p>
-                            <p class="item-date"><time datetime="2018-09-21T06:23:02.000Z" itemprop="datePublished">2018-09-21</time></p>
-                        </div>
-                    </li>
-                
-            </ul>
-        </div>
-    </div>
-
-    
-        
-    <div class="widget-wrap">
-        <h3 class="widget-title">归档</h3>
-        <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">25</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li></ul>
-        </div>
-    </div>
-
-    
-        
-    <div class="widget-wrap">
-        <h3 class="widget-title">标签</h3>
-        <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Media-Server/">-Media -Server</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Activity/">Activity</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">49</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android-Studio/">Android Studio</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Audio/">Audio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Binder/">Binder</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bug/">Bug</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FFmpeg/">FFmpeg</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/">Flutter</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fragment/">Fragment</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/">GitHub</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Glide/">Glide</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Handler/">Handler</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JNI/">JNI</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kotlin/">Kotlin</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Media/">Media</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Okhttp/">Okhttp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Programme/">Programme</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RK3399/">RK3399</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regular/">Regular</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Room/">Room</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Server/">Server</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Source-Code/">Source Code</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tools/">Tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/View/">View</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/frequency/">frequency</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件化/">组件化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/蓝牙/">蓝牙</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计模式/">设计模式</a><span class="tag-list-count">3</span></li></ul>
-        </div>
-    </div>
-
-    
-        
-    <div class="widget-wrap widget-list">
-        <h3 class="widget-title">链接</h3>
-        <div class="widget">
-            <ul>
-                
-                    <li>
-                        <a href="mailto:wangzhumoo@gmail.com">E-mail</a>
-                    </li>
-                
-                    <li>
-                        <a href="http://hexo.io">Hexo</a>
-                    </li>
-                
-            </ul>
-        </div>
-    </div>
 
 
     
-    <div id="toTop" class="fas fa-angle-up"></div>
-</aside>
 
-            
-        </div>
-        <footer id="footer">
-    <div class="outer">
-        <div id="footer-info" class="inner">
-            &copy; 2019 wangzhumo<br>
-            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
-        </div>
-    </div>
+  </div>
 </footer>
-        
+
+<!-- SCRIPTS -->
+<script src="/lib/jquery/jquery.min.js" ></script>
+<script src="/lib/popper/popper.min.js" ></script>
+<script src="/lib/bootstrap/js/bootstrap.min.js" ></script>
+<script src="/lib/mdbootstrap/js/mdb.min.js" ></script>
+<script src="/js/main.js" ></script>
 
 
-    
-        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
-        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
-    
-    
-        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
-    
-    
+  <script src="/js/lazyload.js" ></script>
 
 
 
-<!-- Custom Scripts -->
-<script src="/js/main.js"></script>
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
 
-    </div>
+
+
+  <script src="/lib/smooth-scroll/smooth-scroll.min.js" ></script>
+
+
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+<!-- Plugins -->
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+  <script src="/lib/prettify/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script src="/lib/typed/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Android 项目统一管理依赖版本&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script src="/lib/anchor/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "false",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script src="/lib/fancybox/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
 </body>
 </html>
