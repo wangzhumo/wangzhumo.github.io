@@ -134,6 +134,45 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2018/07/13/RecyclerView-unuseful-notifyItemRangeChanged/">
+        <p class="h4 index-header">RecyclerView中notifyItemRangeChanged无效的BUG</p>
+        
+        
+          
+          
+        
+        <div class="index-excerpt" style="max-height: none;">
+          <div class="index-text mb-1">前言RecyclerView是我们日常开发中用的最频繁的几个控件之一,可以说一个App没有RecyclerView的参与,可能根本就做不出来.然而同时,RecyclerView尽管有复用机制,我们使用的时候,还是应该尽量的节省内存,提高性能.
+所以,对于RecyclerView中的Item,尽量少刷新,越少越好....</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-07-13&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Bug">Bug</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Android">Android</a>&nbsp;
+          
+            <a href="/tags/Bug">Bug</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2018/07/12/ConstraintLayout-Basic/">
         <p class="h4 index-header">ConstraintLayout使用指南-基础的约束</p>
         
@@ -511,57 +550,6 @@ http://gityuan.com/2015/11/08/binder-get-sm/...</div>
     </div>
   </div>
 
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2018/05/10/Thread-Process-IPC/">
-        <p class="h4 index-header">线程与进程的异同以及Android中的IPC机制</p>
-        
-        
-          
-          
-        
-        <div class="index-excerpt" style="max-height: none;">
-          <div class="index-text mb-1">线程与进程Google  Doc (https://developer.android.com/guide/components/processes-and-threads)
-
-进程是资源分配的最小单位，线程是cpu调度的最小单位.
-
-进程是应用程序的执行实例,一个进程中可以包含多个线程,
-而一个进程的创建分配是要消耗较大的性能的,相比来说线程就要比进程的开销小.
-
-对于进程来说不共享资源,内存是独立的.而线程共享它所在的线程的资源,内存.
-
-进程间的通信就要更加麻烦,需要使用IPC( Inter-Proscess Communication)进程间的通讯
-线程方便很多,但是线程间的同步又是一个较为大的课题了.
-
-
-
-想强调的是，线程关注的是中央处理器的运行，而不是进程那样关注内存等资源的管理。
-...</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-05-10&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Java">Java</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Java">Java</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
 
 
   <nav aria-label="index posts navigation">
@@ -670,7 +658,36 @@ http://gityuan.com/2015/11/08/binder-get-sm/...</div>
 
 
   
+    <!-- Baidu Analytics -->
+    <script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
 
+  
+    <!-- Google Analytics -->
+    <script>
+      (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+          (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+          m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+      })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+      ga('create', '', 'auto');
+      ga('send', 'pageview');
+    </script>
   
 
   

@@ -15,7 +15,7 @@
   <meta name="description" content="王诛魔">
   <meta name="author" content="wangzhumo">
   <meta name="keywords" content="">
-  <title>递归调用创建单链表 ~ 王诛魔</title>
+  <title>使用Textureview预览相机 ~ 王诛魔</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
@@ -111,7 +111,7 @@
               
                 <p class="mt-3">
                   <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
-                  星期日, 七月 15日 2018, 11:05 上午
+                  星期二, 十一月 19日 2019, 4:03 下午
                 </p>
               
 
@@ -120,7 +120,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    504 字
+                    109 字
                   </span>&nbsp;
                 
 
@@ -128,7 +128,7 @@
                   
                   &nbsp;<i class="far fa-clock"></i>
                   <span class="post-count">
-                      2 分钟
+                      1 分钟
                   </span>&nbsp;
                 
 
@@ -161,109 +161,24 @@
       <div class="py-5 z-depth-3" id="board">
         <div class="post-content mx-auto" id="post">
           <div class="markdown-body">
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>很多的面试中,都有要求实现一个单链表,这里就搞一个试试.</p>
-<a id="more"></a>
-<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>Node.kt</p>
-<pre><code class="kotlin">//创建一个Node
-class Node(val value:Int){
-    var next : Node? = null
-}
-</code></pre>
-<ol>
-<li>这个Node有一个<code>value</code>,它是一个必传且不可修改的参数,就直接放在了构造了</li>
-<li><code>next</code>指向了下一个Node,这样就可以完成一个单向的链表,让我想起了 <code>Message</code>的next</li>
-<li><code>next</code>默认是null,这是因为单链表最后一个<code>next</code>中就是null.</li>
+            <h2 id="流程分析"><a href="#流程分析" class="headerlink" title="流程分析"></a>流程分析</h2><h4 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h4><p>使用TextureView显示相机的预览，渲染使用opengl实现，仿照GLSurfaceView的方式来预览这个相机。</p>
+<p>相机 —-生产—&gt;  SurfaceTexture</p>
+<p>OpenGL  + GLThread 处理Surface</p>
+<p>TextureView—onSurfaceTextureAvailable(surface)—显示–&gt; SurfaceTexture</p>
+<h4 id="大概流程"><a href="#大概流程" class="headerlink" title="大概流程"></a>大概流程</h4><ol>
+<li>Activity   提供一个 TextureView.</li>
+<li>初始化相机硬件（权限/Camera1/2），准备开始预览</li>
+<li>创建一个GLThread.</li>
+<li>添加TextureView <code>setSurfaceTextureListener</code></li>
+<li>setSurfaceTextureListener<ol>
+<li>加载loadOESTexture</li>
+<li>创建Renderer Thread</li>
+<li>initEGLContext</li>
+<li>开启预览</li>
 </ol>
-<p>ListCreated.kt</p>
-<pre><code class="kotlin">class ListCreated {
-
-    fun createList(list: List&lt;Int&gt;): Node? {
-        //1.
-        if (list.isEmpty()) {
-            return null
-        }
-        //2.
-        val currentNode = Node(list[0])
-        println(&quot;before ${currentNode.value}&quot;)
-        //3.
-        val nextNode = createList(list.subList(1, list.size))
-        if (nextNode != null) {
-            println(&quot;after ${currentNode.value}&quot;)
-        }
-        //4.
-        currentNode.next = nextNode
-        return currentNode
-    }
-}
-
-class ListCreated {
-
-    fun createList(list: List&lt;Int&gt;): Node? {
-        //1.
-        if (list.isEmpty()) {
-            return null
-        }
-
-        //2.
-        val currentNode = Node(list[0])
-        println(&quot;before ${currentNode.value}&quot;)
-
-        //3.
-        val nextNode = createList(list.subList(1, list.size))
-        if (nextNode != null) {
-            println(&quot;after ${currentNode.value}&quot;)
-        }
-
-        //4.
-        currentNode.next = nextNode
-        return currentNode
-    }
-}
-</code></pre>
-<ol>
-<li>我们需要去判断List,如果为空就直接返回null了</li>
-<li>这里就是当前的这个Node,保存了当前的value,但是next还是为null的</li>
-<li>这里就是递归调用的地方,传入的参数是一个subList,当然是去掉了第一个,因为第一个已经是currentNode了</li>
-<li>把currentNode的<code>next</code>指向了nextNode,构成单向</li>
+</li>
+<li>销毁资源</li>
 </ol>
-<p>MainTest.java</p>
-<pre><code class="java">public class MainClass {
-
-    public static void main(String[] args){
-        List&lt;Integer&gt; integerList = Arrays.asList(1,4,6,2);
-        ListCreated created = new ListCreated();
-        Node node = created.createList(integerList);
-        printAll(node);
-    }
-
-    public static void printAll(Node node){
-        while (node != null){
-            System.out.print(node.getValue());
-            System.out.print(&quot; &quot;);
-            node = node.getNext();
-        }
-    }
-}
-</code></pre>
-<p>打印结果:</p>
-<pre><code>before 1
-before 4
-before 6
-before 2
-after 6
-after 4
-after 1
-1 4 6 2
-</code></pre><p>我们可以清楚的知道before 1,4,6,2 而没有打印,说明压入了栈,指令没有返回</p>
-<p>after本来应该是 2,6,4,1的,为什么2没有打印出来,是因为</p>
-<pre><code class="java">if (nextNode != null) {
-     println(&quot;after ${currentNode.value}&quot;)
-}
-</code></pre>
-<p>链表最后一个Node的<code>next</code>是为null的,所以没有打印</p>
-<p>出栈的顺序,也是按照栈的规则,先进后出.</p>
-<p><img src="/images/list_created.gif" srcset="/img/loading.gif" alt=""></p>
-<p>可以看到出入栈的顺序</p>
 
             <hr>
           </div>
@@ -274,7 +189,7 @@ after 1
               <span>
                 <i class="iconfont icon-inbox"></i>
                 
-                  <a class="hover-with-bg" href="/categories/Java">Java</a>
+                  <a class="hover-with-bg" href="/categories/Media">Media</a>
                   &nbsp;
                 
               </span>&nbsp;&nbsp;
@@ -283,7 +198,7 @@ after 1
               <span>
                 <i class="iconfont icon-tag"></i>
                 
-                  <a class="hover-with-bg" href="/tags/Java">Java</a>
+                  <a class="hover-with-bg" href="/tags/Media">Media</a>
                 
               </span>
             
@@ -462,7 +377,7 @@ after 1
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "递归调用创建单链表&nbsp;",
+        "使用Textureview预览相机&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

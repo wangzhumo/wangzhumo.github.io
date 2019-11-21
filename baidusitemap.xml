@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>https://www.wangzhumo.com/2019/11/19/camera-with-textureview/</loc>
+    <lastmod>2019-11-20T03:23:54.220Z</lastmod>
+    <data>
+        <display>
+        <title>使用Textureview预览相机</title>
+        <pubTime>2019-11-19T08:03:41.000Z</pubTime>
+        
+        <tag>Media</tag>
+         
+         
+           
+             
+              <breadCrumb title="Media" url="https://www.wangzhumo.com/categories/Media/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.wangzhumo.com/2018/09/20/ffmpeg-build-install/</loc>
     <lastmod>2019-11-07T13:25:14.576Z</lastmod>
     <data>
@@ -249,9 +269,9 @@
         
         <tag>Android</tag>
          
-        <tag>Bug</tag>
-         
         <tag>Android Studio</tag>
+         
+        <tag>Bug</tag>
          
          
            

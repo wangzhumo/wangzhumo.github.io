@@ -133,6 +133,59 @@
   <div class="row mb-4 mx-auto">
     
     
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/2019/11/19/camera-with-textureview/">
+        <p class="h4 index-header">使用Textureview预览相机</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">流程分析实现思路使用TextureView显示相机的预览，渲染使用opengl实现，仿照GLSurfaceView的方式来预览这个相机。
+相机 —-生产—&gt;  SurfaceTexture
+OpenGL  + GLThread 处理Surface
+TextureView—onSurfaceTextureAvailable(surface)—显示–&gt; SurfaceTexture
+大概流程
+Activity   提供一个 TextureView.
+初始化相机硬件（权限/Camera1/2），准备开始预览
+创建一个GLThread.
+添加TextureView setSurfaceTextureListener
+setSurfaceTextureListener
+加载loadOESTexture
+创建Renderer Thread
+initEGLContext
+开启预览
+
+
+销毁资源
+
+</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-11-19&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Media">Media</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Media">Media</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
       <div class="col-12 col-md-4 m-auto">
         <a href="/2019/11/06/coturn-install-ubuntu/" target="_self">
           <img src="/img/wertc.png" srcset="/img/loading.gif" alt="Ubuntu安装coturn服务" class="img-fluid rounded z-depth-3 index-thumbnails">
@@ -591,50 +644,6 @@ Okhttp
     </div>
   </div>
 
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2018/08/19/websocket-note/">
-        <p class="h4 index-header">WebSocket的使用笔记-理论基础</p>
-        
-        
-          
-          
-        
-        <div class="index-excerpt" style="max-height: none;">
-          <div class="index-text mb-1">前言WebSocket 是HTML5一种新的web通信技术,实现了浏览器与服务器的全双工实时通信(full-duplex)
-在WebSocket中,第一次还是采用Http的形式来通知服务器,准备使用WebSocket的协议,而如果服务器支持的话,会返回成功的通知101,而后就会长连接来进行全双工的通信,而不是Request &amp; Response,每一次请求完成都断开连接.
-因此,WebSocket通常是使用在推送,即时通讯,等等需要即时性的通讯需求.
-Wiki 
-
-WebSocket 是独立的、创建在 TCP 上的协议.  WebSocket使得客户端和服务器之间的数据交换变得更加简单，允许服务端主动向客户端推送数据。在WebSocket API中，浏览器和服务器只需要完成一次握手，两者之间就直接可以创建持久性的连接，并进行双向数据传输。
-...</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-08-19&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Server">Server</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Android">Android</a>&nbsp;
-          
-            <a href="/tags/Server">Server</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
 
 
   <nav aria-label="index posts navigation">
@@ -743,7 +752,36 @@ WebSocket 是独立的、创建在 TCP 上的协议.  WebSocket使得客户端�
 
 
   
+    <!-- Baidu Analytics -->
+    <script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
 
+  
+    <!-- Google Analytics -->
+    <script>
+      (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+          (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+          m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+      })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+      ga('create', '', 'auto');
+      ga('send', 'pageview');
+    </script>
   
 
   

@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>使用Textureview预览相机</title>
+    <link href="undefined2019/11/19/camera-with-textureview/"/>
+    <url>2019/11/19/camera-with-textureview/</url>
+    
+    <content type="html"><![CDATA[<h2 id="流程分析"><a href="#流程分析" class="headerlink" title="流程分析"></a>流程分析</h2><h4 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h4><p>使用TextureView显示相机的预览，渲染使用opengl实现，仿照GLSurfaceView的方式来预览这个相机。</p><p>相机 —-生产—&gt;  SurfaceTexture</p><p>OpenGL  + GLThread 处理Surface</p><p>TextureView—onSurfaceTextureAvailable(surface)—显示–&gt; SurfaceTexture</p><h4 id="大概流程"><a href="#大概流程" class="headerlink" title="大概流程"></a>大概流程</h4><ol><li>Activity   提供一个 TextureView.</li><li>初始化相机硬件（权限/Camera1/2），准备开始预览</li><li>创建一个GLThread.</li><li>添加TextureView <code>setSurfaceTextureListener</code></li><li>setSurfaceTextureListener<ol><li>加载loadOESTexture</li><li>创建Renderer Thread</li><li>initEGLContext</li><li>开启预览</li></ol></li><li>销毁资源</li></ol>]]></content>
+    
+    
+    <categories>
+      
+      <category>Media</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Media</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Ubuntu安装coturn服务</title>
     <link href="undefined2019/11/06/coturn-install-ubuntu/"/>
     <url>2019/11/06/coturn-install-ubuntu/</url>
@@ -1585,9 +1610,9 @@
       
       <tag>Android</tag>
       
-      <tag>Bug</tag>
-      
       <tag>Android Studio</tag>
+      
+      <tag>Bug</tag>
       
     </tags>
     
