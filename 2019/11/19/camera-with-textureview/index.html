@@ -120,7 +120,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    109 字
+                    2.5k 字
                   </span>&nbsp;
                 
 
@@ -128,7 +128,7 @@
                   
                   &nbsp;<i class="far fa-clock"></i>
                   <span class="post-count">
-                      1 分钟
+                      13 分钟
                   </span>&nbsp;
                 
 
@@ -162,23 +162,701 @@
         <div class="post-content mx-auto" id="post">
           <div class="markdown-body">
             <h2 id="流程分析"><a href="#流程分析" class="headerlink" title="流程分析"></a>流程分析</h2><h4 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h4><p>使用TextureView显示相机的预览，渲染使用opengl实现，仿照GLSurfaceView的方式来预览这个相机。</p>
-<p>相机 —-生产—&gt;  SurfaceTexture</p>
-<p>OpenGL  + GLThread 处理Surface</p>
-<p>TextureView—onSurfaceTextureAvailable(surface)—显示–&gt; SurfaceTexture</p>
+<p>相机 —-生产—&gt;  SurfaceTexture  (OpenGL  + GLThread 处理) —&gt; TextureView(SurfaceTextView)关联的GL环境</p>
+<p>onSurfaceTextureAvailable(surface)—显示–&gt;  TextureView(SurfaceTextView)关联的GL环境</p>
 <h4 id="大概流程"><a href="#大概流程" class="headerlink" title="大概流程"></a>大概流程</h4><ol>
-<li>Activity   提供一个 TextureView.</li>
-<li>初始化相机硬件（权限/Camera1/2），准备开始预览</li>
-<li>创建一个GLThread.</li>
-<li>添加TextureView <code>setSurfaceTextureListener</code></li>
-<li>setSurfaceTextureListener<ol>
-<li>加载loadOESTexture</li>
-<li>创建Renderer Thread</li>
-<li>initEGLContext</li>
-<li>开启预览</li>
+<li><p>Activity 提供一个 TextureView</p>
+</li>
+<li><p>初始化相机硬件（权限/Camera1/2），准备开始预览</p>
+</li>
+<li><p>添加TextureView <code>setSurfaceTextureListener</code></p>
+</li>
+<li><p>setSurfaceTextureListener</p>
+<ol>
+<li><p>加载loadOESTexture</p>
+</li>
+<li><p>创建Renderer Thread</p>
+</li>
+<li><p>initEGLContext   使用TextureView中的surfaceTexture  </p>
+</li>
+<li><p>创建一个TextureEGLRenderer用于预览</p>
+<blockquote>
+<p> 完成GL环境的建立</p>
+</blockquote>
+</li>
+<li><p>创建一个SurfaceTexture(mOESTextureId) ,用于相机的预览</p>
+</li>
+<li><p>开启预览</p>
+</li>
 </ol>
 </li>
-<li>销毁资源</li>
+<li><p>setPreviewTexture(surfaceTexture)  -&gt;  创建的surfaceTexture -&gt; setOnFrameAvailableListener</p>
+</li>
 </ol>
+<h4 id="TextureView"><a href="#TextureView" class="headerlink" title="TextureView"></a>TextureView</h4><p>几个常用的<code>SurfaceView</code>，<code>SurfaceTexture</code>  ,<code>GlSurfaceView</code>中</p>
+<p><code>TextureView</code>是唯一一个可以当做View使用，支持动画效果，在5.0前在主线程渲染，在5.0后在单独线程渲染</p>
+<p>但是它的性能没有其他几个好，耗费的内存也比较大，常用在List中，而且必须要在硬件</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>TextureView</th>
+<th>SurfaceView</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>绘制</td>
+<td>1-3帧延迟</td>
+<td>低</td>
+</tr>
+<tr>
+<td>内存</td>
+<td>高</td>
+<td>低</td>
+</tr>
+<tr>
+<td>动画和截图</td>
+<td>支持</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>耗电</td>
+<td>高</td>
+<td>低</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>以上是网络上的资料图表</p>
+</blockquote>
+<h2 id="编码分析"><a href="#编码分析" class="headerlink" title="编码分析"></a>编码分析</h2><h5 id="CameraActivity"><a href="#CameraActivity" class="headerlink" title="CameraActivity"></a>CameraActivity</h5><p>用于承载这个Demo,其中根布局只有一个TextureView</p>
+<h5 id="CameraOpenHelper"><a href="#CameraOpenHelper" class="headerlink" title="CameraOpenHelper"></a>CameraOpenHelper</h5><p>相机的帮助类，用于打开Camera以及处理Camera与TextureView的关联</p>
+<h5 id="ITextureRenderer"><a href="#ITextureRenderer" class="headerlink" title="ITextureRenderer"></a>ITextureRenderer</h5><h5 id="TextureEGLRenderer"><a href="#TextureEGLRenderer" class="headerlink" title="TextureEGLRenderer"></a>TextureEGLRenderer</h5><pre><code>fun onSurfaceCreated()  //加载GL的一些东西，opengl的程序，着色器
+
+fun onSurfaceChanged(width: Int, height: Int)
+
+fun onDrawFrame(surfaceTexture: SurfaceTexture?)   //渲染
+</code></pre><h5 id="TextureEGLHelper"><a href="#TextureEGLHelper" class="headerlink" title="TextureEGLHelper"></a>TextureEGLHelper</h5><p><code>class TextureEGLHelper : SurfaceTexture.OnFrameAvailableListener</code></p>
+<ul>
+<li>提供 SurfaceTexture 给Camera</li>
+<li>initEGLContext</li>
+<li>HandlerThread  初始化/渲染</li>
+</ul>
+<h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><h4 id="CameraActivity-1"><a href="#CameraActivity-1" class="headerlink" title="CameraActivity"></a>CameraActivity</h4><p><code>com.wangzhumo.app.module.media.opengl.camera.CameraActivity</code></p>
+<pre><code>
+    @SuppressLint(&quot;RestrictedApi&quot;)
+    override fun initViews(savedInstanceState: Bundle?) {
+        super.initViews(savedInstanceState)
+        val cameraOpenHelper = CameraOpenHelper(this)
+        cameraOpenHelper.bindCameraUseCases(viewFinder)
+    }
+</code></pre><p>这个<code>CameraActivity</code>很简单，只有xml里也只有一个<code>TextureView</code></p>
+<h4 id="CameraOpenHelper-1"><a href="#CameraOpenHelper-1" class="headerlink" title="CameraOpenHelper"></a>CameraOpenHelper</h4><p><code>com.wangzhumo.app.module.media.opengl.camera.CameraOpenHelper</code></p>
+<pre><code>class CameraOpenHelper constructor(private val lifeOwner: FragmentActivity) :
+    TextureView.SurfaceTextureListener{
+
+    private var textureEGLHelper: TextureEGLHelper? = null
+    private var viewFinder : TextureView? = null
+
+    private var mCamera: ICamera? = null
+    private var mCameraId = 0
+
+    fun bindCameraUseCases(textureView: TextureView) {
+        this.viewFinder = textureView
+        this.textureEGLHelper = TextureEGLHelper()
+        textureView.surfaceTextureListener = this
+    }
+
+    override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture?, width: Int, height: Int) {
+        textureEGLHelper?.onSurfaceChanged(width, height)
+    }
+
+    override fun onSurfaceTextureUpdated(surface: SurfaceTexture?) {}
+
+    override fun onSurfaceTextureDestroyed(surface: SurfaceTexture?): Boolean {
+        onDestroy()
+        return false
+    }
+
+    override fun onSurfaceTextureAvailable(surface: SurfaceTexture?, width: Int, height: Int) {
+        //当外部的TextureView可用之后，开启摄像头，打开渲染线程
+        val textureId = TextureUtils.loadOESTexture()
+        textureEGLHelper?.initEGL(viewFinder,textureId)
+        //通过传递的textureId,构建一个SurfaceTexture，用于相机的预览
+        val surfaceTexture = textureEGLHelper?.loadOESTexture()
+        //不使用自己的SurfaceView，另外构建一个SurfaceView来接收Camera的预览数据
+        //前置摄像头
+        mCameraId = Camera.CameraInfo.CAMERA_FACING_FRONT
+        mCamera = CameraV1(lifeOwner)
+        mCamera?.apply {
+            openCamera(mCameraId)
+            setPreviewTexture(surfaceTexture)
+            enablePreview(true)
+        }
+    }
+</code></pre><h4 id="ITextureRenderer-1"><a href="#ITextureRenderer-1" class="headerlink" title="ITextureRenderer"></a>ITextureRenderer</h4><h4 id="TextureEGLRenderer-1"><a href="#TextureEGLRenderer-1" class="headerlink" title="TextureEGLRenderer"></a>TextureEGLRenderer</h4><pre><code>/**
+ * If you have any questions, you can contact by email {wangzhumoo@gmail.com}
+ *
+ * @author 王诛魔 2019-11-22  21:31
+ *
+ * 渲染实现
+ */
+class TextureEGLRenderer constructor(val textureId: Int) : ITextureRenderer {
+
+    /**
+     * 程序
+     */
+    private var mShaderProgram = -1
+    private var mOESTextureId = -1
+
+    private var mVertexBuffer: FloatBuffer
+
+    /**
+     * 变换矩阵
+     */
+    private val transformMatrix = FloatArray(16)
+
+    private var aPositionLocation = -1
+    private var aTextureCoordLocation = -1
+    private var uTextureMatrixLocation = -1
+    private var uTextureSamplerLocation = -1
+
+
+
+    init {
+        mVertexBuffer = TextureUtils.loadVertexBuffer(VERTEX_DATA)
+        mOESTextureId = textureId
+    }
+
+    override fun onSurfaceCreated() {
+        //加载GL的一些东西
+        val vertexShader = ShaderUtils.compileVertexShader(RawUtils.readResource(R.raw.vertex_texture_shader))
+        val fragmentShader = ShaderUtils.compileFragmentShader(RawUtils.readResource(R.raw.fragment_texture_shader))
+        Log.d(TAG,&quot;com.wangzhumo.app.module.media.opengl.camera.TextureEGLRenderer&quot;,&quot;onSurfaceCreated&quot;,56,&quot;vertexShader = $vertexShader , fragmentShader = $fragmentShader&quot;)
+        mShaderProgram = ShaderUtils.linkProgram(vertexShader, fragmentShader)
+
+        aPositionLocation = GLES30.glGetAttribLocation(mShaderProgram, POSITION_ATTRIBUTE)
+        aTextureCoordLocation = GLES30.glGetAttribLocation(mShaderProgram, TEXTURE_COORD_ATTRIBUTE)
+        uTextureMatrixLocation = GLES30.glGetUniformLocation(mShaderProgram, TEXTURE_MATRIX_UNIFORM)
+        uTextureSamplerLocation = GLES30.glGetUniformLocation(mShaderProgram, TEXTURE_SAMPLER_UNIFORM)
+        Log.d(TAG,&quot;com.wangzhumo.app.module.media.opengl.camera.TextureEGLRenderer&quot;,&quot;onSurfaceCreated&quot;,63,
+            &quot;mShaderProgram = $mShaderProgram , aPositionLocation = $aPositionLocation , aTextureCoordLocation = $aTextureCoordLocation , uTextureMatrixLocation = $uTextureSamplerLocation , uTextureSamplerLocation = $uTextureSamplerLocation&quot;)
+    }
+
+    override fun onSurfaceChanged(width: Int, height: Int) {
+        GLES30.glViewport(0, 0, width, height)
+    }
+
+    override fun onDrawFrame(surfaceTexture: SurfaceTexture?) {
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT)
+        GLES30.glUseProgram(mShaderProgram)  //开始使用程序
+
+        surfaceTexture?.updateTexImage()
+        surfaceTexture?.getTransformMatrix(transformMatrix)
+
+        GLES30.glActiveTexture(GLES30.GL_TEXTURE0)
+        GLES30.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, mOESTextureId)
+        GLES30.glUniform1i(uTextureSamplerLocation, 0)
+        GLES30.glUniformMatrix4fv(
+            uTextureMatrixLocation,
+            1,
+            false,
+            transformMatrix,
+            0
+        )
+
+        mVertexBuffer.position(0)
+        GLES30.glEnableVertexAttribArray(aPositionLocation)
+        GLES30.glVertexAttribPointer(
+            aPositionLocation,
+            2,
+            GLES30.GL_FLOAT,
+            false,
+            STRIDE,
+            mVertexBuffer
+        )
+
+        mVertexBuffer.position(2)
+        GLES30.glEnableVertexAttribArray(aTextureCoordLocation)
+        GLES30.glVertexAttribPointer(
+            aTextureCoordLocation,
+            2,
+            GLES30.GL_FLOAT,
+            false,
+            STRIDE,
+            mVertexBuffer
+        )
+
+        GLES30.glDrawArrays(GLES30.GL_TRIANGLES, 0, 6)
+    }
+
+    companion object {
+        private const val TAG = &quot;TextureEGLRenderer&quot;
+
+        private const val POSITION_ATTRIBUTE = &quot;aPosition&quot;
+        private const val TEXTURE_COORD_ATTRIBUTE = &quot;aTextureCoord&quot;
+        private const val TEXTURE_MATRIX_UNIFORM = &quot;uTextureMatrix&quot;
+        private const val TEXTURE_SAMPLER_UNIFORM = &quot;uTextureSampler&quot;
+
+        private const val POSITION_SIZE = 2
+        private const val TEXTURE_SIZE = 2
+        private const val STRIDE = (POSITION_SIZE + TEXTURE_SIZE) * 4
+
+        /**
+         * 顶点数组
+         */
+        private val VERTEX_DATA = floatArrayOf(
+            1.0f, 1.0f, 1.0f, 1.0f,
+            -1.0f, 1.0f, 0.0f, 1.0f,
+            -1.0f, -1f, 0.0f, 0.0f,
+            1.0f, 1.0f, 1.0f, 1.0f,
+            -1.0f, -1.0f, 0f, 0.0f,
+            1.0f, -1.0f, 1.0f, 0.0f
+        )
+    }
+}
+</code></pre><p>这个<code>TextureEGLRenderer</code>中的GL渲染，大部分内容不是很熟，所以不做太多的解读，当姑且先当做固定的用法，先开始使用</p>
+<h4 id="TextureEGLHelper-1"><a href="#TextureEGLHelper-1" class="headerlink" title="TextureEGLHelper"></a>TextureEGLHelper</h4><p><code>com.wangzhumo.app.module.media.opengl.camera.TextureEGLHelper</code></p>
+<pre><code>class TextureEGLHelper : SurfaceTexture.OnFrameAvailableListener {
+
+    /**
+     * 渲染/初始化 线程
+     */
+    private var mHandlerThread: HandlerThread? = null
+
+    /**
+     * 渲染器
+     */
+    private var mRenderer: ITextureRenderer? = null
+    /**
+     * mHandlerThread 内部的Handler
+     */
+    private var mHandler: Handler? = null
+
+    /**
+     * 最终显示的TextureView
+     */
+    private var mTextureView: TextureView? = null
+
+    /**
+     * 纹理ID
+     */
+    private var mOESTextureId = 0
+
+    /**
+     * 显示设备
+     */
+    private var mEGLDisplay = EGL14.EGL_NO_DISPLAY
+
+    /**
+     * EGL上下文
+     */
+    private var mEGLContext = EGL14.EGL_NO_CONTEXT
+
+    /**
+     * EGL绘图surface
+     */
+    private var mEglSurface: EGLSurface? = null
+
+    /**
+     * 自定义的SurfaceTexture - 实际上接收Camera上的数据
+     */
+    private var mOESSurfaceTexture: SurfaceTexture? = null
+
+
+    /**
+     * @param textureView  外部的TextureView
+     * @param textureId    提供的TextureID
+     */
+    fun initEGL(textureView: TextureView?, textureId: Int) {
+        mTextureView = textureView
+        mOESTextureId = textureId
+        Log.d(TAG,&quot;com.wangzhumo.app.module.media.opengl.camera.TextureEGLHelper&quot;,&quot;initEGL&quot;,84,&quot;initEGL HandlerThread 创建&quot;)
+        mHandlerThread = HandlerThread(&quot;Renderer Thread&quot;)
+        Log.d(TAG,&quot;com.wangzhumo.app.module.media.opengl.camera.TextureEGLHelper&quot;,&quot;initEGL&quot;,85,&quot;initEGL HandlerThread 开始运行&quot;)
+        mHandlerThread?.start()
+
+        //此处的Handler，用于处理各种发送过来的命令
+        mHandler = object : Handler(mHandlerThread?.looper) {
+            override fun handleMessage(msg: Message) {
+                when (msg.what) {
+                    MSG_INIT -&gt; {
+                        //initEGLContext
+                        initEGLContext()   //初始化EGL环境
+                        initEGLRenderer()   //初始化渲染器
+                        //初始化 Renderer.
+                    }
+                    MSG_RENDER -&gt; {
+                        //开始渲染，onFrameAvailable中发送，由mHandlerThread负责渲染的调用。
+                        drawFrame()
+                    }
+                    MSG_DESTROY -&gt; {
+                        //mHandlerThread 关闭
+                        //停止mHandler
+                        //销毁资源
+
+                    }
+                    else -&gt; return
+                }
+            }
+        }
+        Log.d(TAG,&quot;com.wangzhumo.app.module.media.opengl.camera.TextureEGLHelper&quot;,&quot;initEGL&quot;,113,&quot;initEGL HandlerThread 开始运行 -- sendEmptyMessage(MSG_INIT)&quot;)
+        mHandler?.sendEmptyMessage(MSG_INIT)
+    }
+
+
+    /**
+     * 初始化EGLContext
+     */
+    private fun initEGLContext() {
+        Log.d(TAG,&quot;com.wangzhumo.app.module.media.opengl.camera.TextureEGLHelper&quot;,&quot;initEGLContext&quot;,122,&quot;initEGL initEGLContext start&quot;)
+        mEGLDisplay = EGL14.eglGetDisplay(EGL14.EGL_DEFAULT_DISPLAY)
+        //需判断是否成功获取EGLDisplay
+        if (mEGLDisplay == EGL14.EGL_NO_DISPLAY) {
+            throw  RuntimeException(&quot;Unable to get EGL14 display&quot;)
+        }
+        val versions = IntArray(2)
+        versions[0] = 3
+        if (!EGL14.eglInitialize(mEGLDisplay, versions, 0, versions, 1)) {
+            throw RuntimeException(&quot;eglInitialize failed! &quot; + EGL14.eglGetError())
+        }
+
+        //egl的一些配置
+        val eglConfigAttribute = intArrayOf(
+            EGL14.EGL_BUFFER_SIZE, 32,
+            EGL14.EGL_RED_SIZE, 8,
+            EGL14.EGL_GREEN_SIZE, 8,
+            EGL14.EGL_BLUE_SIZE, 8,
+            EGL14.EGL_ALPHA_SIZE, 8,
+            EGL14.EGL_RENDERABLE_TYPE, 4,
+            EGL14.EGL_SURFACE_TYPE, EGL14.EGL_WINDOW_BIT,
+            EGL14.EGL_NONE
+        )
+        val numConfig = IntArray(1)
+        val eglConfig = arrayOfNulls&lt;EGLConfig&gt;(1)
+
+        //EGL配置
+        val eglChooseFlag = EGL14.eglChooseConfig(
+            mEGLDisplay,
+            eglConfigAttribute,
+            0,
+            eglConfig,
+            0,
+            eglConfig.size,
+            numConfig,
+            0
+        )
+        if (!eglChooseFlag) {
+            throw RuntimeException(&quot;eglChooseConfig failed! &quot; + EGL14.eglGetError())
+        }
+
+        //创建EGL显示的窗口
+        val surfaceAttribute = intArrayOf(
+            EGL14.EGL_NONE
+        )
+        val surfaceTexture = mTextureView?.surfaceTexture
+        if (surfaceTexture == null) {
+            throw RuntimeException(&quot;surfaceTexture is null&quot;)
+        }
+        mEglSurface = EGL14.eglCreateWindowSurface(
+            mEGLDisplay,
+            eglConfig[0],
+            mTextureView?.surfaceTexture,
+            surfaceAttribute, 0
+        )
+
+        //创建上下文
+        val ctxAttribute = intArrayOf(
+            EGL14.EGL_CONTEXT_CLIENT_VERSION,
+            3,
+            EGL14.EGL_NONE
+        )
+        mEGLContext = EGL14.eglCreateContext(
+            mEGLDisplay,
+            eglConfig[0],
+            EGL14.EGL_NO_CONTEXT,
+            ctxAttribute, 0
+        )
+
+        //校验1
+        if (mEGLDisplay === EGL14.EGL_NO_DISPLAY || mEGLContext === EGL14.EGL_NO_CONTEXT) {
+            throw RuntimeException(&quot;eglCreateContext fail failed! &quot; + EGL14.eglGetError())
+        }
+        //校验2
+        val makeFlag = EGL14.eglMakeCurrent(mEGLDisplay, mEglSurface, mEglSurface, mEGLContext)
+        if (!makeFlag) {
+            throw RuntimeException(&quot;eglMakeCurrent failed! &quot; + EGL14.eglGetError())
+        }
+        Log.d(TAG,&quot;com.wangzhumo.app.module.media.opengl.camera.TextureEGLHelper&quot;,&quot;initEGLContext&quot;,191,&quot;initEGL initEGLContext end&quot;)
+    }
+
+    /**
+     * 初始化Renderer
+     */
+    private fun initEGLRenderer() {
+        Log.d(TAG,&quot;com.wangzhumo.app.module.media.opengl.camera.TextureEGLHelper&quot;,&quot;initEGLRenderer&quot;,220,&quot;initEGLRenderer  创建 TextureEGLRenderer&quot;)
+        mRenderer = TextureEGLRenderer(mOESTextureId)
+        mRenderer?.onSurfaceCreated()
+    }
+
+    /**
+     * 创建可以放在外部，但是为了加入监听方便，就放在这里初始化
+     */
+    fun loadOESTexture(): SurfaceTexture? {
+        Log.d(TAG,&quot;com.wangzhumo.app.module.media.opengl.camera.TextureEGLHelper&quot;,&quot;loadOESTexture&quot;,198,&quot;loadOESTexture 提供SurfaceTexture&quot;)
+        mOESSurfaceTexture = SurfaceTexture(mOESTextureId)
+        mOESSurfaceTexture?.setOnFrameAvailableListener(this)
+        Log.d(TAG,&quot;com.wangzhumo.app.module.media.opengl.camera.TextureEGLHelper&quot;,&quot;loadOESTexture&quot;,200,&quot;loadOESTexture 添加setOnFrameAvailableListener&quot;)
+        return mOESSurfaceTexture
+    }
+
+
+    /*
+     * setOnFrameAvailableListener   给 loadOESTexture 提供的SurfaceTexture使用
+     */
+    override fun onFrameAvailable(surfaceTexture: SurfaceTexture?) {
+        //frame可用之后，开始渲染
+        if (mHandler != null) {
+            //不能直接调用，需要在mHandlerThread中去渲染
+            mHandler?.sendEmptyMessage(MSG_RENDER)
+        }
+    }
+
+    /**
+     * 实际上渲染画面的方法
+     */
+    private fun drawFrame() {
+        if (mRenderer != null) {
+            EGL14.eglMakeCurrent(mEGLDisplay, mEglSurface, mEglSurface, mEGLContext)
+            mRenderer?.onDrawFrame(mOESSurfaceTexture)
+            EGL14.eglSwapBuffers(mEGLDisplay, mEglSurface)
+        }
+    }
+
+    /**
+     * onSurfaceChanged 回调
+     */
+    fun onSurfaceChanged(width: Int, height: Int) {
+        mRenderer?.onSurfaceChanged(width, height)
+    }
+
+    /**
+     * 释放资源
+     */
+    fun onDestroy() {
+        mHandler?.removeCallbacksAndMessages(null)
+        mHandlerThread?.quitSafely()
+    }
+
+    companion object {
+        var MSG_INIT = 100
+        var MSG_RENDER = 200
+        var MSG_DESTROY = 300
+        const val TAG = &quot;TextureEGLHelper&quot;
+    }
+
+
+}
+</code></pre><h3 id="工具类"><a href="#工具类" class="headerlink" title="工具类"></a>工具类</h3><h4 id="TextureUtils"><a href="#TextureUtils" class="headerlink" title="TextureUtils"></a>TextureUtils</h4><pre><code>/**
+ * If you have any questions, you can contact by email {wangzhumoo@gmail.com}
+ *
+ * @author 王诛魔 2019-08-23$  23:31$
+ */
+object TextureUtils {
+
+    /**
+     * 加载OES Texture
+     *
+     * @return
+     */
+    @JvmStatic
+    fun loadOESTexture(): Int {
+        val textureIds = IntArray(1)
+
+        //textureIds 中存放一个textures中的可用值
+        GLES20.glGenTextures(1, textureIds, 0)
+
+        //当调用glBindTexture
+        //如果是第一次调用这个函数textureIds[0] ，会创建一个新的纹理对象
+        //如果textureIds[0]已经创建过了，把这个纹理置为 活动
+        //如果texture为0，就停止使用这个纹理对象，并返回无名称的默认纹理
+        GLES20.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, textureIds[0])
+
+        //设置参数
+        GLES20.glTexParameterf(
+            GLES11Ext.GL_TEXTURE_EXTERNAL_OES,
+            GLES20.GL_TEXTURE_MIN_FILTER,
+            GLES20.GL_NEAREST.toFloat()
+        )
+        GLES20.glTexParameterf(
+            GLES11Ext.GL_TEXTURE_EXTERNAL_OES,
+            GLES20.GL_TEXTURE_MAG_FILTER,
+            GLES20.GL_LINEAR.toFloat()
+        )
+        GLES20.glTexParameterf(
+            GLES11Ext.GL_TEXTURE_EXTERNAL_OES,
+            GLES20.GL_TEXTURE_WRAP_S,
+            GLES20.GL_CLAMP_TO_EDGE.toFloat()
+        )
+        GLES20.glTexParameterf(
+            GLES11Ext.GL_TEXTURE_EXTERNAL_OES,
+            GLES20.GL_TEXTURE_WRAP_T,
+            GLES20.GL_CLAMP_TO_EDGE.toFloat()
+        )
+
+        //取消绑定纹理，并且返回一个默认的纹理
+        GLES20.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, 0)
+        return textureIds[0]
+    }
+
+
+    /**
+     * 创建一个顶点Buffer
+     */
+    fun loadVertexBuffer(vertexData: FloatArray): FloatBuffer {
+        val buffer = ByteBuffer.allocateDirect(vertexData.size * 4)
+            .order(ByteOrder.nativeOrder())
+            .asFloatBuffer()
+        buffer.put(vertexData, 0, vertexData.size).position(0)
+        return buffer
+    }
+
+
+    /**
+     * 创建一个新的SurfaceTexture
+     */
+    fun loadOESTexture(mOESTextureId: Int): SurfaceTexture {
+        return SurfaceTexture(mOESTextureId)
+    }
+}
+</code></pre><h4 id="ShaderUtils"><a href="#ShaderUtils" class="headerlink" title="ShaderUtils"></a>ShaderUtils</h4><pre><code>/**
+ * If you have any questions, you can contact by email {wangzhumoo@gmail.com}
+ *
+ * @author 王诛魔 2019-09-28  16:16
+ */
+object ShaderUtils {
+
+    /**
+     * 编译顶点着色器
+     *
+     * @param shaderCode
+     * @return
+     */
+    @JvmStatic
+    fun compileVertexShader(shaderCode: String): Int {
+        return compileShader(GLES30.GL_VERTEX_SHADER, shaderCode)
+    }
+
+    /**
+     * 编译片段着色器
+     *
+     * @param shaderCode
+     * @return
+     */
+    @JvmStatic
+    fun compileFragmentShader(shaderCode: String): Int {
+        return compileShader(GLES30.GL_FRAGMENT_SHADER, shaderCode)
+    }
+
+    /**
+     * 编译
+     *
+     * @param type       顶点着色器:GLES30.GL_VERTEX_SHADER
+     * 片段着色器:GLES30.GL_FRAGMENT_SHADER
+     * @param shaderCode
+     * @return
+     */
+    @JvmStatic
+    private fun compileShader(type: Int, shaderCode: String): Int {
+        //创建一个着色器
+        val shaderId = GLES30.glCreateShader(type)
+        if (shaderId != 0) {
+            GLES30.glShaderSource(shaderId, shaderCode)
+            GLES30.glCompileShader(shaderId)
+            //检测状态
+            val compileStatus = IntArray(1)
+            GLES30.glGetShaderiv(shaderId, GLES30.GL_COMPILE_STATUS, compileStatus, 0)
+            if (compileStatus[0] == 0) {
+                val logInfo = GLES30.glGetShaderInfoLog(shaderId)
+                System.err.println(logInfo)
+                //创建失败
+                GLES30.glDeleteShader(shaderId)
+                return 0
+            }
+            return shaderId
+        } else {
+            //创建失败
+            return 0
+        }
+    }
+
+    /**
+     * 链接小程序
+     *
+     * @param vertexShaderId   顶点着色器
+     * @param fragmentShaderId 片段着色器
+     * @return
+     */
+    @JvmStatic
+    fun linkProgram(vertexShaderId: Int, fragmentShaderId: Int): Int {
+        val programId = GLES30.glCreateProgram()
+        if (programId != 0) {
+            //将顶点着色器加入到程序
+            GLES30.glAttachShader(programId, vertexShaderId)
+            //将片元着色器加入到程序中
+            GLES30.glAttachShader(programId, fragmentShaderId)
+            //链接着色器程序
+            GLES30.glLinkProgram(programId)
+            val linkStatus = IntArray(1)
+
+            GLES30.glGetProgramiv(programId, GLES30.GL_LINK_STATUS, linkStatus, 0)
+            if (linkStatus[0] == 0) {
+                val logInfo = GLES30.glGetProgramInfoLog(programId)
+                System.err.println(logInfo)
+                GLES30.glDeleteProgram(programId)
+                return 0
+            }
+            return programId
+        } else {
+            //创建失败
+            return 0
+        }
+    }
+
+    /**
+     * 验证程序片段是否有效
+     *
+     * @param programObjectId
+     * @return
+     */
+    @JvmStatic
+    fun validProgram(programObjectId: Int): Boolean {
+        GLES30.glValidateProgram(programObjectId)
+        val programStatus = IntArray(1)
+        GLES30.glGetProgramiv(programObjectId, GLES30.GL_VALIDATE_STATUS, programStatus, 0)
+        return programStatus[0] != 0
+    }
+}
+</code></pre><h3 id="输出日志"><a href="#输出日志" class="headerlink" title="输出日志"></a>输出日志</h3><p>CameraActivity onCreated &lt;&lt;&lt;</p>
+<p>CameraActivity, createTextureView, 69]:创建帮助类 CameraOpenHelper()</p>
+<p>CameraActivity, createTextureView, 71]:绑定TextureView  bindCameraUseCases（textureView）</p>
+<p>CameraOpenHelper, bindCameraUseCases, 39]:创建EGLHelper TextureEGLHelper（）</p>
+<p>CameraOpenHelper, bindCameraUseCases, 36]:添加 surfaceTextureListener</p>
+<p>CameraActivity onResumed &lt;&lt;&lt;</p>
+<p>CameraOpenHelper, onSurfaceTextureAvailable, 85]:onSurfaceTextureAvailable  loadOESTexture = 0</p>
+<p>TextureEGLHelper, initEGL, 84]:initEGL HandlerThread 创建</p>
+<p>TextureEGLHelper, initEGL, 85]:initEGL HandlerThread 开始运行</p>
+<p>TextureEGLHelper, initEGL, 113]:initEGL HandlerThread 开始运行 – sendEmptyMessage(MSG_INIT)</p>
+<p>TextureEGLHelper, loadOESTexture, 198]:loadOESTexture 提供SurfaceTexture</p>
+<p>TextureEGLHelper, loadOESTexture, 200]:loadOESTexture 添加setOnFrameAvailableListener</p>
+<p>TextureEGLHelper, initEGLContext, 122]:initEGL initEGLContext start</p>
+<p>TextureEGLHelper, initEGLContext, 191]:initEGL initEGLContext end</p>
+<p>TextureEGLHelper, initEGLRenderer, 220]:initEGLRenderer  创建 TextureEGLRenderer</p>
+<p>TextureEGLRenderer, init, 49]:mOESTextureId = 0 , mVertexBuffer = 24</p>
+<p>TextureEGLRenderer, onSurfaceCreated, 63]:mShaderProgram = 3 , aPositionLocation = 0 , aTextureCoordLocation = 1 , uTextureMatrixLocation = 1 , uTextureSamplerLocation = 1</p>
+<p>CameraOpenHelper, onSurfaceTextureAvailable, 95]:onSurfaceTextureAvailable  enablePreview  开启摄像头</p>
+<p><img src="/Users/wangzhumo/Develop/hexo/source/images/camera_texture_img.png" srcset="/img/loading.gif" alt="效果图"></p>
 
             <hr>
           </div>

@@ -133,6 +133,12 @@
   <div class="row mb-4 mx-auto">
     
     
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/2019/11/19/camera-with-textureview/" target="_self">
+          <img src="/img/camera.png" srcset="/img/loading.gif" alt="使用Textureview预览相机" class="img-fluid rounded z-depth-3 index-thumbnails">
+        </a>
+      </div>
+    
     <div class="col-12 col-md-8 m-auto">
       <a href="/2019/11/19/camera-with-textureview/">
         <p class="h4 index-header">使用Textureview预览相机</p>
@@ -142,24 +148,26 @@
         
         <div class="index-excerpt" >
           <div class="index-text mb-1">流程分析实现思路使用TextureView显示相机的预览，渲染使用opengl实现，仿照GLSurfaceView的方式来预览这个相机。
-相机 —-生产—&gt;  SurfaceTexture
-OpenGL  + GLThread 处理Surface
-TextureView—onSurfaceTextureAvailable(surface)—显示–&gt; SurfaceTexture
+相机 —-生产—&gt;  SurfaceTexture  (OpenGL  + GLThread 处理) —&gt; TextureView(SurfaceTextView)关联的GL环境
+onSurfaceTextureAvailable(surface)—显示–&gt;  TextureView(SurfaceTextView)关联的GL环境
 大概流程
-Activity   提供一个 TextureView.
+Activity 提供一个 TextureView
+
 初始化相机硬件（权限/Camera1/2），准备开始预览
-创建一个GLThread.
+
 添加TextureView setSurfaceTextureListener
+
 setSurfaceTextureListener
+
 加载loadOESTexture
+
 创建Renderer Thread
-initEGLContext
-开启预览
 
+initEGLContext   使用TextureView中的surfaceTexture  
 
-销毁资源
+创建一个TextureEGLRenderer用于预览
 
-</div>
+ 完成GL环境的建立</div>
         </div>
       </a>
 
