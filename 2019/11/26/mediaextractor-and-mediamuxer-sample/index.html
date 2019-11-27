@@ -120,7 +120,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    571 字
+                    853 字
                   </span>&nbsp;
                 
 
@@ -128,7 +128,7 @@
                   
                   &nbsp;<i class="far fa-clock"></i>
                   <span class="post-count">
-                      2 分钟
+                      4 分钟
                   </span>&nbsp;
                 
 
@@ -254,7 +254,82 @@
     csd-0=java.nio.HeapByteBuffer[pos=0 lim=41 cap=41]
 }
 </code></pre><p>我们继续，下面的操作把这个MP4分离为一个 <code>ouput_video_mp4</code> , 一个 <code>ouput_audio_mp4</code></p>
+<pre><code class="java">        /**
+     * @param path 媒体文件地址
+     *
+     */
+    fun extractorMedia(path: String) {
+        val extractor = MediaExtractor()
+        //设置来源
+        extractor.setDataSource(path)
+        //视频文件
+        val videoStream = File(OUTPUT_DIR, &quot;output_video_mp4.mp4&quot;).outputStream()
+        //音频文件
+        val audioStream = File(OUTPUT_DIR, &quot;output_audio_mp4&quot;).outputStream()
 
+        //记录音频/视屏轨道的index
+        var videoTrackIndex = -1
+        var audioTrackIndex = -1
+        //获取媒体文件的track数量
+        val numTracks = extractor.trackCount
+        for (index in 0 until numTracks) {
+            val format = extractor.getTrackFormat(index)
+            val mimeType = format.getString(MediaFormat.KEY_MIME)
+
+            //标记视频轨道
+            if (mimeType.startsWith(&quot;video/&quot;)) {
+                videoTrackIndex = index
+            }
+            //标记音频轨道
+            if (mimeType.startsWith(&quot;audio/&quot;)) {
+                audioTrackIndex = index
+            }
+
+            appendLogs(&quot;视频分离 - 任务开始&quot;)
+            // 切换到视频
+            extractor.selectTrack(videoTrackIndex)
+            readTrackStream(videoStream,extractor)
+            videoStream.close()
+            appendLogs(&quot;视频分离 - 任务结束&quot;)
+
+            appendLogs(&quot;音频分离 - 任务开始&quot;)
+            // 切换到音频
+            extractor.selectTrack(audioTrackIndex)
+            readTrackStream(audioStream,extractor)
+            audioStream.close()
+            appendLogs(&quot;音频分离 - 任务结束&quot;)
+        }
+        appendLogs(&quot;任务结束&quot;)
+        extractor.release()
+    }
+
+
+
+        /**
+     * 读取数据，写入到文件中
+     */
+    private fun readTrackStream(fileInput: FileOutputStream, extractor: MediaExtractor) {
+        //Buffer
+        val byteBuffer = ByteBuffer.allocate(1024 * 500)
+        var readCount = 0
+        do {
+            //读取数据
+            readCount = extractor.readSampleData(byteBuffer,0)
+            if (readCount &lt; 0){
+                break
+            }
+            //写入文件
+            val buffer = ByteArray(readCount)
+            byteBuffer.get(buffer)
+            fileInput.write(buffer)
+            byteBuffer.clear()
+            //移动到下一帧
+            extractor.advance()
+        }while (readCount &gt; 0)
+        byteBuffer.clear()
+    }
+</code></pre>
+<h3 id="将音频-视频合并为MP4"><a href="#将音频-视频合并为MP4" class="headerlink" title="将音频/视频合并为MP4"></a>将音频/视频合并为MP4</h3>
             <hr>
           </div>
           <br>
