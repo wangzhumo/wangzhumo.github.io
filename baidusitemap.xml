@@ -4,8 +4,72 @@
 
     
   <url>
+    <loc>https://www.wangzhumo.com/2019/11/26/mediaextractor-and-mediamuxer-sample/</loc>
+    <lastmod>2019-11-27T03:59:50.076Z</lastmod>
+    <data>
+        <display>
+        <title>MediaExtractor与MediaMuxer的简单使用</title>
+        <pubTime>2019-11-26T11:50:39.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Media</tag>
+         
+         
+           
+             
+              <breadCrumb title="Media" url="https://www.wangzhumo.com/categories/Media/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.wangzhumo.com/2018/10/28/jni-basic-conception/</loc>
+    <lastmod>2019-11-26T11:53:47.436Z</lastmod>
+    <data>
+        <display>
+        <title>JNI 认识JNI的基本概念</title>
+        <pubTime>2018-10-28T12:32:20.000Z</pubTime>
+        
+        <tag>JNI</tag>
+         
+         
+           
+             
+              <breadCrumb title="JNI" url="https://www.wangzhumo.com/categories/JNI/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.wangzhumo.com/2019/11/06/coturn-install-ubuntu/</loc>
+    <lastmod>2019-11-26T11:53:14.625Z</lastmod>
+    <data>
+        <display>
+        <title>Ubuntu安装coturn服务</title>
+        <pubTime>2019-11-06T03:59:03.000Z</pubTime>
+        
+        <tag>Server</tag>
+         
+        <tag>Media</tag>
+         
+         
+           
+             
+              <breadCrumb title="Media" url="https://www.wangzhumo.com/categories/Media/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.wangzhumo.com/2019/11/19/camera-with-textureview/</loc>
-    <lastmod>2019-11-25T13:29:39.661Z</lastmod>
+    <lastmod>2019-11-26T11:52:47.085Z</lastmod>
     <data>
         <display>
         <title>使用Textureview预览相机</title>
@@ -88,26 +152,6 @@
 
     
   <url>
-    <loc>https://www.wangzhumo.com/2018/10/28/jni-basic-conception/</loc>
-    <lastmod>2019-11-07T13:23:23.289Z</lastmod>
-    <data>
-        <display>
-        <title>JNI 认识JNI的基本概念</title>
-        <pubTime>2018-10-28T12:32:20.000Z</pubTime>
-        
-        <tag>JNI</tag>
-         
-         
-           
-             
-              <breadCrumb title="JNI" url="https://www.wangzhumo.com/categories/JNI/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>https://www.wangzhumo.com/2018/10/28/taste-jni-default-project/</loc>
     <lastmod>2019-11-07T13:22:53.793Z</lastmod>
     <data>
@@ -121,28 +165,6 @@
            
              
               <breadCrumb title="JNI" url="https://www.wangzhumo.com/categories/JNI/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://www.wangzhumo.com/2019/11/06/coturn-install-ubuntu/</loc>
-    <lastmod>2019-11-07T13:15:30.378Z</lastmod>
-    <data>
-        <display>
-        <title>Ubuntu安装coturn服务</title>
-        <pubTime>2019-11-06T03:59:03.000Z</pubTime>
-        
-        <tag>Server</tag>
-         
-        <tag>Media</tag>
-         
-         
-           
-             
-              <breadCrumb title="Media" url="https://www.wangzhumo.com/categories/Media/"/>
           
         </display>
     </data>

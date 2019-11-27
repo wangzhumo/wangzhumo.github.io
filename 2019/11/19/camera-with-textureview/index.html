@@ -162,6 +162,7 @@
         <div class="post-content mx-auto" id="post">
           <div class="markdown-body">
             <h2 id="流程分析"><a href="#流程分析" class="headerlink" title="流程分析"></a>流程分析</h2><h4 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h4><p>使用TextureView显示相机的预览，渲染使用opengl实现，仿照GLSurfaceView的方式来预览这个相机。</p>
+<a id="more"></a>
 <p>相机 —-生产—&gt;  SurfaceTexture  (OpenGL  + GLThread 处理) —&gt; TextureView(SurfaceTextView)关联的GL环境</p>
 <p>onSurfaceTextureAvailable(surface)—显示–&gt;  TextureView(SurfaceTextView)关联的GL环境</p>
 <h4 id="大概流程"><a href="#大概流程" class="headerlink" title="大概流程"></a>大概流程</h4><ol>

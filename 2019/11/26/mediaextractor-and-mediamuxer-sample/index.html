@@ -15,7 +15,7 @@
   <meta name="description" content="王诛魔">
   <meta name="author" content="wangzhumo">
   <meta name="keywords" content="">
-  <title>归档 ~ 王诛魔</title>
+  <title>MediaExtractor与MediaMuxer的简单使用 ~ 王诛魔</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
@@ -107,6 +107,41 @@
             </span>
 
             
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期二, 十一月 26日 2019, 7:50 晚上
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    571 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      2 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
           </div>
 
           
@@ -117,59 +152,160 @@
 
   <main>
     
-      <div class="container nopadding-md">
-        <div class="py-5 z-depth-3" id="board">
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-<div class="list-group">
-  <p class="h4">共计 87 篇文章</p>
-  <hr>
-  
-    
       
-      <p class="h5">2018</p>
-    
-    <a href="/2018/05/21/Android-Shade/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Android自定义一个遮罩引导层</span>
-      <span style="float: right;">05-21</span>
-    </a>
-  
-    
-    <a href="/2018/05/11/Android-Binder-1/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Android Binder机制(一)</span>
-      <span style="float: right;">05-11</span>
-    </a>
-  
-    
-    <a href="/2018/05/10/Thread-Process-IPC/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">线程与进程的异同以及Android中的IPC机制</span>
-      <span style="float: right;">05-10</span>
-    </a>
-  
-    
-    <a href="/2018/05/09/Java-memory-module/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Java中的内存模型</span>
-      <span style="float: right;">05-09</span>
-    </a>
-  
-    
-    <a href="/2018/05/09/Android-App-Launch/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Android的启动流程</span>
-      <span style="float: right;">05-09</span>
-    </a>
-  
-</div>
 
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <p><code>MediaExtractor</code>可以说是一个非常好用的封装了，支持很多输入格式，可以对我们的多媒体文件进行分解，可以用来分离容器中的视频track和音频track。</p>
+<p><code>MediaMuxer</code>用于封装编码后的视频流和音频流。虽然有一些限制条件，但是对于一般的使用还是可以胜任的。</p>
+<a id="more"></a>
+<h2 id="初步认识"><a href="#初步认识" class="headerlink" title="初步认识"></a>初步认识</h2><h3 id="MediaExtractor"><a href="#MediaExtractor" class="headerlink" title="MediaExtractor"></a>MediaExtractor</h3><blockquote>
+<p><a href="https://developer.android.google.cn/reference/android/media/MediaExtractor?hl=en" target="_blank" rel="noopener">https://developer.android.google.cn/reference/android/media/MediaExtractor?hl=en</a></p>
+</blockquote>
+<p>MediaExtractor facilitates extraction of demuxed, typically encoded, media data from a data source.</p>
+<p>简单的描述它，就是一个解封装的工具。</p>
+<pre><code class="java"> MediaExtractor extractor = new MediaExtractor();
+ //设置来源
+ extractor.setDataSource(...);
+ //获取媒体文件的track数量
+ int numTracks = extractor.getTrackCount();
+ for (int i = 0; i &lt; numTracks; ++i) {
+   MediaFormat format = extractor.getTrackFormat(i);
+   String mime = format.getString(MediaFormat.KEY_MIME);
+   //获取到你想要使用的Track
+   if (weAreInterestedInThisTrack) {
+           //标记这个Track
+     extractor.selectTrack(i);
+   }
+ }
+ ByteBuffer inputBuffer = ByteBuffer.allocate(...)
+ while (extractor.readSampleData(inputBuffer, ...) &gt;= 0) {
+   int trackIndex = extractor.getSampleTrackIndex();
+   long presentationTimeUs = extractor.getSampleTime();
+   ...
+   //下一帧
+   extractor.advance();
+ }
+ //释放
+ extractor.release();
+ extractor = null;
+</code></pre>
+<p>doc上提供了一段比较简单的使用方式</p>
+<p>几个比较常用的<code>setDataSource</code>,<code>MediaFormat</code>,<code>selectTrack</code>,<code>release</code></p>
+<h3 id="MediaMuxer"><a href="#MediaMuxer" class="headerlink" title="MediaMuxer"></a>MediaMuxer</h3><blockquote>
+<p><a href="https://developer.android.google.cn/reference/android/media/MediaMuxer?hl=en" target="_blank" rel="noopener">https://developer.android.google.cn/reference/android/media/MediaMuxer?hl=en</a></p>
+</blockquote>
+<p>MediaMuxer facilitates muxing elementary streams. Currently MediaMuxer supports MP4, Webm and 3GP file as the output. It also supports muxing B-frames in MP4 since Android Nougat.</p>
+<p>支持的格式有MP4，而我们经常使用的封装也就是MP4啦，比较遗憾的是只能支持单个的Video Track 和 Audio Track。</p>
+<h2 id="分离MP4的Video-Audio-Track"><a href="#分离MP4的Video-Audio-Track" class="headerlink" title="分离MP4的Video/Audio Track"></a>分离MP4的Video/Audio Track</h2><pre><code class="kotlin">        /**
+     * @param path 媒体文件地址
+     *
+     */
+    fun extractorMedia(path: String) {
+        val extractor = MediaExtractor()
+        //设置来源
+        extractor.setDataSource(path)
+        //获取媒体文件的track数量
+        val numTracks = extractor.trackCount
+        for (index in 0 until numTracks){
+            val format = extractor.getTrackFormat(index)
+            //获取到你想要使用的Track
+            appendLogs(format.toString())
+        }
+    }
+</code></pre>
+<p>明确的看到，这个MP4中有一条音频轨，一条视频轨道。</p>
+<pre><code>{
+        track-id=2, 
+      max-bitrate=129051,       //码率、比特率
+      sample-rate=44100,        //采样率
+      file-format=video/mp4, 
+      mime=audio/mp4a-latm,     //类型是 audio
+      bitrate=129051, 
+      language=, 
+      aac-profile=2, 
+      durationUs=95087233, 
+      aac-format-adif=0,             
+      channel-count=2,                     //声道
+      max-input-size=65541, 
+      csd-0=java.nio.HeapByteBuffer[pos=0 lim=5 cap=5]
+}
+</code></pre><pre><code>{
+      track-id=1, 
+    file-format=video/mp4, 
+    level=2048, 
+    mime=video/avc,             //类型是 audio
+    profile=2, 
+    language=, 
+    display-width=1920, 
+    csd-1=java.nio.HeapByteBuffer[pos=0 lim=8 cap=8], 
+    durationUs=95041666, 
+    display-height=1080, 
+    width=1920, 
+    rotation-degrees=0, 
+    max-input-size=1555201, 
+    frame-rate=24, 
+    height=1080, 
+    csd-0=java.nio.HeapByteBuffer[pos=0 lim=41 cap=41]
+}
+</code></pre><p>我们继续，下面的操作把这个MP4分离为一个 <code>ouput_video_mp4</code> , 一个 <code>ouput_audio_mp4</code></p>
 
-              </div>
-            </div>
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              <span>
+                <i class="iconfont icon-inbox"></i>
+                
+                  <a class="hover-with-bg" href="/categories/Media">Media</a>
+                  &nbsp;
+                
+              </span>&nbsp;&nbsp;
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/Android">Android</a>
+                
+                  <a class="hover-with-bg" href="/tags/Media">Media</a>
+                
+              </span>
+            
+            </p>
+            
           </div>
         </div>
       </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+  </div>
+</div>
+
     
   </main>
 
@@ -249,6 +385,11 @@
 
 
 
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
+
 
 
   <script src="/lib/smooth-scroll/smooth-scroll.min.js" ></script>
@@ -318,7 +459,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "归档&nbsp;",
+        "MediaExtractor与MediaMuxer的简单使用&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

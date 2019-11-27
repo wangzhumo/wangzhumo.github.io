@@ -134,6 +134,68 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2017/12/25/Android-build-gradle-config/">
+        <p class="h4 index-header">Android项目的build.gradle通用设置</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">apply plugin: &#39;com.android.application&#39;
+
+android {
+
+    //开启dataBinding
+    dataBinding{
+        enabled = true
+    }
+
+    defaultConfig {
+        //开启multiDex
+        multiDexEnabled true
+
+        //使用jni
+        ndk {
+            //设置支持的SO库架构,这里的意思是只支持&#39;armeabi&#39;, &#39;armeabi-v7a&#39;, &#39;x86&#39;
+            //这三种架构
+            abiFilters &#39;armeabi&#39;, &#39;armeabi-v7a&#39;, &#39;x86&#39;
+        }
+    }
+
+
+    //设置一个编译的配置
+    signingConfigs {
+        //名为release的配置项
+  </div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-25&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android">Android</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Android">Android</a>&nbsp;
+          
+            <a href="/tags/Gradle">Gradle</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2017/12/25/Android-dependent-config/">
         <p class="h4 index-header">Android 项目统一管理依赖版本</p>
         
@@ -538,81 +600,6 @@ signingConfigs {
           <i class="iconfont icon-tag"></i>
           
             <a href="/tags/Android">Android</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2017/12/25/Android-Studio-Config/">
-        <p class="h4 index-header">Android Studio 基本设置</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">####1.常用的快捷键
-
-ALT + Enter 自动提示
-ALT + Ins
-
-get set 构造方法  重写方法以及一些插件如这里的 GsonFormat 以及 Butterknife
-
-
-Ctrl + Alt + F  全局变量
-
-Ctrl +Shift + Enter   加; 以及if 的(){}
-
-Ctrl + P  以及  Ctrl + Q  方法参数以及文档
-
-Ctrl +O 继承重写的方法
-
-Ctrl + /   Ctrl +Shift + /    注释
-
-Ctrl + Alt + L 格式化
-
-Ctrl + D  Ctrl + Y   复制 删除行
-
-Ctrl + Shift + U 大小写
-
-Shift Shift     Ctrl + F  全局  当前 搜索 
-
-Ctrl + U 到父类
-
-Ctrl + Alt + B 找到子类
-
-Ctrl + H     类结构
-
-Ctrl+Shift + H   方法层次
-
-Ctrl + Alt + H   调用层次
-
-Alt + F7  find use  非常好用的功能
-
-Shift + F6  重命名
-
-log</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-25&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android%20Studio">Android Studio</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Android%20Studio">Android Studio</a>&nbsp;
           
         
       </div>
