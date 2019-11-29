@@ -4,8 +4,30 @@
 
     
   <url>
+    <loc>https://www.wangzhumo.com/2019/11/29/learn-opengl-pipeline/</loc>
+    <lastmod>2019-11-29T08:53:10.948Z</lastmod>
+    <data>
+        <display>
+        <title>OpenGL的模型以及渲染管线Pipeline</title>
+        <pubTime>2019-11-29T07:14:33.000Z</pubTime>
+        
+        <tag>Media</tag>
+         
+        <tag>OpenGL</tag>
+         
+         
+           
+             
+              <breadCrumb title="Media" url="https://www.wangzhumo.com/categories/Media/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.wangzhumo.com/2019/11/26/mediaextractor-and-mediamuxer-sample/</loc>
-    <lastmod>2019-11-27T13:34:38.619Z</lastmod>
+    <lastmod>2019-11-28T09:24:49.416Z</lastmod>
     <data>
         <display>
         <title>MediaExtractor与MediaMuxer的简单使用</title>
@@ -586,9 +608,9 @@
         
         <tag>Android</tag>
          
-        <tag>Okhttp</tag>
-         
         <tag>Rxjava</tag>
+         
+        <tag>Okhttp</tag>
          
          
            
@@ -610,9 +632,9 @@
         
         <tag>Android</tag>
          
-        <tag>Okhttp</tag>
-         
         <tag>Rxjava</tag>
+         
+        <tag>Okhttp</tag>
          
          
            

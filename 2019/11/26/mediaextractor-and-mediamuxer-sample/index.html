@@ -120,7 +120,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    853 字
+                    1.2k 字
                   </span>&nbsp;
                 
 
@@ -128,7 +128,7 @@
                   
                   &nbsp;<i class="far fa-clock"></i>
                   <span class="post-count">
-                      4 分钟
+                      5 分钟
                   </span>&nbsp;
                 
 
@@ -329,7 +329,94 @@
         byteBuffer.clear()
     }
 </code></pre>
-<h3 id="将音频-视频合并为MP4"><a href="#将音频-视频合并为MP4" class="headerlink" title="将音频/视频合并为MP4"></a>将音频/视频合并为MP4</h3>
+<h3 id="将音频-视频合并为MP4"><a href="#将音频-视频合并为MP4" class="headerlink" title="将音频/视频合并为MP4"></a>将音频/视频合并为MP4</h3><pre><code class="java">        /**
+     * 合并音视频
+     */
+    fun muxerMediaStream(path: String){
+        appendLogs(&quot;任务开始&quot;)
+        val mOutputVideoPath = File(OUTPUT_DIR, &quot;output_mp4_file.mp4&quot;).absolutePath
+        //指定输出目录，指定Format格式
+        appendLogs(&quot;输出目录：$mOutputVideoPath&quot; )
+        val mMediaMuxer = MediaMuxer(
+            mOutputVideoPath,
+            MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4
+        )
+
+        //获取两个轨道，并且添加到mMediaMuxer
+        val extractor = MediaExtractor()
+        //设置来源
+        extractor.setDataSource(path)
+        //记录音频/视屏轨道的index
+        var videoTrackIndex = -1
+        var audioTrackIndex = -1
+        //获取媒体文件的track数量
+        val numTracks = extractor.trackCount
+        for (index in 0 until numTracks) {
+            val format = extractor.getTrackFormat(index)
+            val mimeType = format.getString(MediaFormat.KEY_MIME)
+            //标记视频轨道
+            if (mimeType.startsWith(&quot;video/&quot;)) {
+                videoTrackIndex = index
+                appendLogs(&quot;videoTrackIndex ：$videoTrackIndex&quot; )
+            }
+            //标记音频轨道
+            if (mimeType.startsWith(&quot;audio/&quot;)) {
+                audioTrackIndex = index
+                appendLogs(&quot;audioTrackIndex ：$audioTrackIndex&quot; )
+            }
+        }
+        //添加Track
+        mMediaMuxer.addTrack(extractor.getTrackFormat(videoTrackIndex))
+        mMediaMuxer.addTrack(extractor.getTrackFormat(audioTrackIndex))
+        //添加完毕开始
+        mMediaMuxer.start()
+
+        //读取数据，并且写入MediaMuxer
+        //写入视频文件
+        readTrackAndMuxer(videoTrackIndex,mMediaMuxer,extractor)
+        //写入音频文件
+        readTrackAndMuxer(audioTrackIndex,mMediaMuxer,extractor)
+
+        //释放MediaExtractor
+        extractor.release()
+        //释放MediaMuxer
+        mMediaMuxer.stop();
+        mMediaMuxer.release();
+    }
+
+
+    /**
+     * 读取文件，并且写入mMediaMuxer.
+     */
+    private fun readTrackAndMuxer(trackIndex: Int,mMediaMuxer: MediaMuxer, extractor: MediaExtractor) {
+        appendLogs(&quot;readTrackAndMuxer 开始写入&quot; )
+        //读取数据
+        extractor.selectTrack(trackIndex)
+        val byteBuffer = ByteBuffer.allocate(1024 * 500)
+        val info: MediaCodec.BufferInfo = MediaCodec.BufferInfo()
+        info.presentationTimeUs = 0
+        var readCount = 0
+        do {
+            //读取数据
+            readCount = extractor.readSampleData(byteBuffer,0)
+            if (readCount &lt; 0){
+                break
+            }
+            //写入文件
+            info.offset = 0
+            info.size = readCount
+            info.flags = MediaCodec.BUFFER_FLAG_KEY_FRAME
+            info.presentationTimeUs = extractor.sampleTime
+            mMediaMuxer.writeSampleData(trackIndex,byteBuffer,info)
+            byteBuffer.clear()
+            //移动到下一帧
+            extractor.advance()
+        }while (readCount &gt; 0)
+        appendLogs(&quot;readTrackAndMuxer 结束写入&quot; )
+    }
+</code></pre>
+<p>代码的逻辑已经很清晰。</p>
+<h3 id="END"><a href="#END" class="headerlink" title="END."></a>END.</h3>
             <hr>
           </div>
           <br>

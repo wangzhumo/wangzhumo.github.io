@@ -134,6 +134,48 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2018/03/05/Activity-Fragment-life/">
+        <p class="h4 index-header">Activity与Fragment的生命周期</p>
+        
+        
+          
+          
+        
+        <div class="index-excerpt" style="max-height: none;">
+          <div class="index-text mb-1">前言做Android开发好些年了,这些基础的知识,完完整整的在博客上写一次.
+Activity生命周期必不可少的一张图,来自Google Android developer 的文档上
+...</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-03-05&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android">Android</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Android">Android</a>&nbsp;
+          
+            <a href="/tags/Fragment">Fragment</a>&nbsp;
+          
+            <a href="/tags/Activity">Activity</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2018/02/28/Flutter-Install-MAC/">
         <p class="h4 index-header">Flutter安装指南MAC版</p>
         
@@ -528,62 +570,6 @@ adb shell pm list packages   当前手机安装的所有app包名adb shell pm li
           <i class="iconfont icon-tag"></i>
           
             <a href="/tags/Android">Android</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2018/01/04/webview-video-without-image/">
-        <p class="h4 index-header">WebView播放H5视屏没有画面,只有声音</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">描述:点击播放按钮后,只能听到声音,而画面是白的….一直白…想到应该是硬件加速的问题
-1.确认硬件加速(非此因素)
-在WebViewActivity.java中发现
-webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-2.确认AndroidManifest.xml(非此因素)
-application节点下并没有发现
-android:hardwareAccelerated=&quot;true&quot;
-在WebViewActivity中,也无该配置
-
-尝试: WebViewActivity.java中,注释
-
-#webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-在AndroidManifest.xml节点下加入android:hardwareAccelerated=&quot;true&quot;
-
-结果……没用
-
-3.检查activity_web_view.xml
-
-        &lt;WebView
-            android:id=&quot;@+i</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-01-04&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Bug">Bug</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Android">Android</a>&nbsp;
-          
-            <a href="/tags/Bug">Bug</a>&nbsp;
           
         
       </div>
