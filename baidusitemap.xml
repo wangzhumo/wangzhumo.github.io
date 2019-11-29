@@ -4,12 +4,12 @@
 
     
   <url>
-    <loc>https://www.wangzhumo.com/2019/11/28/learn-opengl-triangle/</loc>
-    <lastmod>2019-11-29T09:30:56.507Z</lastmod>
+    <loc>https://www.wangzhumo.com/2019/11/27/learn-opengl-pipeline/</loc>
+    <lastmod>2019-11-29T09:33:00.235Z</lastmod>
     <data>
         <display>
-        <title>OpenGL绘制一个三角形</title>
-        <pubTime>2019-11-28T09:25:39.000Z</pubTime>
+        <title>OpenGL的模型以及渲染管线Pipeline</title>
+        <pubTime>2019-11-27T07:14:33.000Z</pubTime>
         
         <tag>Media</tag>
          
@@ -26,12 +26,12 @@
 
     
   <url>
-    <loc>https://www.wangzhumo.com/2019/11/29/learn-opengl-pipeline/</loc>
-    <lastmod>2019-11-29T08:53:10.948Z</lastmod>
+    <loc>https://www.wangzhumo.com/2019/11/28/learn-opengl-triangle/</loc>
+    <lastmod>2019-11-29T09:32:48.894Z</lastmod>
     <data>
         <display>
-        <title>OpenGL的模型以及渲染管线Pipeline</title>
-        <pubTime>2019-11-29T07:14:33.000Z</pubTime>
+        <title>OpenGL绘制一个三角形</title>
+        <pubTime>2019-11-28T09:25:39.000Z</pubTime>
         
         <tag>Media</tag>
          
