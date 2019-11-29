@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>https://www.wangzhumo.com/2019/11/28/learn-opengl-triangle/</loc>
+    <lastmod>2019-11-29T09:29:17.320Z</lastmod>
+    <data>
+        <display>
+        <title>OpenGL绘制一个三角形</title>
+        <pubTime>2019-11-28T09:25:39.000Z</pubTime>
+        
+        <tag>Media</tag>
+         
+         
+           
+             
+              <breadCrumb title="Media" url="https://www.wangzhumo.com/categories/Media/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.wangzhumo.com/2019/11/29/learn-opengl-pipeline/</loc>
     <lastmod>2019-11-29T08:53:10.948Z</lastmod>
     <data>
@@ -608,9 +628,9 @@
         
         <tag>Android</tag>
          
-        <tag>Rxjava</tag>
-         
         <tag>Okhttp</tag>
+         
+        <tag>Rxjava</tag>
          
          
            
@@ -632,9 +652,9 @@
         
         <tag>Android</tag>
          
-        <tag>Rxjava</tag>
-         
         <tag>Okhttp</tag>
+         
+        <tag>Rxjava</tag>
          
          
            

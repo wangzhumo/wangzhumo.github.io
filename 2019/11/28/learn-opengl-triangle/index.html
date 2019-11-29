@@ -15,7 +15,7 @@
   <meta name="description" content="王诛魔">
   <meta name="author" content="wangzhumo">
   <meta name="keywords" content="">
-  <title>Retrofit2 + Okhttp3 + Rxjava2 网络请求封装(下) ~ 王诛魔</title>
+  <title>OpenGL绘制一个三角形 ~ 王诛魔</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
@@ -111,7 +111,7 @@
               
                 <p class="mt-3">
                   <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
-                  星期一, 十二月 25日 2017, 12:51 下午
+                  星期四, 十一月 28日 2019, 5:25 下午
                 </p>
               
 
@@ -120,7 +120,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    487 字
+                    860 字
                   </span>&nbsp;
                 
 
@@ -128,7 +128,7 @@
                   
                   &nbsp;<i class="far fa-clock"></i>
                   <span class="post-count">
-                      2 分钟
+                      4 分钟
                   </span>&nbsp;
                 
 
@@ -161,104 +161,162 @@
       <div class="py-5 z-depth-3" id="board">
         <div class="post-content mx-auto" id="post">
           <div class="markdown-body">
-            <pre><code>//请求:
-
-RetrofitApis.getNetworkApis().getFriendsCircle(userBean.token, String.valueOf(45),null,lastId)
-    .compose(new DefaultTransformer&lt;&gt;())
-    .subscribe(new Defaultubscriber&lt;List&lt;FriendItem&gt;&gt;() {
-        @Override
-        protected void onError(ApiException ex) {
-                //请求错误,ex中可以拿到code 和 msg  便于展示给用户
-        }
-
-        @Override
-        public void onNext(List&lt;FriendItem&gt; friends) {
-            //请求成功,friends就是数据
-        }
-
-        @Override
-        public void onComplete() {
-                    //没有错误的话,最后会走着
-        }
-});
-</code></pre><p>compose()  转化<br>subscribe() 订阅</p>
-<p>DefaultTransformer.java</p>
-<pre><code>/**
- * If you have any questions, you can contact by email {wangzhumoo@gmail.com}
- * @author 王诛魔 2017/11/3 下午5:06
- *
- * 默认的切换线程,并返回实体类
- */
-
-public class DefaultTransformer&lt;T extends ResultResponse&lt;RP&gt;, RP&gt; implements FlowableTransformer&lt;T, RP&gt; {
-
-    @Override
-    public Publisher&lt;RP&gt; apply(Flowable&lt;T&gt; upstream) {
-        return upstream
-                .map(t -&gt; t.getResult())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-    }
-}
-</code></pre><p>1.map 将返回的ResultResponse&lt;&gt;  转化,直接取ResultResponse的泛型实体</p>
-<pre><code>
-{&quot;result&quot;:{}
-&quot;code&quot;:&quot;&quot;,
-&quot;msg&quot;:&quot;&quot;}
-</code></pre><p>中的result</p>
-<p>2.subscribeOn(Schedulers.io())  网络请求的耗时操作,放在方便io操作的线程里面<br>3.observeOn(AndroidSchedulers.mainThread())  后面的操作,都在主线程进行</p>
-<p>Defaultubscriber.java</p>
-<pre><code>/**
- * If you have any questions, you can contact by email {wangzhumoo@gmail.com}
- * @author 王诛魔 2017/10/24 上午10:36
- *
- * 用于没有网络时停止网络请求
- */
-
-public abstract class Defaultubscriber&lt;T&gt; extends DisposableSubscriber&lt;T&gt; {
-
-
-    @CallSuper
-    @Override
-    public void onError(Throwable e) {
-        if (e instanceof ApiException) {
-            onError((ApiException) e);
-        } else {
-            onError(new ApiException(&quot;&quot;,&quot;&quot;));
-        }
-    }
-
-    @Override
-    protected void onStart() {
-        if (!SystemUtils.isNetworkConnected()) {
-            onError(new ApiException(Utils.getString(R.string.net_error_title),&quot;999&quot;));
-            cancel();
-            return;
-        }
-        super.onStart();
-    }
-
-
-    /**
-     * 错误回调
-     *
-     * @param ex 异常信息
-     */
-    protected abstract void onError(ApiException ex);
-
-}
-</code></pre><p>1.extends DisposableSubscriber  便于通过CompositeDisposable管理请求,此处没有展示,不用管<br>2.onStart()  中,判断是否有网络</p>
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这里我会使用刚刚学习到的知识点，尝试绘制一个三角形。使用Android提供的GLSurfaceView配合OpenGL ES完成这个任务。</p>
+<a id="more"></a>
 <ul>
-<li><p>没有网络</p>
-<p>onError(new ApiException(Utils.getString(R.string.net_error), false));<br>抛出没有网络的错误,由各个页面自行处理</p>
-<p>cancel(); 取消</p>
-<ul>
-<li>有网络则继续</li>
+<li>GLSurfaceView</li>
+<li>实现GLSurfaceView.Renderer</li>
+<li>glFrustumf，glViewport，glVertexPointer</li>
+<li>glDrawArrays</li>
 </ul>
+<h2 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h2><h3 id="1-创建TriangleActivity"><a href="#1-创建TriangleActivity" class="headerlink" title="1.创建TriangleActivity"></a>1.创建TriangleActivity</h3><pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;androidx.constraintlayout.widget.ConstraintLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+        xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+        xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;match_parent&quot;
+        tools:context=&quot;.opengl.triangle.TriangleActivity&quot;&gt;
+
+    &lt;android.opengl.GLSurfaceView
+            android:id=&quot;@+id/gl_surface_view&quot;
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;match_parent&quot;
+            app:layout_constraintBottom_toBottomOf=&quot;parent&quot;
+            app:layout_constraintEnd_toEndOf=&quot;parent&quot;
+            app:layout_constraintStart_toStartOf=&quot;parent&quot;
+            app:layout_constraintTop_toTopOf=&quot;parent&quot; /&gt;
+&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;
+</code></pre>
+<p>加载布局,设置TriangleRenderer</p>
+<pre><code class="kotlin">@Route(path = IRoute.MEDIA_OPENGL_TRIANGLE)
+class TriangleActivity : BaseActivity() {
+    override fun getLayoutId(): Int = R.layout.activity_triangle
+
+    override fun initViews(savedInstanceState: Bundle?) {
+        gl_surface_view.setRenderer(TriangleRenderer())
+    }
+}
+</code></pre>
+<h3 id="2-实现TriangleRenderer"><a href="#2-实现TriangleRenderer" class="headerlink" title="2.实现TriangleRenderer"></a>2.实现TriangleRenderer</h3><p>这里的注释写的很完善了，不做其他的补充</p>
+<pre><code class="kotlin">/**
+ * If you have any questions, you can contact by email {wangzhumoo@gmail.com}
+ *
+ * @author 王诛魔 2019-11-29  10:49
+ *
+ * 三角形的renderer
+ */
+class TriangleRenderer : GLSurfaceView.Renderer {
+
+    private var ratio = 0F
+
+    override fun onDrawFrame(gl: GL10?) {
+        //切换到模型矩阵
+        gl?.apply {
+            //清屏,清除颜色缓冲区
+            glClear(GL10.GL_COLOR_BUFFER_BIT)
+            //gluLookAt 需要操作的是模型矩阵
+            glMatrixMode(GL10.GL_MODELVIEW)
+            //加载单位矩阵 - 初始化
+            glLoadIdentity()
+        }
+      /*
+         * @param gl a GL10 interface   gl对象
+         *
+         * @param eyeX eye point X
+         * @param eyeY eye point Y      观察者的位置，最好是与平截头体在一个原点上
+         * @param eyeZ eye point Z
+         *
+         * @param centerX center of view X
+         * @param centerY center of view Y   观察者的观察方向（朝向0，0，0 原点）
+         * @param centerZ center of view Z
+         *
+         * @param upX up vector X
+         * @param upY up vector Y    观察者向上的位置
+         * @param upZ up vector Z
+         */
+        //确定观察的空间坐标
+        GLU.gluLookAt(gl, 0F, 0F, 5F, 0F, 0F, 0F, 0F, 1F, 0F)
+        //顶点数组
+        val trianglePoint = floatArrayOf(
+            0F, ratio, 1F,
+            -1F, -ratio, 1F,
+            1F, -ratio, 1F
+        )
+        //创建顶点缓冲区
+        val pointBuffer = ByteBuffer.allocateDirect(trianglePoint.size * 4)
+        val floatBuffer = TextureUtils.loadVertexBuffer(pointBuffer,trianglePoint)
+
+        //设置绘图的颜色,使用红色
+        gl?.glColor4f(1F,0F,0F,1F)
+        //指定3个值确定一个点
+        //Must use a native order direct Buffer
+        gl?.glVertexPointer(3, GL10.GL_FLOAT, 0, floatBuffer)
+        //画一个三角
+        gl?.glDrawArrays(GL10.GL_TRIANGLES,0,3)
+    }
+
+    override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
+        gl?.apply {
+            //viewport视口   也就是opengl可以显示的区域大小
+            glViewport(0, 0, width, height)
+            //投影矩阵 - 矩阵模式
+            glMatrixMode(GL10.GL_PROJECTION)
+            //加载单位矩阵 - 初始化
+            glLoadIdentity()
+            //计算比例，避免缩放后显示变形
+            ratio = width.toFloat() / height
+            //设置平截头体，为了投射到viewport上时，不超出viewport，top/bottom 按照我们viewport的比例设置
+              //此处,  bottom = -left * ratio    top = left * ratio
+            //zNear 近平面距离
+            //zFar  远平面距离
+            glFrustumf(-1F, 1F, -ratio, ratio, 3F, 7F)
+        }
+    }
+
+    override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
+        gl?.apply {
+            //清屏颜色设置
+            glClearColor(0F, 0F, 0F, 1F)
+            //开启顶点缓冲区
+            glEnableClientState(GL10.GL_VERTEX_ARRAY)
+        }
+    }
+}
+</code></pre>
+<p><code>TextureUtils</code>是在渲染Camera时就已经写好的工具了，不重复写了。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><h4 id="顶点坐标"><a href="#顶点坐标" class="headerlink" title="顶点坐标"></a>顶点坐标</h4><pre><code>val trianglePoint = floatArrayOf(
+            0F, ratio, 1F,
+            -1F, -ratio, 1F,
+            1F, -ratio, 1F
+        )
+</code></pre><ul>
+<li><p>x  [-1,1]   我们在平截头体中的比例，最大也就是[-1,1]</p>
+</li>
+<li><p>y  [-ratio,ratio]  这里我们计算了屏幕的比例，得出的ratio</p>
+</li>
+<li><p>z  这个指定了，我们在平截头体中的z位置，在这个例子中，我们的<code>glFrustumf(-1F, 1F, -ratio, ratio, 3F, 7F)</code>中，用远平面减去近平面， 7 -3 = 4   [0,4]</p>
 </li>
 </ul>
-<p>3.重写的 onError()中.<br>    是ApiException实例的,是自己抛出的异常,已经处理过了,直接onError给各个页面处理<br>    不是的再处理一次,在分发给各个页面处理</p>
-<p>####未完待续…</p>
+<h4 id="平截头体"><a href="#平截头体" class="headerlink" title="平截头体"></a>平截头体</h4><pre><code>glFrustumf(-1F, 1F, -ratio, ratio, 3F, 7F)
+</code></pre><ul>
+<li>Left / right  分别为 -1  1</li>
+<li>bottom = -left * ratio</li>
+<li>top = left * ratio</li>
+<li>zNear 近平面距离</li>
+<li>zFar  远平面距离</li>
+</ul>
+<h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><pre><code>val trianglePoint = floatArrayOf(
+            0F, ratio, 1F,
+            -1F, -ratio, 1F,
+            1F, -ratio, 1F
+        )
+</code></pre><p><img src="/Users/wangzhumo/Develop/hexo/source/images/opengl_result1_1.png" srcset="/img/loading.gif" alt="opengl_result1_1"></p>
+<pre><code>val trianglePoint = floatArrayOf(
+            0F, ratio, 2F,
+            -1F, -ratio, 2F,
+            1F, -ratio, 2F
+        )
+</code></pre><p><img src="/Users/wangzhumo/Develop/hexo/source/images/opengl_result1_2.png" srcset="/img/loading.gif" alt="opengl_result1_2"></p>
 
             <hr>
           </div>
@@ -269,7 +327,7 @@ public abstract class Defaultubscriber&lt;T&gt; extends DisposableSubscriber&lt;
               <span>
                 <i class="iconfont icon-inbox"></i>
                 
-                  <a class="hover-with-bg" href="/categories/Android">Android</a>
+                  <a class="hover-with-bg" href="/categories/Media">Media</a>
                   &nbsp;
                 
               </span>&nbsp;&nbsp;
@@ -278,11 +336,7 @@ public abstract class Defaultubscriber&lt;T&gt; extends DisposableSubscriber&lt;
               <span>
                 <i class="iconfont icon-tag"></i>
                 
-                  <a class="hover-with-bg" href="/tags/Android">Android</a>
-                
-                  <a class="hover-with-bg" href="/tags/Okhttp">Okhttp</a>
-                
-                  <a class="hover-with-bg" href="/tags/Rxjava">Rxjava</a>
+                  <a class="hover-with-bg" href="/tags/Media">Media</a>
                 
               </span>
             
@@ -466,7 +520,7 @@ public abstract class Defaultubscriber&lt;T&gt; extends DisposableSubscriber&lt;
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "Retrofit2 + Okhttp3 + Rxjava2 网络请求封装(下)&nbsp;",
+        "OpenGL绘制一个三角形&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

@@ -134,6 +134,60 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2017/12/25/Android-Studio-signature-debug/">
+        <p class="h4 index-header">Android Studio 使用正式签名debug调试</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">###解决问题:
+
+很多时候我们使用第三方登录什么的东西,需要我们提供正式签名,但是我们总是需要调试的.一般情况,我们不可能一次性OK,那么每一次调试都需要正式签名打包,并安装,然后再调试,这也太麻烦了,.
+
+所以,直接上代码:
+signingConfigs {
+        release {
+            keyAlias &#39;phyooos&#39;
+            keyPassword &#39;phyooos&#39;
+            storeFile file(&#39;phyooos.jks&#39;)
+            storePassword &#39;phyooos&#39;
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguar</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-25&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android%20Studio">Android Studio</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Android">Android</a>&nbsp;
+          
+            <a href="/tags/Android%20Studio">Android Studio</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2017/12/25/Bluetooth-iBeacon/">
         <p class="h4 index-header">低功耗蓝牙iBeacon的开发笔记</p>
         

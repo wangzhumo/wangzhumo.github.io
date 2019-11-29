@@ -134,6 +134,61 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2017/12/25/Retrofit2-Okhttp3-Rxjava2-2/">
+        <p class="h4 index-header">Retrofit2 + Okhttp3 + Rxjava2 网络请求封装(下)</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">//请求:
+
+RetrofitApis.getNetworkApis().getFriendsCircle(userBean.token, String.valueOf(45),null,lastId)
+    .compose(new DefaultTransformer&lt;&gt;())
+    .subscribe(new Defaultubscriber&lt;List&lt;FriendItem&gt;&gt;() {
+        @Override
+        protected void onError(ApiException ex) {
+                //请求错误,ex中可以拿到code 和 msg  便于展示给用户
+        }
+
+        @Override
+        public void onNext(List&lt;FriendItem&gt; friends) {
+            //请求成功,friends就是数据
+        }
+
+        @Override
+        publi</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-25&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android">Android</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Android">Android</a>&nbsp;
+          
+            <a href="/tags/Okhttp">Okhttp</a>&nbsp;
+          
+            <a href="/tags/Rxjava">Rxjava</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2017/12/25/Retrofit2-Okhttp3-Rxjava2-1/">
         <p class="h4 index-header">Retrofit2 + Okhttp3 + Rxjava2 网络请求封装(上)</p>
         
@@ -176,9 +231,9 @@ NetworkApis.java
           
             <a href="/tags/Android">Android</a>&nbsp;
           
-            <a href="/tags/Rxjava">Rxjava</a>&nbsp;
-          
             <a href="/tags/Okhttp">Okhttp</a>&nbsp;
+          
+            <a href="/tags/Rxjava">Rxjava</a>&nbsp;
           
         
       </div>
@@ -559,60 +614,6 @@ Android Support Library 25 以上的support包中增加了 BottomNavigationView
             <a href="/tags/Android">Android</a>&nbsp;
           
             <a href="/tags/View">View</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2017/12/25/Android-Studio-signature-debug/">
-        <p class="h4 index-header">Android Studio 使用正式签名debug调试</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">###解决问题:
-
-很多时候我们使用第三方登录什么的东西,需要我们提供正式签名,但是我们总是需要调试的.一般情况,我们不可能一次性OK,那么每一次调试都需要正式签名打包,并安装,然后再调试,这也太麻烦了,.
-
-所以,直接上代码:
-signingConfigs {
-        release {
-            keyAlias &#39;phyooos&#39;
-            keyPassword &#39;phyooos&#39;
-            storeFile file(&#39;phyooos.jks&#39;)
-            storePassword &#39;phyooos&#39;
-        }
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            signingConfig signingConfigs.release
-            proguardFiles getDefaultProguar</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-25&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android%20Studio">Android Studio</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Android">Android</a>&nbsp;
-          
-            <a href="/tags/Android%20Studio">Android Studio</a>&nbsp;
           
         
       </div>
