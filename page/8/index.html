@@ -532,6 +532,12 @@ android:imeOptions=&quot;actionDone&quot;  //右下角按键内容为&#39;完成
   <div class="row mb-4 mx-auto">
     
     
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/2017/12/25/textview-span/" target="_self">
+          <img src="/img/android.png" srcset="/img/loading.gif" alt="TextView中的文字颜色,点击,斜体等实现--SpannableString" class="img-fluid rounded z-depth-3 index-thumbnails">
+        </a>
+      </div>
+    
     <div class="col-12 col-md-8 m-auto">
       <a href="/2017/12/25/textview-span/">
         <p class="h4 index-header">TextView中的文字颜色,点击,斜体等实现--SpannableString</p>
@@ -544,12 +550,7 @@ android:imeOptions=&quot;actionDone&quot;  //右下角按键内容为&#39;完成
           <div class="index-text mb-1">一般实现方式如下:
 String html = &quot;文字&lt;font color=\&quot;red\&quot;&gt;变色&lt;/font&gt;的效果&quot;;
 tvMainShow.setText(Html.fromHtml(html));
-使用Html的方式来实现,简单的还好,复杂一点的真的很不方便
-Google显然早就已经想到了这样的问题,所以  
-
-SpannedString &amp; SpannableStringBuilder 就是干这个的
-
-他们都实现了 CharSequence,眼熟么?  setText(CharSequence text).也就是说,你可以直接赋值给TextView...</div>
+使用Html的方式来实现,简单的还好,复杂一点的真的很不方便...</div>
         </div>
       </a>
 
