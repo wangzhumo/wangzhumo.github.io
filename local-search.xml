@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>非对称加密及OpenSSL的使用</title>
+    <link href="undefined2019/12/22/rsa-encrypt-theory/"/>
+    <url>2019/12/22/rsa-encrypt-theory/</url>
+    
+    <content type="html"><![CDATA[<h2 id="加密算法"><a href="#加密算法" class="headerlink" title="加密算法"></a>加密算法</h2><h4 id="常见的加密算法"><a href="#常见的加密算法" class="headerlink" title="常见的加密算法"></a>常见的加密算法</h4><ul><li><p>RSA    现在比较通用的非对称加密,在性能上满足要求,安全性也足够高</p></li><li><p>AES/DES    对称加密    </p></li><li><p>MD5    使用Hash函数计算信息摘要</p></li><li><p>SHA    和MD5类似,但是比MD5要安全</p></li></ul><p>在加密解密的过程中,总要衡量的是<code>安全性</code>,<code>效率</code>.我们都知道非对称加密的安全性很高,但是它的效率就要比对称加密低很多.</p><a id="more"></a><p>在<code>Https</code>中就是采用先使用<code>非对称加密</code>传递<code>对称加密</code>的密钥,而后传输都使用这个<code>对称加密的密钥</code>进行加解密,以满足效率要求.</p><h3 id="非对称加密的前提条件"><a href="#非对称加密的前提条件" class="headerlink" title="非对称加密的前提条件"></a>非对称加密的前提条件</h3><blockquote><p>非对称加密理论上是可以被破解的,我们要先明白这个前提,而后才能更快速的理解原理</p></blockquote><h4 id="最优解不存在"><a href="#最优解不存在" class="headerlink" title="最优解不存在"></a>最优解不存在</h4><p>非对称加密的最优解，就是找到一个完全不能找到反函数的函数,但是数学目前还没有找到这样的一个函数,</p><p>所以现在,只能去找到一个很难算出来的函数,你要得到这个函数可能要花费巨大的资源,很长的时间,把这个破解的难度尽量提升到无限大,这是现在非对称加密的主要思路</p><h4 id="RSA加密的数学原理"><a href="#RSA加密的数学原理" class="headerlink" title="RSA加密的数学原理"></a>RSA加密的数学原理</h4><p>大数的质因数分解 =&gt; 超级困难</p><p>这样的话,你可以很方便的计算两个质数的积,但是反过来这两个质数,你很难通过这个积来反推回来.</p><h3 id="非对称加密应用"><a href="#非对称加密应用" class="headerlink" title="非对称加密应用"></a>非对称加密应用</h3><p>在知乎上看到一个比喻写的很好,贴上来:</p><blockquote><p>非对称加密主要用于两个场景，数据传输，签名。</p><p>数据传输应用场景：</p><p>古代每年都进行科举考试，考生（数据发送者）将写好答案（明文）的纸张交给收取试卷的太监（可能发生数据泄露的网络），然后由他转交给皇帝（数据接受者）来审阅。最开始相安无事，直到有一年太监偷看答案，将答案告诉某些王公贵族的公子。皇帝开始发现这个办法有缺陷，于是更改了流程，发给每个考生一把锁头（公钥），考试写完答案后将答案锁起来再交给太监，这样太监就没办法偷看了。皇帝有一把能打开这些箱子的钥匙（私钥），这样就保证了考生答案不会泄露。</p><p>签名应用场景：</p><p>有一天皇帝（数据发送者）觉得东边匈奴太嚣张，发了一道圣旨（明文）给驻守边疆的大将军（数据接受者），匈奴太嚣张了你给我怼他。太监又去送信了，结果他勾结匈奴把圣旨改了，让大将军撤军。皇帝发现，这个不行啊，然后给你大将军一把钥匙（公钥），自己按照又配了很多对应的锁头。再次发圣旨的时候，就把圣旨的摘要锁起来。摘要很短，写了圣旨有多少字，主要内容等（其实是按照hash函数映射出的字段，并没有实际意义）。</p><p>ps：不要问我为啥不锁圣旨，因为圣旨比较长，要用的盒子比较大，也就是说加密起来比较困难，而摘要就很短，锁进一个小盒子里就行了。</p><p>就这样，大将军再次收到圣旨的时候，就会拿钥匙打开盒子中的摘要看看圣旨有没有被篡改。</p><p>这样进行两步信息确认：1、盒子上的锁头能被打开证明这个圣旨确实是皇帝发的。2、摘要的内容和圣旨一致，证明确实内容未被篡改过。即保证2点：信息的来源，信息未被篡改。</p><p>作者：高君<br>链接：<a href="https://www.zhihu.com/question/23879943/answer/154260251" target="_blank" rel="noopener">https://www.zhihu.com/question/23879943/answer/154260251</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p></blockquote><h3 id="非对称加密原理"><a href="#非对称加密原理" class="headerlink" title="非对称加密原理"></a>非对称加密原理</h3><p>涉及到密码学的很多知识,以及数学上的一些定理,如果要详细了解</p><blockquote><p><a href="https://cloud.tencent.com/developer/article/1130051" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1130051</a></p></blockquote><h4 id="公钥加密-私钥解密流程图"><a href="#公钥加密-私钥解密流程图" class="headerlink" title="公钥加密 - 私钥解密流程图"></a>公钥加密 - 私钥解密流程图</h4><p><img src="/images/rsa_encrypt_encode.png" srcset="/img/loading.gif" alt="rsa_encrypt_encode"></p><h4 id="私钥加密-公钥解密流程图"><a href="#私钥加密-公钥解密流程图" class="headerlink" title="私钥加密 - 公钥解密流程图"></a>私钥加密 - 公钥解密流程图</h4><p><img src="/images/rsa_encrypt_decode.png" srcset="/img/loading.gif" alt="rsa_encrypt_decode"></p><h2 id="OpenSSL"><a href="#OpenSSL" class="headerlink" title="OpenSSL"></a>OpenSSL</h2><p>SSL全称是<code>Secure Sockets Layer</code></p><p>在<code>SSL</code>3.0版本之后,IETF（Internet工程任务组）标准化SSL协议后,称之为<code>TSL( Transport Layer Security)</code></p><blockquote><p>SSL == TSL</p><p><a href="https://www.openssl.org/docs/manmaster/man1/openssl.html" target="_blank" rel="noopener">https://www.openssl.org/docs/manmaster/man1/openssl.html</a></p></blockquote><pre><code> o  Creation and management of private keys, public keys and parameters o  Public key cryptographic operations o  Creation of X.509 certificates, CSRs and CRLs o  Calculation of Message Digests and Message Authentication Codes o  Encryption and Decryption with Ciphers o  SSL/TLS Client and Server Tests o  Handling of S/MIME signed or encrypted mail o  Timestamp requests, generation and verification</code></pre><p>以上说明了OpenSSl的用途.</p><ul><li><p>生成和管理公钥，私钥以及相关参数</p></li><li><p>使用公钥和私钥</p></li><li><p>管理证书（X.509格式）认证请求</p></li><li><p>计算摘要（hash)</p></li><li><p>使用加密方法(cipher)加密与解密</p></li><li><p>测试SSL/TLS连接</p></li><li><p>Email签名或加密（S/MIME）格式</p></li><li><p>时间戳的生成与验证</p></li></ul><h3 id="OpenSSL的原理"><a href="#OpenSSL的原理" class="headerlink" title="OpenSSL的原理"></a>OpenSSL的原理</h3><ul><li>SSL_CTX   ssl的上下文,证书,密钥,版本等等</li><li>SSL           SSL的链接,是与一个负责传输的socket绑定的</li><li>SSL_Write / SSL_Read      通过这两个方法读取/写入 <code>SSL</code> </li></ul><p><img src="/images/openssl_how_to_use.png" srcset="/img/loading.gif" alt="openssl_how_to_use"></p><h2 id="DTLS"><a href="#DTLS" class="headerlink" title="DTLS"></a>DTLS</h2><p>由于<code>TLS</code>是基于<code>TCP</code>协议的,我们想要在<code>UDP</code>上使用,就需要使用<code>DTLS</code></p><p>DTSL是与SRTP一起用于WebRTC技术的安全协议之一</p><h2 id="SRTP"><a href="#SRTP" class="headerlink" title="SRTP"></a><strong>SRTP</strong></h2><p>SRTP(SecureReal-time Transport Protocol) 安全实时传输协议，SRTP是在实时传输协议(Real-time Transport Protocol)基础上所定义的一个协议，旨在为单播和多播应用程序中的实时传输协议的数据提供加密、消息认证、完整性保证和重放保护安全实时传输协议。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Other</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>RSA</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Flutter稳定版安装</title>
     <link href="undefined2019/12/02/release-flutter-setup/"/>
     <url>2019/12/02/release-flutter-setup/</url>
