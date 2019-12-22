@@ -4,6 +4,48 @@
 
     
   <url>
+    <loc>https://www.wangzhumo.com/2019/10/22/stun-protocol-start/</loc>
+    <lastmod>2019-12-22T11:34:59.776Z</lastmod>
+    <data>
+        <display>
+        <title>STUN协议简单认识</title>
+        <pubTime>2019-10-22T11:18:25.000Z</pubTime>
+        
+        <tag>Media</tag>
+         
+        <tag>WebRTC</tag>
+         
+         
+           
+             
+              <breadCrumb title="WebRTC" url="https://www.wangzhumo.com/categories/WebRTC/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.wangzhumo.com/2019/12/02/release-flutter-setup/</loc>
+    <lastmod>2019-12-03T02:34:11.462Z</lastmod>
+    <data>
+        <display>
+        <title>Flutter稳定版安装</title>
+        <pubTime>2019-12-02T11:35:17.000Z</pubTime>
+        
+        <tag>Flutter</tag>
+         
+         
+           
+             
+              <breadCrumb title="Flutter" url="https://www.wangzhumo.com/categories/Flutter/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.wangzhumo.com/2019/11/27/learn-opengl-pipeline/</loc>
     <lastmod>2019-11-29T09:34:24.863Z</lastmod>
     <data>
@@ -335,9 +377,9 @@
         
         <tag>Android</tag>
          
-        <tag>Android Studio</tag>
-         
         <tag>Bug</tag>
+         
+        <tag>Android Studio</tag>
          
          
            
