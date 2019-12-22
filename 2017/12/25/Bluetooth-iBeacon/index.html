@@ -161,15 +161,15 @@
       <div class="py-5 z-depth-3" id="board">
         <div class="post-content mx-auto" id="post">
           <div class="markdown-body">
-            <p>###1.挣扎的开始<br>各种百度,google,发现国内资料很少,有的也是商业公司提供的sdk,这并不符合我需要,<br>google倒是不少,然而以我的英语水平,望洋兴叹罢了@</p>
+            <h3 id="1-挣扎的开始"><a href="#1-挣扎的开始" class="headerlink" title="1.挣扎的开始"></a>1.挣扎的开始</h3><p>各种百度,google,发现国内资料很少,有的也是商业公司提供的sdk,这并不符合我需要,<br>google倒是不少,然而以我的英语水平,望洋兴叹罢了</p>
+<a id="more"></a>
 <blockquote>
 <p>首先你需要了解这些资料<br>1、profile<br> rofile可以理解为一种规范，一个标准的通信协议，它存在于从机中。蓝牙组织规定了一些标准的profile，例如 HID OVER GATT ，防丢器 ，心率计等。每个profile中会包含多个service，每个service代表从机的一种能力。</p>
 <p>2、service<br>service可以理解为一个服务，在ble从机中，通过有多个服务，例如电量信息服务、系统信息服务等，每个service中又包含多个characteristic特征值。每个具体的characteristic特征值才是ble通信的主题。比如当前的电量是80%，所以会通过电量的characteristic特征值存在从机的profile里，这样主机就可以通过这个characteristic来读取80%这个数据</p>
 <p>3、characteristic<br>characteristic特征值，ble主从机的通信均是通过characteristic来实现，可以理解为一个标签，通过这个标签可以获取或者写入想要的内容。</p>
 <p>4、UUID<br>UUID，统一识别码，我们刚才提到的service和characteristic，都需要一个唯一的uuid来标识<br>S: 百度到的,我以一个过来人的身份保证这个很重要</p>
 </blockquote>
-<a id="more"></a>
-<p>###2.资料,准备<br>资料看这里:</p>
+<h3 id="2-资料-准备"><a href="#2-资料-准备" class="headerlink" title="2.资料,准备"></a>2.资料,准备</h3><p>资料看这里:</p>
 <ul>
 <li>这也是最重要的资料来源,谷歌SDK的例子里面有的项目<br><img src="http://img.blog.csdn.net/20160710190336812" srcset="/img/loading.gif" alt="Android SDK 中的doc文档"></li>
 </ul>
@@ -189,8 +189,7 @@
 <li><p>一个SampleGattAttributes<br>   主要是存储了一些UUID,我对它进行了加强</p>
 </li>
 </ol>
-<p>###3.BLE设备的使用步骤概况</p>
-<ol>
+<h3 id="3-BLE设备的使用步骤概况"><a href="#3-BLE设备的使用步骤概况" class="headerlink" title="3.BLE设备的使用步骤概况"></a>3.BLE设备的使用步骤概况</h3><ol>
 <li>首先要说明的一点是,要求Android版本为4.3及其以上<br>  接着确认设备支持</li>
 </ol>
 <pre><code>/**
@@ -244,7 +243,7 @@ private BluetoothAdapter.LeScanCallback mLeScanCallback =
 <li><strong>byte[] scanRecord (重头戏)</strong><br>广播响应包数据<br>一般包括两个部分,我使用的主要是ServiceData域<br><strong>在这里需要注意的是，这两个部分都存在于广播数据，而且并不是两部分都有，有可能是只有一个部分，所以一定要看情设备的硬件规范，因为这涉及到后面解析广播数据</strong></li>
 </ul>
 <p>要知道，我们都是拿byte[]数组中的某些部分对应特定值,一旦对应关系打乱，那么数据解析就没什么正确性可言了<br>这些广播数据都是依据一定的规则指定 的,所以这时候你需要设备厂商的文档来查看对应的数据,以及其结构<br>PS:需要注意的一点是,这些数据都是byte[],你需要将它们转化(一般常用的做法是,先转化为16进制的字符串,而后再进行读取解析)</p>
-<p>###4.读取蓝牙设备内部数据<br>这里涉及到两个重要部分<br>service  以及 characteristic</p>
+<h3 id="4-读取蓝牙设备内部数据"><a href="#4-读取蓝牙设备内部数据" class="headerlink" title="4.读取蓝牙设备内部数据"></a>4.读取蓝牙设备内部数据</h3><p>这里涉及到两个重要部分<br>service  以及 characteristic</p>
 <p>一般来说<br> 一个Service  eg: FF01-XXXXXXXXXXX-XXXXX<br> 下面可能有很多的characteristic<br>Marjor : FF16 -XXXXXX<br>Power : FF17 - XXX<br>….一堆的characteristic </p>
 <ul>
 <li><strong>如果需要给指定的项目写入一个数据</strong><br> 条件：<pre><code>          1.此特征在哪个Service下，即该service的UUID

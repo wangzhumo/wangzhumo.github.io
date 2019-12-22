@@ -15,7 +15,7 @@
   <meta name="description" content="王诛魔">
   <meta name="author" content="wangzhumo">
   <meta name="keywords" content="">
-  <title>归档 ~ 王诛魔</title>
+  <title>Android Studio报错 cannot debug application ~ 王诛魔</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
@@ -107,6 +107,41 @@
             </span>
 
             
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期二, 十二月 26日 2017, 3:26 下午
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    193 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      1 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
           </div>
 
           
@@ -117,65 +152,86 @@
 
   <main>
     
-      <div class="container nopadding-md">
-        <div class="py-5 z-depth-3" id="board">
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-<div class="list-group">
-  <p class="h4">共计 90 篇文章</p>
-  <hr>
-  
-    
       
-      <p class="h5">2018</p>
-    
-    <a href="/2018/01/17/Room-AppDatabase-Impl-does-not-exist/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Room --AppDatabase_Impl does not exist的异常解决</span>
-      <span style="float: right;">01-17</span>
-    </a>
-  
-    
-    <a href="/2018/01/11/Charles-Https/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">使用Charles抓Https的数据请求</span>
-      <span style="float: right;">01-11</span>
-    </a>
-  
-    
-    <a href="/2018/01/11/Android-shell-Adb/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Android开发中常用的Adb命令</span>
-      <span style="float: right;">01-11</span>
-    </a>
-  
-    
-    <a href="/2018/01/10/OkHttp-support-https/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">OkHttp中添加https支持</span>
-      <span style="float: right;">01-10</span>
-    </a>
-  
-    
-    <a href="/2018/01/04/webview-video-without-image/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">WebView播放H5视屏没有画面,只有声音</span>
-      <span style="float: right;">01-04</span>
-    </a>
-  
-    
-    <a href="/2018/01/03/room-list/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Room中List&lt;&gt;使用详解</span>
-      <span style="float: right;">01-03</span>
-    </a>
-  
-</div>
 
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <p><code>Android Studio报错Error Running app: cannot debug application</code></p>
+<a id="more"></a>
+<p>这里有一位仁兄帮忙翻译了.</p>
+<blockquote>
+<p><a href="http://blog.csdn.net/yishichangan1/article/details/77451486" target="_blank" rel="noopener">http://blog.csdn.net/yishichangan1/article/details/77451486</a></p>
+</blockquote>
+<pre><code>Cannot debug application xx.xxx.xxx.app on device lge_nexus_5x(此处表示你的手机型号).
+你的xxxapp不能在型号为Nexus 5x的LGE手机上调试。
 
-              </div>
-            </div>
+This application does not have the debuggable attribute enabled in its manifest.
+这个项目在清单文件（AndroidManifest.xml）中没有设置可以调试的参数。
+
+If you have manually set it in the manifest, then remove it and let the IDE automatically assign it.
+如果你已经手动在清单文件种设置了这个属性，请remove掉，让IDE自动生成。
+
+If you are using Gradle, make sure that your current variant is debuggable.
+如果你使用Gradle，确认你现在的变体是可调试的。
+</code></pre><p>####我就知道是我自己选了release….果然</p>
+<p><img src="/images/canot_debug.png" srcset="/img/loading.gif" alt="cannotdebug"></p>
+
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              <span>
+                <i class="iconfont icon-inbox"></i>
+                
+                  <a class="hover-with-bg" href="/categories/Bug">Bug</a>
+                  &nbsp;
+                
+              </span>&nbsp;&nbsp;
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/Android">Android</a>
+                
+                  <a class="hover-with-bg" href="/tags/Bug">Bug</a>
+                
+              </span>
+            
+            </p>
+            
           </div>
         </div>
       </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+  </div>
+</div>
+
     
   </main>
 
@@ -255,6 +311,11 @@
 
 
 
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
+
 
 
   <script src="/lib/smooth-scroll/smooth-scroll.min.js" ></script>
@@ -324,7 +385,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "归档&nbsp;",
+        "Android Studio报错 cannot debug application&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
