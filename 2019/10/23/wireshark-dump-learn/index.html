@@ -162,11 +162,11 @@
         <div class="post-content mx-auto" id="post">
           <div class="markdown-body">
             <p>在我们开发的过程中,有些时候需要查看网络传输过程的信息</p>
-<p>在我平时的开发中,移动端仅仅使用<code>Charlse</code>就已经能满足我所有需要了.</p>
+<p>在我平时的开发中,移动端仅仅使用<code>Charles</code>就已经能满足我所有需要了.</p>
 <a id="more"></a>
 <p>在音视频的开发过程中,<code>RTC,RTCP</code>,<code>Offer,Answer</code>中的<code>sdp</code>以及信令服务中的<code>socket</code></p>
 <p>都不能简单的使用<code>Charles</code>,需要更加底层的工具.</p>
-<p>这时候就是<code>WireShark</code>大显身手的识货,<code>tcpdump</code>的输入文件也是可以用<code>WireShark</code>来查看的,这里我仅仅简单的记录一些使用方式,等到我慢慢的深入使用以后,再进行更深层的记录.</p>
+<p>这时候就是<code>WireShark</code>大显身手的时候,<code>tcpdump</code>的输出文件也是可以用<code>WireShark</code>来查看的,这里我仅仅简单的记录一些使用方式,等到我慢慢的深入使用以后,再进行更深层的记录.</p>
 <h2 id="tcpdump"><a href="#tcpdump" class="headerlink" title="tcpdump"></a>tcpdump</h2><p><code>tcpdump -i eth0 src port 80 -xx -Xs 0 -w test.cap</code></p>
 <ul>
 <li><code>-i</code> 指定网卡</li>
