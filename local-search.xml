@@ -162,6 +162,60 @@
   
   
   <entry>
+    <title>WireShark与tcpdump的入门使用记录</title>
+    <link href="undefined2019/10/23/wireshark-dump-learn/"/>
+    <url>2019/10/23/wireshark-dump-learn/</url>
+    
+    <content type="html"><![CDATA[<p>在我们开发的过程中,有些时候需要查看网络传输过程的信息</p><p>在我平时的开发中,移动端仅仅使用<code>Charlse</code>就已经能满足我所有需要了.</p><a id="more"></a><p>在音视频的开发过程中,<code>RTC,RTCP</code>,<code>Offer,Answer</code>中的<code>sdp</code>以及信令服务中的<code>socket</code></p><p>都不能简单的使用<code>Charles</code>,需要更加底层的工具.</p><p>这时候就是<code>WireShark</code>大显身手的识货,<code>tcpdump</code>的输入文件也是可以用<code>WireShark</code>来查看的,这里我仅仅简单的记录一些使用方式,等到我慢慢的深入使用以后,再进行更深层的记录.</p><h2 id="tcpdump"><a href="#tcpdump" class="headerlink" title="tcpdump"></a>tcpdump</h2><p><code>tcpdump -i eth0 src port 80 -xx -Xs 0 -w test.cap</code></p><ul><li><code>-i</code> 指定网卡</li><li><code>src</code>  指定包的来源</li><li><code>port</code> 指定端口号</li><li><code>-xx</code> 抓取到的包使用16进制显示</li><li><code>-X</code> 以ASCII码显示</li><li><code>-s 0</code>  抓取的包无限制,也就是抓取所有包</li><li><code>-w</code>    写入到文件中</li></ul><h2 id="wireshark"><a href="#wireshark" class="headerlink" title="wireshark"></a>wireshark</h2><h3 id="逻辑运算"><a href="#逻辑运算" class="headerlink" title="逻辑运算"></a>逻辑运算</h3><ul><li>与 : and 或者 &amp;&amp; </li><li>或 : or 或者 ||</li><li>非 : not 或者 !</li></ul><h3 id="判断"><a href="#判断" class="headerlink" title="判断"></a>判断</h3><ul><li>等于 : eq 或 ==</li><li>大于 : gt 或 &gt;</li><li>小于 : lt 或 &lt;</li><li>小于等于 : le 或者 &lt;=</li><li>大于等于 : ge 或者 &gt;=</li><li>不等于 : ne 或 !=</li></ul><h3 id="协议过滤"><a href="#协议过滤" class="headerlink" title="协议过滤"></a>协议过滤</h3><ul><li>stun</li><li>udp</li><li>tcp</li><li>arp</li><li>icmp</li><li>http</li><li>smtp</li><li>ftp</li><li>dns</li><li>msnms</li><li>ssl</li><li>oicq</li></ul><h3 id="按照http过滤"><a href="#按照http过滤" class="headerlink" title="按照http过滤"></a>按照http过滤</h3><ul><li>http.request.method == “GET”</li><li>http.request.method == “POST”</li><li>http.request.uri == “/img/logo.png”</li><li>http contains “GET”</li><li>http contains “HTTP/1.”</li></ul><h3 id="按IP过滤"><a href="#按IP过滤" class="headerlink" title="按IP过滤"></a>按IP过滤</h3><ul><li><p>ip.dst == 192.168.1.1 </p><p>发送到的目的IP</p></li><li><p>ip.src == 192.168.2.13</p><p>源IP</p></li><li><p>Ip.addr == 192.168.2.23</p><p>所有该IP的通信, 源IP + 目的IP</p></li></ul><h3 id="按Port过滤"><a href="#按Port过滤" class="headerlink" title="按Port过滤"></a>按Port过滤</h3><ul><li>tcp.port == 8080</li><li>udp.port == 8080</li><li>udp.dstport == 8080</li><li>udp.srcport == 8080</li></ul><h3 id="按长度过滤"><a href="#按长度过滤" class="headerlink" title="按长度过滤"></a>按长度过滤</h3><ul><li>udp.length &lt; 20</li><li>tcp.length &lt; 30</li><li>http.content_length &lt; 100</li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>Tools</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Server</tag>
+      
+      <tag>Http</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>TURN协议简单认识</title>
+    <link href="undefined2019/10/22/turn-protocol-start/"/>
+    <url>2019/10/22/turn-protocol-start/</url>
+    
+    <content type="html"><![CDATA[<h2 id="TURN简介"><a href="#TURN简介" class="headerlink" title="TURN简介"></a>TURN简介</h2><p>Traversal Using Relays around NAT（TURN）：Relay Extensions to Session Traversal Utilities for NAT（STUN）使用中继穿透NAT：STUN的中继扩展</p><a id="more"></a><ul><li>解决STUN不能穿越NAT的情况,通过TURN中转</li><li>建立在STUN服务之上,消息格式使用STUN的规范</li><li>TURN Client需要TURN服务提供一个公网IP以及Port用于接收/发送数据</li></ul><h2 id="TURN中转"><a href="#TURN中转" class="headerlink" title="TURN中转"></a>TURN中转</h2><p><a href="https://tools.ietf.org/html/rfc5766#page-15" target="_blank" rel="noopener">https://tools.ietf.org/html/rfc5766#page-15</a></p><pre><code>                                        Peer A                                        Server-Reflexive    +---------+                                        Transport Address   |         |                                        192.0.2.150:32102   |         |                                            |              /|         |                          TURN              |            / ^|  Peer A |    Client&#39;s              Server            |           /  ||         |    Host Transport        Transport         |         //   ||         |    Address               Address           |       //     |+---------+   10.1.1.2:49721       192.0.2.15:3478     |+-+  //     Peer A            |               |               ||N| /       Host Transport            |   +-+         |               ||A|/        Address            |   | |         |               v|T|     192.168.100.2:49582            |   | |         |               /+-+ +---------+|   | |         |+---------+   /              +---------+ |         ||   |N|         ||         | //               |         | | TURN    |v   | |         v| TURN    |/                 |         | | Client  |----|A|----------| Server  |------------------|  Peer B | |         |    | |^         |         |^                ^|         | |         |    |T||         |         ||                ||         | +---------+    | ||         +---------+|                |+---------+                | ||                    |                |                | ||                    |                |                +-+|                    |                |                   |                    |                |                   |                    |                |             Client&#39;s                   |            Peer B             Server-Reflexive    Relayed             Transport             Transport Address   Transport Address   Address             192.0.2.1:7000      192.0.2.15:50000     192.0.2.210:49191                                 Figure 1</code></pre><h2 id="TURN传输协议"><a href="#TURN传输协议" class="headerlink" title="TURN传输协议"></a>TURN传输协议</h2><pre><code>           +----------------------------+---------------------+           | TURN client to TURN server | TURN server to peer |           +----------------------------+---------------------+           |             UDP            |         UDP         |           |             TCP            |         UDP         |           |        TLS over TCP        |         UDP         |           +----------------------------+---------------------+</code></pre><p>TURN, as defined in this specification, always uses UDP between the server and the peer.  However, this specification allows the use of any one of UDP, TCP, or Transport Layer Security (TLS) over TCP to carry the TURN messages between the client and the server.</p><h3 id="TURN的Allocate"><a href="#TURN的Allocate" class="headerlink" title="TURN的Allocate"></a>TURN的Allocate</h3><pre><code>  TURN                                 TURN           Peer          Peer  client                               server          A             B    |-- Allocate request ---------------&gt;|             |             |    |                                    |             |             |    |&lt;--------------- Allocate failure --|             |             |    |                 (401 Unauthorized) |             |             |    |                                    |             |             |    |-- Allocate request ---------------&gt;|             |             |    |                                    |             |             |    |&lt;---------- Allocate success resp --|             |             |    |            (192.0.2.15:50000)      |             |             |    //                                   //            //            //    |                                    |             |             |    |-- Refresh request ----------------&gt;|             |             |    |                                    |             |             |    |&lt;----------- Refresh success resp --|             |             |    |                                    |             |             |                                 Figure 2</code></pre><p>Client发送一个Allocate到TURN服务 -&gt; 权鉴 -&gt; 成功应答(携带分配的IP:port)</p><p>Refresh request 就是保活</p><h3 id="TURN中转-1"><a href="#TURN中转-1" class="headerlink" title="TURN中转"></a>TURN中转</h3><blockquote><p>这两种方式是可以同时使用的.</p></blockquote><h4 id="Send-And-Data"><a href="#Send-And-Data" class="headerlink" title="Send And Data"></a>Send And Data</h4><pre><code>  TURN                                 TURN           Peer          Peer  client                               server          A             B    |                                    |             |             |    |-- CreatePermission req (Peer A) --&gt;|             |             |    |&lt;-- CreatePermission success resp --|             |             |    |                                    |             |             |    |--- Send ind (Peer A)--------------&gt;|             |             |    |                                    |=== data ===&gt;|             |    |                                    |             |             |    |                                    |&lt;== data ====|             |    |&lt;-------------- Data ind (Peer A) --|             |             |    |                                    |             |             |    |                                    |             |             |    |--- Send ind (Peer B)--------------&gt;|             |             |    |                                    | dropped     |             |    |                                    |             |             |    |                                    |&lt;== data ==================|    |                            dropped |             |             |    |                                    |             |             |                                 Figure 3</code></pre><p>Client Send</p><ol><li>客户端通过Send(Peer A) 到TURN服务,此时拿到其中的data(原始的udp数据)</li><li>将data(原始的udp数据)直接转到Peer A</li></ol><p>Client Data</p><ol><li>TRUN中转需要发送到客户端的data,加入TURN头</li><li>客户端收到了TURN服务中转的数据 Data</li></ol><h4 id="Channel"><a href="#Channel" class="headerlink" title="Channel"></a>Channel</h4><pre><code>TURN                                 TURN           Peer          Peer  client                               server          A             B    |                                    |             |             |    |-- ChannelBind req ----------------&gt;|             |             |    | (Peer A to 0x4001)                 |             |             |    |                                    |             |             |    |&lt;---------- ChannelBind succ resp --|             |             |    |                                    |             |             |    |-- [0x4001] data ------------------&gt;|             |             |    |                                    |=== data ===&gt;|             |    |                                    |             |             |    |                                    |&lt;== data ====|             |    |&lt;------------------ [0x4001] data --|             |             |    |                                    |             |             |    |--- Send ind (Peer A)--------------&gt;|             |             |    |                                    |=== data ===&gt;|             |    |                                    |             |             |    |                                    |&lt;== data ====|             |    |&lt;------------------ [0x4001] data --|             |             |    |                                    |             |             |                                 Figure 4</code></pre><p>我们使用Send / Data的方式,每次都需要传递一个30字节的数据头,耗费了我们的带宽</p><p>The client has already created an allocation and now wishes to bind a channel to Peer A</p><ol><li>发送一个绑定Channel的请求(channel id 16进制的数字)</li><li>成功绑定</li><li>直接发送data -&gt; 中转 -&gt; Peer</li></ol><h2 id="TURN流程"><a href="#TURN流程" class="headerlink" title="TURN流程"></a>TURN流程</h2><ol><li><p>STUN binding  </p><p>发绑定请求,进行NAT的打通,服务拿到映射的地址</p></li><li><p>Caller TURN allocation</p><p>allocation,让TURN分配一个可用的中继地址 ip:port</p></li><li><p>Caller send offer</p><p>呼叫者通过信令,把自己的媒体,网络信息以SDP协议发送给对端</p></li><li><p>Callee(被呼叫者) TURN allocation</p><p>被呼叫者也需要发送allocation,获取中继地址</p></li><li><p>Callee answer </p><p>被呼叫者通过信令,发送自己的信息</p></li><li><p>Exchange candidate IP address</p><p>交换双方的信息candidate,可用的候选者地址</p></li><li><p>ICE check for P2P connection</p><p>先检查效率最高的p2p连接</p></li><li><p>If P2P unsuccessful , make relay connection</p><p>如果P2P不可用,则使用中继服务</p></li></ol>]]></content>
+    
+    
+    <categories>
+      
+      <category>WebRTC</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Media</tag>
+      
+      <tag>WebRTC</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>STUN协议简单认识</title>
     <link href="undefined2019/10/22/stun-protocol-start/"/>
     <url>2019/10/22/stun-protocol-start/</url>
@@ -1693,9 +1747,9 @@
       
       <tag>Android</tag>
       
-      <tag>Bug</tag>
-      
       <tag>Android Studio</tag>
+      
+      <tag>Bug</tag>
       
     </tags>
     

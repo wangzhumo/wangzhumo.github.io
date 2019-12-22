@@ -15,7 +15,7 @@
   <meta name="description" content="王诛魔">
   <meta name="author" content="wangzhumo">
   <meta name="keywords" content="">
-  <title>归档 ~ 王诛魔</title>
+  <title>王诛魔</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
@@ -36,7 +36,7 @@
 
 
 <body>
-  <header style="height: 70vh;">
+  <header style="height: 100vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -96,7 +96,7 @@
 </nav>
 
     <div class="view intro-2" id="background"
-         style="background: url('/img/default.png')no-repeat center center;
+         style="background: url('/img/mountain_covered_by_cloud.jpg')no-repeat center center;
            background-size: cover;
            background-attachment: fixed;">
       <div class="full-bg-img">
@@ -109,6 +109,10 @@
             
           </div>
 
+          
+            <div class="scroll-down-bar">
+              <i class="fas fa-angle-down scroll-down-arrow"></i>
+            </div>
           
         </div>
       </div>
@@ -125,78 +129,158 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
-<div class="list-group">
-  <p class="h4">共计 91 篇文章</p>
-  <hr>
-  
+
+  <div class="row mb-4 mx-auto">
     
-      
-      <p class="h5">2018</p>
     
-    <a href="/2018/07/27/Bezier-Google-caihuaxiaoge/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">贝塞尔曲线练习-谷歌猜画小歌的倒计时</span>
-      <span style="float: right;">07-27</span>
-    </a>
-  
-    
-    <a href="/2018/07/26/Android-xml-style/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Android开发xml中的样式</span>
-      <span style="float: right;">07-26</span>
-    </a>
-  
-    
-    <a href="/2018/07/25/Android-Studio-CMake-JNI/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Android Studio中使用CMake进行JNI开发</span>
-      <span style="float: right;">07-25</span>
-    </a>
-  
-    
-    <a href="/2018/07/22/Data-Structure-Note-1/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">数据结构-下笔记</span>
-      <span style="float: right;">07-22</span>
-    </a>
-  
-    
-    <a href="/2018/07/15/Recursion-Linked-List/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">递归调用创建单链表</span>
-      <span style="float: right;">07-15</span>
-    </a>
-  
-    
-    <a href="/2018/07/14/Design-Pattern-Decoration/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">设计模式-装饰者设计模式</span>
-      <span style="float: right;">07-14</span>
-    </a>
-  
-    
-    <a href="/2018/07/14/Design-pattern-State/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">设计模式-状态模式的使用</span>
-      <span style="float: right;">07-14</span>
-    </a>
-  
-    
-    <a href="/2018/07/13/RecyclerView-unuseful-notifyItemRangeChanged/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">RecyclerView中notifyItemRangeChanged无效的BUG</span>
-      <span style="float: right;">07-13</span>
-    </a>
-  
-    
-    <a href="/2018/07/12/ConstraintLayout-Basic/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">ConstraintLayout使用指南-基础的约束</span>
-      <span style="float: right;">07-12</span>
-    </a>
-  
-    
-    <a href="/2018/07/11/JVM-Garbage-Collection/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">JVM的垃圾回收Garbage Collection</span>
-      <span style="float: right;">07-11</span>
-    </a>
-  
-</div>
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/2017/07/31/Regular-Expression/">
+        <p class="h4 index-header">常用正则表达式记录</p>
+        
+        
+          
+          
+        
+        <div class="index-excerpt" style="max-height: none;">
+          <div class="index-text mb-1">常用正则
+
+
+说明
+正则表达式
+
+
+
+
+网址（URL）
+[a-zA-z]+://[^\s]*
+
+
+IP地址(IP Address)
+`((2[0-4]\d
+25[0-5]
+[01]?\d\d?).){3}(2[0-4]\d
+25[0-5]
+[01]?\d\d?)`
+
+
+电子邮件(Email)
+\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*
+
+
+QQ号码
+[1-9]\d{4,}
+
+
+HTML标记(包含内容或自闭合)
+`&lt;(.)(.)&gt;.*&lt;\/\1&gt;
+&lt;(.*) \/&gt;`
+
+
+密码(由数字/大写字母/小写字母/标点符号组成，四种都必有，8位以上)
+(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?=.*[A-Z])(?=.*[a-z])(?!.*\n).*$
+
+
+日期(年-月-日)
+`(\d{4}
+\d{2})-((1[0-2])
+(0?[1-9]))-(([12][0-9])
+(3[01])
+(0?[1-9]))`
+
+
+日期(月/日/年)
+`((1[0-2])
+(0?[1-9]))/(([12][0-9])
+(3[01])
+(0?[1-9]))/(\d{4}
+\d{2})`
+
+
+时间(小时:分钟, 24小时制)
+`((1
+0?)[0-9]
+2[0-3]):([0-5][0-9])`
+
+
+汉字(字符)
+[\u4e00-\u9fa5]
+
+
+中文及全角标点符号(字符)
+[\u3000-\u301e\ufe10-\ufe19\ufe30-\ufe44\ufe50-\ufe6b\uff01-\uffee]
+
+
+中国大陆固定电话号码
+`(\d{4}-
+\d{3}-)?(\d{8}
+\d{7})`
+
+
+中国大陆手机号码
+1\d{10}
+
+
+中国大陆邮政编码
+[1-9]\d{5}
+
+
+中国大陆身份证号(15位或18位)
+\d{15}(\d\d[0-9xX])?
+
+
+非负整数(正整数或零)
+\d+
+
+
+正整数
+[0-9]*[1-9][0-9]*
+
+
+负整数
+-[0-9]*[1-9][0-9]*
+
+
+整数
+-?\d+
+
+
+小数
+(-?\d+)(\.\d+)?
+
+
+不包含abc的单词
+\b((?!abc)\w)+\b
+
+
+...</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2017-07-31&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Other">Other</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Regular">Regular</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+
 
   <nav aria-label="index posts navigation">
     <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
-      <a class="extend prev" rel="prev" href="/archives/2018/page/2/"><i class="fas fa-angle-double-left"></i></a><a class="page-number" href="/archives/2018/">1</a><a class="page-number" href="/archives/2018/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/archives/2018/page/4/">4</a><a class="page-number" href="/archives/2018/page/5/">5</a><a class="page-number" href="/archives/2018/page/6/">6</a><a class="extend next" rel="next" href="/archives/2018/page/4/"><i class="fas fa-angle-double-right"></i></a>
+      <a class="extend prev" rel="prev" href="/page/9/"><i class="fas fa-angle-double-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span>
     </span>
   </nav>
   
@@ -205,6 +289,7 @@
       ele.href += '#board';
     }
   </script>
+
 
 
               </div>
@@ -360,7 +445,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "归档&nbsp;",
+        "WangZhuMo's Blog.&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
