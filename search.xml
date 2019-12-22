@@ -368,17 +368,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[数据结构-下笔记]]></title>
-    <url>%2F2018%2F07%2F22%2FData-Structure-Note-1%2F</url>
-    <content type="text"><![CDATA[算法 输入,待处理的信息 输出,经处理的信息 正确性,的确可以解决问题 确定性,任意算法都可以描述为由基本操作(明确,精密的)组成的序列 可行性,每一基本操作都可以实现,并在常数时间内完成 有穷性,对任何输入,经有穷次基本操作,都可以得到输出]]></content>
-      <categories>
-        <category>Programme</category>
-      </categories>
-      <tags>
-        <tag>Programme</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[递归调用创建单链表]]></title>
     <url>%2F2018%2F07%2F15%2FRecursion-Linked-List%2F</url>
     <content type="text"><![CDATA[前言很多的面试中,都有要求实现一个单链表,这里就搞一个试试. 实现Node.kt //创建一个Node class Node(val value:Int){ var next : Node? = null } 这个Node有一个value,它是一个必传且不可修改的参数,就直接放在了构造了 next指向了下一个Node,这样就可以完成一个单向的链表,让我想起了 Message的next next默认是null,这是因为单链表最后一个next中就是null. ListCreated.kt class ListCreated { fun createList(list: List&lt;Int&gt;): Node? { //1. if (list.isEmpty()) { return null } //2. val currentNode = Node(list[0]) println(&quot;before ${currentNode.value}&quot;) //3. val nextNode = createList(list.subList(1, list.size)) if (nextNode != null) { println(&quot;after ${currentNode.value}&quot;) } //4. currentNode.next = nextNode return currentNode } } class ListCreated { fun createList(list: List&lt;Int&gt;): Node? { //1. if (list.isEmpty()) { return null } //2. val currentNode = Node(list[0]) println(&quot;before ${currentNode.value}&quot;) //3. val nextNode = createList(list.subList(1, list.size)) if (nextNode != null) { println(&quot;after ${currentNode.value}&quot;) } //4. currentNode.next = nextNode return currentNode } } 我们需要去判断List,如果为空就直接返回null了 这里就是当前的这个Node,保存了当前的value,但是next还是为null的 这里就是递归调用的地方,传入的参数是一个subList,当然是去掉了第一个,因为第一个已经是currentNode了 把currentNode的next指向了nextNode,构成单向 MainTest.java public class MainClass { public static void main(String[] args){ List&lt;Integer&gt; integerList = Arrays.asList(1,4,6,2); ListCreated created = new ListCreated(); Node node = created.createList(integerList); printAll(node); } public static void printAll(Node node){ while (node != null){ System.out.print(node.getValue()); System.out.print(&quot; &quot;); node = node.getNext(); } } } 打印结果: before 1 before 4 before 6 before 2 after 6 after 4 after 1 1 4 6 2 我们可以清楚的知道before 1,4,6,2 而没有打印,说明压入了栈,指令没有返回 after本来应该是 2,6,4,1的,为什么2没有打印出来,是因为 if (nextNode != null) { println(&quot;after ${currentNode.value}&quot;) } 链表最后一个Node的next是为null的,所以没有打印 出栈的顺序,也是按照栈的规则,先进后出. 可以看到出入栈的顺序]]></content>
@@ -763,19 +752,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Android Studio报错Error Running app: cannot debug application]]></title>
-    <url>%2F2017%2F12%2F26%2FAndroid-Studio-Error-Running-app-cannot-debug-application%2F</url>
-    <content type="text"><![CDATA[Android Studio报错Error Running app: cannot debug application 这里有一位仁兄帮忙翻译了. http://blog.csdn.net/yishichangan1/article/details/77451486 Cannot debug application xx.xxx.xxx.app on device lge_nexus_5x(此处表示你的手机型号). 你的xxxapp不能在型号为Nexus 5x的LGE手机上调试。 This application does not have the debuggable attribute enabled in its manifest. 这个项目在清单文件（AndroidManifest.xml）中没有设置可以调试的参数。 If you have manually set it in the manifest, then remove it and let the IDE automatically assign it. 如果你已经手动在清单文件种设置了这个属性，请remove掉，让IDE自动生成。 If you are using Gradle, make sure that your current variant is debuggable. 如果你使用Gradle，确认你现在的变体是可调试的。 ####我就知道是我自己选了release….果然]]></content>
-      <categories>
-        <category>Bug</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-        <tag>Android Studio</tag>
-        <tag>Bug</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Centos 创建用户并实现免密码登录]]></title>
     <url>%2F2017%2F12%2F25%2FCentos-Login-SSH%2F</url>
     <content type="text"><![CDATA[比如,创建一个名为wzm的账号 ####创建账号 1.创建 [root@localhost ~]# adduser wzm [root@localhost ~]# passwd wzm #此时,输入两次密码即可 2.赋予sudo #找到sudoers [root@localhost ~]# whereis sudoers #修改sudoers的读写权限 [root@localhost ~]# chmod -v u+w /etc/sudoers #加入新用户 ## Allow root to run any commands anywher root ALL=(ALL) ALL linuxidc ALL=(ALL) ALL #这个是新增的用户 #把sudoers权限还给他 [root@localhost ~]# chmod -v u-w /etc/sudoers 3.尽情享用吧 ####ssh免密码登录 1.修改配置文件sudo vim /etc/ssh/sshd_config 2.重启ssh服务service sshd restart 3.生成密钥 ssh-keygen -t rsa 默认在 ~/.ssh目录生成两个文件： id_rsa ：私钥 id_rsa.pub ：公钥 4.导入本机cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys 5.下载到客户端并设置 scp [-r] 用户名@ip:文件路径 本地路径 #下载文件 scp [-r] 本地文件 用户名@ip:上传路径 eg: ~/.ssh ⌚ 16:27:33 $ scp id_rsa.pub root@45.XX.XX.XX:/home/ id_rsa.pub 6.改权限如果希望ssh公钥生效需满足至少下面两个条件： 1) .ssh目录的权限必须是7002) .ssh/authorized_keys文件权限必须是600 eg: ~ ⌚ 16:33:21 $ ssh wzm@45.XX.XX.XX Last login: Mon Dec 25 16:21:11 2017 from 118.102.XXX.XXX [wzm@wangzhumo ~]$]]></content>
@@ -885,7 +861,7 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[jni使用指南,关于.so你应该知道的]]></title>
+    <title><![CDATA[Jni使用指南,关于.so你应该知道的]]></title>
     <url>%2F2017%2F12%2F25%2Fjni-with-so%2F</url>
     <content type="text"><![CDATA[其实这些都是Android设备CPU的: armeabi: 早期的手机用的比较多,针对普通的或旧的arm v5 cpu,。 armeabiv-v7a:目前主流版本 2011年以后的生产的大部分设备,针对有浮点运算或高级扩展功能的arm v7 cpu. arm64-v8a: 8代、64位ARM处理器，64位支持. x86: 我们见到的模拟器大多就是这个。 x86_64: 64位的平板。 然后特意说一下x86系列的,是兼容arm的,但是性能损失特别大. Android加载.so的原则同一目录下要么所有使用jni的项目都给加上.so文件,要么你就别给这个目录,也就是只要不齐全就都干掉比如你的lib结构是这样的 libs -armeabi -aaa.so -bbb.so -arm64-v8a -aaa.so 其实这种情况就是属于同一目录下,提供的.so文件不全…然而很容易出现,毕竟有些三方啊什么的,提供的.so文件并不齐全,这样的话同一个架构目录下会缺少一个或多个.so文件. Android在加载某个使用jni的功能时,你并没有提供x86的.so文件,但是你有x86这个目录,那就会去x86目录下去找,没有啊然后就异常了. Android加载.so的目录1.我自己用的是 也就是自己在app -&gt; src -&gt; main 下自己建立一个目录: jniLibs然后放进去即可. 2.就是通常放在libs目录下了别忘了在build.gradle文件中设置 jniLibs.srcDir Android排除某架构的.so android { ... defaultConfig { ... ndk { // 设置支持的 SO 库构架 abiFilters &#39;armeabi&#39;, &#39;armeabi-v7a&#39; // &#39;arm64-v8a&#39;, &#39;x86&#39;, &#39;x86_64&#39;, &#39;mips&#39;, &#39;mips64&#39; } } } 如果编译报 NDK integration is deprecated in the current plugin. gradle.properties 文件中添加： android.useDeprecatedNdk=true 应该还有其他方法排除,我也就知道这一种,如果有知道其他方法的,请告知一下,谢谢]]></content>
       <tags>

@@ -163,9 +163,9 @@
           <div class="markdown-body">
             <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>归并排序可以说是一个经典的使用分治思维的排序算法了.</p>
 <p>先把问题<strong>分</strong>为一些小的问题然后递归求解,而使用<strong>治</strong>的思想把分阶段求得的答案合并在一起.</p>
+<a id="more"></a>
 <p>首先我得来一张图说明这个事:</p>
 <p><img src="/images/merge_sort.png" srcset="/img/loading.gif" alt="merge"></p>
-<a id="more"></a>
 <p>上图显示了一个输入数组被分解的过程,下面只要我们能给他合并起来就可以完成这是输入数组的排序了</p>
 <h3 id="合并思路"><a href="#合并思路" class="headerlink" title="合并思路"></a>合并思路</h3><p>合并的时候我们需要一个临时数组的帮助,这个临时数组的大小应该是与输入数组的大小一致的.</p>
 <p><code>int[] array,int left,int mid,int right,int [] tempArray</code></p>

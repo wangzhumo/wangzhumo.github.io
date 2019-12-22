@@ -163,13 +163,13 @@
           <div class="markdown-body">
             <h3 id="ServiceManager"><a href="#ServiceManager" class="headerlink" title="ServiceManager"></a>ServiceManager</h3><p>首先我们要了解一下ServiceManager.</p>
 <p>ServiceManager的功能主要就是注册,查询服务,作为一个大管家的角色出现.</p>
+<a id="more"></a>
 <ul>
 <li>注册服务：记录服务名和信息，放到服务列表</li>
 <li>查询服务：根据服务名查询相应的的信息</li>
 </ul>
 <p>ServiceManager是有权限控制的，只有具有相应权限的进程才能注册,查询服务</p>
 <p><a href="http://gityuan.com/2015/11/08/binder-get-sm/" target="_blank" rel="noopener">http://gityuan.com/2015/11/08/binder-get-sm/</a></p>
-<a id="more"></a>
 <h3 id="Linux内存"><a href="#Linux内存" class="headerlink" title="Linux内存"></a>Linux内存</h3><h4 id="内核空间"><a href="#内核空间" class="headerlink" title="内核空间"></a>内核空间</h4><p>为什么进程间不可以直接通讯那?</p>
 <p>因为每个进程的内存空间都是隔离起来的,不可能随意去访问其他进程的内存.</p>
 <p>在32位系统中,寻址空间最大为4G,那么这4G内存,一般将1G分配给内核空间,3G用户空间,Linux内核由系统内的所有进程共享.</p>
