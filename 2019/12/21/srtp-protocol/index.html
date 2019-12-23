@@ -15,7 +15,7 @@
   <meta name="description" content="王诛魔">
   <meta name="author" content="wangzhumo">
   <meta name="keywords" content="">
-  <title>分类 - Other ~ 王诛魔</title>
+  <title>SRTP与SRTCP协议的认识 ~ 王诛魔</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
@@ -107,6 +107,41 @@
             </span>
 
             
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期六, 十二月 21日 2019, 11:55 中午
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    462 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      1 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
           </div>
 
           
@@ -117,75 +152,121 @@
 
   <main>
     
-      <div class="container nopadding-md">
-        <div class="py-5 z-depth-3" id="board">
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
+      
 
-<div class="list-group">
-  <p class="h4">共计 7 篇文章</p>
-  <hr>
-  
-    
-      
-      <p class="h5">2019</p>
-    
-    <a href="/2019/12/23/socket-linux-learn/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Socket基础编程</span>
-      <span style="float: right;">12-23</span>
-    </a>
-  
-    
-    <a href="/2019/12/23/epoll-learn/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">EPOLL的简单认识与使用</span>
-      <span style="float: right;">12-23</span>
-    </a>
-  
-    
-    <a href="/2019/12/23/ip-protocol-header/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">IP/TCP协议头的简单认识</span>
-      <span style="float: right;">12-23</span>
-    </a>
-  
-    
-    <a href="/2019/12/22/rsa-encrypt-theory/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">非对称加密及OpenSSL,TLS,DTLS</span>
-      <span style="float: right;">12-22</span>
-    </a>
-  
-    
-    <a href="/2019/12/21/srtp-protocol/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">SRTP与SRTCP协议的认识</span>
-      <span style="float: right;">12-21</span>
-    </a>
-  
-    
-      
-      <p class="h5">2018</p>
-    
-    <a href="/2018/09/21/time-and-frequency-domain/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">认识时域与频域</span>
-      <span style="float: right;">09-21</span>
-    </a>
-  
-    
-      
-      <p class="h5">2017</p>
-    
-    <a href="/2017/07/31/Regular-Expression/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">常用正则表达式记录</span>
-      <span style="float: right;">07-31</span>
-    </a>
-  
-</div>
-              </div>
-            </div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <p>在<code>&lt;&lt;非对称加密及OpenSSL,TLS,DTLS&gt;&gt;</code>一文中,说到了 <code>DTLS</code>.</p>
+<p>由于<code>SRTP</code>在传输中比较重要,我就单列了一篇来记录<code>DTLS</code></p>
+<a id="more"></a>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>SRTP(SecureReal-time Transport Protocol) 安全实时传输协议，SRTP是在实时传输协议(Real-time Transport Protocol)基础上所定义的一个协议，旨在为单播和多播应用程序中的实时传输协议的数据提供加密、消息认证、完整性保证和重放保护安全实时传输协议。</p>
+<p>通过<code>DTLS</code>可以获取到一个对称加密的密钥,<code>SRTP</code>就可以使用这个密钥加解密数据</p>
+<ul>
+<li>加解密数据</li>
+<li>保障数据完整</li>
+</ul>
+<h2 id="SRTP协议头"><a href="#SRTP协议头" class="headerlink" title="SRTP协议头"></a>SRTP协议头</h2><blockquote>
+<p><a href="https://tools.ietf.org/html/rfc3711#section-3.1" target="_blank" rel="noopener">https://tools.ietf.org/html/rfc3711#section-3.1</a>   </p>
+</blockquote>
+<pre><code> The format of an SRTP packet is illustrated in Figure 1.
+
+        0                   1                   2                   3
+      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+&lt;+
+     |V=2|P|X|  CC   |M|     PT      |       sequence number         | |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ |
+     |                           timestamp                           | |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ |
+     |           synchronization source (SSRC) identifier            | |
+     +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+ |
+     |            contributing source (CSRC) identifiers             | |
+     |                               ....                            | |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ |
+     |                   RTP extension (OPTIONAL)                    | |
+   +&gt;+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ |
+   | |                          payload  ...                         | |
+   | |                               +-------------------------------+ |
+   | |                               | RTP padding   | RTP pad count | |
+   +&gt;+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+&lt;+
+   | ~                     SRTP MKI (OPTIONAL)                       ~ |
+   | +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ |
+   | :                 authentication tag (RECOMMENDED)              : |
+   | +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ |
+   |                                                                   |
+   +- Encrypted Portion*                      Authenticated Portion ---+
+</code></pre><p>这张图,第一眼是不是似曾相识,和<code>RTP</code>的协议头非常的像.</p>
+<p>实际上也确实是这样,<code>SRTP</code>在对<code>payload</code>加密后,增加了<code>SRTP MKI (OPTIONAL)</code> 以及<code>authentication tag</code></p>
+<ul>
+<li><p>SRTP MKI   一般不使用这个</p>
+</li>
+<li><p>authentication tag</p>
+<p>对RTP头部的数据做一个hash,并对这个hash签名</p>
+<p>当对端接收到这个数据后,也会对RTP头部数据hash,并且使用之前传输过来的<code>密钥</code>进行加密,进行比对.</p>
+</li>
+</ul>
+<h2 id="SRTP的开源库-libsrtp"><a href="#SRTP的开源库-libsrtp" class="headerlink" title="SRTP的开源库 libsrtp"></a>SRTP的开源库 libsrtp</h2><p>一个应用十分广泛的开源<code>srtp</code>实现,已经被验证过是高效稳定的实现.</p>
+<p>后面遇到继续记录</p>
+<h2 id="SRTCP"><a href="#SRTCP" class="headerlink" title="SRTCP"></a>SRTCP</h2><blockquote>
+<p> <a href="https://tools.ietf.org/html/rfc3711" target="_blank" rel="noopener">https://tools.ietf.org/html/rfc3711</a></p>
+</blockquote>
+<p>文档后面也对 <code>SRTCP</code>也做了说明,如果后面遇到再进行了解</p>
+
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              <span>
+                <i class="iconfont icon-inbox"></i>
+                
+                  <a class="hover-with-bg" href="/categories/Other">Other</a>
+                  &nbsp;
+                
+              </span>&nbsp;&nbsp;
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/WebRTC">WebRTC</a>
+                
+                  <a class="hover-with-bg" href="/tags/SRTP">SRTP</a>
+                
+              </span>
+            
+            </p>
+            
           </div>
         </div>
       </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+  </div>
+</div>
+
     
   </main>
 
@@ -265,6 +346,11 @@
 
 
 
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
+
 
 
   <script src="/lib/smooth-scroll/smooth-scroll.min.js" ></script>
@@ -334,7 +420,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "分类 - Other&nbsp;",
+        "SRTP与SRTCP协议的认识&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

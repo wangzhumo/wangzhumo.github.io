@@ -134,6 +134,132 @@
     
     
       <div class="col-12 col-md-4 m-auto">
+        <a href="/2018/01/03/room-list/" target="_self">
+          <img src="/img/android.png" srcset="/img/loading.gif" alt="Room中List&lt;&gt;使用详解" class="img-fluid rounded z-depth-3 index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/2018/01/03/room-list/">
+        <p class="h4 index-header">Room中List&lt;&gt;使用详解</p>
+        
+        
+          
+          
+        
+        <div class="index-excerpt" style="max-height: none;">
+          <div class="index-text mb-1">
+手摸手教你在Room中使用List.
+
+实际项目有很多这样的结构:
+{
+  &quot;id&quot;: &quot;001&quot;,
+  &quot;name&quot;: &quot;王诛魔&quot;,
+  &quot;age&quot;: 2018,
+  &quot;books&quot;: [
+    {
+      &quot;bookId&quot;: 10081,
+      &quot;userId&quot;: 1,
+      &quot;book&quot;: &quot;断罪小学&quot;,
+      &quot;desc&quot;: &quot;漫画讲述了李杀神、王诛魔和刘斩仙三位少年，为了十万小学生的未来、为了改变被诅咒的命运，相聚在狼牙区飞虎路私立断罪小学，誓死打败四年级的魔神赵日天的故事。&quot;
+    },
+    {
+      &quot;bookId&quot;: 10088,
+      &quot;userId&quot;: 1,
+      &quot;book&quot;: &quot;狂霸天下之断罪学园&quot;,
+      &quot;desc&quot;: &quot;《狂霸天下之断罪学园》，后来因为名字太长，而且“学园”和“学院”容易混淆的原因而改名。&quot;
+    }
+  ]
+}
+...</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-01-03&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android">Android</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Android">Android</a>&nbsp;
+          
+            <a href="/tags/Room">Room</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/2017/12/28/Android-Font-Size/" target="_self">
+          <img src="/img/android.png" srcset="/img/loading.gif" alt="Android字体不跟随系统变化" class="img-fluid rounded z-depth-3 index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/2017/12/28/Android-Font-Size/">
+        <p class="h4 index-header">Android字体不跟随系统变化</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">已知的方法有两种:
+第一种
+不使用sp 而使用 dp
+第二种
+在Application中加入
+@Override
+public void onConfigurationChanged(Configuration newConfig) {
+    if (newConfig.fontScale != 1)
+        getResources();
+    super.onConfigurationChanged(newConfig);
+}
+
+@Override
+public Resources getResources() {
+     Resources res = super.getResources();
+     if (res.getConfiguration().fontScale != 1) {
+        Configuration newConfig = new Configuration();
+        newConfig.setToDefaults();
+        res.updateConfiguration(newConfig, res.g</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android">Android</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Android">Android</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
         <a href="/2017/12/28/Apk-Install-Error/" target="_self">
           <img src="/img/android.png" srcset="/img/loading.gif" alt="Apk Install 的各种问题" class="img-fluid rounded z-depth-3 index-thumbnails">
         </a>
@@ -549,140 +675,6 @@ NetworkApis.java
             <a href="/tags/Okhttp">Okhttp</a>&nbsp;
           
             <a href="/tags/Rxjava">Rxjava</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-      <div class="col-12 col-md-4 m-auto">
-        <a href="/2017/12/25/Android-build-gradle-config/" target="_self">
-          <img src="/img/android.png" srcset="/img/loading.gif" alt="Android项目的build.gradle通用设置" class="img-fluid rounded z-depth-3 index-thumbnails">
-        </a>
-      </div>
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2017/12/25/Android-build-gradle-config/">
-        <p class="h4 index-header">Android项目的build.gradle通用设置</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">apply plugin: &#39;com.android.application&#39;
-
-android {
-
-    //开启dataBinding
-    dataBinding{
-        enabled = true
-    }
-
-    defaultConfig {
-        //开启multiDex
-        multiDexEnabled true
-
-        //使用jni
-        ndk {
-            //设置支持的SO库架构,这里的意思是只支持&#39;armeabi&#39;, &#39;armeabi-v7a&#39;, &#39;x86&#39;
-            //这三种架构
-            abiFilters &#39;armeabi&#39;, &#39;armeabi-v7a&#39;, &#39;x86&#39;
-        }
-    }
-
-
-    //设置一个编译的配置
-    signingConfigs {
-        //名为release的配置项
-  </div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-25&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android">Android</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Android">Android</a>&nbsp;
-          
-            <a href="/tags/Gradle">Gradle</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-      <div class="col-12 col-md-4 m-auto">
-        <a href="/2017/12/25/Android-dependent-config/" target="_self">
-          <img src="/img/android.png" srcset="/img/loading.gif" alt="Android 项目统一管理依赖版本" class="img-fluid rounded z-depth-3 index-thumbnails">
-        </a>
-      </div>
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2017/12/25/Android-dependent-config/">
-        <p class="h4 index-header">Android 项目统一管理依赖版本</p>
-        
-        
-          
-          
-        
-        <div class="index-excerpt" style="max-height: none;">
-          <div class="index-text mb-1">准备引入Arouter,做一个组件的demo,就开始慢慢的改造项目
-.
-|-- app
-|   |-- build.gradle
-|   |-- libs
-|   |-- src
-|   |   |-- androidTest
-|   |   |-- main
-|   |   `-- test
-|
-|-- opensource
-|   |-- build.gradle
-|   |-- libs
-|   `-- src
-|       `-- main
-|-- build.gradle
-|-- settings.gradle
-`-- versions.gradle
-
-app 为主项目opensource 作为library存在,将来会成为baseLib的依赖,其中是所有的三方依赖,开源代码等等
-...</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-25&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android">Android</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Android">Android</a>&nbsp;
-          
-            <a href="/tags/Gradle">Gradle</a>&nbsp;
-          
-            <a href="/tags/%E7%BB%84%E4%BB%B6%E5%8C%96">组件化</a>&nbsp;
           
         
       </div>

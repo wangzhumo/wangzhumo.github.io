@@ -15,7 +15,7 @@
   <meta name="description" content="王诛魔">
   <meta name="author" content="wangzhumo">
   <meta name="keywords" content="">
-  <title>非对称加密及OpenSSL,TLS,DTLS ~ 王诛魔</title>
+  <title>SDP标准格式详解 ~ 王诛魔</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
@@ -111,7 +111,7 @@
               
                 <p class="mt-3">
                   <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
-                  星期日, 十二月 22日 2019, 10:57 晚上
+                  星期一, 十二月 23日 2019, 4:23 下午
                 </p>
               
 
@@ -120,7 +120,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    1.6k 字
+                    1.3k 字
                   </span>&nbsp;
                 
 
@@ -128,7 +128,7 @@
                   
                   &nbsp;<i class="far fa-clock"></i>
                   <span class="post-count">
-                      5 分钟
+                      6 分钟
                   </span>&nbsp;
                 
 
@@ -161,100 +161,204 @@
       <div class="py-5 z-depth-3" id="board">
         <div class="post-content mx-auto" id="post">
           <div class="markdown-body">
-            <h2 id="加密算法"><a href="#加密算法" class="headerlink" title="加密算法"></a>加密算法</h2><h4 id="常见的加密算法"><a href="#常见的加密算法" class="headerlink" title="常见的加密算法"></a>常见的加密算法</h4><ul>
-<li><p>RSA    现在比较通用的非对称加密,在性能上满足要求,安全性也足够高</p>
-</li>
-<li><p>AES/DES    对称加密    </p>
-</li>
-<li><p>MD5    使用Hash函数计算信息摘要</p>
-</li>
-<li><p>SHA    和MD5类似,但是比MD5要安全</p>
-</li>
-</ul>
-<p>在加密解密的过程中,总要衡量的是<code>安全性</code>,<code>效率</code>.我们都知道非对称加密的安全性很高,但是它的效率就要比对称加密低很多.</p>
+            <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><strong>SDP</strong> Session Description Protocol 是一种标准格式,被用来传输媒体信息参数.</p>
+<p>根据<code>wikipadia</code>的解释,是<code>IETF</code>组织发布的标准,文档在<code>RFC 4566</code>.</p>
 <a id="more"></a>
-<p>在<code>Https</code>中就是采用先使用<code>非对称加密</code>传递<code>对称加密</code>的密钥,而后传输都使用这个<code>对称加密的密钥</code>进行加解密,以满足效率要求.</p>
-<h3 id="非对称加密的前提条件"><a href="#非对称加密的前提条件" class="headerlink" title="非对称加密的前提条件"></a>非对称加密的前提条件</h3><blockquote>
-<p>非对称加密理论上是可以被破解的,我们要先明白这个前提,而后才能更快速的理解原理</p>
-</blockquote>
-<h4 id="最优解不存在"><a href="#最优解不存在" class="headerlink" title="最优解不存在"></a>最优解不存在</h4><p>非对称加密的最优解，就是找到一个完全不能找到反函数的函数,但是数学目前还没有找到这样的一个函数,</p>
-<p>所以现在,只能去找到一个很难算出来的函数,你要得到这个函数可能要花费巨大的资源,很长的时间,把这个破解的难度尽量提升到无限大,这是现在非对称加密的主要思路</p>
-<h4 id="RSA加密的数学原理"><a href="#RSA加密的数学原理" class="headerlink" title="RSA加密的数学原理"></a>RSA加密的数学原理</h4><p>大数的质因数分解 =&gt; 超级困难</p>
-<p>这样的话,你可以很方便的计算两个质数的积,但是反过来这两个质数,你很难通过这个积来反推回来.</p>
-<h3 id="非对称加密应用"><a href="#非对称加密应用" class="headerlink" title="非对称加密应用"></a>非对称加密应用</h3><p>在知乎上看到一个比喻写的很好,贴上来:</p>
 <blockquote>
-<p>非对称加密主要用于两个场景，数据传输，签名。</p>
-<p>数据传输应用场景：</p>
-<p>古代每年都进行科举考试，考生（数据发送者）将写好答案（明文）的纸张交给收取试卷的太监（可能发生数据泄露的网络），然后由他转交给皇帝（数据接受者）来审阅。最开始相安无事，直到有一年太监偷看答案，将答案告诉某些王公贵族的公子。皇帝开始发现这个办法有缺陷，于是更改了流程，发给每个考生一把锁头（公钥），考试写完答案后将答案锁起来再交给太监，这样太监就没办法偷看了。皇帝有一把能打开这些箱子的钥匙（私钥），这样就保证了考生答案不会泄露。</p>
-<p>签名应用场景：</p>
-<p>有一天皇帝（数据发送者）觉得东边匈奴太嚣张，发了一道圣旨（明文）给驻守边疆的大将军（数据接受者），匈奴太嚣张了你给我怼他。太监又去送信了，结果他勾结匈奴把圣旨改了，让大将军撤军。皇帝发现，这个不行啊，然后给你大将军一把钥匙（公钥），自己按照又配了很多对应的锁头。再次发圣旨的时候，就把圣旨的摘要锁起来。摘要很短，写了圣旨有多少字，主要内容等（其实是按照hash函数映射出的字段，并没有实际意义）。</p>
-<p>ps：不要问我为啥不锁圣旨，因为圣旨比较长，要用的盒子比较大，也就是说加密起来比较困难，而摘要就很短，锁进一个小盒子里就行了。</p>
-<p>就这样，大将军再次收到圣旨的时候，就会拿钥匙打开盒子中的摘要看看圣旨有没有被篡改。</p>
-<p>这样进行两步信息确认：1、盒子上的锁头能被打开证明这个圣旨确实是皇帝发的。2、摘要的内容和圣旨一致，证明确实内容未被篡改过。即保证2点：信息的来源，信息未被篡改。</p>
-<p>作者：高君<br>链接：<a href="https://www.zhihu.com/question/23879943/answer/154260251" target="_blank" rel="noopener">https://www.zhihu.com/question/23879943/answer/154260251</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<p>wiki : <a href="https://en.wikipedia.org/wiki/Session_Description_Protocol" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Session_Description_Protocol</a></p>
+<p>RFC 4566 : <a href="https://tools.ietf.org/html/rfc4566" target="_blank" rel="noopener">https://tools.ietf.org/html/rfc4566</a></p>
 </blockquote>
-<h3 id="非对称加密原理"><a href="#非对称加密原理" class="headerlink" title="非对称加密原理"></a>非对称加密原理</h3><p>涉及到密码学的很多知识,以及数学上的一些定理,如果要详细了解</p>
+<p><code>SDP</code>旨在作为一种通用的格式,在各种网络环境中,传输媒体信息.</p>
+<h2 id="SDP的格式"><a href="#SDP的格式" class="headerlink" title="SDP的格式"></a>SDP的格式</h2><h4 id="基本格式"><a href="#基本格式" class="headerlink" title="基本格式"></a>基本格式</h4><p>每一行表示一种描述信息,通过:</p>
+<pre><code>&lt;type&gt;=&lt;value&gt;
+</code></pre><p>的形式组成,<code>type</code>和<code>value</code>基本上不用 <code>=</code> 开头结尾,都是可以的.</p>
+<p>其中要注意的是:</p>
+<pre><code>An SDP session description consists of a session-level section
+followed by zero or more media-level sections.  The session-level
+part starts with a &quot;v=&quot; line and continues to the first media-level
+section.  Each media-level section starts with an &quot;m=&quot; line and
+continues to the next media-level section or end of the whole session
+description.  In general, session-level values are the default for
+all media unless overridden by an equivalent media-level value.
+</code></pre><p><strong>session-level section</strong>   会话级的只有一个   </p>
+<p><strong>media-level sections</strong>   媒体级描述可能有 0 - more 个</p>
+<p>其中<code>=*</code> 是可选的.  </p>
+<h4 id="Session-description-会话层"><a href="#Session-description-会话层" class="headerlink" title="Session description 会话层"></a>Session description 会话层</h4><pre><code class="java">v=  (protocol version)     //版本
+o=  (originator and session identifier)    //创建者的会话标识
+s=  (session name)                 //会话的Name,唯一
+i=* (session information)  
+u=* (URI of description)
+e=* (email address)
+p=* (phone number)
+c=* (connection information)     //连接的信息,要注意的是,如果媒体层定义了这个连接信息,
+                                                               //就使用媒体层定义的,否则使用这个    
+b=* (zero or more bandwidth information lines)
+One or more time descriptions (&quot;t=&quot; and &quot;r=&quot; lines; see below)
+z=* (time zone adjustments)
+k=* (encryption key)
+a=* (zero or more session attribute lines)   //attribute ,可以有多个或者没有
+
+Zero or more media descriptions
+</code></pre>
+<h4 id="Time-description"><a href="#Time-description" class="headerlink" title="Time description"></a>Time description</h4><pre><code class="java">t=  (time the session is active)   //存活时间 0 表示一直存在
+r=* (zero or more repeat times)
+</code></pre>
+<h4 id="Media-description-媒体层"><a href="#Media-description-媒体层" class="headerlink" title="Media description  媒体层"></a>Media description  媒体层</h4><pre><code class="java">m=  (media name and transport address)  //媒体名与地址
+i=* (media title)   
+c=* (connection information)                  //连接信息,与会话层的一样
+b=* (zero or more bandwidth information lines)   //带宽,可以做推流的限制
+k=* (encryption key)   
+a=* (zero or more media attribute lines)         //attribute
+</code></pre>
+<h2 id="SDP会话信息"><a href="#SDP会话信息" class="headerlink" title="SDP会话信息"></a>SDP会话信息</h2><p>一个SDP内包含以下的内容:</p>
+<ul>
+<li><p>Session name and purpose</p>
+<p>会话的名字以及意图</p>
+</li>
+<li><p>Time(s) the session is active</p>
+<p>会话可存活的时间</p>
+</li>
+<li><p>The media comprising the session</p>
+<p>组成这个会话的媒体</p>
+</li>
+<li><p>Information needed to receive those media (addresses, ports, formats, etc.)</p>
+<p>接收媒体的信息,比如 地址 ,端口, 编码类型..</p>
+</li>
+</ul>
+<p><strong>支持添加一些 <code>附加信息</code></strong></p>
+<ul>
+<li><p>Information about the bandwidth to be used by the session</p>
+<p>会话使用的带宽信息</p>
+</li>
+<li><p>Contact information for the person responsible for the session</p>
+<p>会话中人员的可靠通信信息</p>
+</li>
+</ul>
+<h2 id="SDP媒体信息"><a href="#SDP媒体信息" class="headerlink" title="SDP媒体信息"></a>SDP媒体信息</h2><ul>
+<li><p>The type of media (video, audio, etc.)</p>
+<p>媒体的类型,如: video audio</p>
+</li>
+<li><p>The transport protocol (RTP/UDP/IP, H.320, etc.)</p>
+<p>传输层的协议,在<code>WebRTC</code>中基本上都是RTP,SRTP</p>
+</li>
+<li><p>The format of the media (H.261 video, MPEG video, etc.)</p>
+<p>这个媒体的编码格式,如:  H.264 video </p>
+</li>
+</ul>
+<p><strong>For an IP multicast session的一些<code>附加信息</code></strong></p>
+<ul>
+<li><p>The multicast group address for media</p>
+<p>这个媒体可能多路传输,这些传输的地址</p>
+</li>
+<li><p>The transport port for media</p>
+<p>端口</p>
 <blockquote>
-<p><a href="https://cloud.tencent.com/developer/article/1130051" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1130051</a></p>
+<p>  这些地址和端口既有 发送 也有 接收</p>
 </blockquote>
-<h4 id="公钥加密-私钥解密流程图"><a href="#公钥加密-私钥解密流程图" class="headerlink" title="公钥加密 - 私钥解密流程图"></a>公钥加密 - 私钥解密流程图</h4><p><img src="/images/rsa_encrypt_encode.png" srcset="/img/loading.gif" alt="rsa_encrypt_encode"></p>
-<h4 id="私钥加密-公钥解密流程图"><a href="#私钥加密-公钥解密流程图" class="headerlink" title="私钥加密 - 公钥解密流程图"></a>私钥加密 - 公钥解密流程图</h4><p><img src="/images/rsa_encrypt_decode.png" srcset="/img/loading.gif" alt="rsa_encrypt_decode"></p>
-<h2 id="OpenSSL"><a href="#OpenSSL" class="headerlink" title="OpenSSL"></a>OpenSSL</h2><p>SSL全称是<code>Secure Sockets Layer</code></p>
-<p>在<code>SSL</code>3.0版本之后,IETF（Internet工程任务组）标准化SSL协议后,称之为<code>TSL( Transport Layer Security)</code></p>
-<blockquote>
-<p>SSL == TSL</p>
-<p><a href="https://www.openssl.org/docs/manmaster/man1/openssl.html" target="_blank" rel="noopener">https://www.openssl.org/docs/manmaster/man1/openssl.html</a></p>
-</blockquote>
-<pre><code> o  Creation and management of private keys, public keys and parameters
- o  Public key cryptographic operations
- o  Creation of X.509 certificates, CSRs and CRLs
- o  Calculation of Message Digests and Message Authentication Codes
- o  Encryption and Decryption with Ciphers
- o  SSL/TLS Client and Server Tests
- o  Handling of S/MIME signed or encrypted mail
- o  Timestamp requests, generation and verification
-</code></pre><p>以上说明了OpenSSl的用途.</p>
+</li>
+</ul>
+<p><strong>For unicast IP sessions的附加信息</strong></p>
 <ul>
-<li><p>生成和管理公钥，私钥以及相关参数</p>
+<li><p>The remote address for media</p>
+<p>地址</p>
 </li>
-<li><p>使用公钥和私钥</p>
-</li>
-<li><p>管理证书（X.509格式）认证请求</p>
-</li>
-<li><p>计算摘要（hash)</p>
-</li>
-<li><p>使用加密方法(cipher)加密与解密</p>
-</li>
-<li><p>测试SSL/TLS连接</p>
-</li>
-<li><p>Email签名或加密（S/MIME）格式</p>
-</li>
-<li><p>时间戳的生成与验证</p>
+<li><p>The remote transport port for media</p>
+<p>端口</p>
 </li>
 </ul>
-<h3 id="OpenSSL的原理"><a href="#OpenSSL的原理" class="headerlink" title="OpenSSL的原理"></a>OpenSSL的原理</h3><ul>
-<li>SSL_CTX   ssl的上下文,证书,密钥,版本等等</li>
-<li>SSL           SSL的链接,是与一个负责传输的socket绑定的</li>
-<li>SSL_Write / SSL_Read      通过这两个方法读取/写入 <code>SSL</code> </li>
-</ul>
-<p><img src="/images/openssl_how_to_use.png" srcset="/img/loading.gif" alt="openssl_how_to_use"></p>
-<h2 id="DTLS"><a href="#DTLS" class="headerlink" title="DTLS"></a>DTLS</h2><p>由于<code>TLS</code>是基于<code>TCP</code>协议的,我们想要在<code>UDP</code>上使用,就需要使用<code>DTLS</code></p>
-<p>DTSL是与SRTP一起用于WebRTC技术的安全协议之一</p>
-<p><strong>握手协议</strong></p>
-<p><img src="/images/dtls_protocol_process.png" srcset="/img/loading.gif" alt="dtls_protocol_process"></p>
-<p>通过这个握手协议,就可以使用非对称加密的方式</p>
-<ul>
-<li>交换对称加密的密钥</li>
-<li>确定双方的加密算法</li>
-</ul>
-<p><strong>时序图</strong></p>
-<p><img src="/images/dtls_protocol_sequence.png" srcset="/img/loading.gif" alt="dtls_protocol_process"></p>
-<h2 id="SRTP"><a href="#SRTP" class="headerlink" title="SRTP"></a><strong>SRTP</strong></h2><p>SRTP(SecureReal-time Transport Protocol) 安全实时传输协议，SRTP是在实时传输协议(Real-time Transport Protocol)基础上所定义的一个协议，旨在为单播和多播应用程序中的实时传输协议的数据提供加密、消息认证、完整性保证和重放保护安全实时传输协议。</p>
-<p>通过<code>DTLS</code>可以获取到一个对称加密的密钥,<code>SRTP</code>就可以使用这个密钥加解密数据</p>
-<ul>
-<li>加解密数据</li>
-<li>保障数据完整</li>
-</ul>
+<h2 id="实例解析"><a href="#实例解析" class="headerlink" title="实例解析"></a>实例解析</h2><p>这是一个真实的项目中,收到的一个对方<code>Answer</code></p>
+<pre><code class="java">    //-------------------------会话层--------------------------START
+    //版本为 0
+    v=0
+
+    // o = [username] [session id] [version] [network type] [address type] [address]  
+    //这里,省略了username, 其他的都是有值的.  
+    o=- 1930416105824510862 2 IN IP4 59.86.51.172
+
+    // s = [session name]  
+    //也会有 s=-,表示忽略Session name  
+    s=VideoRoom 10000436497
+
+      // t = [time]
+    // 表示这个会话不会过期  
+    t=0 0  
+    // a=group 
+    // 音视频的传输中,媒体流是否共用一个通道,复用同一个端口  
+    a=group:BUNDLE audio video
+    a=msid-semantic: WMS janus
+    a=ice-lite
+
+    //-------------------------会话层--------------------------END
+
+
+    //-------------------------媒体层1--------------------------START  
+
+    // m = [media] [prot] [transport] [fmt/payload type list]
+    // UDP上使用了TLS,用RTP传输 S(safe)A(audio)V(Video)P(Profile可配置)F(Feedback可反馈)
+    m=audio 9 UDP/TLS/RTP/SAVPF 111
+    c=IN IP4 59.86.51.172
+    a=recvonly
+    a=mid:audio
+    a=rtcp-mux    
+    // a=crypto [parameters]  
+    // 加密的方式  
+    a=crypto:sha-256  
+    //ICE的用户名  
+    a=ice-ufrag:/XUK
+    //ICE的密码  
+    a=ice-pwd:PQc9v6fR+e8oY9+ZBl
+    a=ice-options:trickle
+    //DTLS握手过程中的指纹  
+    a=fingerprint:sha-256 D2:B9:31:8F:DF:24:D8:0E:ED:D2:EF:25:9E:AF:6F:B8:34:AE:53:9C:E6:F3:8F:F2:64:15:FA:E8:7F:53:2D:38
+    a=setup:active  
+    // a=rtpmap:[fmt/payload type] [encoding name]/[clock rate]/[encoding parameters]
+    // 表示  111 是 opus 的编码格式,时钟频率 48000,channels =2  
+    a=rtpmap:111 opus/48000/2
+    a=msid:janus janusa0
+    a=ssrc:3884373698 cname:janus
+    a=ssrc:3884373698 msid:janus janusa0
+    a=ssrc:3884373698 mslabel:janus
+    a=ssrc:3884373698 label:janusa0
+    // a=candidate  
+    a=candidate:1 1 udp 2013266431 59.86.51.172 33778 typ host
+    a=end-of-candidates
+
+
+    //-------------------------媒体层2--------------------------START   
+    m=video 9 UDP/TLS/RTP/SAVPF 100
+    c=IN IP4 59.86.51.172
+    a=recvonly
+    a=mid:video
+    //RTCP 与 RTP 公共使用一个端口,复用端口  
+    a=rtcp-mux
+    a=ice-ufrag:/XUK
+    a=ice-pwd:PQc9v6fR+e8oY9+ZBl
+    a=ice-options:trickle
+    a=fingerprint:sha-256 D2:B9:31:8F:DF:24:D8:0E:ED:D2:EF:25:9E:AF:6F:B8:34:AE:53:9C:E6:F3:8F:F2:64:15:FA:E8:7F:53:2D:38
+    a=setup:active
+    a=rtpmap:100 H264/90000
+    // a=fmtp:[format/payload type] [parameters]  
+    // 表示是对 100 的继续说明  
+    a=fmtp:100 profile-level-id=42e01f;packetization-mode=1
+    // a=rtcp-fb  
+    // 服务质量的反馈  
+    a=rtcp-fb:100 ccm fir
+    a=rtcp-fb:100 nack
+    a=rtcp-fb:100 nack pli
+    a=rtcp-fb:100 goog-remb
+    a=rtcp-fb:100 transport-cc
+    a=msid:janus janusv0
+    a=ssrc:1697410042 cname:janus
+    a=ssrc:1697410042 msid:janus janusv0
+    a=ssrc:1697410042 mslabel:janus
+    a=ssrc:1697410042 label:janusv0
+    a=candidate:1 1 udp 2013266431 59.86.51.172 33778 typ host
+    a=end-of-candidates
+
+    //-------------------------媒体层--------------------------END
+</code></pre>
+<h2 id="WebRTC中的SDP"><a href="#WebRTC中的SDP" class="headerlink" title="WebRTC中的SDP"></a>WebRTC中的SDP</h2><p><img src="/images/sdp_session_webrtc.png" srcset="/img/loading.gif" alt="sdp_session_webrtc"></p>
+<p>END</p>
 
             <hr>
           </div>
@@ -265,7 +369,7 @@
               <span>
                 <i class="iconfont icon-inbox"></i>
                 
-                  <a class="hover-with-bg" href="/categories/Other">Other</a>
+                  <a class="hover-with-bg" href="/categories/WebRTC">WebRTC</a>
                   &nbsp;
                 
               </span>&nbsp;&nbsp;
@@ -274,7 +378,7 @@
               <span>
                 <i class="iconfont icon-tag"></i>
                 
-                  <a class="hover-with-bg" href="/tags/RSA">RSA</a>
+                  <a class="hover-with-bg" href="/tags/WebRTC">WebRTC</a>
                 
               </span>
             
@@ -458,7 +562,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "非对称加密及OpenSSL,TLS,DTLS&nbsp;",
+        "SDP标准格式详解&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
