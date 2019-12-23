@@ -134,6 +134,230 @@
     
     
       <div class="col-12 col-md-4 m-auto">
+        <a href="/2018/05/10/Thread-Process-IPC/" target="_self">
+          <img src="/img/coding.png" srcset="/img/loading.gif" alt="线程与进程的异同以及Android中的IPC机制" class="img-fluid rounded z-depth-3 index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/2018/05/10/Thread-Process-IPC/">
+        <p class="h4 index-header">线程与进程的异同以及Android中的IPC机制</p>
+        
+        
+          
+          
+        
+        <div class="index-excerpt" style="max-height: none;">
+          <div class="index-text mb-1">线程与进程Google  Doc (https://developer.android.com/guide/components/processes-and-threads)
+
+进程是资源分配的最小单位，线程是cpu调度的最小单位.
+
+进程是应用程序的执行实例,一个进程中可以包含多个线程,
+而一个进程的创建分配是要消耗较大的性能的,相比来说线程就要比进程的开销小.
+
+对于进程来说不共享资源,内存是独立的.而线程共享它所在的线程的资源,内存.
+
+进程间的通信就要更加麻烦,需要使用IPC( Inter-Proscess Communication)进程间的通讯
+线程方便很多,但是线程间的同步又是一个较为大的课题了.
+
+
+
+想强调的是，线程关注的是中央处理器的运行，而不是进程那样关注内存等资源的管理。
+...</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-05-10&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Java">Java</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Java">Java</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/2018/05/09/Java-memory-module/" target="_self">
+          <img src="/img/coding.png" srcset="/img/loading.gif" alt="Java中的内存模型" class="img-fluid rounded z-depth-3 index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/2018/05/09/Java-memory-module/">
+        <p class="h4 index-header">Java中的内存模型</p>
+        
+        
+          
+          
+        
+        <div class="index-excerpt" style="max-height: none;">
+          <div class="index-text mb-1">...</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-05-09&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Java">Java</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Java">Java</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/2018/05/09/Android-App-Launch/" target="_self">
+          <img src="/img/android.png" srcset="/img/loading.gif" alt="Android的启动流程" class="img-fluid rounded z-depth-3 index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/2018/05/09/Android-App-Launch/">
+        <p class="h4 index-header">Android的启动流程</p>
+        
+        
+          
+          
+        
+        <div class="index-excerpt" style="max-height: none;">
+          <div class="index-text mb-1">系统结构
+应用层
+即为开发出来的一些app,当然还包括了一些系统App
+
+应用框架层(Java API Framework)
+这一层由java编写,提供给我们平时开发使用的API,主要的一些组件:
+
+Manager
+Activity Manager , Window Manager , Package Manager ,Location Manager 
+Notification Manager,Resource Manager,Telephony Manager
+
+Content Providers
+
+View System
+
+
+
+系统运行库层
+C/C++程序库和Android运行时库
+
+硬件抽象层(HAL)
+
+Linux内核层
+
+...</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-05-09&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Source%20Code">Source Code</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Android">Android</a>&nbsp;
+          
+            <a href="/tags/Source%20Code">Source Code</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/2018/03/11/JVM-class-loader/" target="_self">
+          <img src="/img/coding.png" srcset="/img/loading.gif" alt="JVM虚拟机中的类加载器" class="img-fluid rounded z-depth-3 index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/2018/03/11/JVM-class-loader/">
+        <p class="h4 index-header">JVM虚拟机中的类加载器</p>
+        
+        
+          
+          
+        
+        <div class="index-excerpt" style="max-height: none;">
+          <div class="index-text mb-1">前言前一篇梳理了一下类加载机制的大概流程,其中就涉及到一个很重要的东西类加载器,在加载阶段”通过一个类的全限定名获取描述此类的二进制字节流”
+
+我们知道二级制字节流不只是我们编写的代码
+
+可以从一些jar,war包等压缩文件中获取
+已经凉了的Applet,也就是可以从网络中获取
+运行时生成,如动态代理,retrofit中使用的技术之一
+其他…
+
+
+那么下面我要知道的是:
+
+类加载器的含义和作用
+类加载器的类型
+类加载器的应用
+...</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-03-11&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Java">Java</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Java">Java</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
         <a href="/2018/03/10/JVM-load-class/" target="_self">
           <img src="/img/coding.png" srcset="/img/loading.gif" alt="JVM虚拟机的类加载机制" class="img-fluid rounded z-depth-3 index-thumbnails">
         </a>
@@ -407,220 +631,6 @@ https://developer.android.com/studio/write/tool-attributes.html#toolssample_reso
             <a href="/tags/Android">Android</a>&nbsp;
           
             <a href="/tags/Android%20Studio">Android Studio</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-      <div class="col-12 col-md-4 m-auto">
-        <a href="/2018/02/07/Android-Timber-Logger/" target="_self">
-          <img src="/img/android.png" srcset="/img/loading.gif" alt="Android项目中使用Timber + Logger日志输出" class="img-fluid rounded z-depth-3 index-thumbnails">
-        </a>
-      </div>
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2018/02/07/Android-Timber-Logger/">
-        <p class="h4 index-header">Android项目中使用Timber + Logger日志输出</p>
-        
-        
-          
-          
-        
-        <div class="index-excerpt" style="max-height: none;">
-          <div class="index-text mb-1">不啰嗦了,直接开始.
-添加依赖
-Logger   orhanobut/Logger
-Timber  JakeWharton/timber
-
-//logger
-implementation &#39;com.orhanobut:logger:2.1.1&#39;
-//timber
-implementation &#39;com.jakewharton.timber:timber:4.6.0&#39;
-...</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-02-07&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android">Android</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Android">Android</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-      <div class="col-12 col-md-4 m-auto">
-        <a href="/2018/02/05/Jenkins-Android/" target="_self">
-          <img src="/img/coding.png" srcset="/img/loading.gif" alt="Jenkins搭建Android自动打包" class="img-fluid rounded z-depth-3 index-thumbnails">
-        </a>
-      </div>
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2018/02/05/Jenkins-Android/">
-        <p class="h4 index-header">Jenkins搭建Android自动打包</p>
-        
-        
-          
-          
-        
-        <div class="index-excerpt" style="max-height: none;">
-          <div class="index-text mb-1">下载安装
-Jenkins的下载与安装
-下载
-
- https://jenkins.io/download/
- 下载war包
- Generic Java package (.war)
-
-因为打算使用Tomcat来部署,所以需要下载war包,也可以直接下对应版本的安装文件,直接安装
-
-
-**安装**
-
-war包放到`./apache-tomcat-7.0.77/webapps`    
-
-Tomcat的wabapps包下即可
-
-Tomcat (略)
-记得配置一下环境变量,等会方便启动
-export TOMCAT_HOME=/Users/phyooos/develop/apache-tomcat-7.0.77
-
-export PATH.....:$TOMCAT/bin
-
-
-...</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-02-05&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android">Android</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Android">Android</a>&nbsp;
-          
-            <a href="/tags/Server">Server</a>&nbsp;
-          
-            <a href="/tags/Jenkins">Jenkins</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-      <div class="col-12 col-md-4 m-auto">
-        <a href="/2018/02/04/Java-String-format/" target="_self">
-          <img src="/img/coding.png" srcset="/img/loading.gif" alt="Java中String.format()的使用指北" class="img-fluid rounded z-depth-3 index-thumbnails">
-        </a>
-      </div>
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2018/02/04/Java-String-format/">
-        <p class="h4 index-header">Java中String.format()的使用指北</p>
-        
-        
-          
-          
-        
-        <div class="index-excerpt" style="max-height: none;">
-          <div class="index-text mb-1">
-本文非原创,来自http://blog.csdn.net/lonely_fireworks/article/details/7962171/
-这里做一个备份,方便随时查询
-...</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-02-04&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Java">Java</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Java">Java</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-      <div class="col-12 col-md-4 m-auto">
-        <a href="/2018/01/17/Room-AppDatabase-Impl-does-not-exist/" target="_self">
-          <img src="/img/android.png" srcset="/img/loading.gif" alt="Room --AppDatabase_Impl does not exist的异常解决" class="img-fluid rounded z-depth-3 index-thumbnails">
-        </a>
-      </div>
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2018/01/17/Room-AppDatabase-Impl-does-not-exist/">
-        <p class="h4 index-header">Room --AppDatabase_Impl does not exist的异常解决</p>
-        
-        
-          
-          
-        
-        <div class="index-excerpt" style="max-height: none;">
-          <div class="index-text mb-1">Bug如下:
-Caused by: java.lang.RuntimeException: cannot find implementation for com.wangzhumo.app.datasource.database.AppDB. AppDB_Impl does not exist
-...</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-01-17&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Bug">Bug</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Android">Android</a>&nbsp;
-          
-            <a href="/tags/Bug">Bug</a>&nbsp;
-          
-            <a href="/tags/Room">Room</a>&nbsp;
           
         
       </div>

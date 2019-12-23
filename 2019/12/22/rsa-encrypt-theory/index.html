@@ -15,7 +15,7 @@
   <meta name="description" content="王诛魔">
   <meta name="author" content="wangzhumo">
   <meta name="keywords" content="">
-  <title>非对称加密及OpenSSL的使用 ~ 王诛魔</title>
+  <title>非对称加密及OpenSSL,TLS,DTLS,SRTP ~ 王诛魔</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
@@ -120,7 +120,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    1.5k 字
+                    1.6k 字
                   </span>&nbsp;
                 
 
@@ -240,10 +240,21 @@
 <p><img src="/images/openssl_how_to_use.png" srcset="/img/loading.gif" alt="openssl_how_to_use"></p>
 <h2 id="DTLS"><a href="#DTLS" class="headerlink" title="DTLS"></a>DTLS</h2><p>由于<code>TLS</code>是基于<code>TCP</code>协议的,我们想要在<code>UDP</code>上使用,就需要使用<code>DTLS</code></p>
 <p>DTSL是与SRTP一起用于WebRTC技术的安全协议之一</p>
+<p><strong>握手协议</strong></p>
 <p><img src="/images/dtls_protocol_process.png" srcset="/img/loading.gif" alt="dtls_protocol_process"></p>
+<p>通过这个握手协议,就可以使用非对称加密的方式</p>
+<ul>
+<li>交换对称加密的密钥</li>
+<li>确定双方的加密算法</li>
+</ul>
 <p><strong>时序图</strong></p>
 <p><img src="/images/dtls_protocol_sequence.png" srcset="/img/loading.gif" alt="dtls_protocol_process"></p>
 <h2 id="SRTP"><a href="#SRTP" class="headerlink" title="SRTP"></a><strong>SRTP</strong></h2><p>SRTP(SecureReal-time Transport Protocol) 安全实时传输协议，SRTP是在实时传输协议(Real-time Transport Protocol)基础上所定义的一个协议，旨在为单播和多播应用程序中的实时传输协议的数据提供加密、消息认证、完整性保证和重放保护安全实时传输协议。</p>
+<p>通过<code>DTLS</code>可以获取到一个对称加密的密钥,<code>SRTP</code>就可以使用这个密钥加解密数据</p>
+<ul>
+<li>加解密数据</li>
+<li>保障数据完整</li>
+</ul>
 
             <hr>
           </div>
@@ -447,7 +458,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "非对称加密及OpenSSL的使用&nbsp;",
+        "非对称加密及OpenSSL,TLS,DTLS,SRTP&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

@@ -4,11 +4,117 @@
   
   
   <entry>
-    <title>非对称加密及OpenSSL的使用</title>
+    <title>Socket基础编程</title>
+    <link href="undefined2019/12/23/socket-linux-learn/"/>
+    <url>2019/12/23/socket-linux-learn/</url>
+    
+    <content type="html"><![CDATA[<p>Socket经常使用,但是基本上都是作为<code>Client</code>端与服务器通信,下面介绍一些<code>Server</code>端的<code>socket</code>编程知识.</p><a id="more"></a><h3 id="TCP-Server-网络编程"><a href="#TCP-Server-网络编程" class="headerlink" title="TCP Server 网络编程"></a>TCP Server 网络编程</h3><ul><li>创建Socket,指定使用TCP协议</li><li>将创建的Socket 与 地址和端口绑定</li><li>监听这个端口</li><li>当连接发起后，创建一个新的socket与这个连接通信，当前的socket要继续接收新的连接请求</li><li>使用recv接收数据</li><li>使用send发送数据</li><li>使用close关闭连接</li></ul><h3 id="TCP常见的套接字选项"><a href="#TCP常见的套接字选项" class="headerlink" title="TCP常见的套接字选项"></a>TCP常见的套接字选项</h3><ul><li>SO_REUSEADDR 端口处于WAIT_TIME仍然可以启动，重用地址端口</li><li>SO_REVBUF    接收的缓冲区</li><li>SO_SNDBUF    发送的缓冲区</li></ul><h3 id="主体流程"><a href="#主体流程" class="headerlink" title="主体流程"></a>主体流程</h3><p><img src="/images/socket_follow_image-7072745.png" srcset="/img/loading.gif" alt="socket_follow_image"></p><h3 id="重要的结构体"><a href="#重要的结构体" class="headerlink" title="重要的结构体"></a>重要的结构体</h3><pre><code class="c++">//设置地址,端口struct sockaddr_in{  sa_family_t sin_family;      //设置ipv4...  uint16_t    sin_port;                    //端口  struct in_addr  sin_addr;            //地址  char                sin_zero[8];            //填充位  0即可}strcut in_addr{      in_addr_t   s_addr;}</code></pre><p>上面的部分方便编程,后面这个是程序中用.</p><pre><code class="c++">struct sockaddr{  sa_family_t    sin_family;  char                     sin_zero[14];  //14字节，包含套接字中的目标地址和端口信息}</code></pre><h3 id="TCP-Client-网络编程基本步骤"><a href="#TCP-Client-网络编程基本步骤" class="headerlink" title="TCP Client 网络编程基本步骤"></a>TCP Client 网络编程基本步骤</h3><ul><li>创建Socket,使用TCP协议</li><li>使用connect方法连接服务器</li><li>使用recv/send 处理消息</li><li>关闭Socket</li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>Other</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>WebRTC</tag>
+      
+      <tag>Socket</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>EPOLL的简单认识与使用</title>
+    <link href="undefined2019/12/23/epoll-learn/"/>
+    <url>2019/12/23/epoll-learn/</url>
+    
+    <content type="html"><![CDATA[<p>Epoll在客户端开发中,也是一个知识点</p><p>我们所知道的<code>Handler</code>其实内部实现也使用到了<code>Epoll</code>,并不是简单的<code>内部是一个for(;;)</code>死循环就可以解释的,毕竟休眠后怎么唤醒那? </p><a id="more"></a><blockquote><p>红黑树，准备就绪句柄链表，少量的内核cache</p></blockquote><h3 id="Epoll的优点"><a href="#Epoll的优点" class="headerlink" title="Epoll的优点"></a>Epoll的优点</h3><ul><li>Epoll没有对文件描述符的最大限制 (系统确定最大限制,一般很大)</li><li>工作效率比较高</li><li>Epoll有一些自带的优化,比如mmap,不需要用户空间-&gt;内核空间-&gt;用户空间的交换</li></ul><h3 id="Epoll的触发模式"><a href="#Epoll的触发模式" class="headerlink" title="Epoll的触发模式"></a>Epoll的触发模式</h3><ul><li><p>Level Trigger (水平触发,default) 类似于<code>stick</code>这样的效果,如果不处理,下一次触发时会再次要求处理这个事件</p><p><strong>只要有数据都会触发</strong>，缓冲区剩余未读尽的数据会导致epoll_wait返回</p></li><li><p>Edge Trigger (边缘处理) 只会返回一次,不管处理结果</p><p><strong>只有数据到来才触发</strong>，<strong>不管缓存区中是否还有数据</strong>，缓冲区剩余未读尽的数据不会导致epoll_wait返回</p></li></ul><p>水平处触发,开发难度小,效率较边缘触发低</p><h3 id="Epoll的几个API"><a href="#Epoll的几个API" class="headerlink" title="Epoll的几个API"></a>Epoll的几个API</h3><ul><li><p><code>int epoll_create(int size)</code> 参数无意义,可以忽略这个参数</p><p>epoll_create建立一个epoll对象,epoll文件系统中给这个句柄分配资源</p></li><li><p><code>int epoll_ctl(int epfd, int op, int fd, struct epoll_event *event)</code>     注册事件到epoll上去</p></li><li><p><code>int epoll_wait(int epfd, struct epoll_event *events,int maxevents, int timeout)</code></p><p>收集发生事件的连接</p><ul><li>epfd  创建出来的epoll</li><li>events  发生变化的文件描述符[array]</li><li>maxevents 一共有多少个变化的文件</li><li>timeout  超时</li></ul></li></ul><h3 id="Epoll的几个事件"><a href="#Epoll的几个事件" class="headerlink" title="Epoll的几个事件"></a>Epoll的几个事件</h3><ul><li>EPOLLET  边缘模式</li><li>EPOLLIN  数据进入</li><li>EPOLLOUT  数据输出</li><li>EPOLLPRI   Epoll中断</li><li>EPOLLERR  错误</li><li>EPOLLHUP  挂起</li></ul><h3 id="epoll-ctl的相关操作"><a href="#epoll-ctl的相关操作" class="headerlink" title="epoll_ctl的相关操作"></a>epoll_ctl的相关操作</h3><blockquote><p>事件操作</p></blockquote><ul><li>EPOLL_CTL_ADD      加入一个文件描述符   </li><li>EPOLL_CTL_MOD     修改一个已经存在的文件描述符</li><li>EPOLL_CTL_DEL        删除一个文件描述符</li></ul><h3 id="Epoll的重要结构体"><a href="#Epoll的重要结构体" class="headerlink" title="Epoll的重要结构体"></a>Epoll的重要结构体</h3><pre><code class="c">//联合体,只能使用其中的一项.typedef union epoll_data {      void *ptr;              //可以自己保存数据    int fd;      uint32_t u32;      uint64_t u64;      //可以使用这个,按位保存不同的数据. } epoll_data_t;struct epoll_event {      uint32_t events;      // Epoll events ,事件类型    epoll_data_t data;      // User data variable  ,自己的数据};</code></pre>]]></content>
+    
+    
+    <categories>
+      
+      <category>Other</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Epoll</tag>
+      
+      <tag>WebRTC</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>RTP与RTCP协议</title>
+    <link href="undefined2019/12/23/rtp-rtcp-protocol-header/"/>
+    <url>2019/12/23/rtp-rtcp-protocol-header/</url>
+    
+    <content type="html"><![CDATA[<h2 id="RTP"><a href="#RTP" class="headerlink" title="RTP"></a>RTP</h2><p><em>RTP</em>全名是<em>Real-time Transport Protocol</em>（实时传输协议）</p><blockquote><p><em>RFC3550</em>中定义了RTP,并且也定义了配套的RTCP（<em>Real-time Transport Control Protocol</em>，即实时传输控制协议）</p></blockquote><p>一般用于对视频,语音等需要实时传输的多媒体文件进行实时传输,并且由<code>RTCP</code>来控制传输的质量.</p><a id="more"></a><p><img src="\images\stream_transport_tree.png" srcset="/img/loading.gif" alt="结构"></p><p>RTP其实是一个传输层,接下来,看一下RTP的协议头.</p><p><img src="\images\rtp_protocol_packet.png" srcset="/img/loading.gif" alt="RTP Header"></p><ul><li><p>Version  (2bit)    标识使用RTP的版本</p></li><li><p>P (1bit)     填充位标识,表示RTP的尾部是否有附加的填充字节</p></li><li><p>X (1bit)     扩展位标识,标识RTP的头部后面有扩展部, Type | Length | Value</p></li><li><p>CC (4bit)   标识了SCRC的个数</p></li><li><p>M (1bit)   根据配置有不同的作用</p><ul><li>音频    开始  1</li><li>视频    结束  1</li></ul></li><li><p>PT (7bit)  标识了<em>RTP</em>负载的类型,记录这个流的数据类型,如音频 opus .视频的 vp9  h264等等</p></li><li><p>sequence number(16bit)    标识当前包的序列号,它和TCP中的不一样,这里是以<code>包</code>为单位的,而不是<code>字节</code></p><ul><li>发送完一个<em>RTP</em>包后就将该域的值增加1,初始值是随机的.</li><li>检测包的丢失及恢复包序列</li></ul></li><li><p>timestamp  (32bit)   这个值是一直增加的,就算没有传输数据,也要增加,这一帧的时间戳</p><p>通常我们就用它来做同步,去抖动,如果分包传输同一帧,那么  timestamp 就是一致的</p></li><li><p>ssrc(32bit)   发送源的标识,如果重复,可以协商重新分配</p></li><li><p>csrc(0-15项，每项32bit)   共享源标识,比如说混音的流,这里记录了这几路音频流的来源</p></li></ul><h2 id="RTCP"><a href="#RTCP" class="headerlink" title="RTCP"></a>RTCP</h2><p>RTP Control Protocol</p><h3 id="Header"><a href="#Header" class="headerlink" title="Header"></a>Header</h3><p><img src="\images\rtcp_packet_header.png" srcset="/img/loading.gif" alt=""></p><ul><li>Version (2bit)   版本</li><li>P (1bit)    填充位,先去数据的最后一位,读取填充位的长度(包含自己),然后从尾部去掉这些长度  </li><li>RC (5bit)    与 <code>PT</code> 共同作用,一般就是数据包的个数</li><li><p>PT (8bit)    这个数据包的类型</p></li><li><p>length (16)   这个包的整体长度,包含Header,数据的长度就是   (length - 4byte)</p></li><li>Data  数据</li></ul><h3 id="Type"><a href="#Type" class="headerlink" title="Type"></a>Type</h3><table><thead><tr><th>类型</th><th></th><th>用途</th></tr></thead><tbody><tr><td>200</td><td>SR(Sender Report)</td><td>发送端的报告</td></tr><tr><td>201</td><td>RR(Receive Report)</td><td>接收端的报告</td></tr><tr><td>202</td><td>SDES(Source Description Items)</td><td>源的描述信息,报告和站点相关的信息，包括CNAME</td></tr><tr><td>203</td><td>BYE</td><td>传输数据结束</td></tr><tr><td>204</td><td>APP</td><td>特定Application</td></tr><tr><td>192[过时]</td><td>FIR (full INTRA-frame request)</td><td>请求一个完整的I帧,重连,初始化</td></tr><tr><td>193[过时]</td><td>NACK(negative acknowledgement)</td><td>sequence number  + 位掩码  可以标识16个丢失的包</td></tr><tr><td>205</td><td>RTPFB(Generic RTP Feedback)</td><td>RTP的反馈</td></tr><tr><td>206</td><td>PSFB(Payload-specific Feedback)</td><td></td></tr></tbody></table>]]></content>
+    
+    
+    <categories>
+      
+      <category>WebRTC</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>WebRTC</tag>
+      
+      <tag>RTP</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>IP/TCP协议头的简单认识</title>
+    <link href="undefined2019/12/23/ip-protocol-header/"/>
+    <url>2019/12/23/ip-protocol-header/</url>
+    
+    <content type="html"><![CDATA[<h3 id="IP协议头"><a href="#IP协议头" class="headerlink" title="IP协议头"></a>IP协议头</h3><p>在WPS上做了一张图,感觉会比较清楚.</p><a id="more"></a><p><img src="\images\ip_protocol_packet.png" srcset="/img/loading.gif" alt="image-20191215223457831"></p><h3 id="MTU"><a href="#MTU" class="headerlink" title="MTU"></a>MTU</h3><blockquote><p>Mainimum Transmission Unit  可传输的最大长度</p></blockquote><p>我们现在的<code>MTU</code>,一般都是默认的值<code>1500B</code></p><p>我们可以自己设置是否需要去分包,在<code>Flags</code>中可以做不分包的设置,</p><p>这样我们每一次都使用最大长度<code>MTU</code>传输,尽量减少分包,避免IP协议头占据了通讯的大部分</p><h3 id="TCP协议头"><a href="#TCP协议头" class="headerlink" title="TCP协议头"></a>TCP协议头</h3><p><img src="\images\tcp_protocol_packet.png" srcset="/img/loading.gif" alt="image-20191215224459627"></p><ul><li>Source Port   源端口</li><li>Destination Port  目标端口</li><li>Sequence Number   序列编号(字节数) - 可以做排序/重传/丢包啥的</li><li>Acknowledgment Number  ACK报文,标识已经收到数据,如果不发送这个,对方重新传输</li><li>Data Offset  数据的开始位置</li><li>Reserved  保留</li><li>URG       紧急数据,一般不使用</li><li>ACK        确认报文,表示确认号是否有效</li><li>PSH        提示接收端这里是负载数据</li><li>RST         复位报文,请求对方重新建立连接</li><li>SYN        请求建立一个连接,3次握手</li><li>FIN         通知关闭连接,4次挥手</li><li>Window        滑动窗口,这里标识缓冲区的大小,对方一次性可以多发送一些消息</li><li>Checksum       校验和</li><li>Urgent Pointer       紧急指针</li><li>Options   一般使用TLV(Type-Length-Value)</li><li>padding   为了对齐,空数据</li><li>data  数据</li></ul><h2 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h2><table><thead><tr><th>16</th><th>16</th></tr></thead><tbody><tr><td>源端口</td><td>目的端口</td></tr><tr><td>UDP长度(Header + Data)</td><td>校验和</td></tr><tr><td>数据</td></tr></tbody></table><p>UDP在IP协议中,直接传输数据,不做顺序的保证,不保证数据丢失等等..</p><p><img src="\images\udp_protocol_packet.png" srcset="/img/loading.gif" alt="UDP头部协议"></p><p>wiki上的更加详细一些</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Other</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>TCP</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>非对称加密及OpenSSL,TLS,DTLS,SRTP</title>
     <link href="undefined2019/12/22/rsa-encrypt-theory/"/>
     <url>2019/12/22/rsa-encrypt-theory/</url>
     
-    <content type="html"><![CDATA[<h2 id="加密算法"><a href="#加密算法" class="headerlink" title="加密算法"></a>加密算法</h2><h4 id="常见的加密算法"><a href="#常见的加密算法" class="headerlink" title="常见的加密算法"></a>常见的加密算法</h4><ul><li><p>RSA    现在比较通用的非对称加密,在性能上满足要求,安全性也足够高</p></li><li><p>AES/DES    对称加密    </p></li><li><p>MD5    使用Hash函数计算信息摘要</p></li><li><p>SHA    和MD5类似,但是比MD5要安全</p></li></ul><p>在加密解密的过程中,总要衡量的是<code>安全性</code>,<code>效率</code>.我们都知道非对称加密的安全性很高,但是它的效率就要比对称加密低很多.</p><a id="more"></a><p>在<code>Https</code>中就是采用先使用<code>非对称加密</code>传递<code>对称加密</code>的密钥,而后传输都使用这个<code>对称加密的密钥</code>进行加解密,以满足效率要求.</p><h3 id="非对称加密的前提条件"><a href="#非对称加密的前提条件" class="headerlink" title="非对称加密的前提条件"></a>非对称加密的前提条件</h3><blockquote><p>非对称加密理论上是可以被破解的,我们要先明白这个前提,而后才能更快速的理解原理</p></blockquote><h4 id="最优解不存在"><a href="#最优解不存在" class="headerlink" title="最优解不存在"></a>最优解不存在</h4><p>非对称加密的最优解，就是找到一个完全不能找到反函数的函数,但是数学目前还没有找到这样的一个函数,</p><p>所以现在,只能去找到一个很难算出来的函数,你要得到这个函数可能要花费巨大的资源,很长的时间,把这个破解的难度尽量提升到无限大,这是现在非对称加密的主要思路</p><h4 id="RSA加密的数学原理"><a href="#RSA加密的数学原理" class="headerlink" title="RSA加密的数学原理"></a>RSA加密的数学原理</h4><p>大数的质因数分解 =&gt; 超级困难</p><p>这样的话,你可以很方便的计算两个质数的积,但是反过来这两个质数,你很难通过这个积来反推回来.</p><h3 id="非对称加密应用"><a href="#非对称加密应用" class="headerlink" title="非对称加密应用"></a>非对称加密应用</h3><p>在知乎上看到一个比喻写的很好,贴上来:</p><blockquote><p>非对称加密主要用于两个场景，数据传输，签名。</p><p>数据传输应用场景：</p><p>古代每年都进行科举考试，考生（数据发送者）将写好答案（明文）的纸张交给收取试卷的太监（可能发生数据泄露的网络），然后由他转交给皇帝（数据接受者）来审阅。最开始相安无事，直到有一年太监偷看答案，将答案告诉某些王公贵族的公子。皇帝开始发现这个办法有缺陷，于是更改了流程，发给每个考生一把锁头（公钥），考试写完答案后将答案锁起来再交给太监，这样太监就没办法偷看了。皇帝有一把能打开这些箱子的钥匙（私钥），这样就保证了考生答案不会泄露。</p><p>签名应用场景：</p><p>有一天皇帝（数据发送者）觉得东边匈奴太嚣张，发了一道圣旨（明文）给驻守边疆的大将军（数据接受者），匈奴太嚣张了你给我怼他。太监又去送信了，结果他勾结匈奴把圣旨改了，让大将军撤军。皇帝发现，这个不行啊，然后给你大将军一把钥匙（公钥），自己按照又配了很多对应的锁头。再次发圣旨的时候，就把圣旨的摘要锁起来。摘要很短，写了圣旨有多少字，主要内容等（其实是按照hash函数映射出的字段，并没有实际意义）。</p><p>ps：不要问我为啥不锁圣旨，因为圣旨比较长，要用的盒子比较大，也就是说加密起来比较困难，而摘要就很短，锁进一个小盒子里就行了。</p><p>就这样，大将军再次收到圣旨的时候，就会拿钥匙打开盒子中的摘要看看圣旨有没有被篡改。</p><p>这样进行两步信息确认：1、盒子上的锁头能被打开证明这个圣旨确实是皇帝发的。2、摘要的内容和圣旨一致，证明确实内容未被篡改过。即保证2点：信息的来源，信息未被篡改。</p><p>作者：高君<br>链接：<a href="https://www.zhihu.com/question/23879943/answer/154260251" target="_blank" rel="noopener">https://www.zhihu.com/question/23879943/answer/154260251</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p></blockquote><h3 id="非对称加密原理"><a href="#非对称加密原理" class="headerlink" title="非对称加密原理"></a>非对称加密原理</h3><p>涉及到密码学的很多知识,以及数学上的一些定理,如果要详细了解</p><blockquote><p><a href="https://cloud.tencent.com/developer/article/1130051" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1130051</a></p></blockquote><h4 id="公钥加密-私钥解密流程图"><a href="#公钥加密-私钥解密流程图" class="headerlink" title="公钥加密 - 私钥解密流程图"></a>公钥加密 - 私钥解密流程图</h4><p><img src="/images/rsa_encrypt_encode.png" srcset="/img/loading.gif" alt="rsa_encrypt_encode"></p><h4 id="私钥加密-公钥解密流程图"><a href="#私钥加密-公钥解密流程图" class="headerlink" title="私钥加密 - 公钥解密流程图"></a>私钥加密 - 公钥解密流程图</h4><p><img src="/images/rsa_encrypt_decode.png" srcset="/img/loading.gif" alt="rsa_encrypt_decode"></p><h2 id="OpenSSL"><a href="#OpenSSL" class="headerlink" title="OpenSSL"></a>OpenSSL</h2><p>SSL全称是<code>Secure Sockets Layer</code></p><p>在<code>SSL</code>3.0版本之后,IETF（Internet工程任务组）标准化SSL协议后,称之为<code>TSL( Transport Layer Security)</code></p><blockquote><p>SSL == TSL</p><p><a href="https://www.openssl.org/docs/manmaster/man1/openssl.html" target="_blank" rel="noopener">https://www.openssl.org/docs/manmaster/man1/openssl.html</a></p></blockquote><pre><code> o  Creation and management of private keys, public keys and parameters o  Public key cryptographic operations o  Creation of X.509 certificates, CSRs and CRLs o  Calculation of Message Digests and Message Authentication Codes o  Encryption and Decryption with Ciphers o  SSL/TLS Client and Server Tests o  Handling of S/MIME signed or encrypted mail o  Timestamp requests, generation and verification</code></pre><p>以上说明了OpenSSl的用途.</p><ul><li><p>生成和管理公钥，私钥以及相关参数</p></li><li><p>使用公钥和私钥</p></li><li><p>管理证书（X.509格式）认证请求</p></li><li><p>计算摘要（hash)</p></li><li><p>使用加密方法(cipher)加密与解密</p></li><li><p>测试SSL/TLS连接</p></li><li><p>Email签名或加密（S/MIME）格式</p></li><li><p>时间戳的生成与验证</p></li></ul><h3 id="OpenSSL的原理"><a href="#OpenSSL的原理" class="headerlink" title="OpenSSL的原理"></a>OpenSSL的原理</h3><ul><li>SSL_CTX   ssl的上下文,证书,密钥,版本等等</li><li>SSL           SSL的链接,是与一个负责传输的socket绑定的</li><li>SSL_Write / SSL_Read      通过这两个方法读取/写入 <code>SSL</code> </li></ul><p><img src="/images/openssl_how_to_use.png" srcset="/img/loading.gif" alt="openssl_how_to_use"></p><h2 id="DTLS"><a href="#DTLS" class="headerlink" title="DTLS"></a>DTLS</h2><p>由于<code>TLS</code>是基于<code>TCP</code>协议的,我们想要在<code>UDP</code>上使用,就需要使用<code>DTLS</code></p><p>DTSL是与SRTP一起用于WebRTC技术的安全协议之一</p><p><img src="/images/dtls_protocol_process.png" srcset="/img/loading.gif" alt="dtls_protocol_process"></p><p><strong>时序图</strong></p><p><img src="/images/dtls_protocol_sequence.png" srcset="/img/loading.gif" alt="dtls_protocol_process"></p><h2 id="SRTP"><a href="#SRTP" class="headerlink" title="SRTP"></a><strong>SRTP</strong></h2><p>SRTP(SecureReal-time Transport Protocol) 安全实时传输协议，SRTP是在实时传输协议(Real-time Transport Protocol)基础上所定义的一个协议，旨在为单播和多播应用程序中的实时传输协议的数据提供加密、消息认证、完整性保证和重放保护安全实时传输协议。</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="加密算法"><a href="#加密算法" class="headerlink" title="加密算法"></a>加密算法</h2><h4 id="常见的加密算法"><a href="#常见的加密算法" class="headerlink" title="常见的加密算法"></a>常见的加密算法</h4><ul><li><p>RSA    现在比较通用的非对称加密,在性能上满足要求,安全性也足够高</p></li><li><p>AES/DES    对称加密    </p></li><li><p>MD5    使用Hash函数计算信息摘要</p></li><li><p>SHA    和MD5类似,但是比MD5要安全</p></li></ul><p>在加密解密的过程中,总要衡量的是<code>安全性</code>,<code>效率</code>.我们都知道非对称加密的安全性很高,但是它的效率就要比对称加密低很多.</p><a id="more"></a><p>在<code>Https</code>中就是采用先使用<code>非对称加密</code>传递<code>对称加密</code>的密钥,而后传输都使用这个<code>对称加密的密钥</code>进行加解密,以满足效率要求.</p><h3 id="非对称加密的前提条件"><a href="#非对称加密的前提条件" class="headerlink" title="非对称加密的前提条件"></a>非对称加密的前提条件</h3><blockquote><p>非对称加密理论上是可以被破解的,我们要先明白这个前提,而后才能更快速的理解原理</p></blockquote><h4 id="最优解不存在"><a href="#最优解不存在" class="headerlink" title="最优解不存在"></a>最优解不存在</h4><p>非对称加密的最优解，就是找到一个完全不能找到反函数的函数,但是数学目前还没有找到这样的一个函数,</p><p>所以现在,只能去找到一个很难算出来的函数,你要得到这个函数可能要花费巨大的资源,很长的时间,把这个破解的难度尽量提升到无限大,这是现在非对称加密的主要思路</p><h4 id="RSA加密的数学原理"><a href="#RSA加密的数学原理" class="headerlink" title="RSA加密的数学原理"></a>RSA加密的数学原理</h4><p>大数的质因数分解 =&gt; 超级困难</p><p>这样的话,你可以很方便的计算两个质数的积,但是反过来这两个质数,你很难通过这个积来反推回来.</p><h3 id="非对称加密应用"><a href="#非对称加密应用" class="headerlink" title="非对称加密应用"></a>非对称加密应用</h3><p>在知乎上看到一个比喻写的很好,贴上来:</p><blockquote><p>非对称加密主要用于两个场景，数据传输，签名。</p><p>数据传输应用场景：</p><p>古代每年都进行科举考试，考生（数据发送者）将写好答案（明文）的纸张交给收取试卷的太监（可能发生数据泄露的网络），然后由他转交给皇帝（数据接受者）来审阅。最开始相安无事，直到有一年太监偷看答案，将答案告诉某些王公贵族的公子。皇帝开始发现这个办法有缺陷，于是更改了流程，发给每个考生一把锁头（公钥），考试写完答案后将答案锁起来再交给太监，这样太监就没办法偷看了。皇帝有一把能打开这些箱子的钥匙（私钥），这样就保证了考生答案不会泄露。</p><p>签名应用场景：</p><p>有一天皇帝（数据发送者）觉得东边匈奴太嚣张，发了一道圣旨（明文）给驻守边疆的大将军（数据接受者），匈奴太嚣张了你给我怼他。太监又去送信了，结果他勾结匈奴把圣旨改了，让大将军撤军。皇帝发现，这个不行啊，然后给你大将军一把钥匙（公钥），自己按照又配了很多对应的锁头。再次发圣旨的时候，就把圣旨的摘要锁起来。摘要很短，写了圣旨有多少字，主要内容等（其实是按照hash函数映射出的字段，并没有实际意义）。</p><p>ps：不要问我为啥不锁圣旨，因为圣旨比较长，要用的盒子比较大，也就是说加密起来比较困难，而摘要就很短，锁进一个小盒子里就行了。</p><p>就这样，大将军再次收到圣旨的时候，就会拿钥匙打开盒子中的摘要看看圣旨有没有被篡改。</p><p>这样进行两步信息确认：1、盒子上的锁头能被打开证明这个圣旨确实是皇帝发的。2、摘要的内容和圣旨一致，证明确实内容未被篡改过。即保证2点：信息的来源，信息未被篡改。</p><p>作者：高君<br>链接：<a href="https://www.zhihu.com/question/23879943/answer/154260251" target="_blank" rel="noopener">https://www.zhihu.com/question/23879943/answer/154260251</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p></blockquote><h3 id="非对称加密原理"><a href="#非对称加密原理" class="headerlink" title="非对称加密原理"></a>非对称加密原理</h3><p>涉及到密码学的很多知识,以及数学上的一些定理,如果要详细了解</p><blockquote><p><a href="https://cloud.tencent.com/developer/article/1130051" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1130051</a></p></blockquote><h4 id="公钥加密-私钥解密流程图"><a href="#公钥加密-私钥解密流程图" class="headerlink" title="公钥加密 - 私钥解密流程图"></a>公钥加密 - 私钥解密流程图</h4><p><img src="/images/rsa_encrypt_encode.png" srcset="/img/loading.gif" alt="rsa_encrypt_encode"></p><h4 id="私钥加密-公钥解密流程图"><a href="#私钥加密-公钥解密流程图" class="headerlink" title="私钥加密 - 公钥解密流程图"></a>私钥加密 - 公钥解密流程图</h4><p><img src="/images/rsa_encrypt_decode.png" srcset="/img/loading.gif" alt="rsa_encrypt_decode"></p><h2 id="OpenSSL"><a href="#OpenSSL" class="headerlink" title="OpenSSL"></a>OpenSSL</h2><p>SSL全称是<code>Secure Sockets Layer</code></p><p>在<code>SSL</code>3.0版本之后,IETF（Internet工程任务组）标准化SSL协议后,称之为<code>TSL( Transport Layer Security)</code></p><blockquote><p>SSL == TSL</p><p><a href="https://www.openssl.org/docs/manmaster/man1/openssl.html" target="_blank" rel="noopener">https://www.openssl.org/docs/manmaster/man1/openssl.html</a></p></blockquote><pre><code> o  Creation and management of private keys, public keys and parameters o  Public key cryptographic operations o  Creation of X.509 certificates, CSRs and CRLs o  Calculation of Message Digests and Message Authentication Codes o  Encryption and Decryption with Ciphers o  SSL/TLS Client and Server Tests o  Handling of S/MIME signed or encrypted mail o  Timestamp requests, generation and verification</code></pre><p>以上说明了OpenSSl的用途.</p><ul><li><p>生成和管理公钥，私钥以及相关参数</p></li><li><p>使用公钥和私钥</p></li><li><p>管理证书（X.509格式）认证请求</p></li><li><p>计算摘要（hash)</p></li><li><p>使用加密方法(cipher)加密与解密</p></li><li><p>测试SSL/TLS连接</p></li><li><p>Email签名或加密（S/MIME）格式</p></li><li><p>时间戳的生成与验证</p></li></ul><h3 id="OpenSSL的原理"><a href="#OpenSSL的原理" class="headerlink" title="OpenSSL的原理"></a>OpenSSL的原理</h3><ul><li>SSL_CTX   ssl的上下文,证书,密钥,版本等等</li><li>SSL           SSL的链接,是与一个负责传输的socket绑定的</li><li>SSL_Write / SSL_Read      通过这两个方法读取/写入 <code>SSL</code> </li></ul><p><img src="/images/openssl_how_to_use.png" srcset="/img/loading.gif" alt="openssl_how_to_use"></p><h2 id="DTLS"><a href="#DTLS" class="headerlink" title="DTLS"></a>DTLS</h2><p>由于<code>TLS</code>是基于<code>TCP</code>协议的,我们想要在<code>UDP</code>上使用,就需要使用<code>DTLS</code></p><p>DTSL是与SRTP一起用于WebRTC技术的安全协议之一</p><p><strong>握手协议</strong></p><p><img src="/images/dtls_protocol_process.png" srcset="/img/loading.gif" alt="dtls_protocol_process"></p><p>通过这个握手协议,就可以使用非对称加密的方式</p><ul><li>交换对称加密的密钥</li><li>确定双方的加密算法</li></ul><p><strong>时序图</strong></p><p><img src="/images/dtls_protocol_sequence.png" srcset="/img/loading.gif" alt="dtls_protocol_process"></p><h2 id="SRTP"><a href="#SRTP" class="headerlink" title="SRTP"></a><strong>SRTP</strong></h2><p>SRTP(SecureReal-time Transport Protocol) 安全实时传输协议，SRTP是在实时传输协议(Real-time Transport Protocol)基础上所定义的一个协议，旨在为单播和多播应用程序中的实时传输协议的数据提供加密、消息认证、完整性保证和重放保护安全实时传输协议。</p><p>通过<code>DTLS</code>可以获取到一个对称加密的密钥,<code>SRTP</code>就可以使用这个密钥加解密数据</p><ul><li>加解密数据</li><li>保障数据完整</li></ul>]]></content>
     
     
     <categories>
