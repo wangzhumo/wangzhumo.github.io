@@ -120,7 +120,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    1.3k 字
+                    1.4k 字
                   </span>&nbsp;
                 
 
@@ -128,7 +128,7 @@
                   
                   &nbsp;<i class="far fa-clock"></i>
                   <span class="post-count">
-                      6 分钟
+                      7 分钟
                   </span>&nbsp;
                 
 
@@ -282,9 +282,11 @@ a=* (zero or more media attribute lines)         //attribute
       // t = [time]
     // 表示这个会话不会过期  
     t=0 0  
-    // a=group 
+    // a=group  audio标识media的mid为 audio
+    //          video标识media的mid为 video的那一路流  
     // 音视频的传输中,媒体流是否共用一个通道,复用同一个端口  
     a=group:BUNDLE audio video
+    // WMS(WebRTC Media Stream)  janus   strean track的标识  
     a=msid-semantic: WMS janus
     a=ice-lite
 
@@ -307,14 +309,19 @@ a=* (zero or more media attribute lines)         //attribute
     a=ice-ufrag:/XUK
     //ICE的密码  
     a=ice-pwd:PQc9v6fR+e8oY9+ZBl
+    //使用trickle,当有连接信息只后就尝试开始检测连接  
     a=ice-options:trickle
     //DTLS握手过程中的指纹  
     a=fingerprint:sha-256 D2:B9:31:8F:DF:24:D8:0E:ED:D2:EF:25:9E:AF:6F:B8:34:AE:53:9C:E6:F3:8F:F2:64:15:FA:E8:7F:53:2D:38
+    //连接,启动的模式   active主动的开始连接,actpass被动模式  
     a=setup:active  
     // a=rtpmap:[fmt/payload type] [encoding name]/[clock rate]/[encoding parameters]
     // 表示  111 是 opus 的编码格式,时钟频率 48000,channels =2  
     a=rtpmap:111 opus/48000/2
+
+    // 当前这一路流的标识
     a=msid:janus janusa0
+    //对ssrc进行了一些标识  
     a=ssrc:3884373698 cname:janus
     a=ssrc:3884373698 msid:janus janusa0
     a=ssrc:3884373698 mslabel:janus
@@ -327,6 +334,7 @@ a=* (zero or more media attribute lines)         //attribute
     //-------------------------媒体层2--------------------------START   
     m=video 9 UDP/TLS/RTP/SAVPF 100
     c=IN IP4 59.86.51.172
+    //只能接收数据, sendrevc 既可以发送也可拉取  
     a=recvonly
     a=mid:video
     //RTCP 与 RTP 公共使用一个端口,复用端口  
