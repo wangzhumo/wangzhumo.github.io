@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>CMake的简单学习</title>
+    <link href="undefined2020/08/02/cmake-learn/"/>
+    <url>2020/08/02/cmake-learn/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Cmake-Basic"><a href="#Cmake-Basic" class="headerlink" title="Cmake Basic"></a>Cmake Basic</h1><h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p>Cmka中的所有变量都是 string ，使用 <code>${变量}</code></p><p>可以使用 <code>set()</code> 以及<code>unset()</code>来声明或者移除一个变量</p><pre><code class="cmake"># 创建一个变量set(var_name 1234567)# 打印message(&quot;var : ${var_name}&quot;)# 创建一个列表set(list_test Python Java CPP Dart)# 打印message(&quot;list : ${list_test}&quot;)</code></pre><h3 id="操作符"><a href="#操作符" class="headerlink" title="操作符"></a>操作符</h3><table><thead><tr><th>类型</th><th>名称</th></tr></thead><tbody><tr><td>一元</td><td>EXIST,COMMAND,DEFINED</td></tr><tr><td>二元</td><td>EQUAL,LESS,LESS_EQUAL,GREATER(大于),GREATER_EQUAL …..</td></tr><tr><td>逻辑</td><td>NOT,AND,OR</td></tr></tbody></table><p>优先级：</p><p>（）  &gt;   一元  &gt; 二元  &gt;  逻辑</p><h3 id="布尔常量值"><a href="#布尔常量值" class="headerlink" title="布尔常量值"></a>布尔常量值</h3><table><thead><tr><th>类型</th><th>值</th></tr></thead><tbody><tr><td>true</td><td>1,ON,YES,TRUE,Y,非零值</td></tr><tr><td>false</td><td>0,OFF,NO,FALSE,N,IGNORE,NOTFOUND,空字符串，以 <code>-NOTFOUND</code>结尾的字符串</td></tr></tbody></table><h3 id="条件语句"><a href="#条件语句" class="headerlink" title="条件语句"></a>条件语句</h3><pre><code class="cmake">if (表达式)    COMMAND(ARGS)    elseif (表达式)         COMMAND(ARGS)else (表达式)    COMMAND(ARGS)endif (表达式)</code></pre><h3 id="循环语句"><a href="#循环语句" class="headerlink" title="循环语句"></a>循环语句</h3><h4 id="while"><a href="#while" class="headerlink" title="while"></a>while</h4><pre><code class="cmake">while (表达式)    COMMAND(ARGS)    continue() #跳出本次循环    break() #可以跳出整个循环endwhile(表达式)</code></pre><h4 id="foreach"><a href="#foreach" class="headerlink" title="foreach"></a>foreach</h4><pre><code class="cmake">foreach (item 1 2 3)    COMMAND(ARGS)    continue() #跳出本次循环    break() #可以跳出整个循环endforeach(item)    ORforeach (item RANG ${END})    COMMAND(ARGS)    continue() #跳出本次循环    break() #可以跳出整个循环endforeach(item)ORforeach (item RANG ${START} ${END} ${STEP})    COMMAND(ARGS)    continue() #跳出本次循环    break() #可以跳出整个循环endforeach(item)</code></pre><h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><pre><code class="cmake">function (&lt;func_name&gt; [arg1] [arg2] ... [argN])    COMMAND()endfunction(&lt;func_name&gt;)    # 调用func_name(args...)</code></pre><h1 id="Cmake-Command"><a href="#Cmake-Command" class="headerlink" title="Cmake Command"></a>Cmake Command</h1><h3 id="指定版本"><a href="#指定版本" class="headerlink" title="指定版本"></a>指定版本</h3><p><code>cmake_minimun_required(VERSION 3.10.1)</code></p><p>指定Cmake最低支持的版本号</p><h3 id="源文件查找"><a href="#源文件查找" class="headerlink" title="源文件查找"></a>源文件查找</h3><p><code>aux_source_directory({目录} DIR_LIST)</code></p><ul><li>查找指定目录的源文件列表，并把这个列表保存到指定变量<code>DIR_LIST</code></li><li>只能查找当前目录下的文件，不会对子目录起作用</li></ul><pre><code class="cmake">aux_source_directory(src SRC_DIR)aux_source_directory(src/advance SRC_ADVANCE)aux_source_directory(src/basic SRC_BASIC)</code></pre><h3 id="添加库"><a href="#添加库" class="headerlink" title="添加库"></a>添加库</h3><h5 id="添加一个库"><a href="#添加一个库" class="headerlink" title="添加一个库"></a>添加一个库</h5><p><code>add_library(&lt;name&gt; [STATIC | SHARED | MODULE] [EXCLUDE_FROM_ALL] source1 ...)</code></p><ul><li>添加一个库，名字是  <name></name></li><li>指定库的类型<ul><li>STACIC 静态库</li><li>SHARED 动态库</li><li>MODULE 如果支持<code>dyld</code>有效，否则等同 SHARED</li></ul></li><li>EXCLUDE_FROM_ALL  表示这个库不会被默认构建</li><li>source1 … sourceN   指定库的源文件</li></ul><h5 id="导入预编译库"><a href="#导入预编译库" class="headerlink" title="导入预编译库"></a>导入预编译库</h5><p><code>add_library(&lt;name&gt; [STATIC | SHARED | MODULE] IMPORTED)</code></p><ul><li>添加一个已经编译好的库，名字为 <name></name></li><li>一般配合<code>set_target_properties</code>使用</li></ul><pre><code class="cmake">add_library(test SHARED IMPORTED)set_target_properties(        test  #库名字        PROPERTIES IMPORT_LOCATION  #指明设置的参数        ${库路径}/libtest.so    #导入库的路径)</code></pre><h4 id="常用的参数"><a href="#常用的参数" class="headerlink" title="常用的参数"></a>常用的参数</h4><h5 id="设置可执行文件的输出路径"><a href="#设置可执行文件的输出路径" class="headerlink" title="设置可执行文件的输出路径"></a>设置可执行文件的输出路径</h5><p><code>EXECUTABLE_OUTPUT_PATH</code>全局变量</p><pre><code class="cmake">set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/build)</code></pre><h5 id="设置库文件的输出目录"><a href="#设置库文件的输出目录" class="headerlink" title="设置库文件的输出目录"></a>设置库文件的输出目录</h5><p><code>LIBRARY_OUTPUT_PATH</code> 全局变量</p><pre><code class="cmake">set(LIBRARY_OUTPUT_PATH ${路径})</code></pre><h5 id="设置编译参数"><a href="#设置编译参数" class="headerlink" title="设置编译参数"></a>设置编译参数</h5><p><code>CMAKE_CXX_FLAGS</code>全局变量</p><pre><code class="cmake"># 允许c++11标准、O3优化、多线程。match选项可避免一些cpu上的问题set( CMAKE_CXX_FLAGS &quot;${CMAKE_CXX_FLAGS} -std=c++14 -march=native -O3 -pthread&quot; )</code></pre><h5 id="设置源文件集合"><a href="#设置源文件集合" class="headerlink" title="设置源文件集合"></a>设置源文件集合</h5><p><code>SOURCE_FILES</code> 本地自定义变量</p><pre><code class="cmake">set(SOURCE_FILES mian.cpp ...)</code></pre><h3 id="设置头文件"><a href="#设置头文件" class="headerlink" title="设置头文件"></a>设置头文件</h3><pre><code class="cma">set(INCLUDES  includes/advance/ includes/basic/  )include_directories(${INCLUDES})</code></pre><p>可以使用相对/绝对路径</p><h3 id="添加可执行文件"><a href="#添加可执行文件" class="headerlink" title="添加可执行文件"></a>添加可执行文件</h3><p><code>add_executable(&lt;name&gt; ${SRC_LIST})</code></p><pre><code class="cmake"># Set all sourceset(ALL_SOURCE ${SRC_DIR} ${SRC_ADVANCE} ${SRC_BASIC})add_executable(learn_cpp ${ALL_SOURCE})</code></pre><h3 id="链接多个库"><a href="#链接多个库" class="headerlink" title="链接多个库"></a>链接多个库</h3><p><code>target_link_libraries(&lt;name&gt; lib1 ... libN)</code></p><ul><li>将一个或者多个库链接到目标库文件</li><li>必须按照互相的依赖关系  lib1 -&gt; lib_sub_1 -&gt; lib_sbu_1_sub_1</li></ul><pre><code class="cmake"># Link dirsset(LIBRARIES ${EVENT_LIBRARIES})target_link_libraries(learn_cpp  ${LIBRARIES})</code></pre><h3 id="添加子目录可执行文件"><a href="#添加子目录可执行文件" class="headerlink" title="添加子目录可执行文件"></a>添加子目录可执行文件</h3><p><code>add_subdirectory(sub_dir [binary_dir])</code></p><blockquote><p>sub_dir 指的是包含CMakeList.txt 和源文件的子目录地址</p><p>binary_dir  是输出路径，一般不指定</p></blockquote><p>需要包含CMakeList.txt</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>CPP</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>CPP</tag>
+      
+      <tag>CMake</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>SDP标准格式详解</title>
     <link href="undefined2019/12/23/session-description-protocol/"/>
     <url>2019/12/23/session-description-protocol/</url>
@@ -388,9 +415,9 @@
     
     <tags>
       
-      <tag>Media</tag>
-      
       <tag>WebRTC</tag>
+      
+      <tag>Media</tag>
       
     </tags>
     
@@ -415,9 +442,9 @@
     
     <tags>
       
-      <tag>Media</tag>
-      
       <tag>WebRTC</tag>
+      
+      <tag>Media</tag>
       
     </tags>
     

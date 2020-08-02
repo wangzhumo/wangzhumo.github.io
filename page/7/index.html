@@ -134,6 +134,56 @@
     
     
       <div class="col-12 col-md-4 m-auto">
+        <a href="/2018/03/05/ConfigChanges/" target="_self">
+          <img src="/img/android.png" srcset="/img/loading.gif" alt="ConfigChanges的属性值" class="img-fluid rounded z-depth-3 index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/2018/03/05/ConfigChanges/">
+        <p class="h4 index-header">ConfigChanges的属性值</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">通过设置这个属性可以使Activity捕捉设备状态变化
+&quot;mcc&quot; 国际移动用户识别码所属国家代号是改变了----- sim被侦测到了，去更新mcc mcc是移动用户所属国家代号
+&quot;mnc&quot; 国际移动用户识别码的移动网号码是改变了------ sim被侦测到了，去更新mnc MNC是移动网号码，最多由两位数字组成，用于识别移动用户所归属的移动通信网
+&quot;locale&quot; 地址改变了-----用户选择了一个新的语言会显示出来
+&quot;touchscreen&quot; 触摸屏是改变了------通常是不会发生的
+&quot;keyboard&quot; 键盘发生了改变----例如用户用了外部的键盘
+&quot;keyboardHidden&quot; 键盘的可用性发生了改变
+&quot;navigation&quot; 导航发生了变化-----通常也不会发生
+&quot;screenLayout&quot; 屏幕的显示发生了变化------不同的显示被激活
+&quot;fontScale&quot; 字体比例发生了变化----选</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-03-05&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android">Android</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Android">Android</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
         <a href="/2018/03/05/Activity-Fragment-life/" target="_self">
           <img src="/img/android.png" srcset="/img/loading.gif" alt="Activity与Fragment的生命周期" class="img-fluid rounded z-depth-3 index-thumbnails">
         </a>
@@ -575,68 +625,6 @@ adb shell pm list packages   当前手机安装的所有app包名adb shell pm li
           <i class="iconfont icon-tag"></i>
           
             <a href="/tags/Android">Android</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-      <div class="col-12 col-md-4 m-auto">
-        <a href="/2018/01/04/webview-video-without-image/" target="_self">
-          <img src="/img/android.png" srcset="/img/loading.gif" alt="WebView播放H5视屏没有画面,只有声音" class="img-fluid rounded z-depth-3 index-thumbnails">
-        </a>
-      </div>
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2018/01/04/webview-video-without-image/">
-        <p class="h4 index-header">WebView播放H5视屏没有画面,只有声音</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">描述:点击播放按钮后,只能听到声音,而画面是白的….一直白…想到应该是硬件加速的问题
-1.确认硬件加速(非此因素)
-在WebViewActivity.java中发现
-webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-2.确认AndroidManifest.xml(非此因素)
-application节点下并没有发现
-android:hardwareAccelerated=&quot;true&quot;
-在WebViewActivity中,也无该配置
-
-尝试: WebViewActivity.java中,注释
-
-#webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-在AndroidManifest.xml节点下加入android:hardwareAccelerated=&quot;true&quot;
-
-结果……没用
-
-3.检查activity_web_view.xml
-
-        &lt;WebView
-            android:id=&quot;@+i</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-01-04&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Bug">Bug</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Android">Android</a>&nbsp;
-          
-            <a href="/tags/Bug">Bug</a>&nbsp;
           
         
       </div>

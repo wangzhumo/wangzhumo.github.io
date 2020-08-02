@@ -134,6 +134,68 @@
     
     
       <div class="col-12 col-md-4 m-auto">
+        <a href="/2018/01/04/webview-video-without-image/" target="_self">
+          <img src="/img/android.png" srcset="/img/loading.gif" alt="WebView播放H5视屏没有画面,只有声音" class="img-fluid rounded z-depth-3 index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/2018/01/04/webview-video-without-image/">
+        <p class="h4 index-header">WebView播放H5视屏没有画面,只有声音</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">描述:点击播放按钮后,只能听到声音,而画面是白的….一直白…想到应该是硬件加速的问题
+1.确认硬件加速(非此因素)
+在WebViewActivity.java中发现
+webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+2.确认AndroidManifest.xml(非此因素)
+application节点下并没有发现
+android:hardwareAccelerated=&quot;true&quot;
+在WebViewActivity中,也无该配置
+
+尝试: WebViewActivity.java中,注释
+
+#webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+在AndroidManifest.xml节点下加入android:hardwareAccelerated=&quot;true&quot;
+
+结果……没用
+
+3.检查activity_web_view.xml
+
+        &lt;WebView
+            android:id=&quot;@+i</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-01-04&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Bug">Bug</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Android">Android</a>&nbsp;
+          
+            <a href="/tags/Bug">Bug</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
         <a href="/2018/01/03/room-list/" target="_self">
           <img src="/img/android.png" srcset="/img/loading.gif" alt="Room中List&lt;&gt;使用详解" class="img-fluid rounded z-depth-3 index-thumbnails">
         </a>
@@ -593,67 +655,6 @@ RetrofitApis.getNetworkApis().getFriendsCircle(userBean.token, String.valueOf(45
 
         @Override
         publi</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-25&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android">Android</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Android">Android</a>&nbsp;
-          
-            <a href="/tags/Okhttp">Okhttp</a>&nbsp;
-          
-            <a href="/tags/Rxjava">Rxjava</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-      <div class="col-12 col-md-4 m-auto">
-        <a href="/2017/12/25/Retrofit2-Okhttp3-Rxjava2-1/" target="_self">
-          <img src="/img/android.png" srcset="/img/loading.gif" alt="Retrofit2 + Okhttp3 + Rxjava2 网络请求封装(上)" class="img-fluid rounded z-depth-3 index-thumbnails">
-        </a>
-      </div>
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2017/12/25/Retrofit2-Okhttp3-Rxjava2-1/">
-        <p class="h4 index-header">Retrofit2 + Okhttp3 + Rxjava2 网络请求封装(上)</p>
-        
-        
-          
-          
-        
-        <div class="index-excerpt" style="max-height: none;">
-          <div class="index-text mb-1">最终结构
-
-net
-├── RequestBuilder.java
-├── RetrofitApis.java
-├── base
-│   ├── ApiException.java
-│   ├── CustomGsonConverter.java
-│   ├── DefaultSubscriber.java
-│   └── DefaultTransformer.java
-└── response
-    ├── BaseResponse.java
-    └── ResultResponse.java
-
-NetworkApis.java
-...</div>
         </div>
       </a>
 

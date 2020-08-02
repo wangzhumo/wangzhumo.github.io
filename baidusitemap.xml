@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>https://www.wangzhumo.com/2020/08/02/cmake-learn/</loc>
+    <lastmod>2020-08-02T02:44:42.315Z</lastmod>
+    <data>
+        <display>
+        <title>CMake的简单学习</title>
+        <pubTime>2020-08-02T02:38:05.000Z</pubTime>
+        
+        <tag>CPP</tag>
+         
+        <tag>CMake</tag>
+         
+         
+           
+             
+              <breadCrumb title="CPP" url="https://www.wangzhumo.com/categories/CPP/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.wangzhumo.com/2019/12/23/session-description-protocol/</loc>
     <lastmod>2019-12-23T11:21:35.570Z</lastmod>
     <data>
@@ -1770,9 +1792,9 @@
         <title>TURN协议简单认识</title>
         <pubTime>2019-10-22T11:42:25.000Z</pubTime>
         
-        <tag>Media</tag>
-         
         <tag>WebRTC</tag>
+         
+        <tag>Media</tag>
          
          
            
@@ -1792,9 +1814,9 @@
         <title>STUN协议简单认识</title>
         <pubTime>2019-10-22T11:18:25.000Z</pubTime>
         
-        <tag>Media</tag>
-         
         <tag>WebRTC</tag>
+         
+        <tag>Media</tag>
          
          
            
