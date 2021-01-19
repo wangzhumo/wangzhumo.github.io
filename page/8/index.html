@@ -134,6 +134,66 @@
     
     
       <div class="col-12 col-md-4 m-auto">
+        <a href="/2018/01/11/Android-shell-Adb/" target="_self">
+          <img src="/img/android.png" srcset="/img/loading.gif" alt="Android开发中常用的Adb命令" class="img-fluid rounded z-depth-3 index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/2018/01/11/Android-shell-Adb/">
+        <p class="h4 index-header">Android开发中常用的Adb命令</p>
+        
+        
+          
+          
+        
+        <div class="index-excerpt" style="max-height: none;">
+          <div class="index-text mb-1">在做这些之前,先配置好adb环境变量,以我的配置为例
+$ vim ~/.bash_profile
+
+export ANDROID_HOME=/Users/phyooos/Library/Android/sdk
+...
+export PATH={省略}:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+
+$ source ~/.bas
+
+$ adb
+Android Debug Bridge version 1.0.39
+Version 0.0.1-4500957
+Installed as /Users/phyooos/Library/Android/sdk/platform-tools/adb
+...
+
+补充
+
+adb shell pm list packages   当前手机安装的所有app包名adb shell pm list packages | grep ‘google’  在所有包名中查找带’google’的
+...</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-01-11&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android">Android</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Android">Android</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
         <a href="/2018/01/10/OkHttp-support-https/" target="_self">
           <img src="/img/android.png" srcset="/img/loading.gif" alt="OkHttp中添加https支持" class="img-fluid rounded z-depth-3 index-thumbnails">
         </a>
@@ -608,53 +668,6 @@ sudo make install
             <a href="/tags/Server">Server</a>&nbsp;
           
             <a href="/tags/Linux">Linux</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-      <div class="col-12 col-md-4 m-auto">
-        <a href="/2017/12/25/room-list-object/" target="_self">
-          <img src="/img/android.png" srcset="/img/loading.gif" alt="Room数据库使用指北List&lt;&gt;的问题" class="img-fluid rounded z-depth-3 index-thumbnails">
-        </a>
-      </div>
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2017/12/25/room-list-object/">
-        <p class="h4 index-header">Room数据库使用指北List&lt;&gt;的问题</p>
-        
-        
-          
-          
-        
-        <div class="index-excerpt" style="max-height: none;">
-          <div class="index-text mb-1">Room依赖
-implementation &quot;android.arch.persistence.room:runtime:1.0.0&quot;
-annotationProcessor &quot;android.arch.persistence.room:compiler:1.0.0&quot;
-...</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2017-12-25&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Android">Android</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Android">Android</a>&nbsp;
-          
-            <a href="/tags/Room">Room</a>&nbsp;
           
         
       </div>

@@ -134,6 +134,56 @@
     
     
       <div class="col-12 col-md-4 m-auto">
+        <a href="/2018/07/05/Android-inner-class-leak/" target="_self">
+          <img src="/img/android.png" srcset="/img/loading.gif" alt="Android非静态内部类与匿名内部类引起的内存泄漏" class="img-fluid rounded z-depth-3 index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/2018/07/05/Android-inner-class-leak/">
+        <p class="h4 index-header">Android非静态内部类与匿名内部类引起的内存泄漏</p>
+        
+        
+          
+          
+        
+        <div class="index-excerpt" style="max-height: none;">
+          <div class="index-text mb-1">内存内存泄漏简单的说，当我们的对象创建时，就占用了一部分内存，而在这个对象没有被引用后会进行回收销毁，
+以释放掉占用的内存。但是如果jvm没有成功回收这个对象，就会造成内存泄漏。
+内存溢出Android中的OOM，系统会给每一个Android程序分配一定的内存。我的的App可能会因为大量的内存泄漏而导致内存耗尽，引发OOM导致整个App的崩溃。
+就算内存没有耗尽而崩溃，也会导致App内存不足。此时我们创建新的对象或者其他方式需要使用内存时，GC就会主动进行垃圾回收，为你的操作准备好内存空间，每次GC都是阻塞操作，这就会导致我们的App卡顿。
+
+所以，我们优化App卡顿时，有一点就是要关注“内存抖动”。
+...</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2018-07-05&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android">Android</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Android">Android</a>&nbsp;
+          
+            <a href="/tags/Java">Java</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
         <a href="/2018/07/02/Git-Submodule/" target="_self">
           <img src="/img/coding.png" srcset="/img/loading.gif" alt="Git Submodule 子模块的使用" class="img-fluid rounded z-depth-3 index-thumbnails">
         </a>
@@ -578,52 +628,6 @@ Linux内核层
           <i class="iconfont icon-tag"></i>
           
             <a href="/tags/Java">Java</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-      <div class="col-12 col-md-4 m-auto">
-        <a href="/2018/03/07/Handler-analyze/" target="_self">
-          <img src="/img/android.png" srcset="/img/loading.gif" alt="Android通讯机制分析-Handler" class="img-fluid rounded z-depth-3 index-thumbnails">
-        </a>
-      </div>
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2018/03/07/Handler-analyze/">
-        <p class="h4 index-header">Android通讯机制分析-Handler</p>
-        
-        
-          
-          
-        
-        <div class="index-excerpt" style="max-height: none;">
-          <div class="index-text mb-1">Handler在Android世界中的地位不言而喻.这篇笔记算是简单的记录一下我对于Handler的理解.
-当时第一次对Handler产生兴趣是我在知乎上看到一个问题:
-Android中为什么主线程不会因为Looper.loop()里的死循环卡死...</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2018-03-07&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Source%20Code">Source Code</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/Android">Android</a>&nbsp;
-          
-            <a href="/tags/Source%20Code">Source Code</a>&nbsp;
           
         
       </div>
