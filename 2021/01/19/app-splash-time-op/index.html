@@ -171,7 +171,7 @@
 <li>Systrace 命令行工具</li>
 <li>Perfetto 命令行工具</li>
 </ul>
-<p>这里我会选择<a href="[Perfetto - System profiling, app tracing and trace analysis](https://perfetto.dev/">Perfetto</a>)进行分析，使用Systrace抓取。</p>
+<p>这里我选择<a href="https://perfetto.dev/" target="_blank" rel="noopener">Perfetto</a>进行分析，使用Systrace抓取。</p>
 <h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><p>Systrace的相关知识可以看这位大佬的文章 </p>
 <blockquote>
 <p><a href="https://www.androidperformance.com/2019/05/28/Android-Systrace-About/" target="_blank" rel="noopener">Android Systrace 基础知识 – Systrace 简介 · Android Performance</a></p>
@@ -181,11 +181,11 @@
 <p><a href="https://developer.android.google.cn/topic/performance/tracing/navigate-report" target="_blank" rel="noopener">浏览 Systrace 报告  | Android 开发者  | Android Developers (google.cn)</a></p>
 </blockquote>
 <p>如果使用老版本的Systrace来查看的话，一定要先看看google的这个文档，要不然可能连看都没办法看，主要是了解一下 <a href="https://developer.android.google.cn/topic/performance/tracing/navigate-report#keyboard-shortcuts" target="_blank" rel="noopener">快捷键</a></p>
-<h2 id="抓取Trace文件"><a href="#抓取Trace文件" class="headerlink" title="抓取Trace文件"></a>抓取Trace文件</h2><h4 id="一-通过Perfetto抓取"><a href="#一-通过Perfetto抓取" class="headerlink" title="一.通过Perfetto抓取"></a>一.通过Perfetto抓取</h4><blockquote>
+<h2 id="抓取Trace文件"><a href="#抓取Trace文件" class="headerlink" title="抓取Trace文件"></a>抓取Trace文件</h2><h3 id="一-通过Perfetto抓取"><a href="#一-通过Perfetto抓取" class="headerlink" title="一.通过Perfetto抓取"></a>一.通过Perfetto抓取</h3><blockquote>
 <p><a href="https://perfetto.dev/docs/quickstart/android-tracing" target="_blank" rel="noopener">Quickstart: Record traces on Android - Perfetto Tracing Docs</a></p>
 </blockquote>
-<h5 id="1-通过Perfetto-UI的图形界面"><a href="#1-通过Perfetto-UI的图形界面" class="headerlink" title="1.通过Perfetto UI的图形界面"></a>1.通过<a href="https://ui.perfetto.dev/#!/" target="_blank" rel="noopener">Perfetto UI</a>的图形界面</h5><p>图形界面进行抓取，我的测试机不支持，只能通过命令</p>
-<h5 id="2-通过命令进行抓取"><a href="#2-通过命令进行抓取" class="headerlink" title="2.通过命令进行抓取"></a>2.通过命令进行抓取</h5><p><strong>2.1打开perfetto services</strong></p>
+<h4 id="1-通过Perfetto-UI的图形界面"><a href="#1-通过Perfetto-UI的图形界面" class="headerlink" title="1.通过Perfetto UI的图形界面"></a>1.通过<a href="https://ui.perfetto.dev/#!/" target="_blank" rel="noopener">Perfetto UI</a>的图形界面</h4><p>图形界面进行抓取，我的测试机不支持，只能通过命令</p>
+<h4 id="2-通过命令进行抓取"><a href="#2-通过命令进行抓取" class="headerlink" title="2.通过命令进行抓取"></a>2.通过命令进行抓取</h4><p><strong>2.1打开perfetto services</strong></p>
 <pre><code class="shell"># Will start both traced and traced_probes.
 adb shell setprop persist.traced.enable 1
 </code></pre>
@@ -253,12 +253,12 @@ chmod +x traceconv
 ./traceconv json [input proto file] [output json file]
 </code></pre>
 <p>不过我更加推荐直接使用perfetto UI 打开，然后 <code>Legacy UI</code> 打开，会自动转</p>
-<h4 id="二-通过Systrace抓取"><a href="#二-通过Systrace抓取" class="headerlink" title="二.通过Systrace抓取"></a>二.通过Systrace抓取</h4><p>这里的话，我也是直接使用提供的命令去抓取了，Android高版本应该会有<code>系统追踪</code>功能，不过我没有去看</p>
-<h5 id="1-前置"><a href="#1-前置" class="headerlink" title="1.前置"></a>1.前置</h5><p><strong>1.1需要SDK支持</strong></p>
+<h3 id="二-通过Systrace抓取"><a href="#二-通过Systrace抓取" class="headerlink" title="二.通过Systrace抓取"></a>二.通过Systrace抓取</h3><p>这里的话，我也是直接使用提供的命令去抓取了，Android高版本应该会有<code>系统追踪</code>功能，不过我没有去看</p>
+<h4 id="1-前置"><a href="#1-前置" class="headerlink" title="1.前置"></a>1.前置</h4><p><strong>1.1需要SDK支持</strong></p>
 <p>先跳转到<code>Android/sdk/platform-tools/systrace</code></p>
 <p><strong>1.2Python版本</strong></p>
 <p>这个脚本只支持python2的版本，所以记得切python的版本，要不会失败</p>
-<h5 id="2-抓取"><a href="#2-抓取" class="headerlink" title="2.抓取"></a>2.抓取</h5><pre><code class="shell">python ./systrace.py -t 5 sched gfx view wm am app webview  -a io.xxxx.xxxx -o ~/Downloads/inyuapptrace/trace.html
+<h4 id="2-抓取"><a href="#2-抓取" class="headerlink" title="2.抓取"></a>2.抓取</h4><pre><code class="shell">python ./systrace.py -t 5 sched gfx view wm am app webview  -a io.xxxx.xxxx -o ~/Downloads/inyuapptrace/trace.html
 
 # 输入
 These categories are unavailable: app
