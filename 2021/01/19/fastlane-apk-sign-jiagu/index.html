@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="description" content="王诛魔">
+  <meta name="author" content="wangzhumo">
+  <meta name="keywords" content="">
+  <title>Android使用Fastlane打渠道包-签名-加固 ~ 王诛魔</title>
+
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
+<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
+<link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css"  >
+<link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css"  >
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+  <link rel="stylesheet" href="/lib/prettify/github-v2.min.css"  >
+
+<link rel="stylesheet" href="/css/main.css"  >
+
+
+  <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.min.css"  >
+
+
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>王诛魔</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+</nav>
+
+    <div class="view intro-2" id="background"
+         style="background: url('/img/default.png')no-repeat center center;
+           background-size: cover;
+           background-attachment: fixed;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期二, 一月 19日 2021, 11:03 上午
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    1.5k 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      7 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Fastlane是一个集成工具，以前用来打flutter的工程，感觉比较好用，近期因为工程里的一个库和walle冲突，以前的打包方式就不适用了。</p>
+<p>这里使用fastlane</p>
+<ul>
+<li>获取channel信息</li>
+<li>调用360加固宝进行加固并签名</li>
+</ul>
+<p>也很简单，jenkins中调用fastlane -&gt; channel信息写入文件 -&gt; 360加固宝加固签名 -&gt; fir上传</p>
+<p><img src="../images/fastlane_dingding_apk.png" srcset="/img/loading.gif" alt="image-20210119105954976"></p>
+<h2 id="fastlane安装"><a href="#fastlane安装" class="headerlink" title="fastlane安装"></a>fastlane安装</h2><p>文档：<a href="https://docs.fastlane.tools/" target="_blank" rel="noopener">fastlane docs</a></p>
+<h4 id="macos"><a href="#macos" class="headerlink" title="macos"></a>macos</h4><p>1.安装：</p>
+<pre><code class="shell">brew install fastlane
+
+Warning: fastlane 2.163.0 is already installed and up-to-date
+To reinstall 2.163.0, run `brew reinstall fastlane`
+
+#我这里已经安装过了
+</code></pre>
+<p>2.工程中初始化fastlane</p>
+<pre><code class="shell">cd path/to/projectRootDir
+# 创建一个Gemfile文件
+
+vim ./Genfile 
+# 文件中写入以下内容
+
+source &quot;https://rubygems.org&quot;
+gem &quot;fastlane&quot;
+
+plugins_path = File.join(File.dirname(__FILE__), &#39;fastlane&#39;, &#39;Pluginfile&#39;)
+eval_gemfile(plugins_path) if File.exist?(plugins_path)
+</code></pre>
+<p>而后执行</p>
+<p><code>fastlane init</code></p>
+<p>3.根据引导填写工程的信息</p>
+<pre><code class="shell">Package Name (com.krausefx.app):  #填写自己的包名即可
+Path to the json secret file:   #我这里不需要，直接跳过
+Download existing metadata and setup metadata management? (y/n)  #不需要直接 n 回车
+Continue by pressing Enter ⏎  # 回车即可
+</code></pre>
+<p>4.初始化完成</p>
+<p>一段时间后初始化就成功了。</p>
+<p>大概会增加目录结构是这样的</p>
+<pre><code class="shell">#项目根目录
+.
+├── Gemfile
+├── fastlane
+│   ├── Appfile
+│   └── Fastfile
+│
+other #自己项目内容
+</code></pre>
+<h2 id="Channel信息"><a href="#Channel信息" class="headerlink" title="Channel信息"></a>Channel信息</h2><h4 id="参数传递"><a href="#参数传递" class="headerlink" title="参数传递"></a>参数传递</h4><p>Jenkins 中选择channel【all】,【channel,channel2,channel3】，【channel】,三种传入样式都可以接收：</p>
+<pre><code class="shell">script[
+     sh(&#39;fastlane android beta channel:${channels}&#39;)
+]
+</code></pre>
+<p>通过这样的方式就可以传入到fastlane中了，但是同时我希望把本地文件中的一些信息也修改掉：</p>
+<pre><code class="groovy">android {
+    compileSdkVersion COMPILE_SDK_VERSION as int
+
+    defaultConfig {
+        versionCode gitVersionCode()  //希望把这个改成具体的值
+        versionName VERSION_NAME
+        multiDexEnabled true
+        multiDexKeepProguard file(&quot;multidexKeep.pro&quot;)
+        multiDexKeepFile file(&quot;multidex-config.txt&quot;)
+
+            manifestPlaceholders = [
+                CHANNEL_VALUE : &quot;Debug&quot;  // 这里也修改掉
+        ]
+    }
+</code></pre>
+<p>那么我准备建立一个gradle Task来做这件事情，在fastlane的脚本里传入android这边</p>
+<pre><code class="shell">gradle(
+       task: &quot;assemble&quot;,
+       build_type: &quot;Debug&quot;,
+       print_command: true,
+       print_command_output: true,
+       properties:{
+          &quot;BUILD_CHANNEL&quot; =&gt; channelName
+      }
+)
+
+# 最终执行的：
+gradle assembleDebug -PBUILD_CHANNEL=channelName
+</code></pre>
+<h4 id="写入文件"><a href="#写入文件" class="headerlink" title="写入文件"></a>写入文件</h4><p>1.建立一个名为 <code>channel.gradle</code>的文件</p>
+<p>2.添加这个文件到项目中<code>apply from:&#39;channel.gradle&#39;</code> </p>
+<p>3.编写channel.gradle</p>
+<pre><code class="groovy">// 修改App的VersionCode
+task modifBuildCodeTask {
+    // gradle文件
+    def gradleFile = file(&quot;build.gradle&quot;)
+    // 版本号
+    def versionCode = gitVersionCode()
+    // 全部文本
+    def allBuffer = new StringBuffer()
+    def channelString = project.hasProperty(&#39;BUILD_CHANNEL&#39;) ? BUILD_CHANNEL : &quot;official&quot;
+    if (channelString.equals(&quot;all&quot;) || channelString.contains(&quot;,&quot;)) {
+        channelString = &quot;official&quot;
+    }
+    // 读取每一行
+    gradleFile.eachLine { line, course -&gt;
+        if (line.contains(&quot;versionCode&quot;)) {
+            int index = line.indexOf(&quot;versionCode&quot;)
+            allBuffer.append(line, 0, index + &quot;versionCode&quot;.length())
+            allBuffer.append(&quot; &quot; + versionCode)
+            allBuffer.append(System.lineSeparator())
+        } else if (line.contains(&quot;CHANNEL_VALUE&quot;)) {
+            int index = line.indexOf(&quot;CHANNEL_VALUE&quot;)
+            allBuffer.append(line, 0, index + &quot;CHANNEL_VALUE&quot;.length())
+            allBuffer.append(&quot; : &quot;).append(&#39;&quot;&#39; + channelString + &#39;&quot;&#39;)
+            allBuffer.append(System.lineSeparator())
+        } else {
+            allBuffer.append(line).append(System.lineSeparator())
+        }
+    }
+    // 写流
+    def printWriter = gradleFile.newWriter()
+    printWriter.write(allBuffer.toString())
+    printWriter.flush()
+    printWriter.close()
+}
+
+static def gitVersionCode() {
+    def cmd = &#39;git rev-list HEAD --count&#39;
+    cmd.execute().text.trim().toInteger()
+}
+
+
+task modifyChannelInfoTask {
+    // 获取外部传入的channel信息
+    def channelString = project.hasProperty(&#39;BUILD_CHANNEL&#39;) ? BUILD_CHANNEL : &quot;official&quot;
+    List&lt;String&gt; channelList
+    if (channelString.equals(&quot;all&quot;)) {
+        //则读取本地channel下的所有channel
+        // channel文件
+        def channelFile = file(&quot;channel&quot;)
+        channelList = channelFile.readLines()
+    } else {
+        // 修改本地的channel列表
+        channelList = channelString.split(&quot;,&quot;)
+    }
+    print(&quot;打包渠道：&quot;)
+    println(channelList)
+    // 写入到 channels 中的channels.txt
+    def path = rootDir.getAbsolutePath() + File.separator + &quot;channels/channels.txt&quot;
+    File file = new File(path)
+    def printWriter = file.newWriter()
+    channelList.forEach {
+        printWriter.append(&quot;INYUAPP_CHANNEL&quot;).append(&quot; &quot;).append(it).append(&quot; &quot;).append(it).append(System.lineSeparator())
+    }
+    printWriter.flush()
+    printWriter.close()
+}
+</code></pre>
+<p>那么当我每次编译的时候，这里都会执行，从而修改对应的文件，这一步修改：</p>
+<p>1.<code>build.gradle</code>中的 <code>CHANNEL_VALUE</code> 以及 <code>versionCode</code>的值</p>
+<p>2.把需要打的渠道写入到 rootDir - channels - channel.txt 中，而后360加固宝读取这个</p>
+<h2 id="加固并打包"><a href="#加固并打包" class="headerlink" title="加固并打包"></a>加固并打包</h2><p>这一步直接调用360加固宝即可，为此我们编写一个sh</p>
+<pre><code class="shell">#!/bin/zsh
+
+# 360加固宝的用户/密码
+USER=&quot;xxxxx&quot;
+PSSSWORD=&quot;xxxxx&quot;
+PARENT_PATH=$(cd ../ &amp;&amp; pwd)
+
+JIAGU_JAVA=$3
+JIAGU_ROOT=$2
+
+# 签名相关信息
+keystore_password=&quot;xxxx&quot;
+alias_password=&quot;xxxx&quot;
+alias=&quot;xxxx&quot;
+keystore_path=&quot;${PARENT_PATH}/modules/module_app/liuliu.keystore&quot;
+# 加固多渠道模板
+CHANNEL_PATH=&quot;${PARENT_PATH}/channels/channels.txt&quot;
+
+# 输入apk包地址
+INPUT_APK=$1
+
+# 输出地址
+OUTPUT_APK=&quot;${PARENT_PATH}/channels/apks/&quot;
+
+
+# 登录
+function login360() {
+  &quot;$JIAGU_JAVA&quot; -jar &quot;$JIAGU_ROOT&quot;/jiagu.jar -login $USER $PSSSWORD
+}
+
+
+# 导入签名信息
+function importkeyStore() {
+  &quot;$JIAGU_JAVA&quot; -jar &quot;$JIAGU_ROOT&quot;/jiagu.jar -importsign &quot;$keystore_path&quot; $keystore_password $alias $alias_password
+  &quot;$JIAGU_JAVA&quot; -jar &quot;$JIAGU_ROOT&quot;/jiagu.jar -showsign
+}
+
+# 导入渠道信息
+function importChannels() {
+  &quot;$JIAGU_JAVA&quot; -jar &quot;$JIAGU_ROOT&quot;/jiagu.jar -importmulpkg &quot;$CHANNEL_PATH&quot;
+  &quot;$JIAGU_JAVA&quot; -jar &quot;$JIAGU_ROOT&quot;/jiagu.jar -showmulpkg
+}
+
+function configJiagu() {
+  &quot;$JIAGU_JAVA&quot; -jar &quot;$JIAGU_ROOT&quot;/jiagu.jar -config
+  &quot;$JIAGU_JAVA&quot; -jar &quot;$JIAGU_ROOT&quot;/jiagu.jar -showconfig
+}
+
+
+
+login360
+importkeyStore
+importChannels
+configJiagu
+&quot;$JIAGU_JAVA&quot; -jar &quot;$JIAGU_ROOT&quot;/jiagu.jar -jiagu &quot;$INPUT_APK&quot; &quot;$OUTPUT_APK&quot; -autosign -automulpkg -pkgparam &quot;$CHANNEL_PATH&quot;
+</code></pre>
+<p>这个脚本通过 <code>bash jiagu.sh {path/to/apk} {path/to/jiagubao-java} {path/to/jiagubao-roodir}</code> 执行即可</p>
+<h2 id="钉钉通知（自定义fastlane-Action）"><a href="#钉钉通知（自定义fastlane-Action）" class="headerlink" title="钉钉通知（自定义fastlane Action）"></a>钉钉通知（自定义fastlane Action）</h2><p>为了更方便的获取到打包的信息，方便获取测试包，还需要一个打包成功的通知</p>
+<p>这里我通过钉钉的<code>webhook</code>功能，从fastlane中发出通知</p>
+<blockquote>
+<p>Action - notification_dingtalk</p>
+</blockquote>
+<h2 id="fastlane组装整个打包流程"><a href="#fastlane组装整个打包流程" class="headerlink" title="fastlane组装整个打包流程"></a>fastlane组装整个打包流程</h2><pre><code class="ruby">default_platform(:android)
+
+platform :android do
+  puts &quot;---------------set apk info start-----------------&quot;
+  # 设置App名称
+  apk_name = &quot;xxx&quot;;
+  puts &quot;---------------set apk info end-----------------&quot;
+
+  timestamp = FastlaneCore::CommandExecutor.execute(command: &quot;date +%s&quot;)
+
+
+  desc &quot;build a debug version apk&quot;
+  lane:beta do |options|
+      puts &quot;---------------build debug version start-----------------&quot;
+      # gradle build
+      # clean
+      gradle(task:&quot;clean&quot;)
+
+      channelName=options[:channel]
+      if channelName.nil?
+        channelName=&quot;official&quot;
+      end
+
+      # build
+      gradle(
+          task: &quot;assemble&quot;,
+          build_type: &quot;Debug&quot;,
+          print_command: true,
+          print_command_output: true,
+          properties:{
+            &quot;BUILD_CHANNEL&quot; =&gt; channelName
+          }
+      )
+      puts &quot;---------------build debug version end-----------------&quot;
+
+      puts(&quot;---------------print debug apk info start-----------------&quot;)
+      app_info
+
+        # 获取版本名称
+          version_name = get_version_name(app_project_dir: &#39;./modules/module_app&#39;);
+          # 获取版本号
+          version_code = get_version_code(app_project_dir: &#39;./modules/module_app&#39;);
+
+      # 默认的apk地址名字
+      apk_file_path=lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]
+      apk_name=apk_name+ &quot;-debug-&quot; + version_code + &quot;-&quot; + timestamp + &quot;.apk&quot;
+      apk_path=&quot;&quot;
+      Dir.chdir(&quot;../channels/input/&quot;) do
+        apk_path=Dir.pwd
+      end
+      apk_path=apk_path + &quot;/#{apk_name}&quot;
+      sh(&quot;mv #{apk_file_path} #{apk_path}&quot;)
+      puts(&quot;---------------print debug apk info end-----------------&quot;)
+
+      # 上传
+      timestamp_string = FastlaneCore::CommandExecutor.execute(command: &quot;date&quot;)
+      fir_result = fir_cli api_token: &quot;xxxxxx&quot;,specify_file_path: &quot;#{apk_path}&quot;,  changelog: &quot;#{timestamp_string}&quot;
+
+      UI.message &quot;#{fir_result}&quot;
+
+        # 钉钉通知
+      notification_dingtalk(uploadUrl:fir_result[:short],buildType:&quot;Debug&quot;)
+
+      say(&quot;Android打包完成&quot;)
+      notification(title: &quot;Android debug build success&quot;, message: &quot;Apk Path：&quot; + apk_path);
+  end
+end
+</code></pre>
+<p>其中用到的插件：</p>
+
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              <span>
+                <i class="iconfont icon-inbox"></i>
+                
+                  <a class="hover-with-bg" href="/categories/Android">Android</a>
+                  &nbsp;
+                
+              </span>&nbsp;&nbsp;
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/Android">Android</a>
+                
+              </span>
+            
+            </p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+  </div>
+</div>
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <br>
+
+    
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv">总访问量 
+          <span id="busuanzi_value_site_pv"></span> 次</span>&nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv">总访客数 
+            <span id="busuanzi_value_site_uv"></span> 人</span>&nbsp;
+  
+  <br>
+
+
+
+    
+  <!-- 备案信息 -->
+  <a href="http://beian.miit.gov.cn/" target="_blank"
+     rel="nofollow noopener">京ICP备19052807号-1</a>
+  
+
+
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="/lib/jquery/jquery.min.js" ></script>
+<script src="/lib/popper/popper.min.js" ></script>
+<script src="/lib/bootstrap/js/bootstrap.min.js" ></script>
+<script src="/lib/mdbootstrap/js/mdb.min.js" ></script>
+<script src="/js/main.js" ></script>
+
+
+  <script src="/js/lazyload.js" ></script>
+
+
+
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
+
+
+
+  <script src="/lib/smooth-scroll/smooth-scroll.min.js" ></script>
+
+
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+<!-- Plugins -->
+
+
+  
+    <!-- Baidu Analytics -->
+    <script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+    <!-- Google Analytics -->
+    <script>
+      (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+          (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+          m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+      })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+      ga('create', '', 'auto');
+      ga('send', 'pageview');
+    </script>
+  
+
+  
+
+  
+
+  
+
+
+
+
+  <script src="/lib/prettify/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script src="/lib/typed/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Android使用Fastlane打渠道包-签名-加固&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script src="/lib/anchor/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "false",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script src="/lib/fancybox/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+</body>
+</html>

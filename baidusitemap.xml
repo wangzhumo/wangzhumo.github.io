@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>https://www.wangzhumo.com/2021/01/19/fastlane-apk-sign-jiagu/</loc>
+    <lastmod>2021-01-19T03:04:46.686Z</lastmod>
+    <data>
+        <display>
+        <title>Android使用Fastlane打渠道包-签名-加固</title>
+        <pubTime>2021-01-19T03:03:11.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="https://www.wangzhumo.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.wangzhumo.com/2020/08/02/cmake-learn/</loc>
     <lastmod>2020-08-02T02:44:42.315Z</lastmod>
     <data>
@@ -1792,9 +1812,9 @@
         <title>TURN协议简单认识</title>
         <pubTime>2019-10-22T11:42:25.000Z</pubTime>
         
-        <tag>WebRTC</tag>
-         
         <tag>Media</tag>
+         
+        <tag>WebRTC</tag>
          
          
            
@@ -1814,9 +1834,9 @@
         <title>STUN协议简单认识</title>
         <pubTime>2019-10-22T11:18:25.000Z</pubTime>
         
-        <tag>WebRTC</tag>
-         
         <tag>Media</tag>
+         
+        <tag>WebRTC</tag>
          
          
            
