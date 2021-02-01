@@ -134,6 +134,68 @@
     
     
       <div class="col-12 col-md-4 m-auto">
+        <a href="/2021/02/01/netty-length-frame-decoder/" target="_self">
+          <img src="/img/coding.png" srcset="/img/loading.gif" alt="Netty中LengthFieldBasedFrameDecoder的使用解析" class="img-fluid rounded z-depth-3 index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/2021/02/01/netty-length-frame-decoder/">
+        <p class="h4 index-header">Netty中LengthFieldBasedFrameDecoder的使用解析</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">前言Netty: Home
+对于Netty中LengthFieldBasedFrameDecoder使用，其实就是把我们自己对byte[]的解析操作封装起来了，而后它解析过的数据，还是会传递到下一级的handler，供我们自己是使用，而LengthFieldBasedFrameDecoder参数比较多，也不是很便于理解。
+这里，我将自己理解的内容记录下来
+Decoder总的来说，大概常用的就是这几个了。
+
+LineBasedFrameDecoder
+通过在包尾添加换行符 \r\n 来区分整包消息
+如果是自己发送的话，建议不要自己拼接“\r\n”，最好使用系统提供的
+
+DelimiterBasedFrameDecoder
+特殊字符作为分隔符
+这种就是你自己和服务器约定了一个特殊的字段，作为分隔
+
+FixedLengthFrameDecoder
+定长的消息，不够指定的长度，则空格补全
+
+LengthFieldBasedFrameDecoder
+这个是我们即将要使用的，他是对不定长但是消息中携带长度信息的协议解析的
+
+netty源码分析之LengthFieldBasedFrameDecode</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2021-02-01&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Server">Server</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Android">Android</a>&nbsp;
+          
+            <a href="/tags/Netty">Netty</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
         <a href="/2021/01/19/app-splash-time-op/" target="_self">
           <img src="/img/android.png" srcset="/img/loading.gif" alt="Android启动时间优化" class="img-fluid rounded z-depth-3 index-thumbnails">
         </a>
@@ -623,56 +685,11 @@ SHA    和MD5类似,但是比MD5要安全
     </div>
   </div>
 
-  <div class="row mb-4 mx-auto">
-    
-    
-      <div class="col-12 col-md-4 m-auto">
-        <a href="/2019/12/21/srtp-protocol/" target="_self">
-          <img src="/img/coding.png" srcset="/img/loading.gif" alt="SRTP与SRTCP协议的认识" class="img-fluid rounded z-depth-3 index-thumbnails">
-        </a>
-      </div>
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2019/12/21/srtp-protocol/">
-        <p class="h4 index-header">SRTP与SRTCP协议的认识</p>
-        
-        
-          
-          
-        
-        <div class="index-excerpt" style="max-height: none;">
-          <div class="index-text mb-1">在&lt;&lt;非对称加密及OpenSSL,TLS,DTLS&gt;&gt;一文中,说到了 DTLS.
-由于SRTP在传输中比较重要,我就单列了一篇来记录DTLS...</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-12-21&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/Other">Other</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/WebRTC">WebRTC</a>&nbsp;
-          
-            <a href="/tags/SRTP">SRTP</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
 
 
   <nav aria-label="index posts navigation">
     <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/2/"><i class="fas fa-angle-double-right"></i></a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/2/"><i class="fas fa-angle-double-right"></i></a>
     </span>
   </nav>
   

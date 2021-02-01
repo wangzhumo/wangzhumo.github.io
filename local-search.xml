@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>Netty中LengthFieldBasedFrameDecoder的使用解析</title>
+    <link href="undefined2021/02/01/netty-length-frame-decoder/"/>
+    <url>2021/02/01/netty-length-frame-decoder/</url>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><a href="https://netty.io/" target="_blank" rel="noopener">Netty: Home</a></p><p>对于Netty中<code>LengthFieldBasedFrameDecoder</code>使用，其实就是把我们自己对byte[]的解析操作封装起来了，而后它解析过的数据，还是会传递到下一级的handler，供我们自己是使用，而<code>LengthFieldBasedFrameDecoder</code>参数比较多，也不是很便于理解。</p><p>这里，我将自己理解的内容记录下来</p><h2 id="Decoder"><a href="#Decoder" class="headerlink" title="Decoder"></a>Decoder</h2><p>总的来说，大概常用的就是这几个了。</p><ul><li><p><strong>LineBasedFrameDecoder</strong></p><p>通过在包尾添加换行符 \r\n 来区分整包消息</p><p>如果是自己发送的话，建议不要自己拼接<code>“\r\n”</code>，最好使用系统提供的</p></li><li><p><strong>DelimiterBasedFrameDecoder</strong></p><p>特殊字符作为分隔符</p><p>这种就是你自己和服务器约定了一个特殊的字段，作为分隔</p></li><li><p><strong>FixedLengthFrameDecoder</strong></p><p>定长的消息，不够指定的长度，则空格补全</p></li><li><p><strong>LengthFieldBasedFrameDecoder</strong></p><p>这个是我们即将要使用的，他是对<strong>不定长</strong>但是消息中携带<strong>长度信息</strong>的协议解析的</p><blockquote><p><a href="https://www.jianshu.com/p/a0a51fd79f62" target="_blank" rel="noopener">netty源码分析之LengthFieldBasedFrameDecoder - 简书 (jianshu.com)</a></p></blockquote><p>这位大哥讲的比较清楚的，可以参考</p></li></ul><h2 id="消息协议"><a href="#消息协议" class="headerlink" title="消息协议"></a>消息协议</h2><p>这大概就是我们的Header + Body</p><pre><code class="shell">  0 1 2 3 4 5 6 7 8               16              24  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+&lt;+  |O| CP| V | PL  |      MM       |      MM       |   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+  |                   Header                      |       body</code></pre><p>其中<code>V</code>代表的是<code>Length</code>属性，从<code>3</code>字节的位置写入，长度为<code>2</code>字节</p><p>要注意的是，这里使用的<code>Header</code>是一个定长的<code>24</code>字节</p><p><code>V</code>代表的<code>Lenght</code>标记的是<code>body</code>的长度，如果那么举个例子</p><pre><code>body = &quot;&quot;  V = 0   代表的是body没有长度body = &quot;1&quot;V = body.getBytes().length();</code></pre><p>再者要注意的是，字节的大小端，我这里都使用 小端</p><p>使用ByteBuffer的<code>order(ByteOrder.LITTLE_ENDIAN)</code>即可，读取的时候，因为是<code>netty</code></p><p>所以返回的是<code>ByteBuf</code>，他已经提供了<code>getXXXLE</code>的系列方法</p><h2 id="LengthFieldBasedFrameDecoder源码解析"><a href="#LengthFieldBasedFrameDecoder源码解析" class="headerlink" title="LengthFieldBasedFrameDecoder源码解析"></a>LengthFieldBasedFrameDecoder源码解析</h2><h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><pre><code class="java">        /**     * Creates a new instance.     *     * @param byteOrder     *        the {@link ByteOrder} of the length field     * @param maxFrameLength     *        the maximum length of the frame.  If the length of the frame is     *        greater than this value, {@link TooLongFrameException} will be     *        thrown.     * @param lengthFieldOffset     *        the offset of the length field     * @param lengthFieldLength     *        the length of the length field     * @param lengthAdjustment     *        the compensation value to add to the value of the length field     * @param initialBytesToStrip     *        the number of first bytes to strip out from the decoded frame     * @param failFast     *        If &lt;tt&gt;true&lt;/tt&gt;, a {@link TooLongFrameException} is thrown as     *        soon as the decoder notices the length of the frame will exceed     *        &lt;tt&gt;maxFrameLength&lt;/tt&gt; regardless of whether the entire frame     *        has been read.  If &lt;tt&gt;false&lt;/tt&gt;, a {@link TooLongFrameException}     *        is thrown after the entire frame that exceeds &lt;tt&gt;maxFrameLength&lt;/tt&gt;     *        has been read.     */    public LengthFieldBasedFrameDecoder(            ByteOrder byteOrder, int maxFrameLength, int lengthFieldOffset, int lengthFieldLength,            int lengthAdjustment, int initialBytesToStrip, boolean failFast) {        this.byteOrder = checkNotNull(byteOrder, &quot;byteOrder&quot;);        checkPositive(maxFrameLength, &quot;maxFrameLength&quot;);        checkPositiveOrZero(lengthFieldOffset, &quot;lengthFieldOffset&quot;);        checkPositiveOrZero(initialBytesToStrip, &quot;initialBytesToStrip&quot;);        if (lengthFieldOffset &gt; maxFrameLength - lengthFieldLength) {            throw new IllegalArgumentException(                    &quot;maxFrameLength (&quot; + maxFrameLength + &quot;) &quot; +                    &quot;must be equal to or greater than &quot; +                    &quot;lengthFieldOffset (&quot; + lengthFieldOffset + &quot;) + &quot; +                    &quot;lengthFieldLength (&quot; + lengthFieldLength + &quot;).&quot;);        }        this.maxFrameLength = maxFrameLength;        this.lengthFieldOffset = lengthFieldOffset;        this.lengthFieldLength = lengthFieldLength;        this.lengthAdjustment = lengthAdjustment;        this.lengthFieldEndOffset = lengthFieldOffset + lengthFieldLength;        this.initialBytesToStrip = initialBytesToStrip;        this.failFast = failFast;    }</code></pre><p>我们看这个最长的构造函数即可</p><ul><li>byteOrder  字节序，我这里是<code>ByteOrder.LITTLE_ENDIAN</code>小端</li><li>maxFrameLength   最大字节数，和服务器约定即可  </li><li><p>lengthFieldOffset   这个指的是你的长度字段在消息<strong>整包中</strong>的开始位置</p><ul><li>Length  属性在最开头      <code>0</code>即可</li><li>Length  不在最开头          那么填写它在<strong>整包中</strong>的偏移量即可，就像我这里是 <code>3</code></li></ul></li><li><p>lengthFieldLength   Length属性的自身的【字节】长度，我这里是<code>2</code>字节，也就是个<code>short</code>类型</p></li><li>lengthAdjustment   这个属性是一个比较难理解的东西，在后面详细说明</li><li>initialBytesToStrip   截取，如果说你不想要某一段数据，直接截取即可，从整包的0位置开始算</li></ul><pre><code class="java">// 那么依据上面消息协议写法就是pipeline.addLast(&quot;frameDecoder&quot;,new LengthFieldBasedFrameDecoder(           ByteOrder.LITTLE_ENDIAN,1024,3,2,19,0,true));// ByteOrder.LITTLE  小端// 1024    最大长度// 3       length属性开始的位置// 2       length属性的长度，我这里是short,那就是2字节// 19      就是说，从length往后还需要读取 19 个字节// 0       不截取任何数据// true    TooLongFrameException的异常</code></pre><h3 id="Decode方法"><a href="#Decode方法" class="headerlink" title="Decode方法"></a>Decode方法</h3><p>最终帮你操作返回数据，解析的方法</p><pre><code class="java">    /**     * Create a frame out of the {@link ByteBuf} and return it.     *     * @param   ctx             the {@link ChannelHandlerContext} which this {@link ByteToMessageDecoder} belongs to     * @param   in              the {@link ByteBuf} from which to read data     * @return  frame           the {@link ByteBuf} which represent the frame or {@code null} if no frame could     *                          be created.     */protected Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {        if (discardingTooLongFrame) {            discardingTooLongFrame(in);        }        if (in.readableBytes() &lt; lengthFieldEndOffset) {            return null;        }              // 1.为了开始读取length，需要计算Length属性，实际上在ByteBuf中的位置              // 实际位置 = 第一个可以读取的位置Index  +  Length属性在整包中的偏移量        int actualLengthFieldOffset = in.readerIndex() + lengthFieldOffset;              // 2.这一步读取Length的值，最终的目的是计算出这个Frame的消息整包长度              // 因为我的协议中Length的值是body.length              // Frame实际的长度 = Length的值（body长度） + 24（Header长度）        long frameLength = getUnadjustedFrameLength(in, actualLengthFieldOffset, lengthFieldLength, byteOrder);        if (frameLength &lt; 0) {            failOnNegativeLengthField(in, frameLength, lengthFieldEndOffset);        }                // 3.这里就是  Length的值（Body长度） +  Length属性结束的位置              // lengthFieldEndOffset 的定义在上面的构造中               // lengthFieldEndOffset = lengthFieldOffset + lengthFieldLength;              // 我们要明白的是，它的目的就是确定Frame整包的长度        frameLength += lengthAdjustment + lengthFieldEndOffset;        if (frameLength &lt; lengthFieldEndOffset) {            failOnFrameLengthLessThanLengthFieldEndOffset(in, frameLength, lengthFieldEndOffset);        }        if (frameLength &gt; maxFrameLength) {            exceededFrameLength(in, frameLength);            return null;        }        // never overflows because it&#39;s less than maxFrameLength        int frameLengthInt = (int) frameLength;        if (in.readableBytes() &lt; frameLengthInt) {            return null;        }        if (initialBytesToStrip &gt; frameLengthInt) {            failOnFrameLengthLessThanInitialBytesToStrip(in, frameLength, initialBytesToStrip);        }        in.skipBytes(initialBytesToStrip);        // extract frame        int readerIndex = in.readerIndex();              // 4.这里确定你需要的字节长度              // 为什么说是“你需要的”  因为initialBytesToStrip如果设置的话，会发生截取              // 截取范围是 [0,initialBytesToStrip]        int actualFrameLength = frameLengthInt - initialBytesToStrip;              // 5.这里取出你指定需要的Frame数据        ByteBuf frame = extractFrame(ctx, in, readerIndex, actualFrameLength);        in.readerIndex(readerIndex + actualFrameLength);        return frame;    }</code></pre><h3 id="计算lengthAdjustment"><a href="#计算lengthAdjustment" class="headerlink" title="计算lengthAdjustment"></a>计算<code>lengthAdjustment</code></h3><p>通过阅读Decode方法，我们注意到</p><p>注释3  中，<code>frameLength</code>的计算方式，<code>lengthAdjustment</code> ，<code>lengthFieldEndOffset</code>会被加上去</p><p>那么怎么计算出<code>lengthAdjustment</code>的值呢？我们先来明确各个属性的含义</p><ul><li>frameLength   消息整包的长度</li><li>lengthFieldEndOffset    Length属性结束的位置</li><li>lengthAdjustment  一个帮你调整<code>frameLength</code>得到正确总长度的参数</li></ul><blockquote><p>这里舍弃从含义去分析，只通过数学的方式去计算lengthAdjustment</p></blockquote><h4 id="1-Lenght值是整个消息的长度"><a href="#1-Lenght值是整个消息的长度" class="headerlink" title="1.Lenght值是整个消息的长度"></a>1.Lenght值是整个消息的长度</h4><p>那么 <code>frameLength</code> 读取到<code>Length</code>的值后，就已经是正确的了，它已经满足<strong>消息的总长度</strong></p><p>但是注释3 中，它又被加上了  <code>lengthFieldEndOffset</code> 以及 <code>lengthAdjustment</code></p><p>而 <code>lengthFieldEndOffset</code> = <code>lengthFieldOffset</code> + <code>lengthFieldLength</code></p><p>所以我们要做的就是满足 <code>lengthFieldEndOffset</code> + <code>lengthAdjustment</code> = 0</p><p>那么<code>lengthAdjustment</code> = 0 - <code>lengthFieldOffset</code> -<code>lengthFieldLength</code></p><p>eg:假设我这里的 Length 的值是  Header.length + body.length</p><p><strong><code>lengthAdjustment</code> = 0 - <code>lengthFieldOffset</code> - <code>lengthFieldLength</code> = 0 - 3 -2 = -5</strong></p><h4 id="2-Lenght的值只代表Body长度"><a href="#2-Lenght的值只代表Body长度" class="headerlink" title="2.Lenght的值只代表Body长度"></a>2.Lenght的值只代表Body长度</h4><p>那么 <code>frameLength</code> 读取到<code>Length</code>的值后，仅仅代表了 Body的长度，并不能满足<strong>消息的总长度</strong></p><p>还缺少了Header.length，header的长度是定长<code>24</code>，那么</p><p><code>lengthFieldEndOffset</code> + <code>lengthFieldLength</code> 就要等于 Header的长度 = 24</p><p>那么<code>lengthAdjustment</code> = 24 - <code>lengthFieldOffset</code> - <code>lengthFieldLength</code></p><p><strong><code>lengthAdjustment</code> = 24 - <code>lengthFieldOffset</code> - <code>lengthFieldLength</code> = 24- 3 -2 = 19</strong></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Server</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Android</tag>
+      
+      <tag>Netty</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Android启动时间优化</title>
     <link href="undefined2021/01/19/app-splash-time-op/"/>
     <url>2021/01/19/app-splash-time-op/</url>
@@ -465,9 +492,9 @@
     
     <tags>
       
-      <tag>Media</tag>
-      
       <tag>WebRTC</tag>
+      
+      <tag>Media</tag>
       
     </tags>
     
@@ -492,9 +519,9 @@
     
     <tags>
       
-      <tag>Media</tag>
-      
       <tag>WebRTC</tag>
+      
+      <tag>Media</tag>
       
     </tags>
     
@@ -594,9 +621,9 @@
     
     <tags>
       
-      <tag>Media</tag>
-      
       <tag>FFmpeg</tag>
+      
+      <tag>Media</tag>
       
     </tags>
     
@@ -2115,9 +2142,9 @@
       
       <tag>Android</tag>
       
-      <tag>Okhttp</tag>
-      
       <tag>Rxjava</tag>
+      
+      <tag>Okhttp</tag>
       
     </tags>
     
@@ -2144,9 +2171,9 @@
       
       <tag>Android</tag>
       
-      <tag>Okhttp</tag>
-      
       <tag>Rxjava</tag>
+      
+      <tag>Okhttp</tag>
       
     </tags>
     

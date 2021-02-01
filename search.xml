@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Netty中LengthFieldBasedFrameDecoder的使用解析]]></title>
+    <url>%2F2021%2F02%2F01%2Fnetty-length-frame-decoder%2F</url>
+    <content type="text"><![CDATA[前言Netty: Home 对于Netty中LengthFieldBasedFrameDecoder使用，其实就是把我们自己对byte[]的解析操作封装起来了，而后它解析过的数据，还是会传递到下一级的handler，供我们自己是使用，而LengthFieldBasedFrameDecoder参数比较多，也不是很便于理解。 这里，我将自己理解的内容记录下来 Decoder总的来说，大概常用的就是这几个了。 LineBasedFrameDecoder 通过在包尾添加换行符 \r\n 来区分整包消息 如果是自己发送的话，建议不要自己拼接“\r\n”，最好使用系统提供的 DelimiterBasedFrameDecoder 特殊字符作为分隔符 这种就是你自己和服务器约定了一个特殊的字段，作为分隔 FixedLengthFrameDecoder 定长的消息，不够指定的长度，则空格补全 LengthFieldBasedFrameDecoder 这个是我们即将要使用的，他是对不定长但是消息中携带长度信息的协议解析的 netty源码分析之LengthFieldBasedFrameDecoder - 简书 (jianshu.com) 这位大哥讲的比较清楚的，可以参考 消息协议这大概就是我们的Header + Body 0 1 2 3 4 5 6 7 8 16 24 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+&lt;+ |O| CP| V | PL | MM | MM | +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ | Header | body 其中V代表的是Length属性，从3字节的位置写入，长度为2字节 要注意的是，这里使用的Header是一个定长的24字节 V代表的Lenght标记的是body的长度，如果那么举个例子 body = &quot;&quot; V = 0 代表的是body没有长度 body = &quot;1&quot; V = body.getBytes().length(); 再者要注意的是，字节的大小端，我这里都使用 小端 使用ByteBuffer的order(ByteOrder.LITTLE_ENDIAN)即可，读取的时候，因为是netty 所以返回的是ByteBuf，他已经提供了getXXXLE的系列方法 LengthFieldBasedFrameDecoder源码解析构造函数 /** * Creates a new instance. * * @param byteOrder * the {@link ByteOrder} of the length field * @param maxFrameLength * the maximum length of the frame. If the length of the frame is * greater than this value, {@link TooLongFrameException} will be * thrown. * @param lengthFieldOffset * the offset of the length field * @param lengthFieldLength * the length of the length field * @param lengthAdjustment * the compensation value to add to the value of the length field * @param initialBytesToStrip * the number of first bytes to strip out from the decoded frame * @param failFast * If &lt;tt&gt;true&lt;/tt&gt;, a {@link TooLongFrameException} is thrown as * soon as the decoder notices the length of the frame will exceed * &lt;tt&gt;maxFrameLength&lt;/tt&gt; regardless of whether the entire frame * has been read. If &lt;tt&gt;false&lt;/tt&gt;, a {@link TooLongFrameException} * is thrown after the entire frame that exceeds &lt;tt&gt;maxFrameLength&lt;/tt&gt; * has been read. */ public LengthFieldBasedFrameDecoder( ByteOrder byteOrder, int maxFrameLength, int lengthFieldOffset, int lengthFieldLength, int lengthAdjustment, int initialBytesToStrip, boolean failFast) { this.byteOrder = checkNotNull(byteOrder, &quot;byteOrder&quot;); checkPositive(maxFrameLength, &quot;maxFrameLength&quot;); checkPositiveOrZero(lengthFieldOffset, &quot;lengthFieldOffset&quot;); checkPositiveOrZero(initialBytesToStrip, &quot;initialBytesToStrip&quot;); if (lengthFieldOffset &gt; maxFrameLength - lengthFieldLength) { throw new IllegalArgumentException( &quot;maxFrameLength (&quot; + maxFrameLength + &quot;) &quot; + &quot;must be equal to or greater than &quot; + &quot;lengthFieldOffset (&quot; + lengthFieldOffset + &quot;) + &quot; + &quot;lengthFieldLength (&quot; + lengthFieldLength + &quot;).&quot;); } this.maxFrameLength = maxFrameLength; this.lengthFieldOffset = lengthFieldOffset; this.lengthFieldLength = lengthFieldLength; this.lengthAdjustment = lengthAdjustment; this.lengthFieldEndOffset = lengthFieldOffset + lengthFieldLength; this.initialBytesToStrip = initialBytesToStrip; this.failFast = failFast; } 我们看这个最长的构造函数即可 byteOrder 字节序，我这里是ByteOrder.LITTLE_ENDIAN小端 maxFrameLength 最大字节数，和服务器约定即可 lengthFieldOffset 这个指的是你的长度字段在消息整包中的开始位置 Length 属性在最开头 0即可 Length 不在最开头 那么填写它在整包中的偏移量即可，就像我这里是 3 lengthFieldLength Length属性的自身的【字节】长度，我这里是2字节，也就是个short类型 lengthAdjustment 这个属性是一个比较难理解的东西，在后面详细说明 initialBytesToStrip 截取，如果说你不想要某一段数据，直接截取即可，从整包的0位置开始算 // 那么依据上面消息协议写法就是 pipeline.addLast(&quot;frameDecoder&quot;,new LengthFieldBasedFrameDecoder( ByteOrder.LITTLE_ENDIAN,1024,3,2,19,0,true )); // ByteOrder.LITTLE 小端 // 1024 最大长度 // 3 length属性开始的位置 // 2 length属性的长度，我这里是short,那就是2字节 // 19 就是说，从length往后还需要读取 19 个字节 // 0 不截取任何数据 // true TooLongFrameException的异常 Decode方法最终帮你操作返回数据，解析的方法 /** * Create a frame out of the {@link ByteBuf} and return it. * * @param ctx the {@link ChannelHandlerContext} which this {@link ByteToMessageDecoder} belongs to * @param in the {@link ByteBuf} from which to read data * @return frame the {@link ByteBuf} which represent the frame or {@code null} if no frame could * be created. */ protected Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception { if (discardingTooLongFrame) { discardingTooLongFrame(in); } if (in.readableBytes() &lt; lengthFieldEndOffset) { return null; } // 1.为了开始读取length，需要计算Length属性，实际上在ByteBuf中的位置 // 实际位置 = 第一个可以读取的位置Index + Length属性在整包中的偏移量 int actualLengthFieldOffset = in.readerIndex() + lengthFieldOffset; // 2.这一步读取Length的值，最终的目的是计算出这个Frame的消息整包长度 // 因为我的协议中Length的值是body.length // Frame实际的长度 = Length的值（body长度） + 24（Header长度） long frameLength = getUnadjustedFrameLength(in, actualLengthFieldOffset, lengthFieldLength, byteOrder); if (frameLength &lt; 0) { failOnNegativeLengthField(in, frameLength, lengthFieldEndOffset); } // 3.这里就是 Length的值（Body长度） + Length属性结束的位置 // lengthFieldEndOffset 的定义在上面的构造中 // lengthFieldEndOffset = lengthFieldOffset + lengthFieldLength; // 我们要明白的是，它的目的就是确定Frame整包的长度 frameLength += lengthAdjustment + lengthFieldEndOffset; if (frameLength &lt; lengthFieldEndOffset) { failOnFrameLengthLessThanLengthFieldEndOffset(in, frameLength, lengthFieldEndOffset); } if (frameLength &gt; maxFrameLength) { exceededFrameLength(in, frameLength); return null; } // never overflows because it&#39;s less than maxFrameLength int frameLengthInt = (int) frameLength; if (in.readableBytes() &lt; frameLengthInt) { return null; } if (initialBytesToStrip &gt; frameLengthInt) { failOnFrameLengthLessThanInitialBytesToStrip(in, frameLength, initialBytesToStrip); } in.skipBytes(initialBytesToStrip); // extract frame int readerIndex = in.readerIndex(); // 4.这里确定你需要的字节长度 // 为什么说是“你需要的” 因为initialBytesToStrip如果设置的话，会发生截取 // 截取范围是 [0,initialBytesToStrip] int actualFrameLength = frameLengthInt - initialBytesToStrip; // 5.这里取出你指定需要的Frame数据 ByteBuf frame = extractFrame(ctx, in, readerIndex, actualFrameLength); in.readerIndex(readerIndex + actualFrameLength); return frame; } 计算lengthAdjustment通过阅读Decode方法，我们注意到 注释3 中，frameLength的计算方式，lengthAdjustment ，lengthFieldEndOffset会被加上去 那么怎么计算出lengthAdjustment的值呢？我们先来明确各个属性的含义 frameLength 消息整包的长度 lengthFieldEndOffset Length属性结束的位置 lengthAdjustment 一个帮你调整frameLength得到正确总长度的参数 这里舍弃从含义去分析，只通过数学的方式去计算lengthAdjustment 1.Lenght值是整个消息的长度那么 frameLength 读取到Length的值后，就已经是正确的了，它已经满足消息的总长度 但是注释3 中，它又被加上了 lengthFieldEndOffset 以及 lengthAdjustment 而 lengthFieldEndOffset = lengthFieldOffset + lengthFieldLength 所以我们要做的就是满足 lengthFieldEndOffset + lengthAdjustment = 0 那么lengthAdjustment = 0 - lengthFieldOffset -lengthFieldLength eg:假设我这里的 Length 的值是 Header.length + body.length lengthAdjustment = 0 - lengthFieldOffset - lengthFieldLength = 0 - 3 -2 = -5 2.Lenght的值只代表Body长度那么 frameLength 读取到Length的值后，仅仅代表了 Body的长度，并不能满足消息的总长度 还缺少了Header.length，header的长度是定长24，那么 lengthFieldEndOffset + lengthFieldLength 就要等于 Header的长度 = 24 那么lengthAdjustment = 24 - lengthFieldOffset - lengthFieldLength lengthAdjustment = 24 - lengthFieldOffset - lengthFieldLength = 24- 3 -2 = 19]]></content>
+      <categories>
+        <category>Server</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+        <tag>Netty</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Android启动时间优化]]></title>
     <url>%2F2021%2F01%2F19%2Fapp-splash-time-op%2F</url>
     <content type="text"><![CDATA[前言App的启动时间从2s飙升到了5s，已经明显的感知到启动慢。 提测后的我准备对启动时间进行优化，打算使用 systrace 进行分析 系统跟踪概览 | Android 开发者 | Android Developers (google.cn) 本来使用Android Studio自带的工具是最好的，但是尝试多次它都没有办法从App启动开始录制Trace文件，只能选择自己动手了 Systrace 命令行工具 Perfetto 命令行工具 这里我选择Perfetto进行分析，使用Systrace抓取。 基础知识Systrace的相关知识可以看这位大佬的文章 Android Systrace 基础知识 – Systrace 简介 · Android Performance 基本的操作可以从google develper 网站了解到 浏览 Systrace 报告 | Android 开发者 | Android Developers (google.cn) 如果使用老版本的Systrace来查看的话，一定要先看看google的这个文档，要不然可能连看都没办法看，主要是了解一下 快捷键 抓取Trace文件一.通过Perfetto抓取 Quickstart: Record traces on Android - Perfetto Tracing Docs 1.通过Perfetto UI的图形界面图形界面进行抓取，我的测试机不支持，只能通过命令 2.通过命令进行抓取2.1打开perfetto services # Will start both traced and traced_probes. adb shell setprop persist.traced.enable 1 2.2写入配置文件 config.txt (这是我自己的配置文件，可以参考) // 抓取的时间 duration_ms: 10000 buffers: { size_kb: 8960 fill_policy: DISCARD } buffers: { size_kb: 1280 fill_policy: DISCARD } data_sources: { config { name: &quot;linux.ftrace&quot; ftrace_config { ftrace_events: &quot;sched/sched_switch&quot; ftrace_events: &quot;power/suspend_resume&quot; ftrace_events: &quot;sched/sched_process_exit&quot; ftrace_events: &quot;sched/sched_process_free&quot; ftrace_events: &quot;task/task_newtask&quot; ftrace_events: &quot;task/task_rename&quot; ftrace_events: &quot;ftrace/print&quot; atrace_categories: &quot;gfx&quot; atrace_categories: &quot;view&quot; atrace_categories: &quot;webview&quot; //这里填入自己的包名 atrace_apps: &quot;xxxxxxxx&quot; } } } data_sources: { config { name: &quot;linux.process_stats&quot; target_buffer: 1 process_stats_config { scan_all_processes_on_start: true } } } 把这个配置文件写入你要抓取的手机 adb push config.txt /data/local/tmp/trace_config.txt 2.3开始抓取adb shell &#39;cat /data/local/tmp/trace_config.txt | perfetto --txt -c - -o /data/misc/perfetto-traces/trace&#39; # 输出 perfetto_cmd.cc:604 Connected to the Perfetto traced service, starting tracing for 10000 ms # /data/misc/perfetto-traces/trace 这个就是抓到的trace文件 perfetto_cmd.cc:677 Wrote 9206246 bytes into /data/misc/perfetto-traces/trace 这里的trace文件是perfetto格式的，如果你需要通过Systrace打开的话，需要转一下 curl -LO https://get.perfetto.dev/traceconv chmod +x traceconv ./traceconv [text|json|systrace|profile] [input proto file] [output file] # Converting to systrace text format ./traceconv systrace [input proto file] [output systrace file] # Converting to Chrome Tracing JSON format ./traceconv json [input proto file] [output json file] 不过我更加推荐直接使用perfetto UI 打开，然后 Legacy UI 打开，会自动转 二.通过Systrace抓取这里的话，我也是直接使用提供的命令去抓取了，Android高版本应该会有系统追踪功能，不过我没有去看 1.前置1.1需要SDK支持 先跳转到Android/sdk/platform-tools/systrace 1.2Python版本 这个脚本只支持python2的版本，所以记得切python的版本，要不会失败 2.抓取python ./systrace.py -t 5 sched gfx view wm am app webview -a io.xxxx.xxxx -o ~/Downloads/inyuapptrace/trace.html # 输入 These categories are unavailable: app Starting tracing (5 seconds) #看到 Starting tracing 的时候，就可以点开app了 Starting tracing (5 seconds) Tracing completed. Collecting output... Outputting Systrace results... Tracing complete, writing results # 这个是输出目录 Wrote trace HTML file: file:///Users/wangzhumo/Downloads/inyuapptrace/trace.html -t：抓取的时间 shced：cpu调度 gfx：图形信息 view：视图 wm：窗口管理 am：活动管理 app：应用信息 webview：webview信息 -a：指定目标的包名 -o：生成的systrace.html输入位置 其他的使用 python systrace.py -l可以查看 查看Trace文件上面的两种文件我们都可以通过Perfetto UI打开 我自己只熟悉Systrace的视图，就直接使用 Open Wiht legacy UI来查看了 嗯 ~~~~ 然后我发现虽然能发现问题，但是还不够清晰 虽然能知道bindApplication 以及 开屏的 measure卡，但是我仍然不知道具体的类，方法，还是需要自己的找 所以我们还需要自己去加一些tag，方便我们定位问题 ByteX 墙裂安利 bytedance/ByteX: ByteX is a bytecode plugin platform based on Android Gradle Transform API and ASM. 字节码插件开发平台 (github.com) 使用byteX把tag注入到方法中去，我写了一个插件，并提供的两个默认实现 SystraceTraceImpl 注入tag MethodTimeTraceImpl 统计方法耗时 这里就不详细说这个了，我们看看加了tag后的Systrace图 这样的话，我们就可以针对每一个方法去搞定它的耗时操作了，进而优化启动的时间 优化的思路对于优化的话，在我看来就2条路 1.异步执行 2.提前准备资源 Application对于这次的问题来说，Application中的话，我会把一些耗时的操作移动到IntentService或者是等待页面展示出来后再进行初始化 Activity 布局进行优化 ViewPager替换为 loadMultiRootView 延迟显示不太重要的元素 有些View是可以固定宽高的，写上值避免它多次measure 动态的添加移除 我发现有一些View,有可能根本就不会显示出来，但是之前的实现是 GONE 掉的 重复的移除老代码 移除老逻辑，减少判断 在此次优化完毕之后，经过测试 #优化前 ➜ adb shell am start -W -n io.xxxx.xxxx/io.xxxx.xxxx.main.MainActivity Starting: Intent { cmp=io.xxxx.xxxx/.main.MainActivity } Status: ok LaunchState: COLD Activity: io.xxxx.xxxx/.main.MainActivity TotalTime: 4341 WaitTime: 4350 Complete #优化后 ➜ adb shell am start -W -n io.xxxx.xxxx/io.xxxx.xxxx.main.MainActivity Starting: Intent { cmp=io.liuliu.xxxx/.main.MainActivity } Status: ok LaunchState: COLD Activity: io.xxxx.xxxx/.main.MainActivity TotalTime: 2229 WaitTime: 2241 Complete 实际上，如果是release包的话，会更快一下，因为这其中还带了两个个网络请求，debug环境下400ms 正式的100ms]]></content>
@@ -205,8 +217,8 @@
         <category>WebRTC</category>
       </categories>
       <tags>
-        <tag>Media</tag>
         <tag>WebRTC</tag>
+        <tag>Media</tag>
       </tags>
   </entry>
   <entry>
@@ -217,8 +229,8 @@
         <category>WebRTC</category>
       </categories>
       <tags>
-        <tag>Media</tag>
         <tag>WebRTC</tag>
+        <tag>Media</tag>
       </tags>
   </entry>
   <entry>
@@ -262,8 +274,8 @@
         <category>Media</category>
       </categories>
       <tags>
-        <tag>Media</tag>
         <tag>FFmpeg</tag>
+        <tag>Media</tag>
       </tags>
   </entry>
   <entry>
@@ -934,8 +946,8 @@
       </categories>
       <tags>
         <tag>Android</tag>
-        <tag>Okhttp</tag>
         <tag>Rxjava</tag>
+        <tag>Okhttp</tag>
       </tags>
   </entry>
   <entry>
@@ -947,8 +959,8 @@
       </categories>
       <tags>
         <tag>Android</tag>
-        <tag>Okhttp</tag>
         <tag>Rxjava</tag>
+        <tag>Okhttp</tag>
       </tags>
   </entry>
   <entry>
